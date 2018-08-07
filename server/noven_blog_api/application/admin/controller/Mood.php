@@ -58,26 +58,47 @@ class Mood extends Controller
 
        //如果有传入Id,则是修改
        if(isset($mood['Id'])) {
-         $res = Db::name('moods')->where('Id',$mood['Id'])->update($mood);
-   
-         if($res == 1) {
-           $this->common->setResponse(200,'修改成功！');
-         }else {
-           $this->common->setResponse(21,'修改失败！');
-         }
+         // 启动事务
+          Db::startTrans();
+          try{
+              $res = Db::name('moods')->where('Id',$mood['Id'])->update($mood);
+              if($res == 1) {
+               $this->common->setResponse(200,'修改成功！');
+              }else {
+               $this->common->setResponse(21,'修改失败！');
+              }
+              // 提交事务
+              Db::commit();
+          } catch (\Exception $e) {
+              $this->common->setResponse(21,'操作数据库失败！');
+              // 回滚事务
+              Db::rollback();
+          }
+
 
        }else {
          $mood['CreateTime'] =  date('Y-m-d H:i:s',time());
          $mood['ReadCount'] = 0;
 
-         $res = Db::name('moods')->insert($mood);
-   
-         if($res == 1) {
-           $moodId = Db::name('moods')->getLastInsID();
-           $this->common->setResponse(200,'新增成功！',$moodId);
-         }else {
-           $this->common->setResponse(21,'新增失败！');
+         // 启动事务
+         Db::startTrans();
+         try{
+            $res = Db::name('moods')->insert($mood);
+
+            if($res == 1) {
+             $moodId = Db::name('moods')->getLastInsID();
+             $this->common->setResponse(200,'新增成功！',$moodId);
+            }else {
+             $this->common->setResponse(21,'新增失败！');
+            }
+            // 提交事务
+            Db::commit();
+         } catch (\Exception $e) {
+            $this->common->setResponse(21,'操作数据库失败！');
+            // 回滚事务
+            Db::rollback();
          }
+
        }
     }
 
@@ -104,8 +125,7 @@ class Mood extends Controller
          $this->common->setResponse(21,'未获取到心情详情！');
       }else {
          $this->common->setResponse(200,'ok',$res[0]);
-      }    
-      
+      }
     }
 
 

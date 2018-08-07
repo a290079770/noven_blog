@@ -10,13 +10,6 @@ class Common
     {
         $res = array();
         switch ($code) {
-            case 21:
-                $res = array(
-                   'code'=>$code,
-                   'success'=>false,
-                   'description'=>$description
-                );
-                break;
             case 200:
                 $res = array(
                      'code'=>$code,
@@ -27,11 +20,13 @@ class Common
                 if(is_array($data)) {
                   $res['recordCount'] = $recordCount;
                 }
-                
                 break;
-            
             default:
-                # code...
+                $res = array(
+                   'code'=>$code,
+                   'success'=>false,
+                   'description'=>$description
+                );
                 break;
         }
 
@@ -146,14 +141,24 @@ class Common
       }
 
 
-      $res = Db::name($table)
-      ->where('Id',request()->post('Id'))
-      ->delete();
+      // 启动事务
+      Db::startTrans();
+      try{
+          $res = Db::name($table)
+          ->where('Id',request()->post('Id'))
+          ->delete();
 
-      if($res) {
-        $this->setResponse(200,'删除成功！');
-      }else {
-        $this->setResponse(21,'删除失败！');
+          if($res) {
+            $this->setResponse(200,'删除成功！');
+          }else {
+            $this->setResponse(21,'删除失败！');
+          }
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          $this->setResponse(21,'删除失败！');
+          // 回滚事务
+          Db::rollback();
       }
     }
 }

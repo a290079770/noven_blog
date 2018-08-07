@@ -8,13 +8,13 @@ use think\Validate;
 use lib\common;
 
 class Banner extends Controller
-{   
+{
 
 	private $common = null;
 
 	public function __construct() {
        $this->common = new Common();
-    }  
+    }
 
     public function bannerList()
     {
@@ -22,7 +22,7 @@ class Banner extends Controller
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
 
         $query = ['Title' => ['like','%'.$keywords.'%']];
-        
+
         //处理非必填查询条件
         if(request()->get('userId')) {
            $query['UserId'] = request()->get('userId');
@@ -59,26 +59,46 @@ class Banner extends Controller
       if(request()->post('Id')) {
          $banner['CreateTime'] =  date('Y-m-d H:i:s',time());
 
-          $res = Db::name('banners')
+         // 启动事务
+          Db::startTrans();
+          try{
+              $res = Db::name('banners')
                  ->where('Id',request()->post('Id'))
                  ->update($banner);
 
-          if($res == 1) {
-             $this->common->setResponse(200,'修改Banner成功！',$bannerId);
-          }else {
-             $this->common->setResponse(21,'未修改任何信息！');
+              if($res == 1) {
+                 $this->common->setResponse(200,'修改Banner成功！',$bannerId);
+              }else {
+                 $this->common->setResponse(21,'未修改任何信息！');
+              }
+              // 提交事务
+              Db::commit(); 
+          } catch (\Exception $e) {
+              $this->common->setResponse(21,'操作数据库失败！');
+              // 回滚事务
+              Db::rollback();
           }
       }else {
          //新增banner
           $banner['CreateTime'] =  date('Y-m-d H:i:s',time());
 
-          $res = Db::name('banners')->insert($banner);
+          // 启动事务
+          Db::startTrans();
+          try{
+              $res = Db::name('banners')->insert($banner);
 
-          if($res == 1) {
-             $bannerId = Db::name('banners')->getLastInsID();
-             $this->common->setResponse(200,'新增Banner成功！',$bannerId);
-          }else {
-             $this->common->setResponse(21,'新增Banner失败！');
+              if($res == 1) {
+                 $bannerId = Db::name('banners')->getLastInsID();
+                 $this->common->setResponse(200,'新增Banner成功！',$bannerId);
+              }else {
+                 $this->common->setResponse(21,'新增Banner失败！');
+              }
+              // 提交事务
+              Db::commit();
+          } catch (\Exception $e) {
+              $this->common->setResponse(21,'操作数据库失败！');
+              // 回滚事务
+              Db::rollback();
           }
       }
     }
@@ -110,15 +130,25 @@ class Banner extends Controller
         return;
       }
 
-      //修改用户的status
-      $res = Db::name('banners')
-      ->where('Id',request()->post('Id'))
-      ->update(['IsShow' => request()->post('isShow')]);
+      // 启动事务
+      Db::startTrans();
+      try{
+          //修改用banner的Isshow
+          $res = Db::name('banners')
+          ->where('Id',request()->post('Id'))
+          ->update(['IsShow' => request()->post('isShow')]);
 
-      if($res === 1) {
-         $this->common->setResponse(200,'操作成功！');
-      }else {
-         $this->common->setResponse(21,'操作失败！');
+          if($res === 1) {
+             $this->common->setResponse(200,'操作成功！');
+          }else {
+             $this->common->setResponse(21,'操作失败！');
+          }
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          $this->common->setResponse(21,'操作数据库失败！');
+          // 回滚事务
+          Db::rollback();
       }
     }
 

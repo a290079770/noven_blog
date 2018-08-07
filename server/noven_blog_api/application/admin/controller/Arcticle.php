@@ -14,19 +14,19 @@ class Arcticle extends Controller
 
 	public function __construct() {
        $this->common = new Common();
-    }  
+    }
 
     public function arcticleList()
     {
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
         $authorId = request()->get('authorId') ? request()->get('authorId') : '';
-        
+
         //时间范围筛选
         $startTime = request()->get('startTime');
         $endTime = request()->get('endTime');
-    
+
         $time = null;
-        
+
         if($startTime && $endTime) {
            $time = ['CreateTime','between',[$startTime,$endTime]];
         }else if($startTime && !$endTime) {
@@ -74,31 +74,52 @@ class Arcticle extends Controller
     {
        //验证请求方式和账号密码不能为空
        if(!$this->validateData()) return;
-       
+
        $arcticle = request()->post();
 
        //如果有传入Id,则是修改
        if(isset($arcticle['Id'])) {
-         $res = Db::name('arcticles')->where('Id',$arcticle['Id'])->update($arcticle);
-   
-         if($res == 1) {
-           $this->common->setResponse(200,'修改成功！');
-         }else {
-           $this->common->setResponse(21,'修改失败！');
-         }
+         // 启动事务
+        Db::startTrans();
+        try{
+            $res = Db::name('arcticles')->where('Id',$arcticle['Id'])->update($arcticle);
+
+           if($res == 1) {
+             $this->common->setResponse(200,'修改成功！');
+           }else {
+             $this->common->setResponse(21,'修改失败！');
+           }
+            // 提交事务
+            Db::commit();    
+        } catch (\Exception $e) {
+            $this->common->setResponse(21,'操作数据库失败！');
+            // 回滚事务
+            Db::rollback();
+        }
 
        }else {
          $arcticle['CreateTime'] =  date('Y-m-d H:i:s',time());
          $arcticle['ReadCount'] = 0;
 
-         $res = Db::name('arcticles')->insert($arcticle);
-   
-         if($res == 1) {
-           $arcticleId = Db::name('arcticles')->getLastInsID();
-           $this->common->setResponse(200,'新增成功！',$arcticleId);
-         }else {
-           $this->common->setResponse(21,'新增失败！');
+         // 启动事务
+         Db::startTrans();
+         try{
+            $res = Db::name('arcticles')->insert($arcticle);
+
+            if($res == 1) {
+             $arcticleId = Db::name('arcticles')->getLastInsID();
+             $this->common->setResponse(200,'新增成功！',$arcticleId);
+            }else {
+             $this->common->setResponse(21,'新增失败！');
+            }
+            // 提交事务
+            Db::commit();
+         } catch (\Exception $e) {
+            $this->common->setResponse(21,'操作数据库失败！');
+            // 回滚事务
+            Db::rollback();
          }
+
        }
     }
 

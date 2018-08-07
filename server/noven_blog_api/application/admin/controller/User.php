@@ -6,10 +6,13 @@ use think\Db;
 use think\Validate;
 
 use lib\common;
+use lib\jwtTool;
+use lib\validJWT;
 
 class User extends Controller
-{  
+{
     private $common = null;
+    private $jwt = null;
     private $error = 21;
     private $success = 200;
 
@@ -17,8 +20,8 @@ class User extends Controller
 
     public function __construct() {
        $this->common = new Common();
-    }  
-    
+       $this->jwt = new JwtTool();
+    }
     //用户登录
     public function login()
     {
@@ -39,22 +42,47 @@ class User extends Controller
        }else {
        	 unset($arr['Password']);
          //返回数据
-       	 $this->common->setResponse(200,'登录成功',$arr);
+         //生成一个token
+         $token = $this->jwt->enc(['uid' => $arr['Id']]);
 
-         //设置上次和本次登录的ip
-         $arr['LastTime'] = $arr['ThisTime'];
-         $arr['LastIp'] = $arr['ThisIp'];
-         $arr['ThisTime'] = date('Y-m-d H:i:s',time());
-         $arr['ThisIp'] = request()->ip();
+         //写入token到数据库
+         //先查询是否有这个uid的token，如果有则更新，无则新增
+         $searchRes = Db::name('tokens')->where('uid',$arr['Id'])->find();
 
-         Db::name('users')
-         ->where('Id',$arr['Id'])
-         ->update($arr);
+         // 启动事务
+          Db::startTrans();
+          try{
+             if(!$searchRes) {
+                //新增
+                Db::name('tokens')->insert(['uid' => $arr['Id'],'token'=> $token]);
+             }else {
+                //更新
+                Db::name('tokens')->where('uid',$arr['Id'])->setField('token', $token);
+             }
+
+             //设置上次和本次登录的ip
+             $arr['LastTime'] = $arr['ThisTime'];
+             $arr['LastIp'] = $arr['ThisIp'];
+             $arr['ThisTime'] = date('Y-m-d H:i:s',time());
+             $arr['ThisIp'] = request()->ip();
+
+             Db::name('users')
+             ->where('Id',$arr['Id'])
+             ->update($arr);
+             // 提交事务
+             Db::commit();    
+          } catch (\Exception $e) {
+              // 回滚事务
+              Db::rollback();
+              $this->common->setResponse(21,'操作数据库失败！');
+          }
+
+         $this->common->setResponse(200,'登录成功',['token'=>$token]);
        }
     }
 
     //用户注册
-    public function reg() 
+    public function reg()
     {
       //验证请求方式和账号密码不能为空
       if(!$this->validateAccount()) return;
@@ -66,21 +94,34 @@ class User extends Controller
          return;
       }
 
-      //验证通过，存数据库
-      $res = Db::name('users')->insert(request()->post());
+      // 启动事务
+      Db::startTrans();
+      try{
+          //验证通过，存数据库
+          $res = Db::name('users')->insert(request()->post());
 
-      if($res == 1) {
-         $userId = Db::name('users')->getLastInsID();
-         $this->common->setResponse(200,'注册成功！',$userId);
-      }else {
-         $this->common->setResponse(21,'注册失败！');
+          if($res == 1) {
+             $userId = Db::name('users')->getLastInsID();
+             $this->common->setResponse(200,'注册成功！',$userId);
+          }else {
+             $this->common->setResponse(21,'注册失败！');
+          }
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          // 回滚事务
+          Db::rollback();
+          $this->common->setResponse(21,'操作数据库失败！');
       }
-  
     }
 
     //获取用户列表
     public function userList()
-    {    
+    {
+        //验证token
+        $tokenData = validJWT::valid();
+        if(!$tokenData) return;
+
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
 
         $res = $this->common->getDataList('users',[
@@ -166,14 +207,23 @@ class User extends Controller
       $user = request()->post();
 
       $user['CreateTime'] =  date('Y-m-d H:i:s',time());
+      // 启动事务
+      Db::startTrans();
+      try{
+          $res = Db::name('users')->insert($user);
 
-      $res = Db::name('users')->insert($user);
-
-      if($res == 1) {
-         $userId = Db::name('users')->getLastInsID();
-         $this->common->setResponse(200,'新增管理员成功！',$userId);
-      }else {
-         $this->common->setResponse(21,'新增管理员失败！');
+          if($res == 1) {
+             $userId = Db::name('users')->getLastInsID();
+             $this->common->setResponse(200,'新增管理员成功！',$userId);
+          }else {
+             $this->common->setResponse(21,'新增管理员失败！');
+          }
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          // 回滚事务
+          $this->common->setResponse(200,'操作数据库失败！');
+          Db::rollback();
       }
 
       //添加其他数据，CreateTime status  UserType  LastTime LastIp  ThisTime  ThisIp
@@ -248,19 +298,29 @@ class User extends Controller
         $this->common->setResponse(21,'未获取到用户信息，修改失败！');
       }
 
-      Db::name('users')
-      ->where('Id',request()->post('Id'))
-      ->update(['Password'=>request()->post('Password')]);
+      // 启动事务
+      Db::startTrans();
+      try{
+          Db::name('users')
+          ->where('Id',request()->post('Id'))
+          ->update(['Password'=>request()->post('Password')]);
 
-      // else if($arr[0]['Password'] == request()->post('Password')){
-      //   $this->common->setResponse(21,'新密码不能与旧密码一致');
+          // else if($arr[0]['Password'] == request()->post('Password')){
+          //   $this->common->setResponse(21,'新密码不能与旧密码一致');
 
-      // }
-      // else if(Db::name('users')->where('Id',request()->post('Id'))->update(['Password'=>request()->post('Password')]) == 0){
-      //   $this->common->setResponse(21,'修改密码失败！');
-      // }else {
-        $this->common->setResponse(200,'修改成功！');
-      // }
+          // }
+          // else if(Db::name('users')->where('Id',request()->post('Id'))->update(['Password'=>request()->post('Password')]) == 0){
+          //   $this->common->setResponse(21,'修改密码失败！');
+          // }else {
+            $this->common->setResponse(200,'修改成功！');
+          // };
+          // 提交事务
+          Db::commit();    
+      } catch (\Exception $e) {
+          // 回滚事务
+          $this->common->setResponse(200,'操作数据库失败！');
+          Db::rollback();
+      }
     }
 
 
@@ -279,16 +339,27 @@ class User extends Controller
         return;
       }
 
-      //修改用户的status
-      $res = Db::name('users')
-      ->where('Id',request()->post('Id'))
-      ->update(['Status' => request()->post('Status')]);
+      // 启动事务
+      Db::startTrans();
+      try{
+          //修改用户的status
+          $res = Db::name('users')
+          ->where('Id',request()->post('Id'))
+          ->update(['Status' => request()->post('Status')]);
 
-      if($res === 1) {
-         $this->common->setResponse(200,'操作成功！');
-      }else {
-         $this->common->setResponse(21,'操作失败！');
+          if($res === 1) {
+             $this->common->setResponse(200,'操作成功！');
+          }else {
+             $this->common->setResponse(21,'操作失败！');
+          }
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          // 回滚事务
+          $this->common->setResponse(21,'操作数据库失败！');
+          Db::rollback();
       }
+
     }
 
 
@@ -304,7 +375,7 @@ class User extends Controller
     }
 
     //验证账号和密码是否传入
-    private function validateAccount() 
+    private function validateAccount()
     {
         //必须post访问
         if(request()->isGet()) {
