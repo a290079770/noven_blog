@@ -1,0 +1,1 @@
+export const defaultUrl = 'http://novenblog_api.com'
