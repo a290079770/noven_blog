@@ -1,13 +1,43 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+<view class="index">
+   <view class="swiper-container"> 
+     <swiper 
+     indicator-dots="true" 
+     autoplay="true" 
+     interval="2000"
+     indicator-color="#b9b9b9"
+     indicator-active-color="#d13954"
+     >
+        <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+          <swiper-item>
+            <view class="swiper-item-cont" style="background: url({{item}});"></view> 
+          </swiper-item>
+        </block>
+      </swiper>
+   </view>
+   
+   <!-- 标题 -->
+   <view class="flex flex-justify-center flex-align-center index-title">
+     <image src="../../images/hotarc.jpg" class="index-title-image"></image>
+   </view>
+
+   <!-- 文章 -->
+   <view class="index-article-cont">
+     <view class="article-item" wx:for="[0,0,0,0,0]">
+       <view class="article-item-cont">
+         <view class="article-item-cont-cover" style="background: url('http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg');">
+         </view>
+         <view class="flex flex-justify-center flex-align-center article-item-basic">
+           <text class="article-item-basic-type">article</text> <text> @noven</text> 2018-08-10
+         </view>
+         <view class="article-item-title text-ess-2">
+           我本楚狂人，凤歌笑孔丘我本楚狂人，凤歌笑孔丘
+         </view>
+         <view class="article-item-abstract text-ess-3">
+           我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我
+         </view>
+       </view>
+     </view>
+   </view>
+   
 </view>

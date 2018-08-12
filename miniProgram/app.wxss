@@ -1,10 +1,141 @@
 /**app.wxss**/
-.container {
-  height: 100%;
+/*
+ primary:#d13954;
+ success:#67c23a;
+ warning:#e6a23c;
+ danger:#f56c6c;
+ info:#909399;
+ */
+.flex {
   display: flex;
-  flex-direction: column;
+}
+
+
+/* 多行flex布局                         */
+
+.flex-multi-row {
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.flex-justify-center {
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+/* 元素默认竖直居中                     */
+.flex-align-center {
+  -webkit-align-items: center;
   align-items: center;
+}
+
+
+/* 从行尾位置开始排列            */
+.flex-justify-end {
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+.flex-justify-around {
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+
+.flex-justify-between {
+  -webkit-justify-content: space-between;
   justify-content: space-between;
-  padding: 200rpx 0;
+}
+
+/*//单行省略*/
+.text-ess-1 {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+/*//几行省略*/
+.text-ess-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.text-ess-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+
+
+
+
+.swiper-container {
+   height: 330rpx;
+   width: 100%;
+}
+
+.swiper-container swiper {
+   width: 100%;
+   height: 100%;
+}
+
+.swiper-item-cont {
+  width: 100%;
+  height: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+
+
+.article-item {
+  padding-bottom: 50rpx;
+  margin-bottom: 50rpx;
+  width: 100%;
   box-sizing: border-box;
-} 
+  border-bottom: 1rpx solid #ccc;
+}
+
+.article-item-cont {
+  padding:0 20rpx;
+}
+
+.article-item-cont-cover {
+  height: 430rpx;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.article-item-basic {
+  padding:0 20rpx;
+  height: 58rpx;
+  font-size: 32rpx;
+  color:#999;
+}
+
+.article-item-basic text {
+  margin:0 20rpx;
+}
+
+.article-item-basic-type {
+  color:#d13954;
+}
+
+.article-item-title {
+  font-size: 46rpx;
+  color:#222;
+  text-align: center;
+  font-weight: 700;
+}
+
+
+.article-item-abstract {
+  margin-top: 30rpx;
+  font-size: 32;
+  color:#666;
+  text-align: center;
+}
+

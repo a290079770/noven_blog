@@ -1,12 +1,39 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/article/article",
+    "pages/mood/mood",
+    "pages/my/my"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "Noven Blog 博客",
     "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "selectedColor": "#d13954",
+    "backgroundColor":"#fff",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath":"images/index2.png",
+      "selectedIconPath":"images/index1.png"
+    }, {
+      "pagePath": "pages/article/article",
+      "text": "文章",
+      "iconPath":"images/article2.png",
+      "selectedIconPath":"images/article1.png"
+    }, {
+      "pagePath": "pages/mood/mood",
+      "text": "心情",
+      "iconPath":"images/mood2.png",
+      "selectedIconPath":"images/mood1.png"
+    }, {
+      "pagePath": "pages/my/my",
+      "text": "我的",
+      "iconPath":"images/n2.png",
+      "selectedIconPath":"images/n1.png"
+    }]
   }
 }
