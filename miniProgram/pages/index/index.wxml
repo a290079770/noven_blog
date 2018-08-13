@@ -23,21 +23,32 @@
 
    <!-- 文章 -->
    <view class="index-article-cont">
-     <view class="article-item" wx:for="[0,0,0,0,0]">
-       <view class="article-item-cont">
-         <view class="article-item-cont-cover" style="background: url('http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg');">
-         </view>
-         <view class="flex flex-justify-center flex-align-center article-item-basic">
-           <text class="article-item-basic-type">article</text> <text> @noven</text> 2018-08-10
-         </view>
-         <view class="article-item-title text-ess-2">
-           我本楚狂人，凤歌笑孔丘我本楚狂人，凤歌笑孔丘
-         </view>
-         <view class="article-item-abstract text-ess-3">
-           我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我
-         </view>
-       </view>
-     </view>
+     <articleItem
+      wx:for="{{hotArticleList}}" 
+      wx:key="article{{index}}"
+      item="{{item}}"
+      isBorderBottomShow="{{index == hotArticleList.length - 1 ? false : true}}"
+      bind:handleClick="handleArticleClick"
+      data-item="{{item}}"
+     />
+   </view>
+
+   <view class="flex flex-align-center flex-justify-center index-more">
+     更多 <view class="arrow-right"></view>  
+   </view>
+
+   <!-- 心情 -->
+   <view class="flex flex-justify-center flex-align-center index-title">
+     <image src="../../images/newmoodfont.jpg" class="index-title-image"></image>
+   </view>
+
+   <!-- 心情列表 -->
+   <view class="index-article-cont">
+     <moodItem
+      wx:for="{{newMoodList}}" 
+      wx:key="mood{{index}}"
+      item="{{item}}"
+     />
    </view>
    
 </view>

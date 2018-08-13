@@ -14,3 +14,12 @@
    width: 100%;
    height: auto;
 }
+
+.index-more {
+   margin-top: -50rpx;	
+   margin-bottom: 50rpx;
+   height: 50rpx;
+   color: #d13954;
+   text-decoration: underline;
+}
+

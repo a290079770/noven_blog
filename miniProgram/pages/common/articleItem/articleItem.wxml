@@ -1,0 +1,17 @@
+
+ <view class="article-item" style="border-bottom:{{!isBorderBottomShow ? 'none':'1rpx solid #ccc'}}" bindtap="handleClick">
+   <view class="article-item-cont">
+     <view class="article-item-cont-cover" style="background: url({{item.src}});">
+     </view>
+     <view class="flex flex-justify-center flex-align-center article-item-basic">
+       <text class="article-item-basic-type">article</text> <text> @noven</text> 2018-08-10
+     </view>
+     <view class="article-item-title text-ess-2">
+       我本楚狂人，凤歌笑孔丘我本楚狂人，凤歌笑孔丘
+     </view>
+     <view class="article-item-abstract text-ess-3">
+       我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我我本楚狂人，凤歌笑孔丘我
+     </view>
+   </view>
+ </view>
+
