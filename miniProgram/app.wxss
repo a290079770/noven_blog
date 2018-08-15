@@ -6,6 +6,8 @@
  danger:#f56c6c;
  info:#909399;
  */
+@import "/lib/wxParse/wxParse.wxss";
+
 .flex {
   display: flex;
 }
@@ -88,8 +90,6 @@
   background-size: cover !important;
   background-position: center !important;
 }
-
-
 
 
 

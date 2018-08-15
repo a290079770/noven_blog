@@ -33,22 +33,21 @@
      />
    </view>
 
-   <view class="flex flex-align-center flex-justify-center index-more">
+   <view class="flex flex-align-center flex-justify-center index-more" bindtap="goToArticleList"> 
      更多 <view class="arrow-right"></view>  
    </view>
 
    <!-- 心情 -->
-   <view class="flex flex-justify-center flex-align-center index-title">
+<!--    <view class="flex flex-justify-center flex-align-center index-title">
      <image src="../../images/newmoodfont.jpg" class="index-title-image"></image>
    </view>
 
-   <!-- 心情列表 -->
    <view class="index-article-cont">
      <moodItem
       wx:for="{{newMoodList}}" 
       wx:key="mood{{index}}"
       item="{{item}}"
      />
-   </view>
+   </view> -->
    
 </view>

@@ -1,0 +1,37 @@
+<!--logs.wxml-->
+<view class="article-list">
+  <!-- 标题 -->
+   <view class="flex flex-justify-center flex-align-center index-title">
+     <image src="../../../images/articlelist.png" class="index-title-image"></image>
+   </view>
+
+   <view class="swiper-container article-list-swiper-container"> 
+     <swiper 
+     interval="2000"
+     >
+        <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+          <swiper-item>
+            <articleItem
+		      wx:for="{{hotArticleList}}" 
+		      wx:key="article{{index}}"
+		      item="{{item}}"
+		      isBorderBottomShow="{{false}}"
+		      bind:handleClick="handleArticleClick"
+		      data-item="{{item}}"
+		     />
+          </swiper-item>
+        </block>
+      </swiper>
+   </view>
+
+   <view class="article-list-notice-swipe">
+   	左右滑动
+   </view>
+
+   
+   <view style="display: {{hasView == 1 ? 'none':'flex'}}" class="flex flex-align-center flex-justify-center first-in-notice">
+     <image class="first-in-notice-main" src="../../../images/swipernotice.svg"></image>
+     <view class="first-in-notice-text">左右滑动文章列表</view>
+     <image bindtap="iknowAction" class="first-in-notice-know" src="../../../images/iknow.svg"></image>
+   </view>
+</view>

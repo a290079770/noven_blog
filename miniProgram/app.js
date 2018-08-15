@@ -1,3 +1,4 @@
+const util = require('./utils/util.js');
 //app.js
 App({
   globalData: {
@@ -36,5 +37,10 @@ App({
       }
     })
   },
+  globalData:{
+    tabBar:['index','articleList','moodList','my']
+  },
+
+  ...util
   
 })

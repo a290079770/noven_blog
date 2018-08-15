@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "文章详情",
+  "usingComponents": {
+    "articleItem": "../../common/articleItem/articleItem",
+    "moodItem": "../../common/moodItem/moodItem"
+  }
+}

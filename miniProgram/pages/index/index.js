@@ -1,6 +1,6 @@
 //index.js
+var app = getApp();
 //获取应用实例
-
 Page({
   data: {
     imgUrls: [
@@ -32,6 +32,20 @@ Page({
     ],
   },
   handleArticleClick(e) {
+    // console.log(app.globalData.a)
+    app.goTo(app,{
+      path:'xxx',
+      query:{
+        a:1,
+        b:2
+      }
+    });
     console.log(e.target.dataset);
-  }
+  },
+
+  goToArticleList() {
+    app.goTo(app,{
+      path:'/pages/article/articleList/articleList'
+    });
+  }  
 })
