@@ -1,6 +1,11 @@
 /**index.wxss**/
+.index-header {
+   height:375rpx;
+   width: 100%;
+}
+
 .index-title {
-   padding: 20rpx 0;	
+   padding: 50rpx 0;	
    height: 141rpx;
    width: 100%;
 }
@@ -23,3 +28,7 @@
    text-decoration: underline;
 }
 
+.index-bottom {
+   height:250rpx;
+   width: 100%;
+}

@@ -74,9 +74,11 @@
 
 
 
+
 .swiper-container {
+   padding: 0 30rpx;
    height: 400rpx;
-   width: 100%;
+   /*width: 100%;*/
 }
 
 .swiper-container swiper {
@@ -102,3 +104,9 @@
   border-top: 1rpx solid #d13954;
   border-right: 1rpx solid #d13954;
 }
+
+.header-bg {
+  background-size: 100% 100% !important;
+}
+
+

@@ -1,4 +1,5 @@
 <!--logs.wxml-->
+<import src="../../../lib/wxParse/wxParse.wxml"/>
 <view class="article-list">
   <!-- 标题 -->
    <view class="flex flex-justify-center flex-align-center index-title">
@@ -27,6 +28,8 @@
    <view class="article-list-notice-swipe">
    	左右滑动
    </view>
+
+   <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
 
    
    <view style="display: {{hasView == 1 ? 'none':'flex'}}" class="flex flex-align-center flex-justify-center first-in-notice">

@@ -8,7 +8,7 @@
 }
 
 .article-item-cont {
-  padding:0 20rpx;
+  padding:0 30rpx;
 }
 
 .article-item-cont-cover {

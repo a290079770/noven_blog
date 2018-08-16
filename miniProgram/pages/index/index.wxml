@@ -1,5 +1,12 @@
 <!--index.wxml-->
-<view class="index">
+<view class="index header-bg" style="background: url(../../images/login_bg_02.png);">
+   <view class="index-header header-bg" style="background: url(http://img1001.pocoimg.cn/image/poco/works/19/2018/0815/21/15343407919404028_185659462_H1920.jpg);"></view>
+     
+   
+   <!-- 标题 -->
+   <view class="flex flex-justify-center flex-align-center index-title">
+     <image src="../../images/hotarc.jpg" class="index-title-image"></image>
+   </view>
    <view class="swiper-container"> 
      <swiper 
      indicator-dots="true" 
@@ -49,5 +56,5 @@
       item="{{item}}"
      />
    </view> -->
-   
+   <view class="index-bottom header-bg" style="background: url(../../images/login_bg_03.jpg);"></view>
 </view>

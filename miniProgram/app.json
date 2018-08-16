@@ -1,17 +1,18 @@
 {
   "pages":[
-    "pages/article/articleList/articleList",
-    "pages/index/index",
     
+    "pages/index/index",
+    "pages/article/articleList/articleList",
     "pages/article/articleDetail/articleDetail",
     "pages/mood/mood",
     "pages/my/my"
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#d13954",
     "navigationBarTitleText": "Noven Blog 博客",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"white",
+    "navigationStyle":"custom"
   },
   "tabBar": {
     "selectedColor": "#d13954",
