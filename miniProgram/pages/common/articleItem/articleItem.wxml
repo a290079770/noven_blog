@@ -1,5 +1,5 @@
 
- <view class="article-item" style="border-bottom:{{!isBorderBottomShow ? 'none':'1rpx solid #ccc'}}" bindtap="handleClick">
+ <view class="article-item" bindtap="handleClick">
    <view class="article-item-cont">
      <view class="article-item-cont-cover" style="background: url({{item.src}});">
      </view>

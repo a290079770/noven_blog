@@ -1,17 +1,23 @@
 <!--index.wxml-->
-<view class="index header-bg" style="background: url(../../images/login_bg_02.png);">
-   <view class="index-header header-bg" style="background: url(http://img1001.pocoimg.cn/image/poco/works/19/2018/0815/21/15343407919404028_185659462_H1920.jpg);"></view>
+<view class="index header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
+   <view class="flex flex-justify-center index-header header-bg" style="background: url(http://y.photo.qq.com/img?s=DlSjzF7V8&l=y.jpg) no-repeat">
+     <!-- 顶部胶囊 -->
+     <view class="flex flex-align-center top-capsule" style="top:{{sysType}}rpx">
+       <text class="top-capsule-text"> Noven 博客 </text>    
+     </view>
+
+     <!-- 标题 -->
+     <view class="flex flex-justify-center flex-align-center index-title index-title1">
+       <image src="../../images/myl.jpg" class="index-title-image1"></image>
+     </view>
+   </view>
      
    
-   <!-- 标题 -->
-   <view class="flex flex-justify-center flex-align-center index-title">
-     <image src="../../images/hotarc.jpg" class="index-title-image"></image>
-   </view>
    <view class="swiper-container"> 
      <swiper 
      indicator-dots="true" 
      autoplay="true" 
-     interval="2000"
+     interval="4000"
      indicator-color="#b9b9b9"
      indicator-active-color="#d13954"
      >
@@ -56,5 +62,5 @@
       item="{{item}}"
      />
    </view> -->
-   <view class="index-bottom header-bg" style="background: url(../../images/login_bg_03.jpg);"></view>
+   <view class="index-bottom header-bg" style="background: url(http://y.photo.qq.com/img?s=F3BHWVFSx&l=y.jpg);"></view>
 </view>

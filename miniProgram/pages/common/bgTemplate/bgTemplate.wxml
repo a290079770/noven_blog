@@ -1,0 +1,20 @@
+<template name="bg-header">
+  <view class="flex flex-justify-center index-header header-bg" style="background: url(http://y.photo.qq.com/img?s=DlSjzF7V8&l=y.jpg) no-repeat">
+	 <!-- 顶部胶囊 -->
+	 <view class="flex flex-align-center top-capsule" style="top:{{sysType}}rpx">
+	   <text class="top-capsule-text"> Noven 博客 </text>    
+	 </view>
+
+	 <!-- 标题 -->
+	 <view class="flex flex-justify-center flex-align-center index-title">
+	   <image src="../../../images/myl.jpg" class="index-title-image1"></image>
+	 </view>
+  </view>
+</template>
+
+
+<template name="bg-footer">
+   <view class="index-bottom header-bg" style="background: url(http://y.photo.qq.com/img?s=F3BHWVFSx&l=y.jpg);">
+   </view>
+</template>
+

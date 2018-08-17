@@ -1,8 +1,8 @@
 @import '../common.wxss'
 
 .article-item {
-  padding-bottom: 50rpx;
-  margin-bottom: 50rpx;
+  padding-bottom: 30rpx;
+  margin-bottom: 30rpx;
   width: 100%;
   box-sizing: border-box;
 }
@@ -12,12 +12,14 @@
 }
 
 .article-item-cont-cover {
+  box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.3);
   height: 430rpx;
   background-size: cover !important;
   background-position: center !important;
 }
 
 .article-item-basic {
+  margin-top: 15rpx;
   padding:0 20rpx;
   height: 58rpx;
   font-size: 32rpx;

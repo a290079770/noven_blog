@@ -76,8 +76,10 @@
 
 
 .swiper-container {
-   padding: 0 30rpx;
+   margin: 0 auto;
+   width: 690rpx;
    height: 400rpx;
+   box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.3);
    /*width: 100%;*/
 }
 
@@ -106,7 +108,20 @@
 }
 
 .header-bg {
+  position: relative;
   background-size: 100% 100% !important;
 }
 
+.top-capsule {
+  position: absolute;
+  left: 30rpx;
+  justify-content: flex-start;
+  width: 690rpx;
+  height: 60rpx;
+  color:#768fc3;
+}
+
+.top-capsule-text {
+  margin-left: 50rpx;
+}
 

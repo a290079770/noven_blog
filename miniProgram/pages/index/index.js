@@ -30,6 +30,8 @@ Page({
         title:'心情1心情1心情1心情1心情1心情1心情1心情1心情1心情1心情1心情1心情1',
       },
     ],
+
+    sysType:48
   },
   handleArticleClick(e) {
     // console.log(app.globalData.a)
@@ -47,5 +49,11 @@ Page({
     app.goTo(app,{
       path:'/pages/article/articleList/articleList'
     });
+  },
+
+  onLoad() {
+    this.setData({
+      sysType:app.globalData.sysType
+    })
   }  
 })

@@ -1,5 +1,6 @@
 /**index.wxss**/
 .index-header {
+   align-items: flex-end;
    height:375rpx;
    width: 100%;
 }
@@ -15,13 +16,18 @@
    height: 100%;
 }
 
+.index-title-image1 {
+   width: 400rpx;
+   height: 100%;
+}
+
 .index-article-cont {
    width: 100%;
    height: auto;
 }
 
 .index-more {
-   margin-top: -50rpx;	
+   margin-top: -30rpx;	
    margin-bottom: 50rpx;
    height: 50rpx;
    color: #d13954;

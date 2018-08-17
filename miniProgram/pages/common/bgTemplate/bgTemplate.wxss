@@ -1,0 +1,43 @@
+@import '../common.wxss'
+
+.index-header {
+   align-items: flex-end;
+   height:375rpx;
+   width: 100%;
+}
+
+
+.header-bg {
+  position: relative;
+  background-size: 100% 100% !important;
+}
+
+.top-capsule {
+  position: absolute;
+  left: 30rpx;
+  justify-content: flex-start;
+  width: 690rpx;
+  height: 60rpx;
+  color:#768fc3;
+}
+
+.top-capsule-text {
+  margin-left: 50rpx;
+}
+
+
+.index-title-image {
+   width: 423rpx;
+   height: 100%;
+}
+
+.index-title-image1 {
+   width: 400rpx;
+   height: 100%;
+}
+
+
+.index-bottom {
+   height:250rpx;
+   width: 100%;
+}

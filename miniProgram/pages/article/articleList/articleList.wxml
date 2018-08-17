@@ -1,6 +1,11 @@
 <!--logs.wxml-->
 <import src="../../../lib/wxParse/wxParse.wxml"/>
-<view class="article-list">
+<import src="../../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="article-list header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
+
+  <template is="bg-header" data="{{sysType}}"/>
+
   <!-- 标题 -->
    <view class="flex flex-justify-center flex-align-center index-title">
      <image src="../../../images/articlelist.png" class="index-title-image"></image>
@@ -37,4 +42,6 @@
      <view class="first-in-notice-text">左右滑动文章列表</view>
      <image bindtap="iknowAction" class="first-in-notice-know" src="../../../images/iknow.svg"></image>
    </view>
+
+   <template is="bg-footer"/>
 </view>
