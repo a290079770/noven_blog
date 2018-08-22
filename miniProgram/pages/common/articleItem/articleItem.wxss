@@ -8,11 +8,12 @@
 }
 
 .article-item-cont {
-  padding:0 30rpx;
+  margin: 0 auto;
+  width: 690rpx;
+  box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.3);
 }
 
 .article-item-cont-cover {
-  box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.3);
   height: 430rpx;
   background-size: cover !important;
   background-position: center !important;
@@ -35,6 +36,7 @@
 }
 
 .article-item-title {
+  padding: 0 20rpx;
   font-size: 36rpx;
   color:#222;
   text-align: center;
@@ -43,6 +45,7 @@
 
 
 .article-item-abstract {
+  padding: 0 20rpx 20rpx;
   margin-top: 30rpx;
   font-size: 28rpx;
   color:#666;

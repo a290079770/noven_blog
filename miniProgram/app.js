@@ -41,7 +41,8 @@ App({
     let sysInfo = wx.getSystemInfoSync();
     this.globalData.sysInfo = sysInfo;
     let sysType = sysInfo.screenHeight - sysInfo.windowHeight;
-    
+
+
     //对齐胶囊所做的兼容
     if(this.globalData.sysTypesByScreen.indexOf(sysType) === 0) {
        //非iponeX的ios
@@ -53,6 +54,9 @@ App({
        //安卓
        this.globalData.sysType = sysType;
     }
+
+
+    console.log(sysInfo)
     
   },
   globalData:{

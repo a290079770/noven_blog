@@ -1,8 +1,4 @@
-.index-title {
-   padding: 20rpx 0;	
-   height: 141rpx;
-   width: 100%;
-}
+
 
 .index-title-image {
    width: 392rpx;
@@ -10,7 +6,10 @@
 }
 
 .article-list-swiper-container {
-   height: 800rpx;
+   height: 860rpx;
+   width: 710rpx;
+   overflow-x: hidden;
+   box-shadow: 0 0 0 transparent
 }
 
 .article-list-notice-swipe {

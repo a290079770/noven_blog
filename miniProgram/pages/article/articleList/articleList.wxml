@@ -1,14 +1,10 @@
 <!--logs.wxml-->
-<import src="../../../lib/wxParse/wxParse.wxml"/>
 <import src="../../common/bgTemplate/bgTemplate.wxml"/>
 
 <view class="article-list header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
 
-  <template is="bg-header" data="{{sysType}}"/>
-
-  <!-- 标题 -->
-   <view class="flex flex-justify-center flex-align-center index-title">
-     <image src="../../../images/articlelist.png" class="index-title-image"></image>
+   <view>
+     <template is="bg-header" data="{{sysType,titleImgUrl}}"/>
    </view>
 
    <view class="swiper-container article-list-swiper-container"> 
@@ -16,15 +12,12 @@
      interval="2000"
      >
         <block wx:for="{{imgUrls}}" wx:key="{{index}}">
-          <swiper-item>
+          <swiper-item wx:for="{{hotArticleList}}" wx:key="article{{index}}">
             <articleItem
-		      wx:for="{{hotArticleList}}" 
-		      wx:key="article{{index}}"
-		      item="{{item}}"
-		      isBorderBottomShow="{{false}}"
-		      bind:handleClick="handleArticleClick"
-		      data-item="{{item}}"
-		     />
+  		      item="{{item}}"
+  		      bind:handleClick="handleArticleClick"
+  		      data-item="{{item}}"
+  		     />
           </swiper-item>
         </block>
       </swiper>
@@ -34,9 +27,6 @@
    	左右滑动
    </view>
 
-   <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
-
-   
    <view style="display: {{hasView == 1 ? 'none':'flex'}}" class="flex flex-align-center flex-justify-center first-in-notice">
      <image class="first-in-notice-main" src="../../../images/swipernotice.svg"></image>
      <view class="first-in-notice-text">左右滑动文章列表</view>

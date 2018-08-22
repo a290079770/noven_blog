@@ -1,0 +1,43 @@
+<import src="../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="updateinfo">
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{sysType}}"></template>
+  </view>
+
+  <view class="updateinfo-cont">
+    <view class="updateinfo-nickname" wx:if="{{type == 1}}"> 
+      <input 
+      placeholder-style="color:#bbb;font-size:30rpx;"
+      type='text' 
+      class="updateinfo-nickname-input"
+      placeholder="请输入您的昵称！" 
+      maxlength="{{6}}" 
+      selection-start="{{0}}"
+      selection-end="{{6}}"
+      focus/>
+    </view>
+
+    <view class="updateinfo-abstract" wx:if="{{type == 2}}">
+      <textarea
+       placeholder-style="color:#bbb;font-size:30rpx;"
+       class="updateinfo-nickname-textarea"
+       auto-focus
+       focus
+       auto-height 
+       maxlength="{{140}}" 
+       selection-start="{{0}}"
+       selection-end="{{140}}"
+       placeholder="请输入您的简介！" />
+    </view>
+
+
+    <view class="flex flex-align-center flex-justify-between updateinfo-notice">
+      <text> 您最多可以输入100个字符 </text>    
+      <text> <text class="updateinfo-notice-hasinput"> 50 </text>     / 100</text>     
+    </view>
+    <view>
+      <button loading="{{true}}" class="updateinfo-submit" open-type="feedback">提交修改</button>
+    </view>
+  </view>
+</view>

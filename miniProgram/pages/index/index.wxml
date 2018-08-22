@@ -1,16 +1,9 @@
 <!--index.wxml-->
-<view class="index header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
-   <view class="flex flex-justify-center index-header header-bg" style="background: url(http://y.photo.qq.com/img?s=DlSjzF7V8&l=y.jpg) no-repeat">
-     <!-- 顶部胶囊 -->
-     <view class="flex flex-align-center top-capsule" style="top:{{sysType}}rpx">
-       <text class="top-capsule-text"> Noven 博客 </text>    
-     </view>
+<import src="../common/bgTemplate/bgTemplate.wxml"/>
 
-     <!-- 标题 -->
-     <view class="flex flex-justify-center flex-align-center index-title index-title1">
-       <image src="../../images/myl.jpg" class="index-title-image1"></image>
-     </view>
-   </view>
+<view class="index header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
+
+   <template is="bg-header" data="{{sysType,titleImgUrl}}"/>
      
    
    <view class="swiper-container"> 
@@ -62,5 +55,5 @@
       item="{{item}}"
      />
    </view> -->
-   <view class="index-bottom header-bg" style="background: url(http://y.photo.qq.com/img?s=F3BHWVFSx&l=y.jpg);"></view>
+  <template is="bg-footer"/>
 </view>

@@ -30,19 +30,18 @@ Page({
         title:'心情1心情1心情1心情1心情1心情1心情1心情1心情1心情1心情1心情1心情1',
       },
     ],
+    titleImgUrl:'../../images/myl.jpg',
 
     sysType:48
   },
   handleArticleClick(e) {
     // console.log(app.globalData.a)
     app.goTo(app,{
-      path:'xxx',
+      path:'/pages/article/articleDetail/articleDetail',
       query:{
-        a:1,
-        b:2
+        id:1,
       }
     });
-    console.log(e.target.dataset);
   },
 
   goToArticleList() {
@@ -55,5 +54,6 @@ Page({
     this.setData({
       sysType:app.globalData.sysType
     })
-  }  
+  },  
+
 })

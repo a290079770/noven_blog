@@ -1,23 +1,7 @@
 /**index.wxss**/
-.index-header {
-   align-items: flex-end;
-   height:375rpx;
-   width: 100%;
-}
-
-.index-title {
-   padding: 50rpx 0;	
-   height: 141rpx;
-   width: 100%;
-}
 
 .index-title-image {
    width: 423rpx;
-   height: 100%;
-}
-
-.index-title-image1 {
-   width: 400rpx;
    height: 100%;
 }
 
@@ -32,9 +16,4 @@
    height: 50rpx;
    color: #d13954;
    text-decoration: underline;
-}
-
-.index-bottom {
-   height:250rpx;
-   width: 100%;
 }

@@ -1,11 +1,12 @@
 {
   "pages":[
-    "pages/article/articleList/articleList",
-    "pages/index/index",
     
-    "pages/article/articleDetail/articleDetail",
+    "pages/index/index",
+    "pages/article/articleList/articleList",
+    "pages/my/my",
     "pages/mood/mood",
-    "pages/my/my"
+    "pages/article/articleDetail/articleDetail",
+    "pages/updateInfo/updateInfo"
   ],
   "window":{
     "backgroundTextStyle":"light",

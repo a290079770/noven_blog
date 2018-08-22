@@ -2,14 +2,56 @@
   <view class="flex flex-justify-center index-header header-bg" style="background: url(http://y.photo.qq.com/img?s=DlSjzF7V8&l=y.jpg) no-repeat">
 	 <!-- 顶部胶囊 -->
 	 <view class="flex flex-align-center top-capsule" style="top:{{sysType}}rpx">
-	   <text class="top-capsule-text"> Noven 博客 </text>    
+		<text class="top-capsule-text" wx:if="{{!isShowBack}}"> Noven 博客</text>    
+
+	   <view class="flex flex-align-center top-custom-btns" wx:else>
+	   	 <view class="flex flex-align-center flex-justify-center top-custom-btn top-custom-btn-left" id="headerBtnLeftCont">
+	   	 	<image src="/images/back.svg" id="headerBtnLeft"></image>	
+	   	 </view>
+	   	 <view class="top-custom-btn-place">
+	   	 	
+	   	 </view>
+	   	 <view class="flex flex-align-center flex-justify-center top-custom-btn" id="headerBtnRightCont">
+	   	 	<image src="/images/index3.svg" id="headerBtnRight"></image>	
+	   	 </view>	
+	   </view>
+	 </view>
+
+
+	<!-- 头像 -->
+	 <view wx:if="{{isCover}}" class="flex flex-justify-center flex-align-center index-title" >
+       <view class="my-cover" style="background: url({{titleImgUrl}}) no-repeat">
+       	
+       </view>
 	 </view>
 
 	 <!-- 标题 -->
-	 <view class="flex flex-justify-center flex-align-center index-title">
-	   <image src="../../../images/myl.jpg" class="index-title-image1"></image>
+	 <view wx:else class="flex flex-justify-center flex-align-center index-title">
+	   <image src="{{titleImgUrl}}" class="index-title-image1"></image>
 	 </view>
+
   </view>
+</template>
+
+
+<!-- 顶部非几个tab页的头部，没有背景图片 -->
+<template name="bg-header-detail">
+   <view class="bg-header-detail">
+     <view class="flex flex-align-center top-capsule" style="top:{{sysType}}rpx">
+	
+	   <view class="flex flex-align-center top-custom-btns">
+	   	 <view class="flex flex-align-center flex-justify-center top-custom-btn top-custom-btn-left" id="headerBtnLeftCont">
+	   	 	<image src="/images/back.svg" id="headerBtnLeft"></image>	
+	   	 </view>
+	   	 <view class="top-custom-btn-place">
+	   	 	
+	   	 </view>
+	   	 <view class="flex flex-align-center flex-justify-center top-custom-btn" id="headerBtnRightCont">
+	   	 	<image src="/images/index3.svg" id="headerBtnRight"></image>	
+	   	 </view>	
+	   </view>
+	 </view>
+   </view>
 </template>
 
 
@@ -17,4 +59,7 @@
    <view class="index-bottom header-bg" style="background: url(http://y.photo.qq.com/img?s=F3BHWVFSx&l=y.jpg);">
    </view>
 </template>
+
+
+
 

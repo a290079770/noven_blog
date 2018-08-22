@@ -20,16 +20,26 @@ Page({
       },
     ],
     article:'',
+    titleImgUrl:'../../../images/articlelist.png',
 
     hasView: wx.getStorageSync('hasView'),   // 0 - 否    1 - 是
     sysType:48
   },
   onLoad: function () {
     //获取用户是否第一次进入这个页面
-    // WxParse.wxParse('article', 'html', `<p>asfdsddfsd水电费水电费水电费水电费水电费水电费水电费水电费水电费水电费<blockquote><p>.first-in-notice {<br>       position: fixed;<br>      left: 0;<br>      top: 0;<br>      flex-direction: column;<br>   width: 100%;<br>   height: 100vh;<br>   background: rgba(0,0,0,0.7);<br>}</p></blockquote></p>`, this,5);
     this.setData({
       sysType:app.globalData.sysType
     })
+  },
+
+  handleArticleClick(e) {
+    // console.log(app.globalData.a)
+    app.goTo(app,{
+      path:'/pages/article/articleDetail/articleDetail',
+      query:{
+        id:1,
+      }
+    });
   },
 
   iknowAction() {
@@ -37,5 +47,7 @@ Page({
     this.setData({
       hasView:1
     })
-  }
+  },
+
+
 })

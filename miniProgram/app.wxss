@@ -4,9 +4,10 @@
  success:#67c23a;
  warning:#e6a23c;
  danger:#f56c6c;
- info:#909399;
+ info:#768fc3;
  */
 @import "/lib/wxParse/wxParse.wxss";
+@import "./pages/common/bgTemplate/bgTemplate.wxss";
 
 .flex {
   display: flex;
@@ -36,6 +37,11 @@
 .flex-justify-end {
   -webkit-justify-content: flex-end;
   justify-content: flex-end;
+}
+
+.flex-justify-start {
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
 }
 
 .flex-justify-around {
@@ -78,6 +84,7 @@
 .swiper-container {
    margin: 0 auto;
    width: 690rpx;
+   overflow-x: hidden;
    height: 400rpx;
    box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.3);
    /*width: 100%;*/
@@ -107,21 +114,10 @@
   border-right: 1rpx solid #d13954;
 }
 
-.header-bg {
-  position: relative;
-  background-size: 100% 100% !important;
-}
 
-.top-capsule {
-  position: absolute;
-  left: 30rpx;
-  justify-content: flex-start;
-  width: 690rpx;
-  height: 60rpx;
-  color:#768fc3;
-}
-
-.top-capsule-text {
-  margin-left: 50rpx;
+.index-title {
+   padding: 50rpx 0;  
+   height: 141rpx;
+   width: 100%;
 }
 

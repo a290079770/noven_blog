@@ -59,14 +59,15 @@ const goTo = (app,params = {},isReplace = false) => {
     let paramsStr,tmp;
     tmp = Object.keys(query).map(( item,index )=> item + '=' + Object.values(query)[index]);
     paramsStr = tmp.join('&');
+    let askparameter = paramsStr ? '?' :'';
 
     if(isReplace) {
       wx.redirectTo({
-        url:path + paramsStr
+        url:path + askparameter + paramsStr
       });
     }else {
       wx.navigateTo({
-        url:path + paramsStr
+        url:path + askparameter + paramsStr
       });
     }
   }
