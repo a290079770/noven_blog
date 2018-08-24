@@ -8,12 +8,9 @@
     min-height: 300rpx;
 }
 
-.my-nickname {
-	height:60rpx;
-	font-size: 36rpx;
-}
 
 .my-published {
+	margin-top: 20rpx;
 	height: 150rpx;
 }
 

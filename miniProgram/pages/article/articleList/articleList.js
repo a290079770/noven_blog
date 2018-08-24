@@ -34,7 +34,7 @@ Page({
 
   handleArticleClick(e) {
     // console.log(app.globalData.a)
-    app.goTo(app,{
+    app.goTo({
       path:'/pages/article/articleDetail/articleDetail',
       query:{
         id:1,

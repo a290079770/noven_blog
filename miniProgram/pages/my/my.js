@@ -14,20 +14,44 @@ Page({
   },  
 
   /**
-   * [updateInfo 跳转到修改用户信息页面]
+   * [goTo 跳转到各个页面。1 - 我的发布。2 - 我的收藏。3 - 修改昵称。4 - 修改简介 5 - 关于我们]
    * @Author   罗文
    * @DateTime 2018-08-22
-   * @return   {[type]}   [description]
    */
-  updateInfo(e) {
+  goTo(e) {
     let type = e.currentTarget.dataset.type;
 
-    app.goTo(app,{
-       path:'/pages/updateInfo/updateInfo',
-       query:{
-       	 type
-       }
-    })
-  }
+    switch (+ type) {
+      case 1:
+      case 2:
+        app.goTo({
+           path:'/pages/article/myList/myList',
+           query:{
+             type
+           }
+        })
+        break;
+      case 3:
+      case 4:
+        app.goTo({
+           path:'/pages/updateInfo/updateInfo',
+           query:{
+             type
+           }
+        })
+        break;
+
+      case 5:
+        app.goTo({
+          path:'/pages/aboutus/aboutus'
+        })
+        break;      
+      default:
+        // statements_def
+        break;
+    }
+
+  },
+
 
 })

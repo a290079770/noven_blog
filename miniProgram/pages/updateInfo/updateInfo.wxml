@@ -6,7 +6,7 @@
   </view>
 
   <view class="updateinfo-cont">
-    <view class="updateinfo-nickname" wx:if="{{type == 1}}"> 
+    <view class="updateinfo-nickname" wx:if="{{type == 3}}"> 
       <input 
       placeholder-style="color:#bbb;font-size:30rpx;"
       type='text' 
@@ -18,7 +18,7 @@
       focus/>
     </view>
 
-    <view class="updateinfo-abstract" wx:if="{{type == 2}}">
+    <view class="updateinfo-abstract" wx:if="{{type == 4}}">
       <textarea
        placeholder-style="color:#bbb;font-size:30rpx;"
        class="updateinfo-nickname-textarea"
@@ -37,7 +37,7 @@
       <text> <text class="updateinfo-notice-hasinput"> 50 </text>     / 100</text>     
     </view>
     <view>
-      <button loading="{{true}}" class="updateinfo-submit" open-type="feedback">提交修改</button>
+      <button loading="{{false}}" class="updateinfo-submit" open-type="feedback">提交修改</button>
     </view>
   </view>
 </view>

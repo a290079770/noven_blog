@@ -66,14 +66,47 @@
    height: 100%;
 }
 
+
 .my-cover {
-   width: 150rpx;
-   height: 150rpx;
+   margin-left: 55rpx;
+   width: 180rpx;
+   height: 180rpx;
    border-radius: 50%;
    background-position: center !important;
    background-size: cover !important;
    border:5rpx solid rgba(118,143,195,0.7);
    box-shadow: 0 10rpx 20rpx rgba(118,143,195,0.2),10rpx 0 20rpx rgba(118,143,195,0.2), 0 -10rpx 20rpx rgba(118,143,195,0.2),-10rpx 0 20rpx rgba(118,143,195,0.2);
+}
+
+.my-cover-cont {
+   margin-left: 55rpx;
+   flex-direction: column;
+   width: 200rpx;
+   height: 200rpx;
+   color:rgb(118,143,195);
+}
+
+.my-nickname {
+  margin-bottom: 20rpx;
+  text-align: center;
+  height:50rpx;
+  font-size: 36rpx;
+}
+
+.my-cover-address {
+  flex-direction: column;
+  width: 190rpx;
+  height: 76rpx;
+  border:2rpx solid rgba(118,143,195,0.7);
+  border-radius: 38rpx;
+  font-size: 24rpx;
+}
+
+
+.my-cover-address-icon {
+  margin-right: 5rpx;
+  width: 30rpx;
+  height: 30rpx;
 }
 
 

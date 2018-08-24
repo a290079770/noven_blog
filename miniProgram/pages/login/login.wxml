@@ -1,0 +1,59 @@
+<import src="../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="login header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
+  <template is="bg-header" data="{{sysType,titleImgUrl,isCover:true,hideInfo:true}}"/>
+
+  <view class="login-content">
+    <view class="flex flex-justify-between login-content-wrap login-show-form">
+      <view class="btns-cont">
+        <button wx:if="{{canIUse}}" class="login-btn-weixin" open-type="getUserInfo" bindgetuserinfo="loginWx">微信授权</button>
+        <button wx:else class="login-btn-weixin" bindtap="loginWx">微信登录</button>
+
+        <button class="login-btn-normal" bindtap="loginAccount">账号登录</button>
+      </view>
+
+      <view class="flex flex-justify-center login-account-form-wrap ">
+        <view class="login-account-form"> 
+          <view class="login-form-item-cont"> 
+            <view class="login-input-cont">
+              <input 
+              type='text' 
+              class="updateinfo-nickname-input"
+              placeholder="" 
+              maxlength="{{20}}"
+              bindfocus="inputFocus"
+              bindblur="inputFocus"
+              data-input="1"
+              />
+
+              <text class="login-input-cont-text {{isAccountInputFocus ? 'login-input-cont-text-ac' : 'login-input-cont-text-inac'}}"> 账号/手机号/邮箱 </text>    
+            </view>
+
+            <view class="login-input-cont">
+              <input 
+              password="{{true}}"
+              type='text' 
+              class="updateinfo-nickname-input"
+              placeholder="" 
+              maxlength="{{20}}" 
+              bindfocus="inputFocus"
+              bindblur="inputFocus"
+              data-input="2"
+              />
+
+              <text class="login-input-cont-text {{isPwdInputFocus ? 'login-input-cont-text-ac' : 'login-input-cont-text-inac'}}" > 密码 </text>    
+            </view>
+          </view>
+
+
+          <button class=".login-btn-normal login-btn-confirm" bindtap="loginAccount">账号登录</button>
+          <view class="login-back-auth"> 授权登录 </view>    
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="login-footer">
+    <template is="bg-footer"/>
+  </view>
+</view>

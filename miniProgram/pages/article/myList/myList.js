@@ -3,17 +3,23 @@ const app = getApp();
 Page({
   data:{
     sysType:48,
-    type:3,  //3 - 修改昵称。 4 - 修改简介
   },
   onLoad(options) {
-    // console.log(options)
-
-    // console.log(getCurrentPages()[getCurrentPages().length - 1])
+    console.log(options)
 
     this.setData({
       sysType:app.globalData.sysType,
-      type:options.type
     })
+  },
+
+  handleArticleClick(e) {
+    // console.log(app.globalData.a)
+    app.goTo({
+      path:'/pages/article/articleDetail/articleDetail',
+      query:{
+        id:1,
+      }
+    });
   },
 
   //导航栏返回跳转

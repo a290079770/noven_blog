@@ -1,3 +1,4 @@
+
 <template name="bg-header">
   <view class="flex flex-justify-center index-header header-bg" style="background: url(http://y.photo.qq.com/img?s=DlSjzF7V8&l=y.jpg) no-repeat">
 	 <!-- 顶部胶囊 -->
@@ -19,9 +20,26 @@
 
 
 	<!-- 头像 -->
-	 <view wx:if="{{isCover}}" class="flex flex-justify-center flex-align-center index-title" >
-       <view class="my-cover" style="background: url({{titleImgUrl}}) no-repeat">
-       	
+	 <view 
+	 wx:if="{{isCover}}" 
+	 class="flex flex-align-center index-title {{hideInfo ? 'flex-justify-center':'flex-justify-start'}}">
+       <view class="my-cover" style="background: url({{titleImgUrl}}) no-repeat;margin-left:{{hideInfo ? '0' : '-55rpx'}}">
+
+       </view>
+
+       <view wx:if="{{!hideInfo}}" class="flex flex-justify-center flex-align-center my-cover-cont">
+       	 <view class="my-nickname">
+     	   five.5
+         </view>
+         <view class="flex flex-justify-center flex-align-center my-cover-address">
+           <view class="flex flex-justify-start flex-align-center my-cover-address-top">
+           	<image src="/images/local.svg" class="my-cover-address-icon"></image>
+           	<text> 成都市 </text>		
+           </view>
+           <view>
+           	2018-06-25
+           </view>
+         </view>
        </view>
 	 </view>
 
@@ -39,7 +57,7 @@
    <view class="bg-header-detail">
      <view class="flex flex-align-center top-capsule" style="top:{{sysType}}rpx">
 	
-	   <view class="flex flex-align-center top-custom-btns">
+	   <view class="flex flex-align-center flex-justify-around top-custom-btns">
 	   	 <view class="flex flex-align-center flex-justify-center top-custom-btn top-custom-btn-left" id="headerBtnLeftCont">
 	   	 	<image src="/images/back.svg" id="headerBtnLeft"></image>	
 	   	 </view>

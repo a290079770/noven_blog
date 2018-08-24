@@ -1,12 +1,14 @@
 {
   "pages":[
-    
+    "pages/login/login",
     "pages/index/index",
     "pages/article/articleList/articleList",
     "pages/my/my",
     "pages/mood/mood",
     "pages/article/articleDetail/articleDetail",
-    "pages/updateInfo/updateInfo"
+    "pages/updateInfo/updateInfo",
+    "pages/aboutus/aboutus",
+    "pages/article/myList/myList"
   ],
   "window":{
     "backgroundTextStyle":"light",

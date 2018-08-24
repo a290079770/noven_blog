@@ -5,12 +5,9 @@
    <template is="bg-header" data="{{sysType,titleImgUrl,isCover:true}}"/>
 
    <view class="my-content">
-   	 <view class="my-nickname">
-   	   five.5
-     </view>
 
      <view class="flex flex-justify-between my-published">
-       <view class="flex flex-justify-between my-published-item ">
+       <view class="flex flex-justify-between my-published-item" bindtap="goTo" data-type="1">
        	 <view class="flex flex-align-center flex-justify-center my-published-item-left">
        	 	<image src="../../images/write.svg" class="my-published-item-img"></image>
        	 </view>
@@ -19,7 +16,7 @@
        	 	<text>我的发布 </text>		
        	 </view>
        </view>
-       <view class="flex flex-justify-between my-published-item ">
+       <view class="flex flex-justify-between my-published-item " bindtap="goTo" data-type="2">
        	 <view class="flex flex-align-center flex-justify-center my-published-item-left">
        	 	<image src="../../images/like.svg" class="my-published-item-img"></image>
        	 </view>
@@ -37,17 +34,17 @@
      	<text> 修改头像 </text>		
      </view>
 
-     <view class="flex flex-align-center my-oparate-item" bindtap="updateInfo" data-type="1">
+     <view class="flex flex-align-center my-oparate-item" bindtap="goTo" data-type="3">
      	<image src="../../images/nickname.svg" class="my-oparate-item-icon"></image>
      	<text> 修改昵称 </text>		
      </view>
 
-     <view class="flex flex-align-center my-oparate-item" bindtap="updateInfo" data-type="2">
+     <view class="flex flex-align-center my-oparate-item" bindtap="goTo" data-type="4">
      	<image src="../../images/abstract.svg" class="my-oparate-item-icon"></image>
      	<text> 修改简介 </text>		
      </view>
 
-     <view class="flex flex-align-center my-oparate-item">
+     <view class="flex flex-align-center my-oparate-item" bindtap="goTo" data-type="5">
      	<image src="../../images/aboutus.svg" class="my-oparate-item-icon"></image>
      	<text> 关于我们 </text>		
      </view>
@@ -56,6 +53,8 @@
      	<image src="../../images/contactus.svg" class="my-oparate-item-icon"></image>
      	<text> 联系我们 </text>		
      </view>
+
+
    </view>
 
    <view class="my-footer-place"></view>	

@@ -69,6 +69,28 @@ App({
     sysInfo:{},
     sysType:48,  //对应sysTypesByScreen 的索引
   },
+  
+  /**
+   * [goTo goToExec跳转的入口函数]
+   * @Author   罗文
+   * @DateTime 2018-08-23
+   * @param    {Object}   params [跳转的附加参数]
+   */
+  goTo(params = {}){
+    util.goToExec(this,params);
+  },
+
+  /**
+   * [headerClick headerClickExec跳转的入口函数]
+   * @Author   罗文
+   * @DateTime 2018-08-23
+   * @param    {Object}   params [跳转的附加参数]
+   */
+  headerClick(e){
+    util.headerClickExec(e,this);
+  },
+
+
 
   ...util
   
