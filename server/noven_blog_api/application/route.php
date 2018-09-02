@@ -23,6 +23,7 @@ return [
         'reg'   => ['admin/user/reg', ['method' => 'post']], //注册
         'createOrUpdate'   => ['admin/user/createOrUpdate', ['method' => 'post']],  //新增或修改
         'lockUser'   => ['admin/user/lockUser', ['method' => 'post']],  //锁定/解锁用户
+        'validOldPwd'   => ['admin/user/validOldPwd', ['method' => 'post']],  //修改/验证旧密码
         'updatePwd'   => ['admin/user/updatePwd', ['method' => 'post']],  //修改/重置密码
         'delete'   => ['admin/user/delete', ['method' => 'post']],  //删除用户
     ],
