@@ -214,6 +214,27 @@ export default {
 			})
 		},
 
+		articleEdit(index, row) {
+		  this.$http.post('/arcticle/createOrUpdate',row).then((res) => {
+          console.log(res.data);
+          if(res.data.code === 200) {
+            this.$message({
+              message: res.data.description,
+              type: 'success',
+              center: true
+            });
+            this.getArcticleList();
+          } else {
+            this.$message({
+              message: res.data.description,
+              type: 'error',
+              center: true
+            });
+          }
+
+         })
+		},
+
 		// 删除文章
 		articleDelete(index, row) {
 		  console.log(index, row);

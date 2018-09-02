@@ -23,9 +23,10 @@ class Other extends Controller
     //获取用户时间轴
     public function timeLine()
     { 
+
       if(!request()->get('Id')) {
         $this->common->setResponse(21,'缺少用户Id');
-        return false;
+        return;
       }
 
       //获取用户所有的文章和心情
