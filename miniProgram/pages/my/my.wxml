@@ -1,7 +1,7 @@
 <import src="../common/bgTemplate/bgTemplate.wxml"/>
 
 
-<view class="my header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
+<view class="my header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);"  bindtap="headerClick">
    <template is="bg-header" data="{{sysType,titleImgUrl,isCover:true}}"/>
 
    <view class="my-content">

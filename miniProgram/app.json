@@ -1,6 +1,6 @@
 {
   "pages":[
-    "pages/login/login",
+    
     "pages/index/index",
     "pages/article/articleList/articleList",
     "pages/my/my",
@@ -8,7 +8,8 @@
     "pages/article/articleDetail/articleDetail",
     "pages/updateInfo/updateInfo",
     "pages/aboutus/aboutus",
-    "pages/article/myList/myList"
+    "pages/article/myList/myList",
+    "pages/login/login"
   ],
   "window":{
     "backgroundTextStyle":"light",

@@ -4,12 +4,14 @@
   <template is="bg-header" data="{{sysType,titleImgUrl,isCover:true,hideInfo:true}}"/>
 
   <view class="login-content">
-    <view class="flex flex-justify-between login-content-wrap login-show-form">
+    <view class="flex flex-justify-between login-content-wrap {{isShowLoginForm ? 'login-show-form' : ''}}">
       <view class="btns-cont">
         <button wx:if="{{canIUse}}" class="login-btn-weixin" open-type="getUserInfo" bindgetuserinfo="loginWx">微信授权</button>
         <button wx:else class="login-btn-weixin" bindtap="loginWx">微信登录</button>
 
-        <button class="login-btn-normal" bindtap="loginAccount">账号登录</button>
+        <button class="login-btn-normal" bindtap="loginAccount" data-type="1">账号登录</button>
+
+        <view class="cancle-login" bindtap="cancleLogin"> 暂不登录 </view> 
       </view>
 
       <view class="flex flex-justify-center login-account-form-wrap ">
@@ -47,7 +49,7 @@
 
 
           <button class=".login-btn-normal login-btn-confirm" bindtap="loginAccount">账号登录</button>
-          <view class="login-back-auth"> 授权登录 </view>    
+          <view class="login-back-auth" bindtap="loginAccount" data-type="-1"> 授权登录 </view>    
         </view>
       </view>
     </view>

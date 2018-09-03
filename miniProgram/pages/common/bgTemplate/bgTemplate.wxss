@@ -102,6 +102,9 @@
   font-size: 24rpx;
 }
 
+.my-cover-address-login-font {
+  font-size: 30rpx;
+}
 
 .my-cover-address-icon {
   margin-right: 5rpx;

@@ -4,12 +4,12 @@ Page({
   data:{
     sysType:48,
     titleImgUrl:'http://y.photo.qq.com/img?s=Qgk0irOPX&l=y.jpg',
-    accountlLogining:false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
     hasUserInfo: false,
     isAccountInputFocus:false,
-    isPwdInputFocus:false
+    isPwdInputFocus:false,
+    isShowLoginForm:false,
   },
   onLoad(options) {
     this.setData({
@@ -17,7 +17,7 @@ Page({
     })
   },
 
-
+  //微信授权
   loginWx(e) {
     if (this.data.canIUse){
 	  this.setData({
@@ -37,10 +37,20 @@ Page({
       })
     }
   },
+  
+  //账号密码登录
+  loginAccount(e) {
+    let type = e.currentTarget.dataset.type;   //1 - 打开登录框。  -1 收起
 
-  loginAccount() {
     this.setData({
-       accountlLogining:true
+       isShowLoginForm:type == 1 ? true : false
+    })
+  },
+  
+  //放弃登录
+  cancleLogin() {
+    wx.navigateBack({
+      delta: 1
     })
   },
 

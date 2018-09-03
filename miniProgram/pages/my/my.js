@@ -53,5 +53,15 @@ Page({
 
   },
 
+  //点击去登录
+  headerClick(e) {
+    let _id = e.target.id;
+
+    if(_id == 'loginInfo') {
+       app.goTo({
+        path:'/pages/login/login'
+       })
+    }
+  }
 
 })

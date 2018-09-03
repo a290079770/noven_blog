@@ -26,7 +26,7 @@
 }
 
 .login-content-wrap {
-  transition: all 2s;
+  transition: all 0.5s;
   width: 200%;
 }
 
@@ -114,4 +114,11 @@
    top: 10rpx;
    font-size:22rpx;
    color:#768fc3;
+}
+
+.cancle-login {
+  margin-top: -20rpx;
+  text-align: center; 
+  color: #d13954;
+  font-size: 30rpx;
 }
