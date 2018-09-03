@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    #particleContainer {
+      width: 100%;
+      height: 600px;
+      background: rgba(235,235,235,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="particleContainer">
+    
+  </div>
+  
+  <script type="text/javascript" src="./particles.min.js"></script>
+  <script type="text/javascript">
+    /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+    particlesJS.load('particleContainer', 'particles.json', function() {
+      console.log('callback - particles.js config loaded');
+    });
+  </script>
+</body>
+</html>

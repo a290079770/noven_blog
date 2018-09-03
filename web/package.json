@@ -93,11 +93,12 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "antd": "^3.9.0",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.7.0",
     "less": "^3.0.2",
     "less-loader": "^4.1.0",
-    "react-app-rewired": "^1.5.2",
+    "react-app-rewired": "^1.6.2",
     "react-router": "^3.2.0"
   }
 }

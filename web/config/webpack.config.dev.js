@@ -113,12 +113,25 @@ module.exports = {
         use: [
           {
             options: {
+              "plugins": [
+                ["import", {"libraryName": "antd","libraryDirectory": "es", "style": "css"}],
+                ["import", {"libraryName": "antd-mobile", "libraryDirectory": "es","style": "css"}],
+              ],
+              compact: true,
+              cacheDirectory:true
+            },
+            loader:require.resolve('babel-loader'),
+          },
+
+          {
+            options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
               
             },
             loader: require.resolve('eslint-loader'),
           },
+          
         ],
         include: paths.appSrc,
       },
