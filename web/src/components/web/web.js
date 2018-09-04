@@ -15,7 +15,11 @@ export default class Index extends React.Component {
    render() {
      return (
        <div className="web-container">
-          {this.props.children}
+          <div id="particleContainer"></div>
+          
+          <div className="web-page-cont">
+            {this.props.children}
+          </div>
        </div>
      )   	
    }
