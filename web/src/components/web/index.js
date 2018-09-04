@@ -65,9 +65,9 @@ export default class Index extends React.Component {
                      return (
                        <div key={'wi-swiper'+index}>
                          <div className="web-index-swiper-item" style={{background:`url(${item.url})`}}>
-                           <div className="web-index-swiper-modal">
+                           {/*<div className="web-index-swiper-modal">
                              
-                           </div>
+                           </div>*/}
                          </div>
                        </div>
                      )
