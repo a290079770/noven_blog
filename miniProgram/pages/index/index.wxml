@@ -1,11 +1,10 @@
 <!--index.wxml-->
 <import src="../common/bgTemplate/bgTemplate.wxml"/>
 
-<view class="index header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
+<view class="index header-bg" style="background: url(http://thyrsi.com/t6/373/1537521319x-1922735559.png);">
 
    <template is="bg-header" data="{{sysType,titleImgUrl}}"/>
      
-   
    <view class="swiper-container"> 
      <swiper 
      indicator-dots="true" 
@@ -31,11 +30,11 @@
    <view class="index-article-cont">
      <articleItem
       wx:for="{{hotArticleList}}" 
-      wx:key="article{{index}}"
+      wx:key="{{_id}}"
       item="{{item}}"
       isBorderBottomShow="{{index == hotArticleList.length - 1 ? false : true}}"
       bind:handleClick="handleArticleClick"
-      data-item="{{item}}"
+      data-id="{{item._id}}"
      />
    </view>
 

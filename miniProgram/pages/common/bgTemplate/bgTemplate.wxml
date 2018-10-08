@@ -1,6 +1,6 @@
 
 <template name="bg-header">
-  <view class="flex flex-justify-center index-header header-bg" style="background: url(http://y.photo.qq.com/img?s=DlSjzF7V8&l=y.jpg) no-repeat">
+  <view class="flex flex-justify-center index-header header-bg" style="background: url(http://thyrsi.com/t6/373/1537521453x-1922733211.jpg) no-repeat">
 	 <!-- 顶部胶囊 -->
 	 <view class="flex flex-align-center top-capsule" style="top:{{sysType}}rpx">
 		<text class="top-capsule-text" wx:if="{{!isShowBack}}"> Noven 博客</text>    
@@ -23,26 +23,31 @@
 	 <view 
 	 wx:if="{{isCover}}" 
 	 class="flex flex-align-center index-title {{hideInfo ? 'flex-justify-center':'flex-justify-start'}}">
-       <view class="my-cover" style="background: url({{titleImgUrl}}) no-repeat;margin-left:{{hideInfo ? '0' : '55rpx'}}">
+       <!-- <view class="my-cover" style="background: url({{!hideInfo && isLogin ? userInfo.avatarUrl : titleImgUrl}}) no-repeat;margin-left:{{hideInfo ? '0' : '55rpx'}}">
 
-       </view>
+       </view> -->
+			 
+			 <view class="flex flex-align-center flex-justify-center my-cover-cont" style="margin-left:{{hideInfo ? '0' : '55rpx'}}">
+					<image class="my-cover" mode="aspectFill" src="{{!hideInfo && isLogin ? userInfo.avatarUrl : titleImgUrl}}" binderror="" ></image>
+       </view>	
 
-       <view wx:if="{{!hideInfo && isLogin}}" class="flex flex-justify-center flex-align-center my-cover-cont">
+
+       <view wx:if="{{!hideInfo && isLogin}}" class="flex flex-justify-center flex-align-center my-cover-address-cont">
        	 <view class="my-nickname">
-     	   five.5
+     	   {{userInfo.nickName}}
          </view>
          <view class="flex flex-justify-center flex-align-center my-cover-address">
            <view class="flex flex-justify-start flex-align-center my-cover-address-top">
            	<image src="/images/local.svg" class="my-cover-address-icon"></image>
-           	<text> 成都市 </text>		
+           	<text> {{userInfo.city}}</text>		
            </view>
            <view>
-           	2018-06-25
+           	{{date}}
            </view>
          </view>
        </view>
 
-       <view id="loginInfo" wx:if="{{!hideInfo && !isLogin}}" class="flex flex-justify-center flex-align-center my-cover-cont my-cover-address my-cover-address-login-font">
+       <view id="loginInfo" wx:if="{{!hideInfo && !isLogin}}" class="flex flex-justify-center flex-align-center my-cover-address-cont my-cover-address my-cover-address-login-font">
            点击登录
         </view>
 	 </view>
@@ -78,7 +83,7 @@
 
 
 <template name="bg-footer">
-   <view class="index-bottom header-bg" style="background: url(http://y.photo.qq.com/img?s=F3BHWVFSx&l=y.jpg);">
+   <view class="index-bottom header-bg" style="background: url(http://thyrsi.com/t6/373/1537521373x-1566679899.jpg">
    </view>
 </template>
 

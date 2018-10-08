@@ -22,8 +22,8 @@
 .article-item-basic {
   margin-top: 15rpx;
   padding:0 20rpx;
-  height: 58rpx;
-  font-size: 32rpx;
+  min-height: 58rpx;
+  font-size: 28rpx;
   color:#999;
 }
 

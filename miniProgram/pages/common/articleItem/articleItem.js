@@ -27,7 +27,7 @@ Component({
    * 可用于模版渲染
    */
   data: {
-    
+    defaultUrl:'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
   },
 
   /**
@@ -41,5 +41,5 @@ Component({
     handleClick(e) {
       this.triggerEvent('handleClick');
     }
-  }
+  },
 })

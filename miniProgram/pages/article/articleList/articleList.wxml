@@ -1,7 +1,7 @@
 <!--logs.wxml-->
 <import src="../../common/bgTemplate/bgTemplate.wxml"/>
 
-<view class="article-list header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
+<view class="article-list header-bg" style="background: url(http://thyrsi.com/t6/373/1537521319x-1922735559.png);">
 
    <view>
      <template is="bg-header" data="{{sysType,titleImgUrl}}"/>
@@ -11,12 +11,12 @@
      <swiper 
      interval="2000"
      >
-        <block wx:for="{{imgUrls}}" wx:key="{{index}}">
-          <swiper-item wx:for="{{hotArticleList}}" wx:key="article{{index}}">
+        <block>
+          <swiper-item wx:for="{{hotArticleList}}" wx:key="_id">
             <articleItem
   		      item="{{item}}"
   		      bind:handleClick="handleArticleClick"
-  		      data-item="{{item}}"
+  		      data-id="{{item._id}}"
   		     />
           </swiper-item>
         </block>

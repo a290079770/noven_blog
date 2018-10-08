@@ -12,10 +12,13 @@
       type='text' 
       class="updateinfo-nickname-input"
       placeholder="请输入您的昵称！" 
-      maxlength="{{6}}" 
       selection-start="{{0}}"
-      selection-end="{{6}}"
-      focus/>
+      selection-end="{{12}}"
+      focus
+      value="{{nickName}}"
+      bindinput="inputAction"
+      data-type="1"
+      />
     </view>
 
     <view class="updateinfo-abstract" wx:if="{{type == 4}}">
@@ -25,16 +28,19 @@
        auto-focus
        focus
        auto-height 
-       maxlength="{{140}}" 
        selection-start="{{0}}"
-       selection-end="{{140}}"
-       placeholder="请输入您的简介！" />
+       selection-end="{{280}}"
+       placeholder="请输入您的简介！" 
+       value="{{brief}}"
+       bindinput="inputAction"
+       data-type="2"
+       />
     </view>
 
 
     <view class="flex flex-align-center flex-justify-between updateinfo-notice">
       <text> 您最多可以输入100个字符 </text>    
-      <text> <text class="updateinfo-notice-hasinput"> 50 </text>     / 100</text>     
+      <text> <text class="updateinfo-notice-hasinput"> {{ currentLen }} </text>     / {{ type == 3 ? nickNameLen : briefLen}}</text>     
     </view>
     <view>
       <button loading="{{false}}" class="updateinfo-submit" open-type="feedback">提交修改</button>

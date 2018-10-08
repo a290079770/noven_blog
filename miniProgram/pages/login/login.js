@@ -1,9 +1,10 @@
 const app = getApp();
+var { Storage } = require('../../noven/storage')
 
 Page({
   data:{
     sysType:48,
-    titleImgUrl:'http://y.photo.qq.com/img?s=Qgk0irOPX&l=y.jpg',
+    titleImgUrl:'http://thyrsi.com/t6/373/1537521642x-1922733205.png',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
     hasUserInfo: false,
@@ -18,24 +19,47 @@ Page({
   },
 
   //微信授权
-  loginWx(e) {
+  loginWx({ detail }) {
+    //如果拒绝授权
+    if(detail.errMsg.indexOf('deny') !== -1) return;
+
     if (this.data.canIUse){
-	  this.setData({
-	    userInfo: e.detail.userInfo,
-	    hasUserInfo: true
-	  })
+      app.globalData.userInfo = detail.userInfo
+      app.globalData.isLogin = true
+
+      this.recordUser(detail.userInfo);
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
+
           app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
+          app.globalData.isLogin = true;
+          
+          this.recordUser(res.userInfo);
         }
       })
     }
+  },
+
+  recordUser(userInfo) {
+    //记录到云
+    app.callCloudFunction({
+      // 要调用的云函数名称
+      name: 'createOrUpdateUser',
+      // 传递给云函数的event参数
+      data: userInfo
+    }).then(res => {
+      console.log(res.data)
+      Storage.set('userInfo',res.data);
+      app.globalData.userInfo = res.data;
+
+      wx.navigateBack({
+        delta: 1
+      })
+    }).catch(err => {
+      app.showToast(err.description,2);
+    })
   },
   
   //账号密码登录

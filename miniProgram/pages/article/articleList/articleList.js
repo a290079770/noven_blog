@@ -30,14 +30,44 @@ Page({
     this.setData({
       sysType:app.globalData.sysType
     })
+
+    this.getDataList();
   },
 
-  handleArticleClick(e) {
-    // console.log(app.globalData.a)
+
+
+  /**
+   * [getDataList 获取文章列表]
+   * @Author   罗文
+   * @DateTime 2018-09-27
+   * @return   {[type]}   [description]
+   */
+  getDataList() {
+    app.callCloudFunction({
+      // 要调用的云函数名称
+      name: 'getArticleList',
+      // 传递给云函数的event参数
+      data: {}
+    }).then(res => {
+      res.data = res.data.map(item => {
+        item.CreateTime = app.dateFormat(item.CreateTime, 'yyyy-mm-dd');
+        return item;
+      })
+
+      this.setData({
+        hotArticleList:res.data
+      })
+    }).catch(err => {
+      app.showToast(err.description,2);
+    })
+  },
+
+
+  handleArticleClick({ currentTarget:{dataset:{ id = '' }}}) {
     app.goTo({
       path:'/pages/article/articleDetail/articleDetail',
       query:{
-        id:1,
+        id,
       }
     });
   },

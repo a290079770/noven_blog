@@ -33,3 +33,7 @@
   border:2rpx solid #ccc;
   border-radius: 10rpx;
 }
+
+.updateinfo-nickname-input,.updateinfo-nickname-textarea {
+  font-size: 24rpx;
+}

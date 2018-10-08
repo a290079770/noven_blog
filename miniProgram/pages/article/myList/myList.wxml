@@ -5,18 +5,18 @@
     <template is="bg-header-detail" data="{{sysType}}"></template>
   </view>
 
-  <view class="flex flex-align-center flex-justify-center my-list-item" wx:for="{{[1,2,3]}}" wx:key="{{index}}" bindtap="handleArticleClick">
+  <view class="flex flex-align-center flex-justify-center my-list-item" wx:for="{{dataList}}" wx:key="{{_id}}" bindtap="handleArticleClick" data-id="{{item._id}}">
     <view class="flex flex-align-center flex-justify-between my-list-item-cont">
        <view class="flex flex-justify-center my-list-arc">
        	 <view class="text-ess-2 my-list-arc-title">
-       	 	美评养车成本最低的十款车，其中六款在中国销售！美评养车成本最低的十款车，其中六款在中国销售！
+       	 	{{item.Title}}
        	 </view>
        	 <view class="text-ess-1 my-list-arc-date">
-       	 	2017-03-27 12:57:32
+       	 	{{item.CreateTime}}
        	 </view>
        </view>
        <view>
-         <image class="my-list-arc-cover" src="/images/n3.png"></image>
+         <image class="my-list-arc-cover" src="{{item.Url || defaultUrl }}"></image>
        </view>
     </view>	
   </view>

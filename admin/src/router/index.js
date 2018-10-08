@@ -7,7 +7,7 @@ const router =  new Router({
   routes: [
   	{
         path: '/login',
-        component: resolve => require.ensure([], () => resolve(require('@/components/Login')), 'login'),
+        component: resolve => require.ensure([], () => resolve(require('@/components/Login')), 'wrap'), 
     },
     {
         path: '/wrap',
@@ -17,6 +17,10 @@ const router =  new Router({
         children: [
 	      	{
 	      		path: 'index',
+
+	      		//如果分割了路由，在加载首页的时候只会加载首页对应的路由和界面
+	      		//下面是分割路由的写法，就是如下一行代码，不需要额外的配置，不需要提前引入组件
+	      		//固定写法 resolve => require.ensure([], () => resolve(require(组件路径)), 这里就是要把这块路由分割打包成什么名字，随便写，相同的名字打包在一起，比如可以在相同模块的所有路由打包到一起)
 	      		component: resolve => require.ensure([], () => resolve(require('@/components/Index')), 'Index'),
 	      	},
 	      	{

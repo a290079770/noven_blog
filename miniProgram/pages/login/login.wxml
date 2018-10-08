@@ -1,12 +1,12 @@
 <import src="../common/bgTemplate/bgTemplate.wxml"/>
 
-<view class="login header-bg" style="background: url(http://y.photo.qq.com/img?s=reDE6epJl&l=y.jpg);">
+<view class="login header-bg" style="background: url(http://thyrsi.com/t6/373/1537521319x-1922735559.png);">
   <template is="bg-header" data="{{sysType,titleImgUrl,isCover:true,hideInfo:true}}"/>
 
   <view class="login-content">
     <view class="flex flex-justify-between login-content-wrap {{isShowLoginForm ? 'login-show-form' : ''}}">
       <view class="btns-cont">
-        <button wx:if="{{canIUse}}" class="login-btn-weixin" open-type="getUserInfo" bindgetuserinfo="loginWx">微信授权</button>
+        <button wx:if="{{canIUse}}" class="login-btn-weixin" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="loginWx">微信授权</button>
         <button wx:else class="login-btn-weixin" bindtap="loginWx">微信登录</button>
 
         <button class="login-btn-normal" bindtap="loginAccount" data-type="1">账号登录</button>
