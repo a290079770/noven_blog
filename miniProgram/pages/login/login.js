@@ -8,6 +8,8 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
     hasUserInfo: false,
+    account:'',
+    password:'',
     isAccountInputFocus:false,
     isPwdInputFocus:false,
     isShowLoginForm:false,
@@ -43,6 +45,7 @@ Page({
   },
 
   recordUser(userInfo) {
+    wx.showLoading();
     //记录到云
     app.callCloudFunction({
       // 要调用的云函数名称
@@ -64,11 +67,17 @@ Page({
   
   //账号密码登录
   loginAccount(e) {
-    let type = e.currentTarget.dataset.type;   //1 - 打开登录框。  -1 收起
+    let type = e.currentTarget.dataset.type;   //1 - 打开登录框。  -1 收起  空 - 登录按钮
+    
+    if(!type) {
+      app.showToast('暂不支持',2);
+    }
 
     this.setData({
        isShowLoginForm:type == 1 ? true : false
     })
+
+    
   },
   
   //放弃登录
@@ -76,6 +85,11 @@ Page({
     wx.navigateBack({
       delta: 1
     })
+  },
+
+  inputAction({ currentTarget : { dataset :{ input } } , detail : { value } }) {
+    let state = input == 1 ? { account : value } : { password : value };
+    this.setData(state)
   },
 
   inputFocus(e) {

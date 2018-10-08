@@ -17,11 +17,12 @@ App({
     db:null,
   },
   onLaunch: function () {
-    //获取并设置全局用户信息，登录状态
-    this.getUserInfo();
-
     //初始化云环境
     this.initCloud();
+
+    //获取并设置全局用户信息，登录状态
+    this.getUserInfo();
+    
 
     //计算全局自定义胶囊的高度
     this.setSysType();
@@ -33,17 +34,28 @@ App({
    * @DateTime 2018-09-28
    */
   getUserInfo() {
-    //从storage中获取userInfo数据
-    Storage
-    .get('userInfo')
-    .then(({ data }) => {
+    //从云端获取用户数据
+    appUtil.callCloudFunction({
+      name:'getUserInfo',
+    })
+    .then(res => {
+       let { data } = res;
        this.globalData.isLogin = !!data;
-       this.globalData.userInfo = data;
+
+       if(!data) {
+          //未查到用户信息
+          this.globalData.userInfo = null;
+          Storage
+          .remove('userInfo');
+       }else {
+          this.globalData.userInfo = data;
+          Storage
+          .set('userInfo',data);
+       }
     })
     .catch(err => {
-       this.globalData.isLogin = false;
-       this.globalData.userInfo = null;
-    }) 
+      appUtil.showToast(err.description,2);
+    })
   },
 
   /**

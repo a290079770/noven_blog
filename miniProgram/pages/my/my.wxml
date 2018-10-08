@@ -54,6 +54,11 @@
      	<text> 联系我们 </text>		
      </view>
 
+<!--      <view class="flex flex-align-center my-oparate-item">
+      <image src="../../images/exit.svg" class="my-oparate-item-icon"></image>
+      <text style="color:#768fc3" bindtap="logoutAction"> 退出登录 </text>   
+     </view> -->
+
 
    </view>
 

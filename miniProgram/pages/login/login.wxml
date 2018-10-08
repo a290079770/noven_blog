@@ -23,12 +23,14 @@
               class="updateinfo-nickname-input"
               placeholder="" 
               maxlength="{{20}}"
+              bindinput="inputAction"
               bindfocus="inputFocus"
               bindblur="inputFocus"
               data-input="1"
+              value="{{account}}"
               />
 
-              <text class="login-input-cont-text {{isAccountInputFocus ? 'login-input-cont-text-ac' : 'login-input-cont-text-inac'}}"> 账号/手机号/邮箱 </text>    
+              <text class="login-input-cont-text {{isAccountInputFocus || account ? 'login-input-cont-text-ac' : 'login-input-cont-text-inac'}}"> 账号/手机号/邮箱 </text>    
             </view>
 
             <view class="login-input-cont">
@@ -38,12 +40,14 @@
               class="updateinfo-nickname-input"
               placeholder="" 
               maxlength="{{20}}" 
+              bindinput="inputAction"
               bindfocus="inputFocus"
               bindblur="inputFocus"
               data-input="2"
+              value="{{password}}"
               />
 
-              <text class="login-input-cont-text {{isPwdInputFocus ? 'login-input-cont-text-ac' : 'login-input-cont-text-inac'}}" > 密码 </text>    
+              <text class="login-input-cont-text {{isPwdInputFocus || password ? 'login-input-cont-text-ac' : 'login-input-cont-text-inac'}}" > 密码 </text>    
             </view>
           </view>
 

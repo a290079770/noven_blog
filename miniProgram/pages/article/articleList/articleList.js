@@ -1,5 +1,5 @@
-var WxParse = require('../../../lib/wxParse/wxParse.js');
 var app = getApp();
+var { dateFormat } = require('../../../noven/utils/dateUtil');
 
 Page({
   data: {
@@ -34,6 +34,10 @@ Page({
     this.getDataList();
   },
 
+  onPullDownRefresh(){
+    this.getDataList();
+  },
+
 
 
   /**
@@ -50,7 +54,7 @@ Page({
       data: {}
     }).then(res => {
       res.data = res.data.map(item => {
-        item.CreateTime = app.dateFormat(item.CreateTime, 'yyyy-mm-dd');
+        item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd');
         return item;
       })
 
@@ -59,6 +63,8 @@ Page({
       })
     }).catch(err => {
       app.showToast(err.description,2);
+    }).then(()=>{
+      wx.stopPullDownRefresh();
     })
   },
 

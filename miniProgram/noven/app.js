@@ -61,6 +61,20 @@ const goToExec = (app,params = {}) => {
 }
 
 
+/**
+ * [goBack 返回上几页]
+ * @Author   罗文
+ * @DateTime 2018-10-08
+ * @param    {[Number]}   delta [要返回的页数]
+ * @return   {[type]}         [description]
+ */
+const goBack = (delta) => {
+  wx.navigateBack({
+      delta
+  })
+}
+
+
 
 /**
  * [headerClickExec. 点击顶部自定义胶囊的两个按钮跳转执行函数]
@@ -121,28 +135,34 @@ const callCloudFunction = (params) => {
  * @DateTime 2018-09-27
  * @param    {[String]}   title [提示文字]
  * @param    {[NUmber]}   type  [1 - 成功 2 - 失败 3 - loading]
+ * @param    {[NUmber]}   duration  [持续时长]
  * @return   {[type]}         [description]
  */
-const showToast = (title,type = 1) =>{
+const showToast = (title,type = 1,duration = 1500) =>{
   wx.hideLoading();
-  
-  title = title ? title : (type == 2 ? '异常错误':(type == 3 ? '请稍候...':'操作成功'));
-  
-  let option = {
-    title,
-    icon: type == 3 ? 'loading' : 'success',   //微信没有内置失败的图标，需要image字段支持
-    duration: 2000
-  }
 
-  if( type == 2 ) option.image = '/images/err.svg';
+  return new Promise((resolve) => {
+    title = title ? title : (type == 2 ? '异常错误':(type == 3 ? '请稍候...':'操作成功'));
+    
+    let option = {
+      title,
+      icon: type == 3 ? 'loading' : 'success',   //微信没有内置失败的图标，需要image字段支持
+      duration,
+    }
 
-  wx.showToast(option)
+    if( type == 2 ) option.image = '/images/err.svg';
+
+    wx.showToast(option)
+
+    setTimeout(resolve,duration);
+  })
 }
 
 
 
 module.exports = {
   goToExec,
+  goBack,
   headerClickExec,
   callCloudFunction,
   showToast

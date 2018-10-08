@@ -1,5 +1,6 @@
 //index.js
 var app = getApp();
+var { dateFormat } = require('../../noven/utils/dateUtil');
 //获取应用实例
 Page({
   data: {
@@ -38,7 +39,7 @@ Page({
       data: {}
     }).then(res => {
       res.data = res.data.map(item => {
-        item.CreateTime = app.dateFormat(item.CreateTime, 'yyyy-mm-dd');
+        item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd');
         return item;
       })
 
@@ -46,7 +47,11 @@ Page({
         hotArticleList:res.data
       })
     }).catch(err => {
+      console.log(err)
       app.showToast(err.description,2);
+    })
+    .then(()=>{
+      wx.stopPullDownRefresh();
     })
   },
 
@@ -75,5 +80,9 @@ Page({
 
     this.getDataList();
   },  
+
+  onPullDownRefresh(){
+    this.getDataList();
+  }
 
 })

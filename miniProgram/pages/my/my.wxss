@@ -1,6 +1,4 @@
-.my {
-	height: 110vh;
-}
+
 
 .my-content {
 	margin: 0 auto;

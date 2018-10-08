@@ -17,7 +17,6 @@
       focus
       value="{{nickName}}"
       bindinput="inputAction"
-      data-type="1"
       />
     </view>
 
@@ -33,7 +32,6 @@
        placeholder="请输入您的简介！" 
        value="{{brief}}"
        bindinput="inputAction"
-       data-type="2"
        />
     </view>
 
@@ -43,7 +41,7 @@
       <text> <text class="updateinfo-notice-hasinput"> {{ currentLen }} </text>     / {{ type == 3 ? nickNameLen : briefLen}}</text>     
     </view>
     <view>
-      <button loading="{{false}}" class="updateinfo-submit" open-type="feedback">提交修改</button>
+      <button bindtap="updateAction">提交修改</button>
     </view>
   </view>
 </view>

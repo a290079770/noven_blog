@@ -1,4 +1,5 @@
 {
+	"enablePullDownRefresh":true,
   "usingComponents": {
     "articleItem": "../common/articleItem/articleItem",
     "moodItem": "../common/moodItem/moodItem"

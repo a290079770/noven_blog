@@ -1,5 +1,6 @@
 const app = getApp();
 const { getLen , getSliceStr } = require('../../noven/utils/stringUtil');
+const { Storage } = require('../../noven/storage'); 
 
 Page({
   data:{
@@ -28,28 +29,36 @@ Page({
    * @DateTime 2018-09-30
    * @return   {[type]}   [description]
    */
-  inputAction({ currentTarget : { dataset: { type } } , detail : { value }}) {
-    //type 1 - 昵称输入    2 - 简介
+  inputAction({ detail : { value } }) {
+    //type 3 - 昵称输入    3 - 简介
     const { nickNameLen = 12, briefLen = 280 } = this.data;
     //获取当前长度
     const computedLen = getLen(value);
     //最后处理之后的长度
     let lastLen = computedLen; 
 
-    if( type == 1 ) {
+    if( this.data.type == 3 ) {
       if( computedLen > nickNameLen ) {
-         this.setData({
-           nickName: getSliceStr(value,nickNameLen)
-         })
-         lastLen = nickNameLen;
+        this.setData({
+          nickName: getSliceStr(value,nickNameLen)
+        })
+        lastLen = nickNameLen;
+      }else {
+        this.setData({
+          nickName:value
+        })
       }
-    }else if( type == 2 ) {
+    }else if( this.data.type == 4 ) {
       if( computedLen > briefLen ) {
         this.setData({
           brief: getSliceStr(value,briefLen)
         })
 
         lastLen = briefLen;
+      }else {
+        this.setData({
+          brief:value
+        })
       }
     }
 
@@ -58,45 +67,37 @@ Page({
     })
   },
 
+  //修改用户信息 3 - 修改昵称。 4 - 修改简介
+  updateAction() {
+    const type = this.data.type;
+    const data = type == 3 ? { nickName : this.data.nickName} : { brief : this.data.brief };
 
-  /**
-   * [getBLen 获取字符串length，中文占两个字符]
-   * @Author   罗文
-   * @DateTime 2018-09-30
-   * @param    {[String]}   str [要计算的字符串]
-   * @return   {[type]}       [description]
-   */
-  getLen(str) { 
-    if (!str) return 0;  
-    if (typeof str != "string"){    
-      str += "";  
-    } 
-    return str.replace(/[^\x00-\xff]/g,"01").length;
-  },
+    wx.showLoading();
+    
+    app.callCloudFunction({
+      name:'updateUserInfo',
+      data
+    })
+    .then(res => {
+      app
+      .showToast('修改成功')
+      .then(() => {
+        //更新globalData 和 Storage
+        let newUserInfo = Object.assign({},app.globalData.userInfo,data);
 
-  /**
-   * [getSliceStr 剪切字符串，需要计算中文长度]
-   * @Author   罗文
-   * @DateTime 2018-09-30
-   * @return   {[type]}   [description]
-   */
-  getSliceStr(str,len) {
-    let sum = 0;
-    for (let i = 0 ; i < str.length ; i ++) {
-      var c = str.charCodeAt(i);     //单字节加1      
-      if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
-        //单字节   
-        sum ++;
-      } else { 
-        //双字节
-        sum += 2;
-      } 
+        // 更新Storage和界面
+        Storage
+        .set('userInfo',newUserInfo)
+        .then(() => {
+           app.globalData.userInfo = newUserInfo;
+           app.goBack();
+        })
 
-      if( sum > len) {
-        return str.slice(0,i);
-        break;
-      }
-    }
+      })
+    })
+    .catch(err => {
+      app.showToast(err.description,2);
+    })
   },
 
   //导航栏返回跳转

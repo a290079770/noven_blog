@@ -2,6 +2,7 @@
 var app = getApp();
 var { randomStr } = require('../../noven/utils/stringUtil')
 var { Storage } = require('../../noven/storage')
+var { dateFormat } = require('../../noven/utils/dateUtil');
 //获取应用实例
 Page({
   data: {
@@ -9,7 +10,7 @@ Page({
     sysType:48,
     isLogin:false,
     userInfo:null,
-    date:new Date().toLocaleString().split(' ')[0],
+    date:dateFormat(Date.now(),'yyyy-mm-dd'),
     publishCount:0,
     collectCount:0,
   },
@@ -21,7 +22,7 @@ Page({
   },  
 
   onShow() {
-    let {isLogin,userInfo} =  app.globalData;
+    let {isLogin,userInfo} = app.globalData;
     this.setData({
       isLogin,
       userInfo
@@ -31,7 +32,6 @@ Page({
       this.getDataCount(1);
       this.getDataCount(2);
     }
-
   },
 
 
@@ -223,6 +223,33 @@ Page({
         path:'/pages/login/login'
        })
     }
+  },
+
+  //退出登录
+  logoutAction() {
+    let _this = this;
+    wx.showModal({
+      title:'提示',
+      content:'确定退出登录？',
+      confirmColor:'#768fc3',
+      success({ cancel , confirm }) {
+        if(confirm) {
+          //点击的确定
+          _this.logout();
+        }
+      }
+    })
+  },
+
+  logout() {
+    app.globalData.userInfo = null;
+    Storage
+    .remove('userInfo')
+    .then(()=>{
+      wx.reLaunch({
+        url:'/pages/index/index'
+      })
+    })
   }
 
 })
