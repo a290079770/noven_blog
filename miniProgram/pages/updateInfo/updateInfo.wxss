@@ -28,6 +28,7 @@
 
 .updateinfo-nickname-textarea {
   width: 646rpx;
+  height: 150rpx;
   margin:50rpx 0 10rpx;
   padding: 10rpx 20rpx;
   border:2rpx solid #ccc;

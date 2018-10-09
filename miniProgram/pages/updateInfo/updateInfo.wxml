@@ -26,7 +26,7 @@
        class="updateinfo-nickname-textarea"
        auto-focus
        focus
-       auto-height 
+       maxlength="-1"
        selection-start="{{0}}"
        selection-end="{{280}}"
        placeholder="请输入您的简介！" 
@@ -37,7 +37,7 @@
 
 
     <view class="flex flex-align-center flex-justify-between updateinfo-notice">
-      <text> 您最多可以输入100个字符 </text>    
+      <text> 您最多可以输入<text class="updateinfo-notice-hasinput">{{ type == 3 ? nickNameLen : briefLen}}</text>个字符 </text>    
       <text> <text class="updateinfo-notice-hasinput"> {{ currentLen }} </text>     / {{ type == 3 ? nickNameLen : briefLen}}</text>     
     </view>
     <view>

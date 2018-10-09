@@ -4,7 +4,7 @@
  success:#67c23a;
  warning:#e6a23c;
  danger:#f56c6c;
- info:#909399;
+ info:#768fc3;
  */
 .flex {
   display: flex;

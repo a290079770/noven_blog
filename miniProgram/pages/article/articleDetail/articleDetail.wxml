@@ -7,10 +7,10 @@
    	 <template is="bg-header-detail" data="{{sysType}}"></template>
    </view>
 
-   <view class="article-detail-cont">
-   	  <view class="article-detail-title">
-   	  	{{detail.Title}} 
-   	  </view>
+   <view class="article-detail-cont" wx:if="{{detail}}">
+	   <view class="article-detail-title">
+	  	{{detail.Title}} 
+	   </view>
 
       <view class="flex flex-align-center flex-justify-between article-info">
       	<view class="article-info-left">{{detail.Author}}  <text class="article-info-time"> {{detail.CreatTime}}</text></view>	
@@ -39,10 +39,15 @@
 
 
       <view class="flex flex-align-center flex-justify-center article-zan">
-      	<view class="flex flex-align-center flex-justify-center article-zan-cont">
-      	   <image src="/images/zan-kong.svg" class="article-zan-icon"></image>
+      	<view class="flex flex-align-center flex-justify-center article-zan-cont" bindtap="addOrCancelCollection">
+      	   <image src="{{ hasCollect ? '/images/zan-full.svg' : '/images/zan-kong.svg' }}" class="article-zan-icon"></image>
       	   <text> {{detail.CollectCount}} </text>		
       	</view>
       </view>	
+   </view>
+
+
+   <view wx:else>
+      <image mode="aspectFill" src="/images/skeletonDetail.jpg" class="article-item-skeleton"></image>
    </view>
 </view>

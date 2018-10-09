@@ -4,6 +4,7 @@ const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database();
 const collection = db.collection('nb_arcticles');
+const _ = db.command
 
 // 云函数入口函数
 /**
@@ -13,19 +14,10 @@ const collection = db.collection('nb_arcticles');
  * @neccessaryParam  id 文章id    
  */
 exports.main = async (event, context) => {
- 	let { id } = event;
+ 	let { id , userInfo:{ openId } } = event;
 
  	if(!id && id !== 0) {
- 		//格式化返回数据
-	  const { result } = await cloud.callFunction({
-	  	name:'response',
-	  	data:{
-	  		code:21,
-	  		description:'文章id为空',
-	  	}
-	  })
-
-	  return result;
+	  return await setResponse(21,'文章id为空')
  	}
 
 
@@ -35,26 +27,59 @@ exports.main = async (event, context) => {
  	}).get();
 
  	if(data.length < 1) {
- 		//格式化返回数据
-	  const { result } = await cloud.callFunction({
-	  	name:'response',
-	  	data:{
-	  		code:21,
-	  		description:'未查到相关文章',
-	  	}
-	  })
+	  return await setResponse(21,'未查到相关文章')
+ 	}else {
+ 		//点击量加1
+ 		const { stats: { updated } } = await collection
+				  .where({
+				  	_id:id
+				  }).update({
+				    data: {
+				    	ReadCount:_.inc(1)
+				    }
+				  })
 
-	  return result;
+		if(updated < 1) {
+			return await setResponse(21,'添加点击量失败')
+		}		  
  	}
 
+ 	//获取该用户的收藏状态
+ 	
+ 	//如果用户不在系统中，就不理会
+ 	let { total: totalUser } = await db.collection('nb_users')
+ 			 .where({
+		 	 	 openId
+		 	 })
+		 	 .count();
+		 	 
+	//系统有该用户
+	if(totalUser > 0) {
+		let { data : collecData } = await db.collection('nb_collections')
+	 			 .where({
+			 	 	 CollectId:id,
+			 	 	 CollectUser:openId
+			 	 })
+			 	 .get();
 
- 	//格式化返回数据
+		if( collecData.length > 0 )	data[0].hasCollect = true;
+	}	 	 
+
+  return await setResponse(200,'ok',data[0])
+}
+
+
+async function setResponse(code,description,data) {
+	let req = {
+		code
+	}
+
+	code == 200 ? (req.data = data) : (req.description = description)
+
+	//格式化返回数据
   const { result } = await cloud.callFunction({
   	name:'response',
-  	data:{
-  		code:200,
-  		data:data[0]
-  	}
+  	data:req
   })
 
   return result;

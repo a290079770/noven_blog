@@ -9,7 +9,17 @@ Page({
       'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
       'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
     ],
-    hotArticleList:[],
+    hotArticleList:[
+      {
+        isSkeleton:true
+      },
+      {
+        isSkeleton:true
+      },
+      {
+        isSkeleton:true
+      },
+    ],
     newMoodList:[
       {
         title:'心情1心情1心情1心情1心情1心情1心情1心情1'
@@ -24,6 +34,19 @@ Page({
     titleImgUrl:'../../images/myl.jpg',
 
     sysType:48
+  },
+
+  onLoad() {
+    this.setData({
+      sysType:app.globalData.sysType,
+      db: app.globalData.db
+    })
+
+    this.getDataList();
+  },  
+
+  onPullDownRefresh(){
+    this.getDataList();
   },
   /**
    * [getDataList 获取文章列表]
@@ -72,17 +95,6 @@ Page({
   },
 
 
-  onLoad() {
-    this.setData({
-      sysType:app.globalData.sysType,
-      db: app.globalData.db
-    })
 
-    this.getDataList();
-  },  
-
-  onPullDownRefresh(){
-    this.getDataList();
-  }
 
 })

@@ -1,4 +1,6 @@
-
+.my {
+	min-height: 110vh;
+}
 
 .my-content {
 	margin: 0 auto;

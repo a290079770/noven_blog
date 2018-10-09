@@ -34,6 +34,10 @@ Page({
     const { nickNameLen = 12, briefLen = 280 } = this.data;
     //获取当前长度
     const computedLen = getLen(value);
+
+    console.log(computedLen)
+    console.log(value)
+
     //最后处理之后的长度
     let lastLen = computedLen; 
 
@@ -55,10 +59,13 @@ Page({
         })
 
         lastLen = briefLen;
+        console.log(1)
       }else {
         this.setData({
           brief:value
         })
+
+        console.log(2)
       }
     }
 
