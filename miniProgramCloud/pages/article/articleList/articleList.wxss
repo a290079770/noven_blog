@@ -1,0 +1,48 @@
+
+
+.index-title-image {
+   width: 392rpx;
+   height: 100%;
+}
+
+.article-list-swiper-container {
+   height: 860rpx;
+   width: 710rpx;
+   overflow-x: hidden;
+   box-shadow: 0 0 0 transparent
+}
+
+.article-list-notice-swipe {
+  margin-bottom: 50rpx;
+  height: 50rpx;
+  color: #d13954;
+  font-size: 30rpx;
+  opacity: 0.6;
+  text-align: center;
+}
+
+
+.first-in-notice {
+   position: fixed;
+   left: 0;
+   top: 0;
+   flex-direction: column;
+   width: 100%;
+   height: 100vh;
+   background: rgba(0,0,0,0.7);
+}
+
+.first-in-notice-main {
+   margin-top: -50rpx;
+} 
+
+.first-in-notice-know {
+   width: 200rpx;
+   height: 100rpx;	 
+} 
+
+.first-in-notice-text {
+   margin:50rpx 0;
+   color: rgba(255,255,255,0.6);
+   font-size: 30rpx;
+}

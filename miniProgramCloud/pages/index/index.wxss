@@ -1,0 +1,19 @@
+/**index.wxss**/
+
+.index-title-image {
+   width: 423rpx;
+   height: 100%;
+}
+
+.index-article-cont {
+   width: 100%;
+   height: auto;
+}
+
+.index-more {
+   margin-top: -30rpx;	
+   margin-bottom: 50rpx;
+   height: 50rpx;
+   color: #d13954;
+   text-decoration: underline;
+}

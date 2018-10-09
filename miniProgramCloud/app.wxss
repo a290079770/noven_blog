@@ -1,0 +1,131 @@
+/**app.wxss**/
+/*
+ primary:#d13954;
+ success:#67c23a;
+ warning:#e6a23c;
+ danger:#f56c6c;
+ info:#768fc3;
+ */
+@import "/lib/wxParse/wxParse.wxss";
+@import "./pages/common/bgTemplate/bgTemplate.wxss";
+
+page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+
+/* 多行flex布局                         */
+
+.flex-multi-row {
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.flex-justify-center {
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+/* 元素默认竖直居中                     */
+.flex-align-center {
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+
+/* 从行尾位置开始排列            */
+.flex-justify-end {
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+.flex-justify-start {
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
+.flex-justify-around {
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+
+.flex-justify-between {
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+/*//单行省略*/
+.text-ess-1 {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+/*//几行省略*/
+.text-ess-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.text-ess-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+
+
+
+
+
+.swiper-container {
+   margin: 0 auto;
+   width: 690rpx;
+   overflow-x: hidden;
+   height: 400rpx;
+   box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.3);
+   /*width: 100%;*/
+}
+
+.swiper-container swiper {
+   width: 100%;
+   height: 100%;
+}
+
+.swiper-item-cont {
+  width: 100%;
+  height: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+
+
+
+.arrow-right {
+  display: inline-block;
+  transform: rotate(45deg);
+  width:16rpx;
+  height: 16rpx;
+  border-top: 1rpx solid #d13954;
+  border-right: 1rpx solid #d13954;
+}
+
+
+.index-title {
+   padding: 50rpx 0;  
+   height: 141rpx;
+   width: 100%;
+}
+

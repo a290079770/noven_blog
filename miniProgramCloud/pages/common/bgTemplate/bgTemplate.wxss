@@ -1,0 +1,129 @@
+@import '../common.wxss'
+
+.index-header {
+   align-items: flex-end;
+   height:375rpx;
+   width: 100%;
+}
+
+
+.header-bg {
+  position: relative;
+  background-size: 100% 100% !important;
+}
+
+.top-capsule {
+  position: absolute;
+  left: 30rpx;
+  z-index: 999;
+  justify-content: flex-start;
+  width: 690rpx;
+  height: 60rpx;
+  color:#768fc3;
+}
+
+.top-capsule-text {
+  margin-left: 50rpx;
+}
+
+.top-custom-btns {
+  margin-left: 50rpx;
+  justify-content: flex-start;
+  width: 180rpx;
+  height: 60rpx;
+  background: rgba(0,0,0,0.2);
+  border-radius: 30rpx;
+}
+
+.top-custom-btn {
+  width: 87rpx;
+  height: 100%;
+}
+
+.top-custom-btn:active {
+  background: rgba(0,0,0,0.1);
+}
+
+.top-custom-btn-place {
+  width: 2rpx;
+  height: 36rpx;
+  background: rgba(255,255,255,0.2);
+}
+
+
+.top-custom-btn image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.index-title-image {
+   width: 423rpx;
+   height: 100%;
+}
+
+.index-title-image1 {
+   width: 400rpx;
+   height: 100%;
+}
+
+
+.my-cover-cont {
+   margin-left: 55rpx;
+   width: 180rpx;
+   height: 180rpx;
+   border-radius: 50%;
+   border:5rpx solid rgba(118,143,195,0.7);
+   box-shadow: 0 10rpx 20rpx rgba(118,143,195,0.2),10rpx 0 20rpx rgba(118,143,195,0.2), 0 -10rpx 20rpx rgba(118,143,195,0.2),-10rpx 0 20rpx rgba(118,143,195,0.2);
+}
+
+.my-cover {
+   width: 170rpx;
+   height: 170rpx;
+   border-radius: 50%;
+}
+
+.my-nickname {
+  margin-bottom: 20rpx;
+  text-align: center;
+  height:50rpx;
+  font-size: 36rpx;
+}
+
+.my-cover-address-cont {
+  margin-left: 55rpx;
+ flex-direction: column;
+ height: 200rpx;
+ color:rgb(118,143,195);
+}
+
+.my-cover-address {
+  padding: 0 38rpx;
+  flex-direction: column;
+  /*min-width: 114rpx;*/
+  height: 76rpx;
+  border:2rpx solid rgba(118,143,195,0.7);
+  border-radius: 38rpx;
+  font-size: 24rpx;
+}
+
+.my-cover-address-login-font {
+  font-size: 30rpx;
+}
+
+.my-cover-address-icon {
+  margin-right: 5rpx;
+  width: 30rpx;
+  height: 30rpx;
+}
+
+
+.index-bottom {
+   height:250rpx;
+   width: 100%;
+}
+
+.bg-header-detail {
+   height: 200rpx;
+   width: 100%;
+   background: #768fc3;
+}

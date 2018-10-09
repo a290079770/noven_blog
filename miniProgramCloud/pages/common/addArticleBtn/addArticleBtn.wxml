@@ -1,0 +1,11 @@
+<movable-area class="add-move-area">
+  <movable-view 
+	class="flex flex-align-center flex-justify-center add-article-cont"
+	direction="all"
+	inertia
+	x="{{0}}"
+	y="{{0}}"
+	>
+	 	<image mode="" src="/images/add.svg" class="add-article"></image>
+	</movable-view>
+</movable-area>

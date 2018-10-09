@@ -1,0 +1,40 @@
+<import src="../../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="my-list">
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{sysType}}"></template>
+  </view>
+
+  <view wx:if="{{dataList.length > 0 }}">
+    <view class="flex flex-align-center flex-justify-center my-list-item" wx:for="{{dataList}}" wx:key="{{_id}}" bindtap="handleArticleClick" data-id="{{item._id}}">
+      <view class="flex flex-align-center flex-justify-between my-list-item-cont">
+         <view class="flex flex-justify-center my-list-arc">
+           <view class="text-ess-2 my-list-arc-title">
+            {{item.Title}}
+           </view>
+           <view class="text-ess-1 my-list-arc-date">
+            {{item.CreateTime}}
+           </view>
+         </view>
+         <view>
+           <image class="my-list-arc-cover" src="{{item.Url || defaultUrl }}"></image>
+         </view>
+      </view> 
+    </view>
+  </view>
+
+
+  <view wx:else>
+    <view class="flex flex-align-center flex-justify-center my-list-item">
+      <image mode="aspectFill" src="/images/skeletonmylist.jpg" class="article-item-skeleton"></image>
+    </view>
+
+    <view class="flex flex-align-center flex-justify-center my-list-item">
+      <image mode="aspectFill" src="/images/skeletonmylist.jpg" class="article-item-skeleton"></image>
+    </view>
+
+    <view class="flex flex-align-center flex-justify-center my-list-item">
+      <image mode="aspectFill" src="/images/skeletonmylist.jpg" class="article-item-skeleton"></image>
+    </view>
+  </view>
+</view>

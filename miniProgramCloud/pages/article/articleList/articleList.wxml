@@ -1,0 +1,37 @@
+<!--logs.wxml-->
+<import src="../../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="article-list header-bg" style="background: url(http://thyrsi.com/t6/373/1537521319x-1922735559.png);">
+
+   <view>
+     <template is="bg-header" data="{{sysType,titleImgUrl}}"/>
+   </view>
+
+   <view class="swiper-container article-list-swiper-container"> 
+     <swiper 
+     interval="2000"
+     >
+        <block>
+          <swiper-item wx:for="{{hotArticleList}}" wx:key="_id">
+            <articleItem
+  		      item="{{item}}"
+  		      bind:handleClick="handleArticleClick"
+  		      data-id="{{item._id}}"
+  		     />
+          </swiper-item>
+        </block>
+      </swiper>
+   </view>
+
+   <view class="article-list-notice-swipe">
+   	左右滑动
+   </view>
+
+   <view style="display: {{hasView == 1 ? 'none':'flex'}}" class="flex flex-align-center flex-justify-center first-in-notice">
+     <image class="first-in-notice-main" src="../../../images/swipernotice.svg"></image>
+     <view class="first-in-notice-text">左右滑动文章列表</view>
+     <image bindtap="iknowAction" class="first-in-notice-know" src="../../../images/iknow.svg"></image>
+   </view>
+
+   <template is="bg-footer"/>
+</view>

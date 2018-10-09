@@ -1,0 +1,19 @@
+<import src="../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="aboutus">
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{sysType}}"></template>
+  </view>
+
+  <view class="aboutus-cont">
+    <view class="aboutus-logo-cont">
+      <image src="/images/n3.png" class="aboutus-logo"></image>
+    </view>
+    <view class="aboutus-title">
+      关于 Noven Blog 博客
+    </view>
+    <view class="aboutus-text">
+      Noven Blog 是一个方便记录博客、文章、心情的涵盖大部分平台的系统，由个人开发维护。如果您在使用的过程中遇到问题或有更好的建议，欢迎联系作者 290079770@qq.com。
+    </view>
+  </view>
+</view>
