@@ -1,6 +1,6 @@
 .article-list-item-wrap {
-  padding: 20rpx;
-  height: 350rpx;
+  padding: 0 30rpx;
+  height: 272rpx;
   margin-bottom: 30rpx;
 }
 .article-list-item {
@@ -11,6 +11,7 @@
   height: 100%;
   border: 1px solid rgb(204, 122, 135);
   border-radius: 10rpx;
+  box-shadow: 0 8rpx 16rpx rgba(241, 136, 136, .3);
 }
 .article-list-item-left {
   display: flex;
@@ -25,7 +26,7 @@
   height: 80%;
 }
 .article-list-item-right {
-  padding: 30rpx;
+  padding: 25rpx 20rpx 25rpx 0;
   width: 60%;
   height: 100%;
   box-sizing: border-box;

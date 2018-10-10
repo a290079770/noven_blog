@@ -1,14 +1,14 @@
 <view class="login-wrap">
-  <view class="login-info">
-    <view class="login-logo">
-      <image src="../../images/n1.png"></image>
-    </view>
+  <view class="login-logo">
+    <image class="logo-img" src="../../images/n1.png"></image>
+  </view>
+  <view class="login-info mg-top30">
     <view class="login-info-email">
-      <text>邮箱：</text>
+      <!-- <text>邮箱：</text> -->
       <input type="text" placeholder="请输入邮箱"></input>
     </view>
-    <view class="login-info-password">
-      <text>密码：</text>
+    <view class="login-info-password mg-top30">
+      <!-- <text>密码：</text> -->
       <input password="true" placeholder="请输入密码"></input>
     </view>
     <view class="login-btn">登录</view>
