@@ -1,3 +1,0 @@
-<view>
- {{item.title}}
-</view>

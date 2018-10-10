@@ -1,8 +1,5 @@
 {
-	"enablePullDownRefresh":true,
   "usingComponents": {
-    "articleItem": "../common/articleItem/articleItem",
-    "moodItem": "../common/moodItem/moodItem",
-    "add-article": "../common/addArticleBtn/addArticleBtn"
+    "article-item": "../component/articleItem/articleItem"
   }
 }

@@ -1,0 +1,4 @@
+<view>
+  我的
+  <button bindtap="toLogin">login</button>
+</view>

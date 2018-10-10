@@ -4,14 +4,11 @@
 	position: fixed;
 	right: 0;
 	bottom: 0;
-	width: 200rpx;
-	height: 200rpx;
+	width: 300rpx;
+	height: 300rpx;
 }
 
 .add-article-cont {
-	/*position: fixed;*/
-/*	right: 100rpx;
-	bottom: 100rpx;*/
 	height: 100rpx;
 	width: 100rpx;
 	border-radius: 50%;

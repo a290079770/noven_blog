@@ -1,0 +1,12 @@
+<view class="article-wrap">
+    <view wx:for="{{articleLists}}" wx:key="index" class="article-item">
+      <view class="article-image-wrap"><image class="article-image" src="{{item.url}}"/></view>
+      <view class="about-article">
+        <text class="article">article</text>
+        <text class="author mg-letf20">@{{item.author}}</text>
+        <text class="time mg-letf20">{{item.time}}</text>
+      </view>
+      <view class="title">{{item.title}}</view>
+      <view class="des">{{item.des}}</view>
+    </view>
+  </view>

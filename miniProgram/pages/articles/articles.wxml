@@ -1,0 +1,4 @@
+<view class="article-wrap">
+  <article-list-item></article-list-item>
+  <!-- <button bindtap="toDetails">details</button> -->
+</view>

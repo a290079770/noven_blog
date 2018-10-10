@@ -1,0 +1,12 @@
+<view class="detail-wrap">
+  <view class="detail-title">{{title}}</view>
+  <view class="about-article">
+    <text class="article">article</text>
+    <text class="author mg-letf20">@{{author}}</text>
+    <text class="time mg-letf20">{{time}}</text>
+  </view>
+  <view class="detail-image-wrap"><image class="detail-image" src="http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg" /></view>
+  <view class="detail-text">
+    这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。
+  </view>
+</view>

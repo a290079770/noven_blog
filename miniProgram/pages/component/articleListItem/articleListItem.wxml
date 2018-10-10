@@ -1,0 +1,19 @@
+<view class="article-list-wrap">
+  <!-- <article-item></article-item> -->
+  <!-- <button bindtap="toDetails">details</button> -->
+  <view class="article-list-item-wrap" wx:for="{{3}}" wx:key="{{index}}">
+    <view class="article-list-item" bindtap="toDetails">
+      <view class="article-list-item-left">
+        <image class="article-list-item-image" src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg" />
+      </view>
+      <view class="article-list-item-right">
+        <view class="article-list-item-title">我的文章的标题111我的文章的标题111我的文章的标题111</view>
+        <view class="article-list-item-des">我的文章的简介111我的文章的简介111我的文章的简介111我的文章的简介111</view>
+        <view class="article-list-item-tongji">
+          <text class="reading">阅读量：331</text>
+          <text class="collection">收藏量：2</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

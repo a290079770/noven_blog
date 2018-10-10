@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "文章详情",
-  "enablePullDownRefresh":true,
-  "usingComponents": {
-    "articleItem": "../../common/articleItem/articleItem",
-    "moodItem": "../../common/moodItem/moodItem"
-  }
-}

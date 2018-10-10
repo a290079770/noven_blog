@@ -1,65 +1,16 @@
-<import src="../common/bgTemplate/bgTemplate.wxml"/>
-
-<view class="login header-bg" style="background: url(http://thyrsi.com/t6/373/1537521319x-1922735559.png);">
-  <template is="bg-header" data="{{sysType,titleImgUrl,isCover:true,hideInfo:true}}"/>
-
-  <view class="login-content">
-    <view class="flex flex-justify-between login-content-wrap {{isShowLoginForm ? 'login-show-form' : ''}}">
-      <view class="btns-cont">
-        <button wx:if="{{canIUse}}" class="login-btn-weixin" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="loginWx">微信授权</button>
-        <button wx:else class="login-btn-weixin" bindtap="loginWx">微信登录</button>
-
-        <button class="login-btn-normal" bindtap="loginAccount" data-type="1">账号登录</button>
-
-        <view class="cancle-login" bindtap="cancleLogin"> 暂不登录 </view> 
-      </view>
-
-      <view class="flex flex-justify-center login-account-form-wrap ">
-        <view class="login-account-form"> 
-          <view class="login-form-item-cont"> 
-            <view class="login-input-cont">
-              <input 
-              type='text' 
-              class="updateinfo-nickname-input"
-              placeholder="" 
-              maxlength="{{20}}"
-              bindinput="inputAction"
-              bindfocus="inputFocus"
-              bindblur="inputFocus"
-              data-input="1"
-              value="{{account}}"
-              />
-
-              <text class="login-input-cont-text {{isAccountInputFocus || account ? 'login-input-cont-text-ac' : 'login-input-cont-text-inac'}}"> 账号/手机号/邮箱 </text>    
-            </view>
-
-            <view class="login-input-cont">
-              <input 
-              password="{{true}}"
-              type='text' 
-              class="updateinfo-nickname-input"
-              placeholder="" 
-              maxlength="{{20}}" 
-              bindinput="inputAction"
-              bindfocus="inputFocus"
-              bindblur="inputFocus"
-              data-input="2"
-              value="{{password}}"
-              />
-
-              <text class="login-input-cont-text {{isPwdInputFocus || password ? 'login-input-cont-text-ac' : 'login-input-cont-text-inac'}}" > 密码 </text>    
-            </view>
-          </view>
-
-
-          <button class=".login-btn-normal login-btn-confirm" bindtap="loginAccount">账号登录</button>
-          <view class="login-back-auth" bindtap="loginAccount" data-type="-1"> 授权登录 </view>    
-        </view>
-      </view>
+<view class="login-wrap">
+  <view class="login-info">
+    <view class="login-logo">
+      <image src="../../images/n1.png"></image>
     </view>
-  </view>
-
-  <view class="login-footer">
-    <template is="bg-footer"/>
+    <view class="login-info-email">
+      <text>邮箱：</text>
+      <input type="text" placeholder="请输入邮箱"></input>
+    </view>
+    <view class="login-info-password">
+      <text>密码：</text>
+      <input password="true" placeholder="请输入密码"></input>
+    </view>
+    <view class="login-btn">登录</view>
   </view>
 </view>

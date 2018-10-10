@@ -1,50 +1,40 @@
 {
   "pages":[
-    
     "pages/index/index",
-    "pages/article/articleList/articleList",
-    "pages/my/my",
-    "pages/mood/mood",
-    "pages/article/articleDetail/articleDetail",
-    "pages/updateInfo/updateInfo",
-    "pages/aboutus/aboutus",
-    "pages/article/myList/myList",
-    "pages/login/login"
+    "pages/articles/articles",
+    "pages/mine/mine",
+    "pages/login/login",
+    "pages/details/details"
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#d13954",
-    "navigationBarTitleText": "Noven Blog 博客",
-    "navigationBarTextStyle":"white",
-    "navigationStyle":"custom"
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Noven Blog",
+    "navigationBarTextStyle":"black"
   },
   "tabBar": {
-    "selectedColor": "#d13954",
-    "backgroundColor":"#fff",
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "首页",
-      "iconPath":"images/index2.png",
-      "selectedIconPath":"images/index1.png"
-    }, 
-    {
-      "pagePath": "pages/article/articleList/articleList",
-      "text": "文章",
-      "iconPath":"images/article2.png",
-      "selectedIconPath":"images/article1.png"
-    }, 
-    {
-      "pagePath": "pages/my/my",
-      "text": "我的",
-      "iconPath":"images/n2.png",
-      "selectedIconPath":"images/n1.png"
-    }]
-  },
-  "useful": {
-    "pagePath": "pages/mood/mood",
-    "text": "心情",
-    "iconPath":"images/mood2.png",
-    "selectedIconPath":"images/mood1.png"
-  },
-  "cloud": true
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tabBar-icons/index2.png",
+        "selectedIconPath": "images/tabBar-icons/index1.png"
+      },
+      {
+        "pagePath": "pages/articles/articles",
+        "text": "文章",
+        "iconPath": "images/tabBar-icons/article2.png",
+        "selectedIconPath": "images/tabBar-icons/article1.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "images/tabBar-icons/my2.png",
+        "selectedIconPath": "images/tabBar-icons/my1.png"
+      }
+    ],
+    "color": "black",
+    "selectedColor": "red",
+    "backgroundColor": "#fff"
+  }
 }

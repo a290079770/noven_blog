@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "我的文章",
+  "usingComponents": {
+    "article-list-item": "../component/articleListItem/articleListItem"
+  }
+}

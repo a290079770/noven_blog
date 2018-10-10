@@ -1,0 +1,44 @@
+.mg-letf20 {
+  margin-left: 20rpx;
+}
+.article-wrap {
+  padding: 0 20rpx;
+}
+.article-item {
+  padding-bottom: 30rpx;
+  margin-bottom: 30rpx;
+}
+.article-image-wrap {
+  width: 100%;
+  height: 400rpx;
+}
+.article-image {
+  width: 100%;
+  height: 100%;
+}
+.about-article {
+  margin-top: 10rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.article {
+  color: rgb(27, 221, 124);
+}
+.author {
+  color: brown;
+}
+.time {
+  font-family: STLiti,NSimSun,"Times New Roman",Georgia,Serif;
+  font-size: 30rpx;
+  color: rgb(10, 10, 143);
+}
+.title {
+  padding: 20rpx 0 30rpx;
+  color: rgb(63, 12, 3);
+  font-size: 40rpx;
+  text-align: center;
+}
+.des {
+  font-size: 28rpx;
+  color: #555;
+}
