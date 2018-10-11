@@ -67,7 +67,8 @@
    <view class="my-footer">
     	<template is="bg-footer"/>
    </view>
-
+    
+   <add-article />
 </view>
 
 

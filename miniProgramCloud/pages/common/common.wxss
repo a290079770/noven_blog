@@ -67,3 +67,32 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
+
+
+.gray3 {
+  color:#333;
+}
+
+.gray6 {
+  color:#666;
+}
+
+.gray9 {
+  color:#999;
+}
+
+.font-lg {
+  font-size:30rpx;
+}
+
+.font-l {
+  font-size:26rpx;
+}
+
+.font {
+  font-size:24rpx;
+}
+
+.font-xs {
+  font-size:22rpx;
+}

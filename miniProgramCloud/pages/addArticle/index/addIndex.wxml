@@ -1,0 +1,30 @@
+<import src="../../common/bgTemplate/bgTemplate.wxml"/>
+
+<view>
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{sysType}}"></template>
+  </view>
+
+  <view class="addindex-cont">
+  	<view class="font addindex-border addindex-title">
+  		<input class="addindex-title-input" placeholder="请输入文章标题" placeholder-class="placeholder-class" auto-focus/>
+  	</view>	
+
+  	<view class="addindex-border addindex-cover">
+  	
+    </view>
+
+    <view class="flex flex-justify-center flex-align-center addindex-addbtn-cont">
+  		<view class="addindex-addbtn">
+  			<view class="flex flex-justify-center flex-align-center addindex-addbtn-btns">
+  				<image class="addindex-addbtn-btn" mode="aspectFit" src="/images/add-img.png"></image>
+  		    <image class="addindex-addbtn-btn" mode="aspectFit" src="/images/add-arc.png"></image>
+  			</view>
+  		</view>
+    </view>
+
+    <view class="addindex-border addindex-paragraph">
+  	
+    </view>
+  </view>
+</view>

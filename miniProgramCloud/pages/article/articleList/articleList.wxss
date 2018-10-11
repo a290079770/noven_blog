@@ -6,7 +6,7 @@
 }
 
 .article-list-swiper-container {
-   height: 860rpx;
+   height: 820rpx;
    width: 710rpx;
    overflow-x: hidden;
    box-shadow: 0 0 0 transparent

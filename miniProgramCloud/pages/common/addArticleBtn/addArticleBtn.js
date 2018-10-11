@@ -1,3 +1,5 @@
+var app = getApp();
+
 Component({
   // options: {
   //   multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -21,6 +23,17 @@ Component({
    * 更新属性和数据的方法与更新页面数据的方法类似
    */
   methods: {
-
+    addArticleAction() {
+      //验证是否登录
+      if( !app.globalData.isLogin ) {
+        app.goTo({
+          path:'/pages/login/login'
+        });
+      }else {
+        app.goTo({
+          path:'/pages/addArticle/index/addIndex'
+        });
+      }
+    }
   },
 })

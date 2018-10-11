@@ -1,6 +1,5 @@
 {
   "pages":[
-    
     "pages/index/index",
     "pages/article/articleList/articleList",
     "pages/my/my",
@@ -9,7 +8,9 @@
     "pages/updateInfo/updateInfo",
     "pages/aboutus/aboutus",
     "pages/article/myList/myList",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/addArticle/index/addIndex",
+    "pages/addArticle/text/addText"
   ],
   "window":{
     "backgroundTextStyle":"light",

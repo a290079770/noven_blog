@@ -34,4 +34,6 @@
    </view>
 
    <template is="bg-footer"/>
+
+   <add-article />
 </view>

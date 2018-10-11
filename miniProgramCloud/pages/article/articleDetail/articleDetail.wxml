@@ -50,4 +50,6 @@
    <view wx:else>
       <image mode="aspectFill" src="/images/skeletonDetail.jpg" class="article-item-skeleton"></image>
    </view>
+
+   <add-article />
 </view>

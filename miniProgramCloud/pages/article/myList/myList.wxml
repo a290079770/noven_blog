@@ -37,4 +37,6 @@
       <image mode="aspectFill" src="/images/skeletonmylist.jpg" class="article-item-skeleton"></image>
     </view>
   </view>
+
+  <add-article />
 </view>
