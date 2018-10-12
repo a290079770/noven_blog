@@ -4,6 +4,7 @@ page {
 .addindex-cont {
 	margin: 0 auto;
 	width: 690rpx;
+	overflow: visible;
 }
 
 .placeholder-class {
@@ -18,6 +19,17 @@ page {
 	background: white;
 }
 
+.addindex-close {
+	position: absolute;
+	right: 20rpx;
+	top: 20rpx;
+	z-index: 2;
+}
+
+.addindex-title {
+	margin-bottom: 10rpx;
+}
+
 .addindex-title-input {
 	padding: 0 20rpx;
 	height: 70rpx;
@@ -25,12 +37,32 @@ page {
 }
 
 .addindex-cover {
+	position: relative;
 	height: 300rpx;
 }
 
-.addindex-paragraph {
-	height: 200rpx;
+.addindex-cover-img {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 }
+
+.addindex-cover-oparate-icon {
+	position: relative;
+	z-index: 2;
+	margin: 0 10rpx;
+	width: 70rpx;
+	height: 70rpx;
+	border-radius: 50%;
+	background: rgba(118,143,195,0.7);
+}
+
+.addindex-cover-oparate-icon-nobg {
+	background: transparent;
+}
+
 
 .addindex-addbtn-cont {
 	height: 70rpx;
@@ -39,26 +71,100 @@ page {
 
 .addindex-addbtn {
 	position: relative;
-	height: 60rpx;
-	width: 60rpx;
+	height: 50rpx;
+	width: 50rpx;
 	border-radius: 50%;
 	overflow: visible;
 	background: #ddd;
+	box-shadow: 0 8rpx 16rpx #dedddd;
 }
 
 .addindex-addbtn-btns {
 	position: absolute;
-	left: -45rpx;
+	left: -53rpx;
 	bottom: -75rpx;
-	height: 70rpx;
+	z-index: 2;
+	height: 65rpx;
 	width: 150rpx;
 	background: white;
 	border-radius: 35rpx;
 	box-shadow: 0 8rpx 16rpx #dedddd;
+	overflow: visible;
 }
 
 .addindex-addbtn-btn {
 	margin: 0 10rpx;
 	width: 30rpx;
 	height: 50rpx;
+}
+
+.addindex-icon {
+	width: 35rpx;
+	height: 35rpx;
+}
+
+.addindex-addbtn-btn-arrow {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	margin-left: -8rpx;
+	margin-top: -6rpx;
+	transform: rotate(45deg);
+	width: 20rpx;
+	height: 20rpx;
+	background: white;
+}
+
+.updateinfo-nickname-textarea {
+  width: 646rpx;
+  height: 150rpx;
+  margin:30rpx 0 10rpx;
+  padding: 10rpx 20rpx;
+  border:2rpx solid #dedddd;
+  border-radius: 10rpx;
+  background: white;
+}
+
+.updateinfo-nickname-input,.updateinfo-nickname-textarea {
+  font-size: 24rpx;
+}
+
+.updateinfo-notice {
+
+}
+
+.updateinfo-notice-hasinput {
+  color:#d13954;
+}
+
+.addindex-content-list {
+	overflow: visible;
+}
+
+.addindex-paragraph {
+	position: relative;
+	margin: 20rpx 0;
+	min-height: 74rpx;
+}
+
+.addindex-text {
+	padding: 20rpx;
+}
+
+.addindex-img {
+	padding: 20rpx;
+}
+
+.addindex-image {
+	margin-right: 20rpx;
+	width: 200rpx;
+	height: 180rpx;
+}
+
+.addindex-image-desc {
+	flex:1;
+}
+
+.addindex-placeholder {
+	margin-bottom: 120rpx;
 }

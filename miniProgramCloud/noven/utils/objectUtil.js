@@ -12,10 +12,12 @@
  */
 const pick = (obj,keysArr) => {
   let newObj = {};
+  let keys = Object.keys(obj);
 
-  keysArr.forEach(key => {
-    newObj[key] = obj[key];
-  })
+	keysArr.forEach(key => {
+		let isInclude = keys.includes(key);
+		if(isInclude) newObj[key] = obj[key];
+	})
 
   return newObj;
 }

@@ -59,13 +59,10 @@ Page({
         })
 
         lastLen = briefLen;
-        console.log(1)
       }else {
         this.setData({
           brief:value
         })
-
-        console.log(2)
       }
     }
 

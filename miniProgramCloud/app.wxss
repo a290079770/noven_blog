@@ -153,3 +153,23 @@ page {
    width: 100%;
 }
 
+.page-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  width: 100vw;
+}
+
+.page-bottom-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex:1;
+  height: 90rpx;
+  background: #d13954;
+  color:white;
+  font-size: 36rpx;
+}
+
+

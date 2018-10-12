@@ -1,3 +1,5 @@
+var { randomStr } = require('../noven/utils/stringUtil')
+
 /**
  * [goToExec 小程序跳转的执行函数，区分tabbar与非tabbar]
  * @Author   罗文
@@ -158,6 +160,82 @@ const showToast = (title,type = 1,duration = 1500) =>{
   })
 }
 
+/**
+ * [uploadImgCloud 上传图片操作]
+ * @Author   罗文
+ * @DateTime 2018-10-12
+ * @return   {[type]}   [description]
+ */
+const uploadImgCloud = function () {
+  return new Promise((resolve,reject) => {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success (res) {
+        wx.showLoading({
+          title:'上传中...',
+          mask:true
+        })
+
+        // tempFilePath可以作为img标签的src属性显示图片
+        const tempFilePaths = res.tempFilePaths[0]
+        let ext = tempFilePaths.slice(tempFilePaths.lastIndexOf('.'));
+
+        const url = 'images/'+ randomStr(32) +'_photo' + ext;
+
+
+        //上传文件到服务器
+        wx.cloud.uploadFile({
+          cloudPath: url,
+          filePath: tempFilePaths, // 小程序临时文件路径
+        })
+        .then(res => {
+          //获取到上传文件的fileID
+          let { fileID } = res;
+          return Promise.resolve(fileID);
+        })
+        .then( res =>{
+
+          //根据文件id获取url
+          callCloudFunction({
+            name:'uploadPhoto',
+            data: {
+              fileID:res
+            }
+          })
+          .then(res => {
+            resolve(res);
+          })
+          .catch(error => {
+            showToast('',2);
+            reject(error);
+          })
+
+        })
+        .catch(error => {
+          showToast('',2);
+          reject(error);
+        })
+        
+      }
+    })
+  })
+}
+
+// function uploadAction(cloudUrl,tempFilePaths) {
+//   return await wx.cloud.uploadFile({
+//     cloudPath: cloudUrl,
+//     filePath: tempFilePaths, // 小程序临时文件路径
+//   }).then(res => {
+//     //获取到上传文件的fileID
+//     let { fileID } = res;
+//     return Promise.resolve(fileID);
+//   }).catch(error => {
+//     showToast('',2);
+//     return Promise.reject();
+//   })
+// }
 
 
 module.exports = {
@@ -165,5 +243,6 @@ module.exports = {
   goBack,
   headerClickExec,
   callCloudFunction,
-  showToast
+  showToast,
+  uploadImgCloud
 }

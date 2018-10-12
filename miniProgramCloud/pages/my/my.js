@@ -78,61 +78,20 @@ Page({
     }
 
     let _this = this;
-
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['original', 'compressed'],
-      sourceType: ['album', 'camera'],
-      success (res) {
-        wx.showLoading({
-          title:'上传中...',
-          mask:true
-        })
-
-        // tempFilePath可以作为img标签的src属性显示图片
-        const tempFilePaths = res.tempFilePaths[0]
-        let ext = tempFilePaths.slice(tempFilePaths.lastIndexOf('.'));
-
-        const url = 'images/'+ randomStr(32) +'_photo' + ext;
-
-        _this.uploadAction(url,tempFilePaths);
-      }
-    })
-  },
-
-  //上传头像操作
-  uploadAction(cloudUrl,tempFilePaths) {
-    wx.cloud.uploadFile({
-      cloudPath: cloudUrl,
-      filePath: tempFilePaths, // 小程序临时文件路径
-    }).then(res => {
-      //获取到上传文件的fileID
-      let { fileID } = res;
-      return Promise.resolve(fileID);
-    }).catch(error => {
-      app.showToast('',2);
-      return Promise.reject();
-    }).then(res => {
-      
-      //与用户绑定
-      app.callCloudFunction({
-        name:'uploadPhoto',
-        data: {
-          fileID:res
-        }
-      })
-      .then(res => {
-        //获取到新的头像数据，更新Storage 和 Userinfo
-        const url = res.data;
-        this.updateUserInfo({
-          avatarUrl:url
-        })
-      })
-      .catch(error => {
-        app.showToast('',2);
+    
+    app.uploadImgCloud()
+    .then(res =>{
+      _this.updateUserInfo({
+        avatarUrl:res.data
       })
     })
+    .catch(err => {
+      console.log(err);
+      app.showToast(err.description,2);
+    })
+
   },
+
 
   /**
    * [updateUserInfo 更新用户信息统一方法]

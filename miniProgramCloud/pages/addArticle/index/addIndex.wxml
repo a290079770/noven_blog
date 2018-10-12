@@ -1,30 +1,185 @@
 <import src="../../common/bgTemplate/bgTemplate.wxml"/>
 
-<view>
+<view style="overflow: visible;">
   <view bindtap="headerClick">
     <template is="bg-header-detail" data="{{sysType}}"></template>
   </view>
 
   <view class="addindex-cont">
+    <!-- 标题 -->
   	<view class="font addindex-border addindex-title">
-  		<input class="addindex-title-input" placeholder="请输入文章标题" placeholder-class="placeholder-class" auto-focus/>
+  		<input 
+      class="addindex-title-input" 
+      placeholder="请输入文章标题" 
+      placeholder-class="placeholder-class" 
+      auto-focus
+      bindinput="inputAction"
+      data-type="3"
+      value="{{newArticle.Title}}"
+      />
   	</view>	
 
-  	<view class="addindex-border addindex-cover">
-  	
+    <view class="flex flex-align-center flex-justify-between gray9 font updateinfo-notice">
+      <text> 您最多可以输入<text class="updateinfo-notice-hasinput">{{ titleLen }}</text>个字符 </text>    
+      <text> <text class="updateinfo-notice-hasinput"> {{ titleCurrentLen }} </text>     / {{ titleLen }}</text>     
     </view>
 
+    <!-- 简介 -->
+    <view>
+      <textarea
+       placeholder-class="placeholder-class"
+       class="updateinfo-nickname-textarea"
+       maxlength="-1"
+       selection-start="{{0}}"
+       selection-end="{{280}}"
+       placeholder="请输入文章简介！" 
+       value="{{newArticle.Brief}}"
+       bindinput="inputAction"
+       data-type="4"
+       />
+    </view>
+
+    <view class="flex flex-align-center flex-justify-between gray9 font updateinfo-notice">
+      <text> 您最多可以输入<text class="updateinfo-notice-hasinput">{{ briefLen }}</text>个字符 </text>    
+      <text> <text class="updateinfo-notice-hasinput"> {{ briefCurrentLen }} </text>     / {{ briefLen }}</text>     
+    </view>
+
+
+    <!-- 封面 -->
+    <view class="flex flex-align-center flex-justify-center addindex-border addindex-cover">
+      <image 
+      mode="aspectFill" 
+      src="{{newArticle.Url}}" 
+      class="addindex-cover-img"
+      bindtap="previewCoverAction"
+      ></image>
+      
+      <!-- 新增按钮 -->
+      <image 
+      wx:if="{{!newArticle.Url}}" 
+      mode="aspectFit" src="/images/add-gray.svg" 
+      class="addindex-cover-oparate-icon addindex-cover-oparate-icon-nobg"
+      bindtap="addCoverAction"
+      ></image>
+      
+      <!-- 关闭按钮 -->
+      <image 
+      wx:if="{{newArticle.Url}}" 
+      mode="aspectFit" 
+      src="/images/close.svg" 
+      class="addindex-close addindex-icon"
+      bindtap="deleteCoverAction"
+      ></image>
+    </view>
+
+    
+    <!-- 添加按钮 -->
     <view class="flex flex-justify-center flex-align-center addindex-addbtn-cont">
-  		<view class="addindex-addbtn">
-  			<view class="flex flex-justify-center flex-align-center addindex-addbtn-btns">
-  				<image class="addindex-addbtn-btn" mode="aspectFit" src="/images/add-img.png"></image>
-  		    <image class="addindex-addbtn-btn" mode="aspectFit" src="/images/add-arc.png"></image>
+  		<view class="flex flex-justify-center flex-align-center addindex-addbtn">
+  			<image 
+        mode="aspectFit" 
+        src="/images/add.svg" 
+        class="addindex-icon"
+        bindtap="showBtns"
+        ></image>
+
+  			<view 
+        class="flex flex-justify-center flex-align-center addindex-addbtn-btns" 
+        wx:if="{{ showBtns }}"
+        >
+          <image 
+          class="addindex-addbtn-btn" 
+          mode="aspectFit" 
+          src="/images/add-arc.png"
+          bindtap="addTextParagraph"
+          ></image>
+  				<image 
+          class="addindex-addbtn-btn" 
+          mode="aspectFit" 
+          src="/images/add-img.png"
+          bindtap="addImgParagraph"
+          ></image>
+
+  		    <view class="addindex-addbtn-btn-arrow"></view>
   			</view>
   		</view>
     </view>
+    
 
-    <view class="addindex-border addindex-paragraph">
-  	
-    </view>
+    <!-- 段落 -->
+    <view wx:for="{{ contentList }}" wx:key="index" class="addindex-content-list">
+      <view class="font addindex-border addindex-paragraph">
+        <view 
+        class="addindex-text" 
+        wx:if="{{ item.type == 'text' }}" 
+        bindtap="addTextParagraph"
+        data-index="{{index}}"
+        data-current-text="{{item.value}}"
+        >
+          {{ item.value }}
+        </view>
+
+        <view class="flex addindex-img" wx:if="{{ item.type == 'img' }}">
+          <image class="addindex-image" mode="aspectFill" src="{{ item.value }}"></image>
+
+          <text 
+          wx:if="{{item.desc}}" 
+          class="addindex-image-desc" 
+          bindtap="addTextParagraph"
+          data-index="{{index}}"
+          data-current-text="{{item.desc}}"
+          > {{ item.desc }} </text>    
+          <text 
+          wx:else 
+          class="addindex-image-desc gray9" 
+          bindtap="addTextParagraph"
+          data-index="{{index}}"
+          data-current-text="{{item.desc}}"
+          > 添加图片描述... </text>    
+        </view>
+
+
+        <image 
+        mode="aspectFit" 
+        src="/images/close.svg" 
+        class="addindex-close addindex-icon"
+        bindtap="closeParagraph"
+        data-index="{{index}}"
+        ></image>
+      </view>
+
+      <!-- 添加按钮 -->
+      <view class="flex flex-justify-center flex-align-center addindex-addbtn-cont">
+        <view class="flex flex-justify-center flex-align-center addindex-addbtn">
+          <image mode="aspectFit" src="/images/add.svg" class="addindex-icon" bindtap="showBtns" data-index="{{index}}"></image>
+          <view class="flex flex-justify-center flex-align-center addindex-addbtn-btns" wx:if="{{ item.showBtns }}">
+            <image 
+            class="addindex-addbtn-btn" 
+            mode="aspectFit" 
+            src="/images/add-arc.png"
+            bindtap="addTextParagraph"
+            data-index="{{index}}"
+            ></image>
+            <image 
+            class="addindex-addbtn-btn" 
+            mode="aspectFit" 
+            src="/images/add-img.png"
+            bindtap="addImgParagraph"
+            data-index="{{index}}"
+            ></image>
+
+            <view class="addindex-addbtn-btn-arrow"></view> 
+          </view>
+        </view>
+      </view>
+    </view> 
+
+    <view class="addindex-placeholder"></view>
+  </view>
+</view>
+
+<view class="page-bottom">
+  <view class="page-bottom-btn" bindtap="previewArticle">
+    预览文章
   </view>
 </view>

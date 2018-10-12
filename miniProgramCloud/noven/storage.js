@@ -91,7 +91,7 @@ let Storage = {
   },
 
   getInfoSync() {
-    return wx.getStorageInfoSync(key);
+    return wx.getStorageInfoSync();
   },
 }
 
