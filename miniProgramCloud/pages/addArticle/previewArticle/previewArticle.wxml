@@ -1,0 +1,9 @@
+<import src="../../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="updateinfo">
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{sysType}}"></template>
+  </view>
+
+  1111
+</view>
