@@ -19,12 +19,6 @@ page {
 	background: white;
 }
 
-.addindex-close {
-	position: absolute;
-	right: 20rpx;
-	top: 20rpx;
-	z-index: 2;
-}
 
 .addindex-title {
 	margin-bottom: 10rpx;
@@ -81,21 +75,21 @@ page {
 
 .addindex-addbtn-btns {
 	position: absolute;
-	left: -53rpx;
-	bottom: -75rpx;
+	left: -63rpx;
+	bottom: -93rpx;
 	z-index: 2;
-	height: 65rpx;
-	width: 150rpx;
+	height: 80rpx;
+	width: 180rpx;
 	background: white;
-	border-radius: 35rpx;
+	border-radius: 40rpx;
 	box-shadow: 0 8rpx 16rpx #dedddd;
 	overflow: visible;
 }
 
 .addindex-addbtn-btn {
-	margin: 0 10rpx;
-	width: 30rpx;
-	height: 50rpx;
+	padding: 0 15rpx;
+	width: 35rpx;
+	height: 55rpx;
 }
 
 .addindex-icon {
@@ -108,7 +102,7 @@ page {
 	left: 50%;
 	top: 0;
 	margin-left: -8rpx;
-	margin-top: -6rpx;
+	margin-top: -8rpx;
 	transform: rotate(45deg);
 	width: 20rpx;
 	height: 20rpx;
@@ -145,7 +139,37 @@ page {
 	position: relative;
 	margin: 20rpx 0;
 	min-height: 74rpx;
+	overflow: visible;
 }
+
+.addindex-paragraph-controlbar {
+	position: absolute;
+	right: 0rpx;
+	top: -50rpx;
+	z-index: 2;
+}
+
+.addindex-close {
+	position: absolute;
+	right: 20rpx;
+	top: 20rpx;
+	z-index: 2;
+}
+
+
+.addindex-up,.addindex-down {
+	width: 40rpx !important;
+	height: 40rpx !important;
+}
+
+.addindex-up {
+	right: 100rpx;
+}
+
+.addindex-down {
+	right: 60rpx;
+}
+
 
 .addindex-text {
 	padding: 20rpx;
@@ -166,5 +190,5 @@ page {
 }
 
 .addindex-placeholder {
-	margin-bottom: 120rpx;
+	margin-bottom: 184rpx;
 }

@@ -48,6 +48,7 @@
     <!-- 封面 -->
     <view class="flex flex-align-center flex-justify-center addindex-border addindex-cover">
       <image 
+      wx:if="{{newArticle.Url}}"
       mode="aspectFill" 
       src="{{newArticle.Url}}" 
       class="addindex-cover-img"
@@ -109,6 +110,39 @@
     <!-- 段落 -->
     <view wx:for="{{ contentList }}" wx:key="index" class="addindex-content-list">
       <view class="font addindex-border addindex-paragraph">
+         <view class="flex flex-align-center flex-justify-center addindex-paragraph-controlbar">
+          <!-- 上移一段 -->
+          <image 
+          wx:if="{{ index > 0}}"
+          mode="aspectFit" 
+          src="/images/up.svg" 
+          class="addindex-up addindex-icon"
+          bindtap="upordownParagraphAction"
+          data-index="{{index}}"
+          data-type="{{ -1 }}"
+          ></image>
+          <!-- 下移一段 -->
+          <image 
+          wx:if="{{ index < contentList.length - 1}}"
+          mode="aspectFit" 
+          src="/images/down.svg" 
+          class="addindex-down addindex-icon"
+          bindtap="upordownParagraphAction"
+          data-index="{{index}}"
+          data-type="{{ 1 }}"
+          ></image>
+          <!-- 关闭按钮 -->
+          <image 
+          mode="aspectFit" 
+          src="/images/close.svg" 
+          class="addindex-icon"
+          bindtap="closeParagraph"
+          data-index="{{index}}"
+          ></image>
+        </view> 
+
+
+
         <view 
         class="addindex-text" 
         wx:if="{{ item.type == 'text' }}" 
@@ -139,19 +173,14 @@
         </view>
 
 
-        <image 
-        mode="aspectFit" 
-        src="/images/close.svg" 
-        class="addindex-close addindex-icon"
-        bindtap="closeParagraph"
-        data-index="{{index}}"
-        ></image>
+        
       </view>
 
       <!-- 添加按钮 -->
       <view class="flex flex-justify-center flex-align-center addindex-addbtn-cont">
         <view class="flex flex-justify-center flex-align-center addindex-addbtn">
           <image mode="aspectFit" src="/images/add.svg" class="addindex-icon" bindtap="showBtns" data-index="{{index}}"></image>
+
           <view class="flex flex-justify-center flex-align-center addindex-addbtn-btns" wx:if="{{ item.showBtns }}">
             <image 
             class="addindex-addbtn-btn" 

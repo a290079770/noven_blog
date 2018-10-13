@@ -197,6 +197,28 @@ Page({
     }
   },
 
+
+  /**
+   * [upordownParagraphAction 下移或者上移一段文本]
+   * @Author   罗文
+   * @DateTime 2018-10-12
+   * @param {[Number]} index [循环的第几个]
+   * @param {[Number]} type [1 - 下移  -1 - 上移]
+   * @return   {[type]}   [description]
+   */
+  upordownParagraphAction({ currentTarget :{ dataset : { index , type } } }) {
+    let { contentList } = this.data;
+    const current =contentList[index] ;
+
+    contentList.splice(index,1);
+    contentList.splice(index + type,0,current);
+
+    this.setData({
+      contentList
+    })
+  },
+
+
   /**
    * [showBtns 移除一段文本]
    * @Author   罗文
@@ -205,12 +227,23 @@ Page({
    * @return   {[type]}   [description]
    */
   closeParagraph({ currentTarget :{ dataset : { index } } }) {
-    this.data.contentList.splice( index , 1 );
-
-    this.setData({
-      contentList:this.data.contentList
+    app.showModal({
+      title:'提示',
+      content:'确定删除该段落吗？',
+      confirmColor:'#d13954'
     })
+   .then(() => {
+     this.data.contentList.splice( index , 1 );
+
+     this.setData({
+       contentList:this.data.contentList
+     })
+   })
+   .catch(() => {
+     
+   })
   },
+
 
   /**
    * [showBtns 添加一个图片段落]
@@ -289,24 +322,37 @@ Page({
     //收集数据
     let isPass = this.validNeccessaryField();
 
-    console.log(isPass)
+    if(!isPass) return;
+
+    //收集数据
+    this.data.newArticle.Content = this.data.contentList.slice(0);
+
+
+    Storage.set('previewArticleData',this.data.newArticle)
+    .then(() => {
+      app.goTo({
+        path:'/pages/addArticle/previewArticle/previewArticle'
+      })
+    })
   },
 
   validNeccessaryField() {
-    this.data.newArticle.Content = this.data.contentList.slice(0);
+    const Content = this.data.contentList;
+    const { Title } = this.data.newArticle;
 
-    const { Title , Content } = this.data.newArticle;
     let neccess = [ 'Title','Content' ];
     let isPass = true;
 
-    neccess.forEach( key => {
+    for( let i = 0 ; i < neccess.length ; i ++) {
+      let key = neccess[i];
       switch (key) {
         case 'Title':
           //非空
-          if(!Title) {
+          if(!Title || !Title.replace(/ /g,'')) {
             app.showToast('请添加标题',2);
             isPass = false;
           }
+
           break;
         case 'Content':
           //非空
@@ -314,9 +360,26 @@ Page({
             app.showToast('请添加内容',2);
             isPass = false;
           }
+
+          //内容列表中，至少要有一项有数据
+          for(let i = 0 ; i < Content.length ; i ++) {
+            let item = Content[i];
+
+            if(item.value || item.desc) {
+              break;
+            }
+
+            if(i == Content.length - 1) {
+              app.showToast('内容不能都为空',2);
+              isPass = false;
+            }
+          }
           break;      
       }
-    })
+      
+      if(!isPass) break;
+    }
+    
 
     return isPass;
   },

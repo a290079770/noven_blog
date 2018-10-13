@@ -161,6 +161,36 @@ const showToast = (title,type = 1,duration = 1500) =>{
 }
 
 /**
+ * [showModal 显示弹出框]
+ * @Author   罗文
+ * @DateTime 2018-09-27
+ * @param    {[Object]}   params  [参数]
+ * @return   {[type]}         [description]
+ */
+const showModal = (params) =>{
+  if( Object.prototype.toString.call(params) != '[object Object]' ) {
+    showToast('参数错误',2)
+    return;
+  }
+
+  delete params.success;
+  delete params.fail;
+  delete params.complete;
+
+  return new Promise((resolve,reject) => {
+    wx.showModal({
+      ...params,
+      success(res) {
+        let { cancel , confirm } = res;
+
+        if(cancel) reject();
+        if(confirm) resolve();
+      }
+    })
+  })
+}
+
+/**
  * [uploadImgCloud 上传图片操作]
  * @Author   罗文
  * @DateTime 2018-10-12
@@ -223,20 +253,6 @@ const uploadImgCloud = function () {
   })
 }
 
-// function uploadAction(cloudUrl,tempFilePaths) {
-//   return await wx.cloud.uploadFile({
-//     cloudPath: cloudUrl,
-//     filePath: tempFilePaths, // 小程序临时文件路径
-//   }).then(res => {
-//     //获取到上传文件的fileID
-//     let { fileID } = res;
-//     return Promise.resolve(fileID);
-//   }).catch(error => {
-//     showToast('',2);
-//     return Promise.reject();
-//   })
-// }
-
 
 module.exports = {
   goToExec,
@@ -244,5 +260,6 @@ module.exports = {
   headerClickExec,
   callCloudFunction,
   showToast,
+  showModal,
   uploadImgCloud
 }
