@@ -16,7 +16,7 @@
             {{item.CreateTime}}
            </view>
          </view>
-         <view>
+         <view class="my-list-arc-cover-cont">
            <image class="my-list-arc-cover" src="{{item.Url || defaultUrl }}"></image>
          </view>
       </view> 

@@ -179,6 +179,7 @@ const showModal = (params) =>{
 
   return new Promise((resolve,reject) => {
     wx.showModal({
+      confirmColor:'#d13954',
       ...params,
       success(res) {
         let { cancel , confirm } = res;

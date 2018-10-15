@@ -1,6 +1,5 @@
 <!--logs.wxml-->
 <import src="../../common/bgTemplate/bgTemplate.wxml"/>
-<import src="../../../lib/wxParse/wxParse.wxml"/>
 
 <view class="article-detail">
    <view bindtap="headerClick">
@@ -9,7 +8,7 @@
 
    <view class="article-detail-cont" wx:if="{{detail}}">
 	   <view class="article-detail-title">
-	  	{{detail.Title}} 
+	  	{{detail.Title}}
 	   </view>
 
       <view class="flex flex-align-center flex-justify-between article-info">
@@ -17,7 +16,7 @@
 
       	<view class="flex flex-align-center flex-justify-between article-info-numbercont">
       	  <view class="flex flex-align-center flex-justify-end article-info-zan">
-      	   	<image src="/images/zan-kong.svg" class=" article-info-icon"></image>
+      	   	<image src="{{ hasCollect ? '/images/zan-full.svg' : '/images/zan-kong.svg' }}" class=" article-info-icon"></image>
       	   	<view class="article-info-number">
       	   	  {{detail.CollectCount}}	
       	   	</view>
@@ -31,10 +30,38 @@
       	  </view>
       	</view>		
       </view>
+      
+      
+      <!-- 简介 -->
+      <view class="article-brief font gray9" wx:if="{{detail.Brief}}">
+         简介：{{detail.Brief}}
+      </view>
 
+      
+      <!-- 封面 -->
+      <view class="article-cover" wx:if="{{detail.Url}}" bindtap="previewImage">
+         <image class="article-img" mode="aspectFill" src="{{detail.Url}}" data-type="img" data-src="{{detail.Url}}"></image>
+      </view>
 
-      <view class="article-content">
-      	<template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+      
+      <!-- 内容 -->
+      <view class="gray6 font-l article-content " bindtap="previewImage">
+      	<view class="article-content-item" wx:for="{{detail.Content}}" wx:key="index">
+            <!-- 如果是文本段落 -->
+            <view class="article-content-text-item" wx:if="{{item.type == 'text'}}">
+               {{ item.value }}
+            </view>
+
+            <!-- 如果是图片段落 -->
+            <view wx:if="{{item.type == 'img'}}">
+               <view class="article-content-imgs">
+                  <image class="article-img" mode="widthFix" src="{{item.value}}" data-type="img" data-src="{{item.value}}"></image>
+               </view>
+               <view class="gray9 font-xs article-content-imgs-desc">
+                  {{item.desc}}
+               </view>
+            </view> 
+         </view>
       </view>
 
 
@@ -50,6 +77,33 @@
    <view wx:else>
       <image mode="aspectFill" src="/images/skeletonDetail.jpg" class="article-item-skeleton"></image>
    </view>
+
+   <movable-area class="article-move-area" bindtap="openEditBtns" wx:if="{{ isCurrentAuthor }}">
+     <movable-view 
+      class="flex flex-align-center flex-justify-center article-article-cont {{ isEditTap ? 'article-article-cont-active':''}}"
+      direction="all"
+      inertia
+      x="{{0}}"
+      y="{{0}}"
+      >
+         <image mode="aspectFit" src="/images/edit.svg" class="article-icon"></image>
+      </movable-view>
+
+
+      <view  
+      catchtap="toEditAction"
+      class="flex flex-align-center flex-justify-center article-edit-btn-cont {{isEditTap ? 'article-edit-btn-cont-active' : ''}}"
+      >
+        <image mode="aspectFit" src="/images/write-white.svg" class="article-edit-btn"></image>
+      </view>
+
+      <view  
+      catchtap="deleteAction"
+      class="flex flex-align-center flex-justify-center article-del-btn-cont {{isEditTap ? 'article-del-btn-cont-active' : ''}}"
+      >
+        <image mode="aspectFit" src="/images/delete.svg" class="article-edit-btn"></image>
+      </view>
+   </movable-area>
 
    <add-article />
 </view>

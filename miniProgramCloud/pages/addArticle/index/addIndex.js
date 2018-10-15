@@ -9,6 +9,7 @@ Page({
       Title:'',
       Url:'',
       Brief:'',
+      CreateTime:Date.now(),
       Content:[]
     },
     contentList:[
@@ -325,7 +326,13 @@ Page({
     if(!isPass) return;
 
     //收集数据
-    this.data.newArticle.Content = this.data.contentList.slice(0);
+    let Content = this.data.contentList.slice(0);
+    this.data.newArticle.Content = Content.map( item => {
+       delete item.showBtns;
+       return item;
+    })
+    
+    this.data.newArticle.CreateTime = Date.now();
 
 
     Storage.set('previewArticleData',this.data.newArticle)

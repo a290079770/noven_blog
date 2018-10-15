@@ -45,11 +45,16 @@
 
 
 .article-item-abstract {
-  padding: 0 20rpx 20rpx;
+  padding: 0 20rpx ;
   margin-top: 30rpx;
+  margin-bottom: 10rpx;
   font-size: 28rpx;
   color:#666;
   text-align: center;
+}
+
+.article-item-place {
+  height: 1rpx;
 }
 
 .article-item-skeleton {

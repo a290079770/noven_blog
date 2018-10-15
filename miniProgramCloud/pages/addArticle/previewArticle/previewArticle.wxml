@@ -1,9 +1,55 @@
+<!--logs.wxml-->
 <import src="../../common/bgTemplate/bgTemplate.wxml"/>
 
-<view class="updateinfo">
-  <view bindtap="headerClick">
-    <template is="bg-header-detail" data="{{sysType}}"></template>
-  </view>
+<view class="article-detail">
+   <view bindtap="headerClick">
+   	 <template is="bg-header-detail" data="{{sysType}}"></template>
+   </view>
 
-  1111
+   <view class="article-detail-cont" wx:if="{{detail}}">
+	   <view class="article-detail-title">
+	  	{{detail.Title}} 
+	   </view>
+
+      <view class="flex flex-align-center flex-justify-between article-info">
+      	<view class="article-info-left">{{detail.Author}}  <text class="article-info-time"> {{formatCreateTime}}</text></view>	
+
+      	<view class="flex flex-align-center flex-justify-between article-info-numbercont">
+      	  <view class="flex flex-align-center flex-justify-end article-info-zan">
+      	   	<image src="/images/zan-kong.svg" class=" article-info-icon"></image>
+      	   	<view class="article-info-number">
+      	   	  0
+      	   	</view>
+      	  </view>
+
+      	  <view class="flex flex-align-center flex-justify-end article-info-zan">
+      	   	<image src="/images/view.svg" class=" article-info-icon"></image>
+      	   	<view class="article-info-number">
+      	   	  0
+      	   	</view>
+      	  </view>
+      	</view>		
+      </view>
+
+
+      <view class="article-content">
+      	<!-- <template is="wxParse" data="{{wxParseData:article.nodes}}"/> -->
+      </view>
+
+   </view>
+
+
+   <view wx:else>
+      <image mode="aspectFill" src="/images/skeletonDetail.jpg" class="article-item-skeleton"></image>
+   </view>
+
+</view>
+
+<view class="flex page-bottom">
+	<view class="page-bottom-btn page-bottom-btn-plain" bindtap="editArticle">
+    修改
+  </view>
+  <view class="page-bottom-btn" bindtap="submitArticle">
+    发布
+  </view>
 </view>

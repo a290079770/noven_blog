@@ -12,6 +12,8 @@
      <view class="article-item-abstract text-ess-3">
        {{item.Brief}}
      </view>
+
+     <view class="article-item-place"></view>
    </view>
 
    <view class="article-item-cont" wx:else>

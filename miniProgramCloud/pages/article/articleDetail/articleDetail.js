@@ -1,4 +1,3 @@
-var WxParse = require('../../../lib/wxParse/wxParse.js');
 var { dateFormat } = require('../../../noven/utils/dateUtil');
 var app = getApp();
 
@@ -9,8 +8,11 @@ Page({
     hasView: wx.getStorageSync('hasView'),   // 0 - 否    1 - 是
     sysType:48,
     detail:null,
+    previewUrls:[],  //存放页面预览图片数组
     hasCollect:false,
     collecting:false,   //拦截连续点击
+    isEditTap: false, //是否点击了编辑按钮
+    isCurrentAuthor:false //当前用户是否是本文的作者
   },
   onLoad: function ({ id }) {
     //获取用户是否第一次进入这个页面
@@ -20,10 +22,6 @@ Page({
     })
 
     this.getDetail(id)
-  },
-
-  onShow() {
-    this.getDetail(this.data.id)
   },
 
   onPullDownRefresh(){
@@ -44,15 +42,28 @@ Page({
         id
       }
     }).then(res => {
+       console.log(res.data)
+       let { CreatTime , Url , Content , AuthorId} = res.data;
        //处理下时间
-       res.data.CreatTime = dateFormat(res.data.CreatTime,'yyyy-mm-dd HH:mm:ss');
+       CreatTime = dateFormat(CreatTime,'yyyy-mm-dd');
+
+       //收集可预览图片
+       let previewUrls = [];
+       if( Url ) previewUrls.push( Url );
+       Content.forEach( item => {
+        if( item.type == 'img' && item.value ) previewUrls.push( item.value );
+       })
+
+       //判断当前文章是不是登录用户写的，如果是，则显示编辑按钮
+       const { userInfo } = app.globalData;
 
        this.setData({
          detail: res.data,
-         hasCollect: res.data.hasCollect || false
+         hasCollect: res.data.hasCollect || false,
+         previewUrls,
+         isCurrentAuthor: userInfo && userInfo.openId && userInfo.openId == AuthorId
        })
 
-       WxParse.wxParse('article', 'html', res.data.Content , this,5);
     }).catch(err => {
       console.log(err)
       app.showToast(err.description,2);
@@ -113,6 +124,56 @@ Page({
         hasCollect,
         collecting:false
       })
+    })
+  },
+
+  //点击去编辑操作
+  toEditAction() {
+
+  },
+
+  //点击去删除操作
+  deleteAction() {
+    app.showModal({
+      title:'提示',
+      content:'确定删除改文章？',
+    })
+    .then(()=>{
+      //删除文章
+      return app.callCloudFunction({
+        name:'deleteArticle',
+        id: this.data.detail.id
+      })
+    })
+    .then( res => {
+      return app.showToast('删除成功')
+    })
+    .then(() => {
+      app.goTo({
+        path:'/pages/article/myList/myList?type=1'
+      });
+    })
+    .catch((err)=>{
+      console.log(err)
+      app.showToast(err.description,2)
+    })
+  },
+
+  //点击内容区的图片，可以预览图片
+  previewImage({ target:{ dataset } }) {
+    const { type, src } = dataset;
+    if( !type || type !=='img') return;
+
+    wx.previewImage({
+      current:src,
+      urls:this.data.previewUrls
+    })
+  },
+
+  //打开或者关闭编辑按钮组
+  openEditBtns() {
+    this.setData({
+      isEditTap: !this.data.isEditTap
     })
   },
   

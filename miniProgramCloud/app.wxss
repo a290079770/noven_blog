@@ -6,7 +6,6 @@
  danger:#f56c6c;
  info:#768fc3;
  */
-@import "/lib/wxParse/wxParse.wxss";
 @import "./pages/common/bgTemplate/bgTemplate.wxss";
 
 page {
@@ -15,6 +14,10 @@ page {
   bottom: 0;
   left: 0;
   width: 100%;
+}
+
+view {
+  overflow: visible;
 }
 
 .flex {
@@ -60,6 +63,10 @@ page {
 .flex-justify-between {
   -webkit-justify-content: space-between;
   justify-content: space-between;
+}
+
+.flex-column {
+  flex-direction: column;
 }
 
 /*//单行省略*/
@@ -170,6 +177,13 @@ page {
   background: #d13954;
   color:white;
   font-size: 36rpx;
+}
+
+.page-bottom-btn-plain {
+  background: white;
+  box-sizing: border-box;
+  border-top:1px solid #eee;
+  color:#d13954;
 }
 
 

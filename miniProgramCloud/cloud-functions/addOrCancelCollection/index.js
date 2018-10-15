@@ -4,7 +4,6 @@ const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database();
 const collection = db.collection('nb_collections');
-const _ = db.command
 
 // 云函数入口函数
 /**

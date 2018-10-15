@@ -1,6 +1,7 @@
 page {
 	background: #f4f4f4;
 }
+
 .addindex-cont {
 	margin: 0 auto;
 	width: 690rpx;
@@ -57,6 +58,10 @@ page {
 	background: transparent;
 }
 
+.addindex-cover-addtext {
+	color:#dedddd;
+	margin-top: 4rpx; 
+}
 
 .addindex-addbtn-cont {
 	height: 70rpx;
