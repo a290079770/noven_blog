@@ -3,7 +3,7 @@ const cloud = require('wx-server-sdk')
 
 cloud.init()
 const db = cloud.database();
-const collection = db.collection('nb_collections');
+const collection = db.collection('nb_arcticles');
 
 // 云函数入口函数
 /**
@@ -13,6 +13,17 @@ const collection = db.collection('nb_collections');
  * @neccessaryParam  id 文章id    
  */
 exports.main = async (event, context) => {
+	const { id } = event;
+
+	if( !id ) return await setResponse(21,'文章id为空'); 
+
+    const { stats } = await collection.where({
+    	_id:id
+    })
+    .remove();
+    
+    if( stats < 1) return await setResponse(21,'删除失败');
+
 	return await setResponse(200,'ok');
 }
 

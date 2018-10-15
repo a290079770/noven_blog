@@ -195,5 +195,5 @@ page {
 }
 
 .addindex-placeholder {
-	margin-bottom: 184rpx;
+	height: 184rpx;
 }

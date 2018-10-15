@@ -32,8 +32,36 @@
       </view>
 
 
-      <view class="article-content">
-      	<!-- <template is="wxParse" data="{{wxParseData:article.nodes}}"/> -->
+      <!-- 简介 -->
+      <view class="article-brief font gray9" wx:if="{{detail.Brief}}">
+         简介：{{detail.Brief}}
+      </view>
+
+      
+      <!-- 封面 -->
+      <view class="article-cover" wx:if="{{detail.Url}}" bindtap="previewImage">
+         <image class="article-img" mode="aspectFill" src="{{detail.Url}}" data-type="img" data-src="{{detail.Url}}"></image>
+      </view>
+
+      
+      <!-- 内容 -->
+      <view class="gray6 font-l article-content " bindtap="previewImage">
+        <view class="article-content-item" wx:for="{{detail.Content}}" wx:key="index">
+            <!-- 如果是文本段落 -->
+            <view class="article-content-text-item" wx:if="{{item.type == 'text'}}">
+               {{ item.value }}
+            </view>
+
+            <!-- 如果是图片段落 -->
+            <view wx:if="{{item.type == 'img'}}">
+               <view class="article-content-imgs">
+                  <image class="article-img" mode="widthFix" src="{{item.value}}" data-type="img" data-src="{{item.value}}"></image>
+               </view>
+               <view class="gray9 font-xs article-content-imgs-desc">
+                  {{item.desc}}
+               </view>
+            </view> 
+         </view>
       </view>
 
    </view>
@@ -44,6 +72,8 @@
    </view>
 
 </view>
+
+<view style="height:110rpx;"></view>
 
 <view class="flex page-bottom">
 	<view class="page-bottom-btn page-bottom-btn-plain" bindtap="editArticle">

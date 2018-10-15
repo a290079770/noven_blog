@@ -16,6 +16,28 @@
 	height: 140rpx;
 }
 
+.my-list-item-cont-left {
+	height: 100%;
+}
+
+.my-list-item-del {
+	width: 60rpx;
+	height: 100%;
+}
+
+.my-list-item-del-icon {
+	width: 40rpx;
+	height: 40rpx;
+}
+
+.my-list-item-del-kong {
+	box-sizing: border-box;
+	border: 1px solid #dedede;
+	border-radius: 50%;
+	width: 40rpx;
+	height: 40rpx;
+}
+
 .my-list-arc {
 	flex-direction: column;
 	width: 460rpx;
@@ -48,4 +70,56 @@
 .article-item-skeleton {
 	width: 100%;
 	height: 100%;
+}
+
+
+.my-list-edit-btns {
+	position: fixed;
+	right: 0;
+	bottom: 200rpx;
+	height: 390rpx;
+	width:200rpx;
+}
+
+.my-list-edit-btn {
+	position: absolute;
+	bottom: -100rpx;
+	left: 0;
+	transition: all 0.5s;
+	width: 100rpx;
+	height: 100rpx;
+	border-radius: 50%;
+	background: #768fc3;
+	-webkit-box-shadow: 0 10px 30px rgba(118,143,195,.6);
+	box-shadow: 0 10px 30px rgba(118,143,195,.6);
+	color:white;
+	opacity: 0;
+}
+
+.my-list-edit-del {
+	background: #d13954;
+	-webkit-box-shadow: 0 10px 30px rgba(248,76,91,.6);
+	box-shadow: 0 10px 30px rgba(248,76,91,.6);
+}
+
+.my-list-edit-cancel {
+	background: #ededed;
+	-webkit-box-shadow: 0 10px 30px rgba(0,0,0,.2);
+	box-shadow: 0 10px 30px rgba(0,0,0,.2);
+	color:#999;
+}
+
+.my-list-edit-all-active {
+	opacity: 1;
+	bottom: 190rpx;
+}
+
+.my-list-edit-del-active {
+	opacity: 1;
+	bottom: 60rpx;
+}
+
+.my-list-edit-cancel-active {
+	opacity: 1;
+	bottom: -70rpx;
 }

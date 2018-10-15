@@ -37,7 +37,7 @@ Page({
     app.goBack();
   },
 
-  //发布视频
+  //发布文章
   submitArticle() {
     wx.showLoading({
       title:'正在发布',

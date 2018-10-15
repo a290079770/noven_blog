@@ -1,4 +1,5 @@
 var { dateFormat } = require('../../../noven/utils/dateUtil');
+const { Storage } = require('../../../noven/storage')
 var app = getApp();
 
 Page({
@@ -129,7 +130,13 @@ Page({
 
   //点击去编辑操作
   toEditAction() {
-
+    //直接把当前数据写入到Storage中，编辑页直接取
+    Storage.set('previewArticleData',this.data.detail)
+    .then(() => {
+      app.goTo({
+        path:'/pages/addArticle/index/addIndex'
+      })
+    })
   },
 
   //点击去删除操作

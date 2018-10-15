@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
 	 	 //去数据库查询该用户
 		 const { data:arr } = await db.collection('nb_users').where({
 			 openId
-	   })
+	     })
 		 .get()
 
 		 if( arr.length < 1 ) return await setResponse(21, '未获取到用户信息',event);
@@ -53,7 +53,16 @@ exports.main = async (event, context) => {
 	 	 return await setResponse(200, 'ok',_id);
 	 }else {
 		 //修改
+	 	 const { stats } = await collection.where({
+	 	 	 _id
+	 	 })
+	 	 .update({
+	 	 	data:detail
+	 	 })
 
+	 	 if( stats < 1) return await setResponse(21,'修改失败');
+
+	 	 return await setResponse(200, 'ok',_id);
 	 }
 }
 
