@@ -36,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -47,7 +47,50 @@
 				{
 					"id": -1,
 					"name": "我的文章",
-					"pathName": "pages/articles/articles"
+					"pathName": "pages/articles/articles",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/mine/mine",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "首页",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/mine/mine",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "修改昵称",
+					"pathName": "pages/editInfo/editInfo",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "关于我们",
+					"pathName": "pages/aboutUs/aboutUs",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的发布、收藏",
+					"pathName": "pages/myStatistics/myStatistics",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "文章详情",
+					"pathName": "pages/details/details",
+					"query": ""
 				}
 			]
 		}

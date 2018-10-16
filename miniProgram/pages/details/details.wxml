@@ -1,12 +1,27 @@
 <view class="detail-wrap">
-  <view class="detail-title">{{title}}</view>
-  <view class="about-article">
-    <text class="article">article</text>
-    <text class="author mg-letf20">@{{author}}</text>
-    <text class="time mg-letf20">{{time}}</text>
+  <view wx:if="{{hasGotData}}">
+    <view class="detail-title">{{detailData.Title}}</view>
+    <view class="about-article">
+      <text class="article">article</text>
+      <text class="author mg-letf20">@{{detailData.Author}}</text>
+      <text class="time mg-letf20">{{detailData.CreateTime}}</text>
+    </view>
+    <view class="tongji-wrap">
+      <view class="tongji">
+        <text>收藏量：<text>{{detailData.CollectCount || 0}}</text></text>
+        <text class="reading">阅读量：<text>{{detailData.ReadCount || 0}}</text></text>
+      </view>
+    </view>
+    <view class="detail-image-wrap"><image class="detail-image" src="{{detailData.Url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg'}}" /></view>
+    <view class="detail-text">{{detailData.Content}}</view>
+    <!-- 是否收藏 -->
+    <movable-area class="is-collection-wrap">
+      <movable-view
+        class="is-collection"
+        direction="all">
+          <image class="collection-img" src="/images/detail/zan-kong.svg"></image>
+      </movable-view>
+    </movable-area>
   </view>
-  <view class="detail-image-wrap"><image class="detail-image" src="http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg" /></view>
-  <view class="detail-text">
-    这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。这是文章详情的内容文本。
-  </view>
+  <image wx:else class="detail-skeleton" src="../../images/detail/detail-skeleton.jpg"></image>
 </view>

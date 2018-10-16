@@ -1,0 +1,8 @@
+<!--pages/aboutUs/aboutUs.wxml-->
+<view class="aboutus-wrap">
+  <image class="aboutus-logo" src="/images/n1.png"></image>
+  <text class="aboutus-title">关于Noven Blog</text>
+  <view class="aboutus-text">
+    Noven Blog 是一个方便记录博客、文章、心情的涵盖大部分平台的系统，由个人开发维护。如果您在使用的过程中遇到问题或有更好的建议，欢迎联系作者 290079770@qq.com。
+  </view>
+</view>

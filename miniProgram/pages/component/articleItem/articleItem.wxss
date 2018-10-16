@@ -7,6 +7,8 @@
 .article-item {
   padding-bottom: 30rpx;
   margin-bottom: 30rpx;
+  border: 1px solid rgba(206, 194, 196, 0.5);
+  box-shadow: 0 8rpx 16rpx rgba(241, 136, 136, .3);
 }
 .article-image-wrap {
   width: 100%;
@@ -18,6 +20,7 @@
 }
 .about-article {
   margin-top: 10rpx;
+  padding: 0 20rpx;
   text-align: center;
   font-size: 30rpx;
 }
@@ -33,12 +36,13 @@
   color: rgb(10, 10, 143);
 }
 .title {
-  padding: 20rpx 0 30rpx;
+  padding: 20rpx 60rpx 30rpx;
   color: rgb(63, 12, 3);
   font-size: 40rpx;
   text-align: center;
 }
 .des {
+  padding: 0 20rpx;
   font-size: 28rpx;
   color: #555;
 }

@@ -1,12 +1,12 @@
 <view class="article-wrap">
-    <view wx:for="{{articleLists}}" wx:key="index" class="article-item">
-      <view class="article-image-wrap"><image class="article-image" src="{{item.url}}"/></view>
+    <view class="article-item" bindtap="toDetail">
+      <view class="article-image-wrap"><image class="article-image" src="{{item.url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg'}}"/></view>
       <view class="about-article">
         <text class="article">article</text>
-        <text class="author mg-letf20">@{{item.author}}</text>
-        <text class="time mg-letf20">{{item.time}}</text>
+        <text class="author mg-letf20">@{{item.Author}}</text>
+        <text class="time mg-letf20">{{item.CreateTime}}</text>
       </view>
-      <view class="title">{{item.title}}</view>
-      <view class="des">{{item.des}}</view>
+      <view class="title">{{item.Title}}</view>
+      <view class="des">{{item.Brief}}</view>
     </view>
   </view>

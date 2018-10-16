@@ -4,13 +4,17 @@
     "pages/articles/articles",
     "pages/mine/mine",
     "pages/login/login",
-    "pages/details/details"
+    "pages/details/details",
+    "pages/myStatistics/myStatistics",
+    "pages/aboutUs/aboutUs",
+    "pages/editInfo/editInfo"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Noven Blog",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"black",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "list": [

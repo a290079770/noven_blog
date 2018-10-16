@@ -5,12 +5,17 @@
   <view class="login-info mg-top30">
     <view class="login-info-email">
       <!-- <text>邮箱：</text> -->
-      <input type="text" placeholder="请输入邮箱"></input>
+      <input type="text" placeholder="请输入邮箱" name="email" bindinput="emailInput"></input>
     </view>
     <view class="login-info-password mg-top30">
       <!-- <text>密码：</text> -->
-      <input password="true" placeholder="请输入密码"></input>
+      <input password="true" placeholder="请输入密码" name="pwd" bindinput="pwdInput"></input>
     </view>
-    <view class="login-btn">登录</view>
+    <view class="login-btn" bindtap="login">登录</view>
+  </view>
+  <view class="shouquan-login">
+    <!-- <view bindtap="shouquan">微信授权登录</view> -->
+    <button open-type="getUserInfo" bindgetuserinfo="shouquan">微信授权登录</button>
+    <view class="mg-top30" bindtap="nologin">暂不登录</view>
   </view>
 </view>

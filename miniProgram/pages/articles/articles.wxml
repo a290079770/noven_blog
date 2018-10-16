@@ -1,4 +1,26 @@
 <view class="article-wrap">
-  <article-list-item></article-list-item>
+  <!-- <view class="article-image-wrap">
+    <image class="article-image" src="../../images/article/hotarc.jpg"></image>
+  </view>
+  <view class="scroll-image-wrap">
+     <article-list-item wx:for="{{articleList}}" wx:key="{{id}}" data="{{item}}"></article-list-item>
+  </view>
+  <view class="article-image-wrap">
+    <image class="article-image" src="../../images/article/choiceness.jpg"></image>
+  </view>
+  <view class="scroll-image-wrap">
+     <article-list-item wx:for="{{articleList}}" wx:key="{{id}}" data="{{item}}"></article-list-item>
+  </view> -->
+  <view class="article-image-wrap">
+    <image class="article-image" src="../../images/article/articlelist.png"></image>
+  </view>
+  <view wx:if="{{hasGotData}}">
+    <article-list-item
+      wx:for="{{articleList}}"
+      wx:key="{{id}}"
+      data="{{item}}">
+    </article-list-item>
+  </view>
+  <image wx:else class="articlelist-skeleton" src="../../images/article/articleListItem-skeleton.jpg"></image>
   <!-- <button bindtap="toDetails">details</button> -->
 </view>

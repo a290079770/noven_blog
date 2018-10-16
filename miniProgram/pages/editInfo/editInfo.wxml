@@ -1,0 +1,37 @@
+<!--pages/editInfo/editInfo.wxml-->
+<view class="edit-info-wrap">
+  <view wx:if="{{type === 3}}" class="egit-info-item">
+    <input class="edit-nickname"
+      focus
+      maxlength="12"
+      placeholder="请输入昵称"
+      placeholder-style="color:#bbb;font-size:30rpx;"
+      selection-start="{{0}}"
+      selection-end="{{12}}"
+      value="小林"></input>
+    <view class="text-wrap">
+      <text>您最多可以输入12个字符</text>
+      <text><text class="current-length">0</text> / 12</text>
+    </view>
+  </view>
+  <view wx:else class="edit-info-item">
+    <textarea placeholder-style="color:#bbb;font-size:30rpx;"
+      class="edit-brief"
+      auto-focus
+      focus
+      maxlength="-1"
+      selection-start="{{0}}"
+      selection-end="{{280}}"
+      placeholder="请输入您的简介！" 
+      value="{{brief}}"
+      bindinput="inputAction">
+    </textarea>
+    <view class="text-wrap">
+      <text>您最多可以输入280个字符</text>
+      <text><text class="current-length">0</text> / 280</text>
+    </view>
+  </view>
+  <view>
+    <button class="submit-btn" bindtap="submitEdit">提交修改</button>
+  </view>
+</view>

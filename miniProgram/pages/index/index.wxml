@@ -7,18 +7,19 @@
   </view>
   <!-- 轮播图 -->
   <view class="banner">
-    <swiper class="slide-wrap pd-left20 pd-right20" indicator-dots="{{indicatorDots}}" indicator-color="{{indicatorColor}}"
-      indicator-active-color="{{indicatorActiveColor}}"
-      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}" wx:key="{{index}}">
-        <swiper-item>
+    <swiper class="slide-wrap pd-left20 pd-right20" indicator-dots="{{true}}" indicator-color="{{indicatorColor}}"
+      indicator-active-color="{{indicatorActiveColor}}" circular="true"
+      autoplay="{{true}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}" wx:key="{{id}}">
+        <swiper-item bindtap="toDetail">
           <image src="{{item}}" class="slide-image"/>
         </swiper-item>
       </block>
     </swiper>
   </view>
   <!-- 文章列表 -->
-  <view>
-    <article-item></article-item>
+  <view wx:if="{{hasGotData}}">
+    <article-item  wx:for="{{articleList}}" wx:key="id" item="{{item}}"></article-item>
   </view>
+  <image wx:else class="articlelist-skeleton" src="../../images/articleItem-skeleton.jpg"></image>
 </view>

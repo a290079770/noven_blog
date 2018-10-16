@@ -24,8 +24,39 @@
   margin-top: 30rpx;
   height: 400rpx;
 }
-
 .slide-image {
   width: 100%;
   height: 100%;
+}
+.articlelist-skeleton {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 50rpx;
+  width: 700rpx;
+  height: 626rpx;
+  border: 1px solid #ddd;
+}
+
+ /* 面板指示点样式 */
+.slide-wrap .wx-swiper-dots.wx-swiper-dots-horizontal{
+  margin-bottom: 2rpx;
+}
+.slide-wrap .wx-swiper-dot{
+  width:20rpx;
+  display: inline-flex;
+  height: 10rpx; 
+  margin-left: 10rpx;
+  justify-content:space-between;
+}
+.slide-wrap .wx-swiper-dot-active {
+  width: 40rpx;
+}
+.slide-wrap .wx-swiper-dot::before{
+  content: '';
+  flex-grow: 1;  
+  background: rgba(255,255,255,0.6);
+  border-radius: 8rpx;
+}
+.slide-wrap .wx-swiper-dot-active::before{
+  background:rgba(244,0,0,0.8);
 }

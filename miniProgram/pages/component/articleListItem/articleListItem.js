@@ -1,16 +1,26 @@
+const app = getApp();
+
 Component({
-  properties: {},
+  properties: {
+    data: {
+      type: Object,
+      default: {}
+    }
+  },
   data: {
     
   },
-  onLoad: function () {
-    
+  attached: function () {
+    // console.log(this.properties.data)
   },
   methods: {
     toDetails: function () {
-      wx.navigateTo({
-        url: "/pages/details/details"
-      })
+
+      app.toDetails(this.properties.data.Id);
+      
+      // wx.navigateTo({
+      //   url: "/pages/details/details?id=" + this.properties.data.id
+      // })
     }
   }
   

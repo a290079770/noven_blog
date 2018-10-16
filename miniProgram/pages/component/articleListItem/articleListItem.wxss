@@ -39,8 +39,13 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+.author-info {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: rgb(94, 17, 17);
+}
 .article-list-item-des {
-  margin: 20rpx 0;
+  margin-top: 10rpx;
   font-size: 30rpx;
   color: #666;
   /* 2行省略 */
@@ -50,6 +55,7 @@
   overflow: hidden;
 }
 .article-list-item-tongji {
+  margin-top: 20rpx;
   font-size: 28rpx;
   color: rgb(156, 35, 35);
 }

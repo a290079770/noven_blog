@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "article-list-item": "../component/articleListItem/articleListItem"
+  }
+}

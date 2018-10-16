@@ -38,3 +38,10 @@ page, .login-wrap, .login-info, .login-logo {
   background: rgb(223, 76, 76);
   border-radius: 10rpx;
 }
+.shouquan-login {
+  position: absolute;
+  bottom: 50rpx;
+  font-size: 32rpx;
+  color: rgba(173, 42, 42, 0.9);
+  text-align: center;
+}
