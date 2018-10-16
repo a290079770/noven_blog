@@ -4,27 +4,30 @@ const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database();
 const collection = db.collection('nb_arcticles');
+const _ = db.command
 
 // 云函数入口函数
 /**
  * [main 删除文章]
  * @Author   罗文
  * @DateTime 2018-09-26
- * @neccessaryParam  id 文章id    
+ * @neccessaryParam Array ids 要删除的文章id集合    
  */
 exports.main = async (event, context) => {
-	const { id } = event;
+	const { ids } = event;
 
-	if( !id ) return await setResponse(21,'文章id为空'); 
+	if( !ids || !Array.isArray(ids) || ids.length < 1 ) return await setResponse(21,'文章id为空'); 
 
-    const { stats } = await collection.where({
-    	_id:id
+  try {
+    const res = await collection.where({
+      _id:_.in(ids)
     })
     .remove();
-    
-    if( stats < 1) return await setResponse(21,'删除失败');
 
-	return await setResponse(200,'ok');
+    return await setResponse(200,'ok',res);
+  } catch(e) {
+    return await setResponse(21,'服务端错误');
+  }
 }
 
 

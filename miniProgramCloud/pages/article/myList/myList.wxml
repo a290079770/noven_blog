@@ -13,11 +13,12 @@
     bindtap="handleArticleClick" 
     bindlongpress="itemLongPress"
     data-id="{{item._id}}"
+    data-index="{{index}}"
     >
       <view class="flex flex-align-center flex-justify-between my-list-item-cont">
          <view class="flex flex-align-center my-list-item-cont-left">
            <view wx:if="{{isOpenEdit}}" class="flex flex-align-center my-list-item-del">
-             <view class="my-list-item-del-kong" wx:if="{{false}}"></view>
+             <view class="my-list-item-del-kong" wx:if="{{!item.selected}}"></view>
              <image wx:else mode="aspectFill" src="/images/gou.svg" class="my-list-item-del-icon"></image>
            </view>
            <view class="flex flex-justify-center my-list-arc" style="width:{{isOpenEdit ? 400 : 460 }}rpx">
@@ -52,10 +53,10 @@
   </view>
   
   <view class="my-list-edit-btns">
-    <view class="flex flex-align-center flex-justify-center font-lg my-list-edit-btn my-list-edit-all {{ isOpenEdit ? 'my-list-edit-all-active':''}}">
+    <view class="flex flex-align-center flex-justify-center font-lg my-list-edit-btn my-list-edit-all {{ isOpenEdit ? 'my-list-edit-all-active':''}}" bindtap="selectAll">
       全选
     </view>
-    <view class="flex flex-align-center flex-justify-center font-lg my-list-edit-btn my-list-edit-del {{ isOpenEdit ? 'my-list-edit-del-active':''}}" bindtap="">
+    <view class="flex flex-align-center flex-justify-center font-lg my-list-edit-btn my-list-edit-del {{ isOpenEdit ? 'my-list-edit-del-active':''}}" bindtap="deleteAction">
       删除
     </view>
     <view class="flex flex-align-center flex-justify-center font-lg my-list-edit-btn my-list-edit-cancel {{ isOpenEdit ? 'my-list-edit-cancel-active':''}}" bindtap="cancel">

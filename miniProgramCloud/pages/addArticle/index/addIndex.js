@@ -56,6 +56,7 @@ Page({
           })
        }
     }) 
+    .catch(()=>{})
   },
 
   onShow() {
@@ -102,6 +103,11 @@ Page({
     })
     .catch(()=>{})
 
+  },
+
+  onUnload() {
+    //返回的时候，移除掉当前编辑
+    Storage.remove('previewArticleData').catch(()=>{})
   },
 
 

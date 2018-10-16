@@ -61,6 +61,7 @@ Page({
         delta: 1
       })
     }).catch(err => {
+      console.log(err)
       app.showToast(err.description,2);
     })
   },

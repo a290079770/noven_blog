@@ -52,6 +52,7 @@ exports.main = async (event, context) => {
 
 	 	 return await setResponse(200, 'ok',_id);
 	 }else {
+	 	 delete detail._id;
 		 //修改
 	 	 const { stats } = await collection.where({
 	 	 	 _id

@@ -71,15 +71,22 @@ exports.main = async (event, context) => {
 
 	}
 
+	let data = list.data;
+	data = data.map( item => {
+		delete item.Content;
+		return data;
+	})
+
 	//格式化返回数据
   const { result } = await cloud.callFunction({
   	name:'response',
   	data:{
   		code:200,
-  		data:list.data || list.total,
+  		data:data || list.total,
   		recordCount:recordCount.total
   	}
   })
 
   return result;
 }
+

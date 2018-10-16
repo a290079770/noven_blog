@@ -143,16 +143,19 @@ Page({
   deleteAction() {
     app.showModal({
       title:'提示',
-      content:'确定删除改文章？',
+      content:'确定删除该文章？',
     })
     .then(()=>{
       //删除文章
       return app.callCloudFunction({
         name:'deleteArticle',
-        id: this.data.detail.id
+        data:{
+          ids: [this.data.detail._id]
+        }  
       })
     })
     .then( res => {
+      console.log(res)
       return app.showToast('删除成功')
     })
     .then(() => {

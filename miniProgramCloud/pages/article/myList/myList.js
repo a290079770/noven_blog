@@ -41,11 +41,13 @@ Page({
     }).then(res => {
       res.data = res.data.map(item => {
         item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd HH:mm:ss');
+        item.selected = false;
         return item;
       })
 
       this.setData({
-        dataList:res.data
+        dataList:res.data,
+        isOpenEdit:false
       })
     }).catch(err => {
       app.showToast(err.description,2);
@@ -54,13 +56,23 @@ Page({
     })
   },
 
-  handleArticleClick({ currentTarget:{dataset:{ id = '' }}}) {
-    app.goTo({
-      path:'/pages/article/articleDetail/articleDetail',
-      query:{
-        id,
-      }
-    });
+  handleArticleClick({ currentTarget:{dataset:{ id , index }}}) {
+    if( this.data.isOpenEdit ) {
+      //如果是正在操作，就勾选或取消当前项
+      let current = this.data.dataList[index];
+      current.selected = !current.selected;
+
+      this.setData({
+        dataList: this.data.dataList
+      })
+    }else {
+      app.goTo({
+        path:'/pages/article/articleDetail/articleDetail',
+        query:{
+          id,
+        }
+      });
+    }
   },
    
   //长按事件，触发删除操作
@@ -72,9 +84,79 @@ Page({
     })
   },
 
-  cancel() {
+  //全选
+  selectAll() {
+    let dataList = this.data.dataList.map( item => {
+       item.selected = true;
+       return item
+    })
+
     this.setData({
-      isOpenEdit:false
+      dataList
+    })
+  },
+
+  //取消
+  cancel() {
+    let dataList = this.data.dataList.map( item => {
+       item.selected = false;
+       return item
+    })
+
+    this.setData({
+      isOpenEdit:false,
+      dataList
+    })
+  },
+
+  //删除操作
+  deleteAction() {
+    let ids = [];
+    this.data.dataList.forEach( item => {
+      if( item.selected ) ids.push(item._id);
+    })
+
+    console.log(ids);
+    if( ids.length < 1) {
+       app.showToast('未选择删除文章',2) 
+       return
+    }
+
+    app.showModal({
+      title:'提示',
+      content:'确定删除选中文章？',
+    })
+    .then(()=>{
+      wx.showLoading({
+        title:'正在删除',
+        mask:true
+      })
+      //删除文章
+      return app.callCloudFunction({
+        name:'deleteArticle',
+        data:{
+          ids
+        }  
+      })
+    })
+    .then( res => {
+      return app.showToast('删除成功')
+    })
+    .then(() => {
+      //这里本来应该调用this.getDataList，但是性能不太好，就直接删除本地了
+      //移除本地
+      this.data.dataList.forEach( (item,index) => {
+        if( item.selected ) this.data.dataList.splice(index,1)
+      })
+
+      this.setData({
+        dataList:this.data.dataList,
+        isOpenEdit:false
+      })
+    })
+    .catch((err)=>{
+      console.log(err)
+      app.showToast(err.description,2)
     })
   },
 
