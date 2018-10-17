@@ -4,11 +4,7 @@ var { dateFormat } = require('../../noven/utils/dateUtil');
 //获取应用实例
 Page({
   data: {
-    imgUrls: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-    ],
+    swiperDefaultUrl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
     hotArticleList:[
       {
         isSkeleton:true
@@ -16,6 +12,16 @@ Page({
       {
         isSkeleton:true
       },
+      {
+        isSkeleton:true
+      },
+    ],
+    choiceArticleList:[
+      {
+        isSkeleton:true
+      }
+    ],
+    newestArticleList:[
       {
         isSkeleton:true
       },
@@ -42,11 +48,24 @@ Page({
       db: app.globalData.db
     })
 
-    this.getDataList();
+    this.getDataListIndex();
   },  
 
   onPullDownRefresh(){
-    this.getDataList();
+    this.getDataListIndex();
+  },
+
+  onShareAppMessage: function (res) {
+    return {
+      title:'记之所忆，为您记录点点滴滴～～'
+    }
+  },
+
+  //首页获取列表和刷新入口
+  getDataListIndex( ) {
+    this.getDataList('hot');
+    this.getDataList('newest');
+    this.getDataList('choice');
   },
   /**
    * [getDataList 获取文章列表]
@@ -54,21 +73,27 @@ Page({
    * @DateTime 2018-09-27
    * @return   {[type]}   [description]
    */
-  getDataList() {
+  getDataList(orderBy) {
     app.callCloudFunction({
       // 要调用的云函数名称
       name: 'getArticleList',
       // 传递给云函数的event参数
-      data: {}
+      data: {
+        orderBy,
+        ps:5
+      }
     }).then(res => {
+      console.log(res)
       res.data = res.data.map(item => {
         item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd');
         return item;
       })
 
-      this.setData({
-        hotArticleList:res.data
-      })
+      let listSet = {};
+
+      listSet[orderBy + 'ArticleList'] = res.data;
+
+      this.setData(listSet)
     }).catch(err => {
       console.log(err)
       app.showToast(err.description,2);

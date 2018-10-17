@@ -24,6 +24,12 @@ exports.main = async (event, context) => {
     })
     .remove();
 
+    //同时移除nb_collections表对应的数据
+    const collectionRes = await db.collection('nb_collections').where({
+      CollectId:_.in(ids)
+    })
+    .remove();
+
     return await setResponse(200,'ok',res);
   } catch(e) {
     return await setResponse(21,'服务端错误');

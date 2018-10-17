@@ -54,7 +54,7 @@
 }
 
 .article-item-place {
-  height: 1rpx;
+  height: 10rpx;
 }
 
 .article-item-skeleton {

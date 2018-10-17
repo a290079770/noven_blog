@@ -17,3 +17,26 @@
    color: #d13954;
    text-decoration: underline;
 }
+
+ /* 面板指示点样式 */
+.slide-wrap .wx-swiper-dots.wx-swiper-dots-horizontal{
+  margin-bottom: 2rpx;
+}
+.slide-wrap .wx-swiper-dot{
+  width:20rpx;
+  display: inline-flex;
+  height: 10rpx; 
+  justify-content:space-between;
+}
+.slide-wrap .wx-swiper-dot-active {
+  width: 40rpx;
+}
+.slide-wrap .wx-swiper-dot::before{
+  content: '';
+  flex-grow: 1;  
+  background: rgba(255,255,255,0.6);
+  border-radius: 5rpx;
+}
+.slide-wrap .wx-swiper-dot-active::before{
+  background:rgba(209,57,84,0.8);
+}

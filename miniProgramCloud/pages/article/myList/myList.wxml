@@ -5,7 +5,7 @@
     <template is="bg-header-detail" data="{{sysType}}"></template>
   </view>
 
-  <view wx:if="{{dataList.length > 0 }}">
+  <view wx:if="{{ hasGotData }}">
     <view 
     class="flex flex-align-center flex-justify-center my-list-item" 
     wx:for="{{dataList}}" 
@@ -31,7 +31,7 @@
            </view>
          </view>
          <view class="my-list-arc-cover-cont">
-           <image class="my-list-arc-cover" src="{{item.Url || defaultUrl }}"></image>
+           <image class="my-list-arc-cover" mode="aspectFill" src="{{item.Url || defaultUrl }}"></image>
          </view>
       </view> 
     </view>

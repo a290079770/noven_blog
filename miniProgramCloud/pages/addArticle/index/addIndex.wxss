@@ -23,12 +23,12 @@ page {
 
 .addindex-title {
 	margin-bottom: 10rpx;
+	border-radius: 8rpx;
 }
 
 .addindex-title-input {
 	padding: 0 20rpx;
 	height: 70rpx;
-	background: white;
 }
 
 .addindex-cover {

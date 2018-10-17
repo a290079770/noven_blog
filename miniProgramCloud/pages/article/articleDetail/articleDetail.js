@@ -29,6 +29,14 @@ Page({
     this.getDetail(this.data.id);
   },
 
+  onShareAppMessage: function (res) {
+    return {
+      title: this.data.detail.Title,
+      path: '/pages/article/articleDetail/articleDetail?id=' + this.data.id,
+      imageUrl: this.data.detail.Url
+    }
+  },
+
 
   getDetail(id) {
     if(!id) {

@@ -22,15 +22,7 @@ exports.main = async (event, context) => {
 
 	if(Object.keys(updateObj).length < 1) {
 		//没有可修改项
-		const { result } = await cloud.callFunction({
-	  	name:'response',
-	  	data:{
-	  		code:21,
-	  		description:'只能修改头像、昵称、简介',
-	  	}
-	  })
-
-	  return result;
+	  return await setResponse(21,'只能修改头像、昵称、简介');
 	}
 
 	let obj = {};
@@ -40,7 +32,7 @@ exports.main = async (event, context) => {
 	}
 
   //更新用户信息
-  const { stats:{updated}} = await collection
+  const { stats:{ updated }} = await collection
 									  .where({
 									  	openId : event.openId
 									  }).update({
@@ -49,29 +41,41 @@ exports.main = async (event, context) => {
 
 	if(updated < 1) {
 		//未修改成功
-		const { result } = await cloud.callFunction({
-	  	name:'response',
-	  	data:{
-	  		code:21,
-	  		description:'未修改任何数据',
-	  	}
-	  })
+	  return await setResponse(21,'未修改任何数据');
+	}
 
-	  return result;
+	//判断是否有修改昵称，如果有，则需要同步到所有的文章
+	if(Object.keys(updateObj).includes('nickName')) {
+		const { stats } = await db.collection('nb_arcticles')
+									  .where({
+									  	AuthorId : event.openId
+									  }).update({
+									    data: {
+									    	Author:_.set(updateObj.nickName)
+									    }
+									  })
 	}
 
 	//格式化返回数据
+  return await setResponse(200,'ok');
+}
+
+
+async function setResponse(code,description,data) {
+	let req = {
+		code
+	}
+
+	code == 200 ? (req.data = data) : (req.description = description)
+
+	//格式化返回数据
   const { result } = await cloud.callFunction({
-    name:'response',
-    data:{
-  		code:200,
-  		data:'修改成功'
-  	}
+  	name:'response',
+  	data:req
   })
 
   return result;
 }
-
 
 
 /**

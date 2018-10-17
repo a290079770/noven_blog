@@ -7,39 +7,68 @@
      
    <view class="swiper-container"> 
      <swiper 
+     class="slide-wrap"
      indicator-dots="true" 
      autoplay="true" 
      interval="4000"
      indicator-color="#b9b9b9"
      indicator-active-color="#d13954"
      >
-        <block wx:for="{{imgUrls}}" wx:key="{{index}}">
-          <swiper-item>
-            <view class="swiper-item-cont" style="background: url({{item}});"></view> 
+        <block wx:for="{{choiceArticleList}}" wx:key="{{index}}">
+          <swiper-item bindtap="handleArticleClick" data-id="{{item._id}}">
+            <view class="swiper-item-cont" style="background: url({{item.Url || swiperDefaultUrl}});"></view> 
           </swiper-item>
         </block>
       </swiper>
    </view>
    
-   <!-- 标题 -->
-   <view class="flex flex-justify-center flex-align-center index-title">
-     <image src="../../images/hotarc.jpg" class="index-title-image"></image>
+   <!-- 热门文章 -->
+   <view>
+     <!-- 标题 -->
+     <view class="flex flex-justify-center flex-align-center index-title">
+       <image src="../../images/hotarc.jpg" class="index-title-image"></image>
+     </view>
+
+     <!-- 文章 -->
+     <view class="index-article-cont">
+       <articleItem
+        wx:for="{{hotArticleList}}" 
+        wx:key="{{_id}}"
+        item="{{item}}"
+        isBorderBottomShow="{{index == hotArticleList.length - 1 ? false : true}}"
+        bind:handleClick="handleArticleClick"
+        data-id="{{item._id}}"
+       />
+     </view>
+
+     <view class="flex flex-align-center flex-justify-center index-more" bindtap="goToArticleList"> 
+       更多 <view class="arrow-right"></view>  
+     </view>
    </view>
 
-   <!-- 文章 -->
-   <view class="index-article-cont">
-     <articleItem
-      wx:for="{{hotArticleList}}" 
-      wx:key="{{_id}}"
-      item="{{item}}"
-      isBorderBottomShow="{{index == hotArticleList.length - 1 ? false : true}}"
-      bind:handleClick="handleArticleClick"
-      data-id="{{item._id}}"
-     />
-   </view>
 
-   <view class="flex flex-align-center flex-justify-center index-more" bindtap="goToArticleList"> 
-     更多 <view class="arrow-right"></view>  
+   <!-- 最新文章 -->
+   <view>
+     <!-- 标题 -->
+     <view class="flex flex-justify-center flex-align-center index-title">
+       <image src="../../images/newest.png" class="index-title-image"></image>
+     </view>
+
+     <!-- 文章 -->
+     <view class="index-article-cont">
+       <articleItem
+        wx:for="{{newestArticleList}}" 
+        wx:key="{{_id}}"
+        item="{{item}}"
+        isBorderBottomShow="{{index == newestArticleList.length - 1 ? false : true}}"
+        bind:handleClick="handleArticleClick"
+        data-id="{{item._id}}"
+       />
+     </view>
+
+     <view class="flex flex-align-center flex-justify-center index-more" bindtap="goToArticleList"> 
+       更多 <view class="arrow-right"></view>  
+     </view>
    </view>
 
    <!-- 心情 -->

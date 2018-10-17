@@ -35,9 +35,6 @@ Page({
     //获取当前长度
     const computedLen = getLen(value);
 
-    console.log(computedLen)
-    console.log(value)
-
     //最后处理之后的长度
     let lastLen = computedLen; 
 
@@ -100,6 +97,7 @@ Page({
       })
     })
     .catch(err => {
+      console.log(err)
       app.showToast(err.description,2);
     })
   },

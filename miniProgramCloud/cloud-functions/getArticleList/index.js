@@ -19,9 +19,13 @@ const collection = db.collection('nb_arcticles')
  * @possibleParam  isCollect  获取当前用户的收藏文章列表  
  */
 exports.main = async (event, context) => {
-	const { ps = 10,cp = 1,isMy,isCollect,count } = event;
+	const { ps = 10,cp = 1,isMy,isCollect,count, orderBy = 'newest' } = event;
 
-	let before = collection.skip((cp - 1) * ps).limit(ps);
+	const orders = [ 'newest' , 'hot', 'choice'];  //可接受的排序
+	const orderBys = [ 'CreateTime' , 'ReadCount' , 'CollectCount']  //排序对应的映射
+	let orderExec = orders.includes(orderBy) ? orderBys[orders.indexOf(orderBy)] : 'CreateTime'
+
+	let before = collection.skip((cp - 1) * ps).limit(ps).orderBy(orderExec, 'desc')
 	let list;
 	let recordCount = { total:0 };
 
@@ -39,7 +43,8 @@ exports.main = async (event, context) => {
 		if(isMy) {
 		  list = await before.where({
 	      AuthorId: event.userInfo.openId,
-	    }).get();
+	    })
+	    .get();
 
 	    recordCount = await collection.where({
 	      AuthorId: event.userInfo.openId,
@@ -48,7 +53,7 @@ exports.main = async (event, context) => {
 		}else {
 			if(isCollect) {
 				//此时需要去收藏的集合中获取当前用户所有收藏
-				let collect = db.collection('nb_collections').skip((cp - 1) * ps).limit(ps);
+				let collect = db.collection('nb_collections').skip((cp - 1) * ps).limit(ps).orderBy(orderExec, 'desc');
 
 				res = await cloud.callFunction({
 					name:'getCollectList',
@@ -71,18 +76,19 @@ exports.main = async (event, context) => {
 
 	}
 
-	let data = list.data;
-	data = data.map( item => {
-		delete item.Content;
-		return data;
-	})
+	if( list.data ) {
+		list.data = list.data.map( item => {
+			delete item.Content;
+			return item;
+		})
+	}
 
 	//格式化返回数据
   const { result } = await cloud.callFunction({
   	name:'response',
   	data:{
   		code:200,
-  		data:data || list.total,
+  		data:list.data || list.total,
   		recordCount:recordCount.total
   	}
   })

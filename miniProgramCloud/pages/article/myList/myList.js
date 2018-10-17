@@ -8,7 +8,7 @@ Page({
     dataList:[],
     defaultUrl:'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
     isOpenEdit: false,
-
+    hasGotData: false,
   },
   onLoad(options) {
     this.setData({
@@ -46,10 +46,12 @@ Page({
       })
 
       this.setData({
-        dataList:res.data,
-        isOpenEdit:false
+        dataList: res.data,
+        isOpenEdit: false,
+        hasGotData: true
       })
     }).catch(err => {
+      console.log(err)
       app.showToast(err.description,2);
     }).then(()=>{
       wx.stopPullDownRefresh();
@@ -145,12 +147,8 @@ Page({
     .then(() => {
       //这里本来应该调用this.getDataList，但是性能不太好，就直接删除本地了
       //移除本地
-      this.data.dataList.forEach( (item,index) => {
-        if( item.selected ) this.data.dataList.splice(index,1)
-      })
-
       this.setData({
-        dataList:this.data.dataList,
+        dataList:this.data.dataList.filter( item => !ids.includes(item._id)),
         isOpenEdit:false
       })
     })

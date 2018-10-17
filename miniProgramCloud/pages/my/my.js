@@ -59,6 +59,7 @@ Page({
       this.setData(count);
 
     }).catch(err => {
+      console.log(err)
       app.showToast(err.description,2);
     })
   },

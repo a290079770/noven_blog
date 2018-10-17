@@ -93,10 +93,10 @@
    position: relative;
 }
 
-.login-input-cont:last-child {
+/*.login-input-cont:last-child {
   margin-top: -50rpx;
 }
-
+*/
 .login-input-cont-text {
    transition: all 0.5s;
    position: absolute;
@@ -105,13 +105,13 @@
 
 .login-input-cont-text-inac {
    left: 20rpx;
-   top: 78rpx;
+   top: 30rpx;
    font-size:30rpx;
 }
 
 .login-input-cont-text-ac {
    left: 0rpx;
-   top: 10rpx;
+   top: -45rpx;
    font-size:22rpx;
    color:#768fc3;
 }

@@ -75,9 +75,44 @@
       ></image>
     </view>
 
+    <!-- 内容占位区 -->
+    <view wx:if="{{ contentList.length < 1 }}" class="flex flex-align-center flex-justify-center flex-column addindex-border addindex-cover">
+      <view class="flex flex-justify-center flex-align-center  addindex-addbtn-cont">
+        <view class="flex flex-justify-center flex-align-center addindex-addbtn">
+          <image 
+          mode="aspectFit" 
+          src="/images/add.svg" 
+          class="addindex-icon"
+          bindtap="showBtns"
+          ></image>
+
+          <view 
+          class="flex flex-justify-center flex-align-center addindex-addbtn-btns" 
+          wx:if="{{ showBtns }}"
+          >
+            <image 
+            class="addindex-addbtn-btn" 
+            mode="aspectFit" 
+            src="/images/add-arc.png"
+            bindtap="addTextParagraph"
+            ></image>
+            <image 
+            class="addindex-addbtn-btn" 
+            mode="aspectFit" 
+            src="/images/add-img.png"
+            bindtap="addImgParagraph"
+            ></image>
+
+            <view class="addindex-addbtn-btn-arrow"></view>
+          </view>
+        </view>
+      </view>
+      <text class="font-l gray9 addindex-cover-addtext"> 内容 </text> 
+    </view>
+
     
     <!-- 添加按钮 -->
-    <view class="flex flex-justify-center flex-align-center addindex-addbtn-cont">
+    <view wx:if="{{ contentList.length > 0 }}" class="flex flex-justify-center flex-align-center addindex-addbtn-cont">
   		<view class="flex flex-justify-center flex-align-center addindex-addbtn">
   			<image 
         mode="aspectFit" 
