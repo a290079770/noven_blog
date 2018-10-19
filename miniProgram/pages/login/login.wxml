@@ -15,7 +15,7 @@
   </view>
   <view class="shouquan-login">
     <!-- <view bindtap="shouquan">微信授权登录</view> -->
-    <button open-type="getUserInfo" bindgetuserinfo="shouquan">微信授权登录</button>
+    <button open-type="getUserInfo" class="shouquan-btn" bindgetuserinfo="shouquan">微信授权登录</button>
     <view class="mg-top30" bindtap="nologin">暂不登录</view>
   </view>
 </view>

@@ -45,6 +45,7 @@ Page({
         break;
       case 3:
       case 4:
+      case 6:
         wx.navigateTo({
           url: "/pages/editInfo/editInfo?type=" + type
         })

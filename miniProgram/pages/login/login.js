@@ -1,3 +1,4 @@
+// const app = getApp();
 Page({
   data: {
     userEmail: '',
@@ -20,6 +21,7 @@ Page({
     console.log(this.data.userEmail, this.data.userPwd)
   },
   shouquan({ detail : { userInfo } }) {
+    console.log(userInfo)
     if (!userInfo) return;
     wx.setStorageSync("userInfo", userInfo);
     wx.navigateBack({
@@ -30,5 +32,6 @@ Page({
     wx.navigateBack({
       delta: 1
     })
-  }
+  },
+  
 })

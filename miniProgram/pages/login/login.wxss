@@ -45,3 +45,14 @@ page, .login-wrap, .login-info, .login-logo {
   color: rgba(173, 42, 42, 0.9);
   text-align: center;
 }
+.shouquan-btn {
+  border: none;
+  background: none;
+  font-size: 30rpx;
+  color: rgba(173, 42, 42, 0.9);
+  padding: 0;
+  line-height: 50rpx;
+}
+.shouquan-btn::after {
+  border: none;
+}

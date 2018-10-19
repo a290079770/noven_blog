@@ -50,7 +50,7 @@
     </view>
     <view class="mine-list-item" data-type="6" bindtap="goTo">
       <image class="mine-list-item-img" src="../../images/mine/contactus.svg"></image>
-      <text class="mine-list-item-text">联系我们</text>
+      <text class="mine-list-item-text">意见反馈</text>
     </view>
   </view>
 </view>

@@ -2,11 +2,13 @@
 App({
   globalData: {
     userInfo: null,
-    isLogin: false
+    isLogin: false,
+    code: ''
   },
 
   onLaunch: function () {
-    
+    this.getLocation();
+    this.getCode();
   },
 
   toDetails(articleId) {
@@ -73,6 +75,64 @@ App({
             optionFunctions.success(data.data);
           }
         }
+      }
+    })
+  },
+
+  // 获取地理位置
+  getLocation() {
+    wx.openSetting({
+      success(res) {
+        console.log(res)
+      },
+      fail(err) {
+        console.log(err);// openSetting:fail can only be invoked by user TAP gesture.
+      }
+    })
+  },
+  
+  getCode() {
+    // 获取用户的code
+    wx.login({
+      success(wxRes) {
+        console.log(wxRes.code)
+        wx.request({
+          url: 'http://novenblog_api.com/user/login',
+          method: 'POST',
+          data: {
+            Code: wxRes.code
+          },
+          success(loginRes) {
+            console.log(loginRes.data.isExist)
+            if(loginRes.data.isExist) {
+              wx.request({
+                url: 'http://novenblog_api.com/user/detail',
+                method: 'POST',
+                data: {
+                  Token: loginRes.data.Token
+                },
+                success(detailRes) {
+                  console.log(detailRes)
+                }
+              })
+            }else {
+              wx.request({
+                url: 'http://novenblog_api.com/user/updateUserInfo',
+                method: 'POST',
+                data: {
+                  Token: loginRes.data.Token,
+                  UserInfo: null
+                },
+                success(updateUserInfoRes) {
+                  console.log(updateUserInfoRes)
+                }
+              })
+            }
+          }
+        })
+      },
+      fail(err) {
+        console.log(err)
       }
     })
   }
