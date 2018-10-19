@@ -24,7 +24,14 @@ class User extends Controller
     }
     //用户登录
     public function login()
-    {
+    {  
+       //验证是否是第三方登录，如果是，走第三方登录流程
+       if(request()->post('Code')) {
+         $this->thirdPartyLogin();
+         return;
+       }
+
+
        //验证请求方式和账号密码不能为空
        if(!$this->validateAccount()) return;
 
@@ -78,6 +85,84 @@ class User extends Controller
           }
 
          $this->common->setResponse(200,'登录成功',['token'=>$token]);
+       }
+    }
+
+
+    /**
+     * [thirdPartyLogin 第三方登录，目前主要针对微信第三方的openId]
+     * @return [type] [description]
+     */
+    public function thirdPartyLogin() {
+      $code = request()->post('Code');
+      $appId = 'wx0933eb006a76d4a5';
+      $secret = 'a51ec5e2f71f5fc4b6441cfbd1d17b91';
+
+      $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$appId.'&secret='.$secret.'&js_code='.$code.'&grant_type=authorization_code';
+
+      $res = file_get_contents($url);
+      $res = json_decode($res);
+      $openId = $res->openid;
+
+      //获取到openId,查询数据库是否有该用户
+      $arr = Db::name('users')->where('OpenId',$openId)->find();
+
+      if(!$arr) {
+         //如果没有，则需要新建一个用户
+         $res = Db::name('users')->insert([
+           'OpenId'=> $openId
+         ]);
+
+         $userId = Db::name('users')->getLastInsID();
+
+         //生成一个token
+         $token = $this->jwt->enc(['uid' => $userId]);
+         Db::name('tokens')->insert(['uid' => $userId,'token'=> $token]);
+
+         $this->common->setResponse(200,'登录成功',['token' => $token , 'isExist' =>false]);
+       }
+       else if($arr['Status'] == 2) {
+         $this->common->setResponse(21,'您的账号已被锁定，请联系管理人员！');
+         return;
+       }else {
+         unset($arr['Password']);
+         //返回数据
+         //生成一个token
+         $token = $this->jwt->enc(['uid' => $arr['Id']]);
+
+         //写入token到数据库
+         //先查询是否有这个uid的token，如果有则更新，无则新增
+         $searchRes = Db::name('tokens')->where('uid',$arr['Id'])->find();
+
+         // 启动事务
+          Db::startTrans();
+          try{
+             if(!$searchRes) {
+                //新增
+                Db::name('tokens')->insert(['uid' => $arr['Id'],'token'=> $token]);
+             }else {
+                //更新
+                Db::name('tokens')->where('uid',$arr['Id'])->setField('token', $token);
+             }
+
+             //设置上次和本次登录的ip
+             $arr['LastTime'] = $arr['ThisTime'];
+             $arr['LastIp'] = $arr['ThisIp'];
+             $arr['ThisTime'] = date('Y-m-d H:i:s',time());
+             $arr['ThisIp'] = request()->ip();
+
+             Db::name('users')
+             ->where('Id',$arr['Id'])
+             ->update($arr);
+             // 提交事务
+             Db::commit();    
+          } catch (\Exception $e) {
+              // 回滚事务
+              Db::rollback();
+              $this->common->setResponse(21,'操作数据库失败！');
+          }
+
+         $this->common->setResponse(200,'登录成功',['token'=>$token, 'isExist'=> true]);
        }
     }
 
