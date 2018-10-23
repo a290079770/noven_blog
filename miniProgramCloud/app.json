@@ -11,7 +11,8 @@
     "pages/login/login",
     "pages/addArticle/index/addIndex",
     "pages/addArticle/text/addText",
-    "pages/addArticle/previewArticle/previewArticle"
+    "pages/addArticle/previewArticle/previewArticle",
+    "pages/search/search"
   ],
   "window":{
     "backgroundTextStyle":"light",

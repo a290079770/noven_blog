@@ -17,9 +17,10 @@ const collection = db.collection('nb_arcticles')
  * @possibleParam  isMy  是否获取当前用户的文章列表，如果这个参数为true,则忽略isCollect
  * @possibleParam  count  是否是统计数量，如果有这个参数，则只返回符合规则的数量，不返回具体数据，目前只支持全部和isMy，不支持isCollect
  * @possibleParam  isCollect  获取当前用户的收藏文章列表  
+ * @possibleParam  keywords  查询文章关键字  
  */
 exports.main = async (event, context) => {
-	const { ps = 10,cp = 1,isMy,isCollect,count, orderBy = 'newest' } = event;
+	const { ps = 10,cp = 1,isMy,isCollect,count, orderBy = 'newest' ,keywords='' } = event;
 
 	const orders = [ 'newest' , 'hot', 'choice'];  //可接受的排序
 	const orderBys = [ 'CreateTime' , 'ReadCount' , 'CollectCount']  //排序对应的映射
@@ -29,26 +30,25 @@ exports.main = async (event, context) => {
 	let list;
 	let recordCount = { total:0 };
 
+	let whereSql = {
+		AuthorId: event.userInfo.openId,
+	};
+	if( keywords ) whereSql.Title = keywords;
+
 	if(count) {
 		//只统计数量　
 		if(isMy) {
-			list = await before.where({
-	      AuthorId: event.userInfo.openId,
-	    }).count();
+			list = await before.where(whereSql).count();
 		}else {
 			list = await before.count();
 		}
 	}else {
 		//查具体数据
 		if(isMy) {
-		  list = await before.where({
-	      AuthorId: event.userInfo.openId,
-	    })
+		  list = await before.where(whereSql)
 	    .get();
 
-	    recordCount = await collection.where({
-	      AuthorId: event.userInfo.openId,
-	    }).count();
+	    recordCount = await collection.where(whereSql).count();
 
 		}else {
 			if(isCollect) {
@@ -68,7 +68,9 @@ exports.main = async (event, context) => {
 				recordCount = { total: list.recordCount };
 			}else {
 				//查询所有
-				list = await before.get();
+				delete whereSql.AuthorId;
+				
+				list = await before.where(whereSql).get();
 				// 取出集合记录总数
 	 		  recordCount = await collection.count();
 			}
@@ -76,12 +78,12 @@ exports.main = async (event, context) => {
 
 	}
 
-	if( list.data ) {
-		list.data = list.data.map( item => {
-			delete item.Content;
-			return item;
-		})
-	}
+	// if( list.data ) {
+	// 	list.data = list.data.map( item => {
+	// 		delete item.Content;
+	// 		return item;
+	// 	})
+	// }
 
 	//格式化返回数据
   const { result } = await cloud.callFunction({

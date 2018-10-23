@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -69,7 +69,14 @@
 				{
 					"id": -1,
 					"name": "文章列表",
-					"pathName": "pages/article/articleList/articleList"
+					"pathName": "pages/article/articleList/articleList",
+					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "全文索引",
+					"pathName": "pages/search/search",
+					"query": ""
 				}
 			]
 		}

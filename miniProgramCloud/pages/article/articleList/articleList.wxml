@@ -26,7 +26,7 @@
        </view>
 
        <view class="flex flex-align-center flex-justify-center article-list-search">
-         <view class="flex flex-align-center gray9 font article-list-search-input">
+         <view class="flex flex-align-center gray9 font article-list-search-input" bindtap="goSearch">
            <image class="article-list-search-icon" mode="aspectFit" src="/images/search.svg"></image>
            <text> 搜索您感兴趣的文章 </text>    
          </view>
@@ -36,7 +36,14 @@
 
 
    <view class="article-list-cont">
-     <article-list-item wx:for="{{hotArticleList}}" item="{{item}}" wx:key="index"/>
+  
+     <view wx:for="{{hotArticleList}}" wx:key="_id" style="{{ index < hotArticleList.length - 1 ? 'border-bottom: 1px solid #dedede;':''}}">
+       <article-list-item 
+       bind:handleClick="handleArticleClick"  
+       item="{{item}}" 
+       data-id="{{item._id}}"
+       />
+     </view>
    </view>
 
 

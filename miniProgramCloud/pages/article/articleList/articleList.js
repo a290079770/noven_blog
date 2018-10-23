@@ -29,17 +29,23 @@ Page({
 
   /**
    * [getDataList 获取文章列表]
-   * @Author   罗文
-   * @DateTime 2018-09-27
-   * @return   {[type]}   [description]
+   * @param  {[Number]} index [当前请求的排序数据索引]
+   * @return {[type]}       [description]
    */
-  getDataList() {
+  getDataList(index = 0) {
+    if( index < 0 || index > 2) return;
+
+    wx.showLoading({ title : '加载中...',mask:true});
+    let order = [ 'newest' , 'choice', 'hot'];
     app.callCloudFunction({
       // 要调用的云函数名称
       name: 'getArticleList',
       // 传递给云函数的event参数
-      data: {}
+      data: {
+        orderBy:order[index],
+      }
     }).then(res => {
+      console.log(res)
       res.data = res.data.map(item => {
         item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd');
         return item;
@@ -48,19 +54,30 @@ Page({
       this.setData({
         hotArticleList:res.data
       })
-    }).catch(err => {
-      app.showToast(err.description,2);
     }).then(()=>{
       wx.stopPullDownRefresh();
+      wx.hideLoading();
+    }).catch(err => {
+      app.showToast(err.description,2);
+      wx.hideLoading();
     })
   },
 
   //改变当前活跃的na vba r
   changeNavAction({ currentTarget:{dataset:{ index }}}) {
-    console.log(index)
     this.setData({
       activeIndex:index
     })
+
+    //根据当前索引，获取数据
+    this.getDataList(index);
+  },
+
+  //去搜索界面
+  goSearch() {
+    app.goTo({
+      path:'/pages/search/search',
+    });
   },
 
 

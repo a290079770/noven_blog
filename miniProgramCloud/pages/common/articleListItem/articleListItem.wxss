@@ -9,7 +9,6 @@
 	width: 100%;
 	max-height: 430rxp;
 	min-height: 260rpx;
-	border-bottom: 1px solid #dedede;
 	overflow: hidden;
 }
 
@@ -33,6 +32,7 @@
 .art-li-brief {
    margin-bottom: 20rpx;
    height: 74rpx;
+   line-height: 37rpx;
 }
 
 .art-li-imgs {
@@ -44,7 +44,6 @@
 .art-li-imgs-item {
 	width: 215rpx;
 	height: 100%;
-	background: red;
 	border-radius: 12rpx;
 }
 
