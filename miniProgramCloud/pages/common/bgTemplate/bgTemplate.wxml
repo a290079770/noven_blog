@@ -1,6 +1,6 @@
 
 <template name="bg-header">
-  <view class="flex flex-justify-center index-header header-bg" style="background: url(http://thyrsi.com/t6/373/1537521453x-1922733211.jpg) no-repeat">
+  <view class="flex flex-justify-center index-header header-bg" style="background: url(http://thyrsi.com/t6/394/1540276229x-1404781090.jpg) no-repeat">
 	 <!-- 顶部胶囊 -->
 	 <view class="flex flex-align-center top-capsule" style="top:{{sysType}}rpx">
 		<text class="top-capsule-text" wx:if="{{!isShowBack}}"> Noven 博客</text>    
@@ -83,7 +83,7 @@
 
 
 <template name="bg-footer">
-   <view class="index-bottom header-bg" style="background: url(http://thyrsi.com/t6/373/1537521373x-1566679899.jpg">
+   <view class="index-bottom header-bg" style="background: url(http://thyrsi.com/t6/394/1540276318x-1404817712.jpg">
    </view>
 </template>
 

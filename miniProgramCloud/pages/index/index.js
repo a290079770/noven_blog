@@ -83,7 +83,6 @@ Page({
         ps:5
       }
     }).then(res => {
-      console.log(res)
       res.data = res.data.map(item => {
         item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd');
         return item;

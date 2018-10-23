@@ -3,21 +3,15 @@ var { dateFormat } = require('../../../noven/utils/dateUtil');
 
 Page({
   data: {
-    imgUrls: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-    ],
     hotArticleList:[
       {
       	isSkeleton:true
       }
     ],
-    article:'',
     titleImgUrl:'../../../images/articlelist.png',
+    sysType:48,
 
-    hasView: wx.getStorageSync('hasView'),   // 0 - 否    1 - 是
-    sysType:48
+    activeIndex: 0,  //当前列表的索引  0 - 最新  1 - 精选   2 - 热门
   },
   onLoad: function () {
     //获取用户是否第一次进入这个页面
@@ -61,7 +55,16 @@ Page({
     })
   },
 
+  //改变当前活跃的na vba r
+  changeNavAction({ currentTarget:{dataset:{ index }}}) {
+    console.log(index)
+    this.setData({
+      activeIndex:index
+    })
+  },
 
+
+  //点击每个文章
   handleArticleClick({ currentTarget:{dataset:{ id = '' }}}) {
     app.goTo({
       path:'/pages/article/articleDetail/articleDetail',
@@ -70,13 +73,5 @@ Page({
       }
     });
   },
-
-  iknowAction() {
-    wx.setStorageSync('hasView',1);
-    this.setData({
-      hasView:1
-    })
-  },
-
 
 })

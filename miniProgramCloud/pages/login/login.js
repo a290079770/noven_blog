@@ -4,7 +4,7 @@ var { Storage } = require('../../noven/storage')
 Page({
   data:{
     sysType:48,
-    titleImgUrl:'http://thyrsi.com/t6/373/1537521642x-1922733205.png',
+    titleImgUrl:'http://thyrsi.com/t6/394/1540276844x-1404793579.png',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
     hasUserInfo: false,
@@ -45,7 +45,10 @@ Page({
   },
 
   recordUser(userInfo) {
-    wx.showLoading();
+    wx.showLoading({
+      title:'授权登录中...',
+      mask:true
+    });
     //记录到云
     app.callCloudFunction({
       // 要调用的云函数名称

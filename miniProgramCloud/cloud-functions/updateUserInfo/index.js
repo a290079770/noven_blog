@@ -16,6 +16,7 @@ const collection = db.collection('nb_users')
  */
 
 exports.main = async (event, context) => {
+	const { userInfo:{ openId } } = event;
 	//允许修改的字段名
 	let canUpdate = ['avatarUrl','nickName','brief'];
 	let updateObj = pick(event,canUpdate);
@@ -31,10 +32,11 @@ exports.main = async (event, context) => {
 		obj[k] = _.set(updateObj[k])
 	}
 
+
   //更新用户信息
   const { stats:{ updated }} = await collection
 									  .where({
-									  	openId : event.openId
+									  	openId
 									  }).update({
 									    data: obj
 									  })
@@ -48,7 +50,7 @@ exports.main = async (event, context) => {
 	if(Object.keys(updateObj).includes('nickName')) {
 		const { stats } = await db.collection('nb_arcticles')
 									  .where({
-									  	AuthorId : event.openId
+									  	AuthorId:openId
 									  }).update({
 									    data: {
 									    	Author:_.set(updateObj.nickName)

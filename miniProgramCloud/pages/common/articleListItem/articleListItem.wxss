@@ -1,0 +1,74 @@
+@import '../common.wxss'
+
+.full-img {
+	width: 100%;
+	height: 100%;
+}
+
+.art-li {
+	width: 100%;
+	max-height: 430rxp;
+	min-height: 260rpx;
+	border-bottom: 1px solid #dedede;
+	overflow: hidden;
+}
+
+.art-li-title {
+	margin-top: 20rpx;
+	height: 74rpx;
+	width: 100%;
+	font-weight: 600;
+}
+
+.art-li-title-yuanchuang {
+	margin-right: 12rpx;
+	padding: 5rpx 16rpx;
+	font-size: 20rpx;
+	color: #d13954;
+	box-sizing: border-box;
+	border: 2rpx solid #d13954;
+	border-radius: 8rpx;
+}
+
+.art-li-brief {
+   margin-bottom: 20rpx;
+   height: 74rpx;
+}
+
+.art-li-imgs {
+	margin-bottom: 15rpx;
+	height: 155rpx;
+	width: 100%;
+}
+
+.art-li-imgs-item {
+	width: 215rpx;
+	height: 100%;
+	background: red;
+	border-radius: 12rpx;
+}
+
+
+.art-li-info {
+	margin-bottom: 27rpx;
+  height: 48rpx;
+  width: 100%;
+}
+
+.art-li-author-cover {
+	margin-right: 12rpx;
+	width: 48rpx;
+	height: 48rpx;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.article-info-icon {
+	margin-right:15rpx;
+	width: 28rpx;
+	height: 28rpx;
+}
+
+.article-info-zan {
+	margin-left: 35rpx;
+}

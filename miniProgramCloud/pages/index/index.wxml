@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <import src="../common/bgTemplate/bgTemplate.wxml"/>
 
-<view class="index header-bg" style="background: url(http://thyrsi.com/t6/373/1537521319x-1922735559.png);">
+<view class="index header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);">
 
    <template is="bg-header" data="{{sysType,titleImgUrl}}"/>
      

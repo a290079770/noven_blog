@@ -1,0 +1,39 @@
+<view class="art-li">
+  <view class="flex flex-align-center art-li-title">
+  	<text class="art-li-title-yuanchuang"> 原创 </text>
+  	<text class="flex-1 text-ess-1 font-lg"> 一张二十年前的老照片</text>				
+  </view>
+  <view class="art-li-brief font gray9 text-ess-2">
+  	一张二十年前的老照片一张二十年前的老照片一张二十年前的老照片一张二十年前的老照片一张二十年前的老照片一张二十年前的老照片一张二十年前的老照片一张二十年前的老照片一张二十年前的老照片一张二十年前的老照片
+  </view>
+	
+  <view wx:if="{{true}}" class="flex flex-align-center flex-justify-between art-li-imgs">
+  	<image wx:for="{{[1,2,3]}}" wx:key="item" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3199093078,918503307&fm=27&gp=0.jpg" class="art-li-imgs-item"></image>
+  </view>
+
+  <view class="flex flex-align-center flex-justify-between art-li-info font-xs">
+  	<view class="flex flex-align-center">
+  		<view class="art-li-author-cover">
+  			<image class="full-img" mode="aspectFill" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3199093078,918503307&fm=27&gp=0.jpg"></image>
+  		</view>
+  		<view class="font gray9">
+  			淘气中年人
+  		</view>
+  	</view>
+  	<view class="flex flex-align-center font-l gray9">
+  		<view class="flex flex-align-center flex-justify-end article-info-zan">
+  	   	<image src="/images/zan-kong.svg" class=" article-info-icon"></image>
+  	   	<view class="article-info-number" style="color:#768fc3">
+  	   	  01
+  	   	</view>
+  	  </view>
+
+  	  <view class="flex flex-align-center flex-justify-end article-info-zan">
+  	   	<image src="/images/view.svg" class=" article-info-icon"></image>
+  	   	<view class="article-info-number" style="color:#d13954">
+  	   	  122
+  	   	</view>
+  	  </view>
+  	</view>
+  </view>
+</view>

@@ -46,6 +46,10 @@
   justify-content: space-between;
 }
 
+.flex-1 {
+  flex: 1;
+}
+
 /*//单行省略*/
 .text-ess-1 {
   overflow: hidden;

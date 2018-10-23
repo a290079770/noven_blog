@@ -213,7 +213,7 @@ const uploadImgCloud = function () {
         const tempFilePaths = res.tempFilePaths[0]
         let ext = tempFilePaths.slice(tempFilePaths.lastIndexOf('.'));
 
-        const url = 'images/'+ randomStr(32) +'_photo' + ext;
+        const url = 'images/'+ randomStr(16) +'_photo_'+ Date.now() + ext;
 
 
         //上传文件到服务器

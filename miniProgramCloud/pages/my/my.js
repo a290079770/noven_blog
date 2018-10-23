@@ -6,7 +6,7 @@ var { dateFormat } = require('../../noven/utils/dateUtil');
 //获取应用实例
 Page({
   data: {
-    titleImgUrl:'http://thyrsi.com/t6/373/1537521642x-1922733205.png',
+    titleImgUrl:'http://thyrsi.com/t6/394/1540276844x-1404793579.png',
     sysType:48,
     isLogin:false,
     userInfo:null,

@@ -80,20 +80,19 @@ Page({
       data
     })
     .then(res => {
-      app
-      .showToast('修改成功')
+      console.log(res)
+      return app.showToast('修改成功')
+    })
+    .then(() => {
+      //更新globalData 和 Storage
+      let newUserInfo = Object.assign({},app.globalData.userInfo,data);
+
+      // 更新Storage和界面
+      return Storage
+      .set('userInfo',newUserInfo)
       .then(() => {
-        //更新globalData 和 Storage
-        let newUserInfo = Object.assign({},app.globalData.userInfo,data);
-
-        // 更新Storage和界面
-        Storage
-        .set('userInfo',newUserInfo)
-        .then(() => {
-           app.globalData.userInfo = newUserInfo;
-           app.goBack();
-        })
-
+         app.globalData.userInfo = newUserInfo;
+         app.goBack();
       })
     })
     .catch(err => {

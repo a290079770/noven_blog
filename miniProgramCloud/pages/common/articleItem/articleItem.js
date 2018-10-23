@@ -17,7 +17,6 @@ Component({
       value:true,
       observer: function (newVal, oldVal) { 
         //数据变化时执行的操作
-        console.log(oldVal)
       }
     },
   },
