@@ -5,13 +5,8 @@ var { Storage } = require('./noven/storage')
 App({
   globalData:{
     tabBar:['index','articleList','moodList','my'],
-    sysTypesByScreen:[
-       48,   //ios   非刘海
-       54,   //andriod   安卓
-       82,   //刘海屏
-    ],
+    tabBarData:{},
     sysInfo:{},
-    sysType:48,  //对应sysTypesByScreen 的索引
     isLogin:false,
     userInfo:null,
     db:null,
@@ -91,20 +86,18 @@ App({
     //同步获取设备型号,设置顶部位置
     let sysInfo = wx.getSystemInfoSync();
     this.globalData.sysInfo = sysInfo;
-    let sysType = sysInfo.screenHeight - sysInfo.windowHeight;
+    let { model,statusBarHeight } = sysInfo;
 
-
-    //对齐胶囊所做的兼容
-    if(this.globalData.sysTypesByScreen.indexOf(sysType) === 0) {
-       //非iponeX的ios
-       this.globalData.sysType = sysType + 6;
-    }else if(this.globalData.sysTypesByScreen.indexOf(sysType) === 2) {
-       //IphoneX
-       this.globalData.sysType = sysType + 20;
-    }else {
-       //安卓
-       this.globalData.sysType = sysType;
+    let totalTopHeight = 68
+    //安卓，刘海 - statusBarHeight 40   非刘海  20
+    if (model.indexOf('iPhone X') !== -1 || statusBarHeight == 40) {
+      totalTopHeight = 88
+    } else if (model.indexOf('iPhone') !== -1) {
+      totalTopHeight = 64
     }
+
+    Storage.setSync('statusBarHeight',statusBarHeight);
+    Storage.setSync('titleBarHeight',totalTopHeight - statusBarHeight);
   },
   /**
    * [goTo goToExec跳转的入口函数]

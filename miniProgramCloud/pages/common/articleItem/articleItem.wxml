@@ -4,7 +4,9 @@
      <view class="article-item-cont-cover" style="background: url({{item.Url || defaultUrl}});">
      </view>
      <view class="flex flex-justify-center flex-align-center article-item-basic">
-       <text class="article-item-basic-type">article</text> <text> @{{item.Author}}</text> {{item.CreateTime}}
+       <text class="article-item-basic-type">article</text> 
+       <text> @{{item.Author}}</text> 
+       <text> {{item.CreateTime}} </text>    
      </view>
      <view class="article-item-title text-ess-2">
        {{item.Title}}

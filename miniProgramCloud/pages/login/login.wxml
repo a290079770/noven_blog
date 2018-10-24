@@ -1,7 +1,7 @@
 <import src="../common/bgTemplate/bgTemplate.wxml"/>
 
 <view class="login header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);">
-  <template is="bg-header" data="{{sysType,titleImgUrl,isCover:true,hideInfo:true}}"/>
+  <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl,isCover:true,hideInfo:true}}"/>
 
   <view class="login-content">
     <view class="flex flex-justify-between login-content-wrap {{isShowLoginForm ? 'login-show-form' : ''}}">

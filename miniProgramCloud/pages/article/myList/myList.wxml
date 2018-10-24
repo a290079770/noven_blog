@@ -2,7 +2,7 @@
 
 <view class="my-list">
   <view bindtap="headerClick">
-    <template is="bg-header-detail" data="{{sysType}}"></template>
+    <template is="bg-header-detail" data="{{statusBarHeight,titleBarHeight}}"></template>
   </view>
 
   <view wx:if="{{ hasGotData }}">
@@ -65,4 +65,5 @@
   </view>
 
   <add-article wx:if="{{!isOpenEdit}}"/>
+  <scroll-to-top bind:handleClick="hideScrollToTop" hidden="{{!isShowScrollTop}}" />
 </view>

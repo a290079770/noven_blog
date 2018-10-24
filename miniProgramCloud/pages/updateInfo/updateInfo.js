@@ -4,7 +4,8 @@ const { Storage } = require('../../noven/storage');
 
 Page({
   data:{
-    sysType:48,
+    statusBarHeight:0,
+    titleBarHeight:0,
     type:3,  //3 - 修改昵称。 4 - 修改简介
     nickName: '',
     nickNameLen:12,
@@ -13,9 +14,9 @@ Page({
     currentLen:0,
   },
   onLoad(options) {
-    console.log(app.globalData.userInfo)
     this.setData({
-      sysType:app.globalData.sysType,
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight'),
       type:options.type,
       nickName:app.globalData.userInfo.nickName,
       brief:app.globalData.userInfo.brief,

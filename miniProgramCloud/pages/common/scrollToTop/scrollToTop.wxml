@@ -1,0 +1,12 @@
+<movable-area class="add-move-area" hidden="{{hidden}}">
+  <movable-view 
+	class="flex flex-align-center flex-justify-center add-article-cont"
+	direction="all"
+	inertia
+	x="{{0}}"
+	y="{{0}}"
+	bindtap="addArticleAction"
+	>
+	 	<image mode="" src="/images/toTop.svg" class="add-article"></image>
+	</movable-view>
+</movable-area>

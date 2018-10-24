@@ -1,18 +1,21 @@
 const app = getApp();
 var { dateFormat } = require('../../../noven/utils/dateUtil');
-
+const { Storage } = require('../../../noven/storage')
 Page({
   data:{
-    sysType:48,
-    type:1,
+    statusBarHeight:0,
+    titleBarHeight:0,
+    type:1,  //1 - 我的发布   2 - 我的收藏
     dataList:[],
     defaultUrl:'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
     isOpenEdit: false,
     hasGotData: false,
+    isShowScrollTop:false,
   },
   onLoad(options) {
     this.setData({
-      sysType:app.globalData.sysType,
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight'),
       type:options.type
     })
 
@@ -23,11 +26,23 @@ Page({
     this.getDataList(this.data.type);
   },
 
+  onPageScroll({ scrollTop }) {
+    if( scrollTop > 500 && !this.data.isShowScrollTop) {
+      this.setData({
+        isShowScrollTop:true
+      });
+    }else if(scrollTop <= 500 && this.data.isShowScrollTop) {
+      this.setData({
+        isShowScrollTop:false
+      });
+    }
+  },
+
   /**
    * [getDataList 获取文章列表]
    * @Author   罗文
    * @DateTime 2018-09-27
-   * @return   {[type]}   [description]
+   * @return   {[type]}   [1 - 我的发布    2 - 我的收藏]
    */
   getDataList(type) {
     app.callCloudFunction({
@@ -39,6 +54,7 @@ Page({
         isCollect: type == 2 ? true : false,
       }
     }).then(res => {
+      console.log(res)
       res.data = res.data.map(item => {
         item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd HH:mm:ss');
         item.selected = false;
@@ -111,19 +127,25 @@ Page({
     })
   },
 
-  //删除操作
+  /**
+   * [deleteAction 删除操作]
+   * @Author   罗文
+   * @DateTime 2018-10-24
+   * @param    {[Number]}   type [1 - 删除我的文章   2 - 删除我的收藏]
+   * @return   {[type]}        [description]
+   */
   deleteAction() {
     let ids = [];
     this.data.dataList.forEach( item => {
       if( item.selected ) ids.push(item._id);
     })
 
-    console.log(ids);
     if( ids.length < 1) {
        app.showToast('未选择删除文章',2) 
        return
     }
 
+    //获取type
     app.showModal({
       title:'提示',
       content:'确定删除选中文章？',
@@ -135,7 +157,7 @@ Page({
       })
       //删除文章
       return app.callCloudFunction({
-        name:'deleteArticle',
+        name: this.data.type == 1 ? 'deleteArticle' : 'batchCancelCollections',
         data:{
           ids
         }  
@@ -162,5 +184,11 @@ Page({
   //导航栏返回跳转
   headerClick(e) {
     app.headerClick(e);
+  },
+
+  hideScrollToTop() {
+    this.setData({
+      isShowScrollTop:false
+    });
   }
 })

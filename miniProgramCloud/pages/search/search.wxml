@@ -2,7 +2,7 @@
 
 <view class="search-box">
   <view bindtap="headerClick">
-    <template is="bg-header-detail" data="{{sysType}}"></template>
+    <template is="bg-header-detail" data="{{statusBarHeight,titleBarHeight}}"></template>
   </view>
   <view class="search-wrap flex flex-justify-between">
     <icon class="search-icon" size='16' type='search'></icon>

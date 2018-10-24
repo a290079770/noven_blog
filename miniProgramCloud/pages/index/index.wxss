@@ -15,7 +15,12 @@
    margin-bottom: 50rpx;
    height: 50rpx;
    color: #d13954;
-   text-decoration: underline;
+}
+
+.index-more-text {
+   margin-right: 10rpx;
+   padding: 5rpx 0;
+   border-bottom: 1px solid #d13954;
 }
 
  /* 面板指示点样式 */

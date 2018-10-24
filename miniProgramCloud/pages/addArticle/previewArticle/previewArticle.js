@@ -3,9 +3,11 @@ var { Storage } = require('../../../noven/storage');
 var app = getApp();
 
 Page({
+  statusBarHeight:0,
+  titleBarHeight:0,
   data: {
     hasView: wx.getStorageSync('hasView'),   // 0 - 否    1 - 是
-    sysType:48,
+    
     detail:null,
     formatCreateTime:null,
     // detail:{
@@ -16,12 +18,16 @@ Page({
     // },
   },
   onLoad: function () {
+    this.setData({
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight'),
+    })
     //获取用户是否第一次进入这个页面
     Storage
     .get('previewArticleData')
     .then( ({ data }) => {
       this.setData({
-        sysType:app.globalData.sysType,
+        
         detail:data,
         hasView:true,
         formatCreateTime:dateFormat(data.CreateTime,'yyyy-mm-dd')

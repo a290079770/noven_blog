@@ -4,7 +4,7 @@
 <view class="article-list header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);">
 
    <view>
-     <template is="bg-header" data="{{sysType,titleImgUrl}}"/>
+     <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl}}"/>
    </view>
 
 
@@ -50,4 +50,5 @@
    <template is="bg-footer"/>
 
    <add-article />
+   <scroll-to-top bind:handleClick="hideScrollToTop" hidden="{{!isShowScrollTop}}" />
 </view>

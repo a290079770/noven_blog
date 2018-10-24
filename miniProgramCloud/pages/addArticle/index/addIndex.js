@@ -4,7 +4,8 @@ const { Storage } = require('../../../noven/storage')
 
 Page({
   data:{
-    sysType:48,
+    statusBarHeight:0,
+    titleBarHeight:0,
     newArticle:{
       Title:'',
       Url:'',
@@ -32,22 +33,22 @@ Page({
     briefCurrentLen:0,
   },
   onLoad(options) {
+    this.setData({
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight'),
+    })
     //这个界面是新增和修改通用，所以在修改的时候，需要自动设置数据
     Storage
     .get('previewArticleData')
     .then( ({ data })=>{
-       if( !data ) {
-          this.setData({
-            sysType:app.globalData.sysType,
-          })
-       }else {
+       if( data ) {
           let contentList = data.Content.map( item =>{
              item.showBtns = false;
              return item; 
           })
 
           this.setData({
-            sysType:app.globalData.sysType,
+            
             newArticle:data,
             contentList,
             showBtns:false,

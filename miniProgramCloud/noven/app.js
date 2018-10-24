@@ -211,10 +211,49 @@ const uploadImgCloud = function () {
 
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths[0]
-        let ext = tempFilePaths.slice(tempFilePaths.lastIndexOf('.'));
+        // let ext = tempFilePaths.slice(tempFilePaths.lastIndexOf('.'));
 
-        const url = 'images/'+ randomStr(16) +'_photo_'+ Date.now() + ext;
+        // const url = 'images/'+ randomStr(16) +'_photo_'+ Date.now() + ext;
 
+        callCloudFunction({
+          name:'uploadFile',
+          data:{
+            filePath:tempFilePaths
+          }
+        })
+        .then(res => {
+          console.log(res)
+          //获取到上传文件的fileID
+          let { fileID } = res;
+          return Promise.resolve(fileID);
+        })
+        .then( res =>{
+          
+          //根据文件id获取url
+          callCloudFunction({
+            name:'uploadPhoto',
+            data: {
+              fileID:res
+            }
+          })
+          .then(res => {
+            resolve(res);
+          })
+          .catch(error => {
+            showToast('',2);
+            reject(error);
+          })
+
+        })
+        .catch(error => {
+          showToast('',2);
+          reject(error);
+        })
+
+
+
+
+        return;
 
         //上传文件到服务器
         wx.cloud.uploadFile({

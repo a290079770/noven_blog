@@ -20,7 +20,8 @@
 }
 
 .article-item-basic {
-  margin-top: 15rpx;
+  margin-top: 10rpx;
+  margin-bottom: 5rpx;
   padding:0 20rpx;
   min-height: 58rpx;
   font-size: 28rpx;
@@ -46,7 +47,7 @@
 
 .article-item-abstract {
   padding: 0 20rpx ;
-  margin-top: 30rpx;
+  margin-top: 20rpx;
   margin-bottom: 10rpx;
   font-size: 28rpx;
   color:#666;

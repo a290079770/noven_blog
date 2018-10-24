@@ -7,7 +7,8 @@ var { dateFormat } = require('../../noven/utils/dateUtil');
 Page({
   data: {
     titleImgUrl:'http://thyrsi.com/t6/394/1540276844x-1404793579.png',
-    sysType:48,
+    statusBarHeight:0,
+    titleBarHeight:0,
     isLogin:false,
     userInfo:null,
     date:dateFormat(Date.now(),'yyyy-mm-dd'),
@@ -17,7 +18,8 @@ Page({
 
   onLoad() {
     this.setData({
-      sysType:app.globalData.sysType
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight')
     })
   },  
 

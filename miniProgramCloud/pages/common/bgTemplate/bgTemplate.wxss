@@ -12,11 +12,13 @@
   background-size: 100% 100% !important;
 }
 
+.status-bar {
+  width: 100%;
+}
+
 .top-capsule {
-  position: absolute;
-  left: 30rpx;
-  z-index: 999;
   justify-content: flex-start;
+  margin: 0 auto;
   width: 690rpx;
   height: 60rpx;
   color:#768fc3;
@@ -27,7 +29,7 @@
 }
 
 .top-custom-btns {
-  margin-left: 50rpx;
+  /*margin-left: 50rpx;*/
   justify-content: flex-start;
   width: 180rpx;
   height: 60rpx;
@@ -127,3 +129,8 @@
    width: 100%;
    background: #768fc3;
 }
+
+
+
+
+

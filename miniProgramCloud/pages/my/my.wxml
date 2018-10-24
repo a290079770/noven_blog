@@ -2,7 +2,7 @@
 
 
 <view class="my header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);"  bindtap="headerClick">
-   <template is="bg-header" data="{{sysType,titleImgUrl,isCover:true,isLogin,userInfo,date}}"/>
+   <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl,isCover:true,isLogin,userInfo,date}}"/>
 
    <view class="my-content">
 

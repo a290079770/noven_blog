@@ -1,15 +1,18 @@
 const app = getApp();
 var { dateFormat } = require('../../noven/utils/dateUtil');
+var { Storage } = require('../../noven/storage')
 Page({
   data:{
-    sysType:48,
+    statusBarHeight:0,
+    titleBarHeight:0,
     searchKeywords: '',
     dataList:[],
     hasGotData:false,
   },
   onLoad(options) {
     this.setData({
-      sysType:app.globalData.sysType,
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight')
     })
   },
 

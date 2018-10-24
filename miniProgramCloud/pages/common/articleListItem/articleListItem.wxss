@@ -71,3 +71,9 @@
 .article-info-zan {
 	margin-left: 35rpx;
 }
+
+
+.article-li-item-skeleton {
+	width: 680rpx;
+	height: 432rpx;
+}

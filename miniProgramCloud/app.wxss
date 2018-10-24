@@ -151,8 +151,8 @@ view {
 .arrow-right {
   display: inline-block;
   transform: rotate(45deg);
-  width:16rpx;
-  height: 16rpx;
+  width:10rpx;
+  height: 10rpx;
   border-top: 1rpx solid #d13954;
   border-right: 1rpx solid #d13954;
 }

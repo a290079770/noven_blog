@@ -5,6 +5,7 @@
     "articleItem": "../../common/articleItem/articleItem",
     "moodItem": "../../common/moodItem/moodItem",
     "add-article": "../../common/addArticleBtn/addArticleBtn",
-    "article-list-item": "../../common/articleListItem/articleListItem"
+    "article-list-item": "../../common/articleListItem/articleListItem",
+    "scroll-to-top": "../../common/scrollToTop/scrollToTop"
   }
 }

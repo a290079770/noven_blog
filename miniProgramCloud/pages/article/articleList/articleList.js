@@ -1,39 +1,98 @@
 var app = getApp();
 var { dateFormat } = require('../../../noven/utils/dateUtil');
+const { Storage } = require('../../../noven/storage')
 
 Page({
   data: {
     hotArticleList:[
       {
       	isSkeleton:true
-      }
+      },
+      {
+        isSkeleton:true
+      },
     ],
     titleImgUrl:'../../../images/articlelist.png',
-    sysType:48,
+    statusBarHeight:0,
+    titleBarHeight:0,
 
     activeIndex: 0,  //当前列表的索引  0 - 最新  1 - 精选   2 - 热门
+    isShowScrollTop:false,
+    ps:5,  //分页参数，下拉加载更多
+    cp:1,
+    total:0,
   },
-  onLoad: function () {
+  onLoad: function (options) {
+    const { type } = app.globalData.tabBarData;
     //获取用户是否第一次进入这个页面
     this.setData({
-      sysType:app.globalData.sysType
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight'),
     })
 
-    this.getDataList();
+    this.resetData(type);
+  },
+
+  onShow() {
+    const { type } = app.globalData.tabBarData;
+    if( type && type != this.data.activeIndex) {
+      wx.pageScrollTo({
+        scrollTop: 0,
+        duration: 300
+      })
+      this.resetData(type);
+    }
   },
 
   onPullDownRefresh(){
-    this.getDataList();
+    this.resetData(this.data.activeIndex);
   },
 
+  onReachBottom() {
+    this.getDataList(this.data.activeIndex,true);
+  },
+
+  onPageScroll({ scrollTop }) {
+    if( scrollTop > 500 && !this.data.isShowScrollTop) {
+      this.setData({
+        isShowScrollTop:true
+      });
+    }else if(scrollTop <= 500 && this.data.isShowScrollTop) {
+      this.setData({
+        isShowScrollTop:false
+      });
+    }
+  },
+  /**
+   * [resetData 重置页面数据，cp,total,activeIndex]
+   * @Author   罗文
+   * @DateTime 2018-10-24
+   * @param    {[Number]}   activeIndex [当前活跃的tab]
+   * @return   {[type]}               [description]
+   */
+  resetData(activeIndex) {
+    this.setData({
+      activeIndex: + activeIndex || 0  , 
+      cp:1,
+      total:0
+    })
+
+    this.getDataList(activeIndex);
+  },
 
   /**
    * [getDataList 获取文章列表]
    * @param  {[Number]} index [当前请求的排序数据索引]
+   * @param  {[Boolean]} isLoadMore [是否是加载更多操作]
    * @return {[type]}       [description]
    */
-  getDataList(index = 0) {
+  getDataList(index = 0, isLoadMore = false) {
     if( index < 0 || index > 2) return;
+
+    let { ps ,cp ,total } = this.data;
+    //如果加载更多，则需要判断当前已加载数量是否已经超过了total
+    if( isLoadMore && ps * cp >= total ) return;
+    if( isLoadMore ) cp++;
 
     wx.showLoading({ title : '加载中...',mask:true});
     let order = [ 'newest' , 'choice', 'hot'];
@@ -43,6 +102,8 @@ Page({
       // 传递给云函数的event参数
       data: {
         orderBy:order[index],
+        ps,
+        cp
       }
     }).then(res => {
       console.log(res)
@@ -51,9 +112,15 @@ Page({
         return item;
       })
 
-      this.setData({
-        hotArticleList:res.data
-      })
+      let updateData = {
+        total: res.recordCount,
+        hotArticleList: isLoadMore ? [...this.data.hotArticleList, ...res.data] : res.data,
+        cp: isLoadMore ? cp : 1,
+        total: res.recordCount
+      }
+
+      this.setData(updateData);
+
     }).then(()=>{
       wx.stopPullDownRefresh();
       wx.hideLoading();
@@ -65,12 +132,7 @@ Page({
 
   //改变当前活跃的na vba r
   changeNavAction({ currentTarget:{dataset:{ index }}}) {
-    this.setData({
-      activeIndex:index
-    })
-
-    //根据当前索引，获取数据
-    this.getDataList(index);
+    this.resetData(index);
   },
 
   //去搜索界面
@@ -90,5 +152,11 @@ Page({
       }
     });
   },
+
+  hideScrollToTop() {
+    this.setData({
+      isShowScrollTop:false
+    });
+  }
 
 })

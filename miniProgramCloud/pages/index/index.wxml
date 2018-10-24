@@ -3,7 +3,7 @@
 
 <view class="index header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);">
 
-   <template is="bg-header" data="{{sysType,titleImgUrl}}"/>
+   <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl}}"/>
      
    <view class="swiper-container"> 
      <swiper 
@@ -41,8 +41,10 @@
        />
      </view>
 
-     <view class="flex flex-align-center flex-justify-center index-more" bindtap="goToArticleList"> 
-       更多 <view class="arrow-right"></view>  
+     <view class="flex flex-align-center flex-justify-center index-more font-lg" bindtap="goToArticleList" data-type="2"> 
+       <text class="index-more-text"> 更多热门文章 </text>    
+       <view class="arrow-right"></view>  
+       <view class="arrow-right"></view>  
      </view>
    </view>
 
@@ -66,8 +68,10 @@
        />
      </view>
 
-     <view class="flex flex-align-center flex-justify-center index-more" bindtap="goToArticleList"> 
-       更多 <view class="arrow-right"></view>  
+     <view class="flex flex-align-center flex-justify-center index-more font-lg" bindtap="goToArticleList" data-type="0"> 
+       <text class="index-more-text"> 更多热门文章 </text>    
+       <view class="arrow-right"></view>  
+       <view class="arrow-right"></view>   
      </view>
    </view>
 
@@ -87,4 +91,5 @@
 
 
   <add-article />
+  <scroll-to-top bind:handleClick="hideScrollToTop" hidden="{{!isShowScrollTop}}" />
 </view>

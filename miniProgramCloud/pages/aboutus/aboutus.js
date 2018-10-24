@@ -1,14 +1,15 @@
 const app = getApp();
+const { Storage } = require('../../noven/storage'); 
 
 Page({
   data:{
-    sysType:48,
+    statusBarHeight:0,
+    titleBarHeight:0,
   },
   onLoad(options) {
-    console.log(options)
-
     this.setData({
-      sysType:app.globalData.sysType,
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight'),
     })
   },
 

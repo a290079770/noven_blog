@@ -3,7 +3,8 @@ var { Storage } = require('../../noven/storage')
 
 Page({
   data:{
-    sysType:48,
+    statusBarHeight:0,
+    titleBarHeight:0,
     titleImgUrl:'http://thyrsi.com/t6/394/1540276844x-1404793579.png',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
@@ -16,7 +17,8 @@ Page({
   },
   onLoad(options) {
     this.setData({
-      sysType:app.globalData.sysType,
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight')
     })
   },
 

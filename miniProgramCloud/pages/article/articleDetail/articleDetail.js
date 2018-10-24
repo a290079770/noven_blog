@@ -7,7 +7,8 @@ Page({
     id:null,
     article:'',
     hasView: wx.getStorageSync('hasView'),   // 0 - 否    1 - 是
-    sysType:48,
+    statusBarHeight:0,
+    titleBarHeight:0,
     detail:null,
     previewUrls:[],  //存放页面预览图片数组
     hasCollect:false,
@@ -18,7 +19,8 @@ Page({
   onLoad: function ({ id }) {
     //获取用户是否第一次进入这个页面
     this.setData({
-      sysType:app.globalData.sysType,
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight'),
       id,
     })
 

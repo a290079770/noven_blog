@@ -1,4 +1,4 @@
-<view class="art-li" bindtap="handleClick">
+<view wx:if="{{!item.isSkeleton}}" class="art-li" bindtap="handleClick">
   <view class="flex flex-align-center art-li-title">
   	<text class="art-li-title-yuanchuang"> 原创 </text>
   	<text class="flex-1 text-ess-1 font-lg"> {{item.Title}}</text>				
@@ -45,4 +45,8 @@
   	  </view>
   	</view>
   </view>
+</view>
+
+<view wx:else bindtap="handleClick">
+	<image src="/images/article-list-skeleton.jpg" mode="apsectFill" class=" article-li-item-skeleton"></image>
 </view>

@@ -1,6 +1,7 @@
 //index.js
 var app = getApp();
 var { dateFormat } = require('../../noven/utils/dateUtil');
+var { Storage } = require('../../noven/storage');
 //获取应用实例
 Page({
   data: {
@@ -39,13 +40,16 @@ Page({
     ],
     titleImgUrl:'../../images/myl.jpg',
 
-    sysType:48
+    statusBarHeight:0,
+    titleBarHeight:0,
+
+    isShowScrollTop:false,
   },
 
   onLoad() {
     this.setData({
-      sysType:app.globalData.sysType,
-      db: app.globalData.db
+      statusBarHeight:Storage.getSync('statusBarHeight'),
+      titleBarHeight: Storage.getSync('titleBarHeight')
     })
 
     this.getDataListIndex();
@@ -53,6 +57,18 @@ Page({
 
   onPullDownRefresh(){
     this.getDataListIndex();
+  },
+
+  onPageScroll({ scrollTop }) {
+    if( scrollTop > 500 && !this.data.isShowScrollTop) {
+      this.setData({
+        isShowScrollTop:true
+      });
+    }else if(scrollTop <= 500 && this.data.isShowScrollTop) {
+      this.setData({
+        isShowScrollTop:false
+      });
+    }
   },
 
   onShareAppMessage: function (res) {
@@ -112,13 +128,20 @@ Page({
     });
   },
 
-  goToArticleList() {
+  goToArticleList({ currentTarget:{dataset:{ type }}}) {
     app.goTo({
-      path:'/pages/article/articleList/articleList'
+      path:'/pages/article/articleList/articleList',
+      query:{
+        type
+      }
     });
   },
 
-
+  hideScrollToTop() {
+    this.setData({
+      isShowScrollTop:false
+    });
+  }
 
 
 })

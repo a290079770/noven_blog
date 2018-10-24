@@ -1,6 +1,7 @@
 {
   "enablePullDownRefresh":true,
   "usingComponents": {
-    "add-article": "../../common/addArticleBtn/addArticleBtn"
+    "add-article": "../../common/addArticleBtn/addArticleBtn",
+    "scroll-to-top": "../../common/scrollToTop/scrollToTop"
   }
 }
