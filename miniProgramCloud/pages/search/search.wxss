@@ -2,6 +2,7 @@
   min-height: 100vh;
 }
 .search-wrap {
+  position: relative;
   padding: 16rpx 20rpx;
   color: #666;
   border-bottom: 1px solid #e7e7e7;
@@ -11,7 +12,7 @@
   left: 25rpx;
   top: 15rpx;
 }
-.search-inut {
+.search-input {
   flex: 1;
   margin-left: -25rpx;
   padding-left: 60rpx;
@@ -34,18 +35,17 @@
 
 .search-clear {
   position: relative;
-  left: -44rpx;
-  top: 16rpx ;
-  z-index: 9;
-  width:28rpx;
-  height: 28rpx;
-  background: #999;
-  border-radius: 50%;
+  z-index: 2;
+  margin-left: -7rpx;
+  width:60rpx;
+  height: 60rpx;
+  background: #efefef;
+  border-radius: 0 8rpx 8rpx 0;
 }
 
 .search-clear-icon {
-  width: 16rpx;
-  height: 16rpx;
+  width: 28rpx;
+  height: 28rpx;
 }
 
 .search-article-list-nodata {

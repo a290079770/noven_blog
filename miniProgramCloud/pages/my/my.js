@@ -168,7 +168,13 @@ Page({
         app.goTo({
           path:'/pages/aboutus/aboutus'
         })
-        break;      
+        break;    
+
+      case 6:
+        app.goTo({
+          path:'/pages/feedback/feedback'
+        })
+        break;    
       default:
         // statements_def
         break;

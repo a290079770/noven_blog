@@ -12,7 +12,8 @@
     "pages/addArticle/index/addIndex",
     "pages/addArticle/text/addText",
     "pages/addArticle/previewArticle/previewArticle",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/feedback/feedback"
   ],
   "window":{
     "backgroundTextStyle":"light",

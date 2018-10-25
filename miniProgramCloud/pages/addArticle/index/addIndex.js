@@ -4,6 +4,7 @@ const { Storage } = require('../../../noven/storage')
 
 Page({
   data:{
+    pageTitle:'',
     statusBarHeight:0,
     titleBarHeight:0,
     newArticle:{
@@ -34,6 +35,7 @@ Page({
   },
   onLoad(options) {
     this.setData({
+      pageTitle:'添加文章',
       statusBarHeight:Storage.getSync('statusBarHeight'),
       titleBarHeight: Storage.getSync('titleBarHeight'),
     })

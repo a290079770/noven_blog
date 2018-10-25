@@ -3,7 +3,7 @@
   	<text class="art-li-title-yuanchuang"> 原创 </text>
   	<text class="flex-1 text-ess-1 font-lg"> {{item.Title}}</text>				
   </view>
-  <view class="art-li-brief font gray9 text-ess-2">
+  <view wx:if="{{item.Brief}}" class="art-li-brief font gray9 text-ess-2">
   	{{item.Brief}}
   </view>
 
@@ -23,7 +23,7 @@
   <view class="flex flex-align-center flex-justify-between art-li-info font-xs">
   	<view class="flex flex-align-center">
   		<view class="art-li-author-cover">
-  			<image class="full-img" mode="aspectFill" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3199093078,918503307&fm=27&gp=0.jpg"></image>
+  			<image class="full-img" mode="aspectFill" src="{{ item.AuthorInfo && item.AuthorInfo.avatarUrl}}"></image>
   		</view>
   		<view class="font gray9">
   			{{item.Author}}

@@ -4,6 +4,7 @@ const { Storage } = require('../../noven/storage');
 
 Page({
   data:{
+    pageTitle:'',
     statusBarHeight:0,
     titleBarHeight:0,
     type:3,  //3 - 修改昵称。 4 - 修改简介
@@ -15,6 +16,7 @@ Page({
   },
   onLoad(options) {
     this.setData({
+      pageTitle: options.type == 3 ? '修改昵称' : '修改个人简介',
       statusBarHeight:Storage.getSync('statusBarHeight'),
       titleBarHeight: Storage.getSync('titleBarHeight'),
       type:options.type,

@@ -49,9 +49,9 @@
      	<text> 关于我们 </text>		
      </view>
 
-     <view class="flex flex-align-center my-oparate-item">
+     <view class="flex flex-align-center my-oparate-item" bindtap="goTo" data-type="6">
      	<image src="../../images/contactus.svg" class="my-oparate-item-icon"></image>
-     	<text> 联系我们 </text>		
+     	<text> 意见反馈 </text>		
      </view>
 
 <!--      <view class="flex flex-align-center my-oparate-item">

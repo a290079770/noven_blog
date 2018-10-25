@@ -1,0 +1,38 @@
+<import src="../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="updateinfo">
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{pageTitle,statusBarHeight,titleBarHeight}}"></template>
+  </view>
+
+  <view class="updateinfo-cont">
+
+    <view class="updateinfo-abstract">
+      <textarea
+       placeholder-class="placeholder-class"
+       class="updateinfo-nickname-textarea"
+       auto-focus
+       focus
+       maxlength="-1"
+       placeholder="给点意见吧！" 
+       value="{{text}}"
+       bindinput="textareaInput"
+       />
+
+       <view class="flex flex-align-center feed-pics">
+ <!--         <view class="feed-pic"> 
+           
+         </view> -->
+
+         <view class="flex flex-align-center flex-justify-center flex-column feed-pic camera-pic"> 
+           <image class="camera" mode="aspectFit" src="/images/camera.svg"></image>
+           <text class="gray9 font"> 添加图片 </text>    
+         </view>
+       </view>
+    </view>
+
+    <view>
+      <button class="updateinfo-submit" bindtap="sumbitAction">提交意见</button>
+    </view>
+  </view>
+</view>

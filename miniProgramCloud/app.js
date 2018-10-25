@@ -95,7 +95,6 @@ App({
     } else if (model.indexOf('iPhone') !== -1) {
       totalTopHeight = 64
     }
-
     Storage.setSync('statusBarHeight',statusBarHeight);
     Storage.setSync('titleBarHeight',totalTopHeight - statusBarHeight);
   },

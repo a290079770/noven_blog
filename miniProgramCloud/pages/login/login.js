@@ -3,6 +3,7 @@ var { Storage } = require('../../noven/storage')
 
 Page({
   data:{
+    pageTitle:'',
     statusBarHeight:0,
     titleBarHeight:0,
     titleImgUrl:'http://thyrsi.com/t6/394/1540276844x-1404793579.png',
@@ -17,6 +18,7 @@ Page({
   },
   onLoad(options) {
     this.setData({
+      pageTitle:'登录Noven Blog',
       statusBarHeight:Storage.getSync('statusBarHeight'),
       titleBarHeight: Storage.getSync('titleBarHeight')
     })

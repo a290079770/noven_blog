@@ -40,6 +40,7 @@ exports.main = async (event, context) => {
 	 	 let supplement = {
 	 	 	  Author:user.nickName,
 	 	 	  AuthorId:openId,
+	 	 	  AuthorInfo: pick(user,['avatarUrl','brief','gender','nickName']),
 	 	 	  CollectCount:0,
 	 	 	  ReadCount:0,
 	 	 	  ThumbUrl:detail.Url
@@ -83,4 +84,25 @@ async function setResponse(code,description,data) {
   })
 
   return result;
+}
+
+
+/**
+ * [pick 从对象中取出特定项，返回新对象]
+ * @Author   罗文
+ * @DateTime 2018-09-28
+ * @param    {[Object]}   obj        [目标对象]
+ * @param    {[Array]}   filtersArr [要筛选的键数组]
+ * @return   {[type]}              [description]
+ */
+function pick(obj,keysArr) {
+	let newObj = {};
+	let keys = Object.keys(obj);
+
+	keysArr.forEach(key => {
+		let isInclude = keys.includes(key);
+		if(isInclude) newObj[key] = obj[key];
+	})
+
+	return newObj;
 }

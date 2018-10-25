@@ -10,7 +10,7 @@
 
 
 .my-published {
-	margin-top: 20rpx;
+	margin-top: 40rpx;
 	height: 150rpx;
 }
 
@@ -37,6 +37,7 @@
 
 .my-published-item-img {
 	width: 80rpx;
+	height: 80rpx;
 }
 
 .my-published-item-number {

@@ -30,17 +30,34 @@ Page({
       titleBarHeight: Storage.getSync('titleBarHeight'),
     })
 
-    this.resetData(type);
+    this.resetData(type,false);
   },
 
   onShow() {
+    //每次一进入当前页面，检测是否需要刷新
+    //触发刷新的操作 - 新增文章，删除文章，修改文章
+    let articleHasUpdate = Storage.getSync('articleHasUpdate');
+
+    if(articleHasUpdate && articleHasUpdate === true) {
+      wx.pageScrollTo({
+        scrollTop: 0,
+        duration: 300
+      })
+      this.resetData(0);
+      Storage.remove('articleHasUpdate');
+      return;
+    } 
+    
+
     const { type } = app.globalData.tabBarData;
+    //如果从首页过来，点击的类别和当前类别不一致，则从新请求
     if( type && type != this.data.activeIndex) {
       wx.pageScrollTo({
         scrollTop: 0,
         duration: 300
       })
       this.resetData(type);
+      delete app.globalData.tabBarData.type;
     }
   },
 
@@ -70,13 +87,14 @@ Page({
    * @param    {[Number]}   activeIndex [当前活跃的tab]
    * @return   {[type]}               [description]
    */
-  resetData(activeIndex) {
+  resetData(activeIndex,isShowLoading = true) {
     this.setData({
       activeIndex: + activeIndex || 0  , 
       cp:1,
       total:0
     })
 
+    if(isShowLoading) wx.showLoading({ title : '加载中...',mask:true});
     this.getDataList(activeIndex);
   },
 
@@ -94,7 +112,7 @@ Page({
     if( isLoadMore && ps * cp >= total ) return;
     if( isLoadMore ) cp++;
 
-    wx.showLoading({ title : '加载中...',mask:true});
+    
     let order = [ 'newest' , 'choice', 'hot'];
     app.callCloudFunction({
       // 要调用的云函数名称

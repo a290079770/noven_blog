@@ -3,6 +3,7 @@ var { Storage } = require('../../../noven/storage');
 var app = getApp();
 
 Page({
+  pageTitle:'',
   statusBarHeight:0,
   titleBarHeight:0,
   data: {
@@ -19,6 +20,7 @@ Page({
   },
   onLoad: function () {
     this.setData({
+      pageTitle:'预览文章',
       statusBarHeight:Storage.getSync('statusBarHeight'),
       titleBarHeight: Storage.getSync('titleBarHeight'),
     })
@@ -67,6 +69,7 @@ Page({
       .showToast('发布成功')
       .then(()=>{
         Storage.remove('previewArticleData');
+        Storage.set('articleHasUpdate',true);
         
         app.goTo({
           path:'/pages/article/articleDetail/articleDetail',

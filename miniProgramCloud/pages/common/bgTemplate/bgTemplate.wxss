@@ -2,7 +2,7 @@
 
 .index-header {
    align-items: flex-end;
-   height:375rpx;
+   min-height:350rpx;
    width: 100%;
 }
 
@@ -56,6 +56,19 @@
 .top-custom-btn image {
   width: 40rpx;
   height: 40rpx;
+}
+
+.top-custom-title {
+  margin-left: 10rpx;
+  width: 350rpx;
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 36rpx;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .index-title-image {

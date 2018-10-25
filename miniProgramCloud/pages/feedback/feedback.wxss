@@ -1,0 +1,53 @@
+.updateinfo-cont {
+  margin: 0 auto;
+  width: 700rpx;
+  min-height: 100rpx;
+}
+
+.placeholder-class {
+  font-size: 24rpx;
+  color:#999;
+}
+
+.updateinfo-abstract {
+  margin: 50rpx 0;
+  height: 470rpx;
+  width: 100%;
+  border:2rpx solid #ccc;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.updateinfo-submit {
+  color:white;
+  background: #768fc3;
+}
+
+.updateinfo-nickname-textarea {
+  width: 660rpx;
+  height: 260rpx;
+  padding: 20rpx;
+  font-size: 24rpx;
+}
+
+
+.feed-pics {
+  width: 700rpx;
+  height: 150rpx;
+}
+
+.feed-pic {
+  margin-left: 20rpx;
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.camera-pic {
+  border: 1px dashed #ccc;
+}
+
+.camera {
+  margin-bottom: 5rpx;
+  width: 64rpx;
+  height: 64rpx;
+}

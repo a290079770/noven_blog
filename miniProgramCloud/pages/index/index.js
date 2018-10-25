@@ -18,9 +18,7 @@ Page({
       },
     ],
     choiceArticleList:[
-      {
-        isSkeleton:true
-      }
+      
     ],
     newestArticleList:[
       {
@@ -44,6 +42,12 @@ Page({
     titleBarHeight:0,
 
     isShowScrollTop:false,
+
+    current: 0,
+    animationData: {},
+    animationData2: {},
+    currentHeight: '420rpx',
+    otherHeight: '360rpx'
   },
 
   onLoad() {
@@ -53,6 +57,7 @@ Page({
     })
 
     this.getDataListIndex();
+    this.shrink(this.data.currentHeight)
   },  
 
   onPullDownRefresh(){
@@ -99,6 +104,7 @@ Page({
         ps:5
       }
     }).then(res => {
+      console.log(res)
       res.data = res.data.map(item => {
         item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd');
         return item;
@@ -109,6 +115,8 @@ Page({
       listSet[orderBy + 'ArticleList'] = res.data;
 
       this.setData(listSet)
+
+      if(orderBy == 'choice') this.stretch(this.data.currentHeight)
     }).catch(err => {
       console.log(err)
       app.showToast(err.description,2);
@@ -120,6 +128,7 @@ Page({
 
 
   handleArticleClick({ currentTarget:{dataset:{ id = '' }}}) {
+    if( !id ) return;
     app.goTo({
       path:'/pages/article/articleDetail/articleDetail',
       query:{
@@ -141,7 +150,42 @@ Page({
     this.setData({
       isShowScrollTop:false
     });
-  }
+  },
 
+
+  //控制轮播图
+  change(e){
+    this.setData({
+      current: e.detail.current
+    })
+    this.stretch(this.data.currentHeight)
+    
+    this.shrink(this.data.otherHeight)
+  },
+
+  // 放大
+  stretch(h){
+    var animation = wx.createAnimation({
+      duration: 300,
+      timingFunction: 'ease',
+    })
+    this.animation = animation
+    animation.height(h).step()
+    this.setData({
+      animationData: animation.export(),
+    })
+  },
+  // 缩小
+  shrink(h){
+    var animation2 = wx.createAnimation({
+      duration: 300,
+      timingFunction: 'ease',
+    })
+    this.animation2 = animation2
+    animation2.height(h).step()
+    this.setData({
+      animationData2: animation2.export()
+    })
+  },
 
 })

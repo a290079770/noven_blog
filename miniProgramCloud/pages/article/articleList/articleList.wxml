@@ -45,7 +45,15 @@
        />
      </view>
    </view>
+  
 
+<!--    <view class="flex flex-align-center flex-justify-center font-xs gray9">
+     <image mode="aspectFill" src="/images/loading.svg" class="load-more-icon"></image>
+     <text> 加载更多... </text>      
+   </view> 
+   <view class="flex flex-align-center flex-justify-center font-xs gray9">
+     ^_^ 没有更多了...
+   </view> -->  
 
    <template is="bg-footer"/>
 

@@ -3,6 +3,7 @@ var { dateFormat } = require('../../noven/utils/dateUtil');
 var { Storage } = require('../../noven/storage')
 Page({
   data:{
+    pageTitle:'',
     statusBarHeight:0,
     titleBarHeight:0,
     searchKeywords: '',
@@ -11,6 +12,7 @@ Page({
   },
   onLoad(options) {
     this.setData({
+      pageTitle:'搜索文章',
       statusBarHeight:Storage.getSync('statusBarHeight'),
       titleBarHeight: Storage.getSync('titleBarHeight')
     })
@@ -76,6 +78,7 @@ Page({
   },
   //清除按钮
   clear() {
+    if( !this.data.searchKeywords ) return;
     this.setData({
       searchKeywords: ''
     })

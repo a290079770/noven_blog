@@ -3,6 +3,7 @@ var { dateFormat } = require('../../../noven/utils/dateUtil');
 const { Storage } = require('../../../noven/storage')
 Page({
   data:{
+    pageTitle:'',
     statusBarHeight:0,
     titleBarHeight:0,
     type:1,  //1 - 我的发布   2 - 我的收藏
@@ -14,6 +15,7 @@ Page({
   },
   onLoad(options) {
     this.setData({
+      pageTitle: options.type == 1 ? '我的发布' : '我的收藏',
       statusBarHeight:Storage.getSync('statusBarHeight'),
       titleBarHeight: Storage.getSync('titleBarHeight'),
       type:options.type
@@ -173,6 +175,8 @@ Page({
         dataList:this.data.dataList.filter( item => !ids.includes(item._id)),
         isOpenEdit:false
       })
+
+      if( this.data.type == 1 ) Storage.set('articleHasUpdate',true);
     })
     .catch((err)=>{
       console.log(err)

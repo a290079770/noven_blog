@@ -2,7 +2,7 @@
 
 <view class="aboutus">
   <view bindtap="headerClick">
-    <template is="bg-header-detail" data="{{statusBarHeight,titleBarHeight}}"></template>
+    <template is="bg-header-detail" data="{{pageTitle,statusBarHeight,titleBarHeight}}"></template>
   </view>
 
   <view class="aboutus-cont">

@@ -3,7 +3,7 @@
 
 <view class="article-detail">
    <view bindtap="headerClick">
-   	 <template is="bg-header-detail" data="{{statusBarHeight,titleBarHeight}}"></template>
+   	 <template is="bg-header-detail" data="{{pageTitle,statusBarHeight,titleBarHeight}}"></template>
    </view>
 
    <view class="article-detail-cont" wx:if="{{detail}}">

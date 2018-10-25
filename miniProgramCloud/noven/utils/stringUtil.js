@@ -51,7 +51,7 @@ const getSliceStr = (str,len) => {
  * @return   {[type]}   [description]
  */
 const randomStr = (len) => {
-  var preinstallStr = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-$';
+  var preinstallStr = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
   var str = '';
 
   for(var i = 0 ; i < len ; i ++) {

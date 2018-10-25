@@ -6,6 +6,7 @@ Page({
   data: {
     id:null,
     article:'',
+    pageTitle:'',
     hasView: wx.getStorageSync('hasView'),   // 0 - 否    1 - 是
     statusBarHeight:0,
     titleBarHeight:0,
@@ -54,7 +55,7 @@ Page({
       }
     }).then(res => {
        console.log(res.data)
-       let { CreatTime , Url , Content , AuthorId} = res.data;
+       let { Title , CreatTime , Url , Content , AuthorId} = res.data;
        //处理下时间
        CreatTime = dateFormat(CreatTime,'yyyy-mm-dd');
 
@@ -69,6 +70,7 @@ Page({
        const { userInfo } = app.globalData;
 
        this.setData({
+         pageTitle: Title,
          detail: res.data,
          hasCollect: res.data.hasCollect || false,
          previewUrls,
@@ -165,12 +167,16 @@ Page({
       })
     })
     .then( res => {
-      console.log(res)
       return app.showToast('删除成功')
     })
     .then(() => {
+      Storage.set('articleHasUpdate',true);
       app.goTo({
-        path:'/pages/article/myList/myList?type=1'
+        path:'/pages/article/myList/myList',
+        query:{
+          type:1
+        },
+        isReplace:true
       });
     })
     .catch((err)=>{

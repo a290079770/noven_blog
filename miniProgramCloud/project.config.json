@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 7,
 			"list": [
 				{
 					"id": 0,
@@ -77,6 +77,11 @@
 					"name": "全文索引",
 					"pathName": "pages/search/search",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "意见反馈",
+					"pathName": "pages/feedback/feedback"
 				}
 			]
 		}

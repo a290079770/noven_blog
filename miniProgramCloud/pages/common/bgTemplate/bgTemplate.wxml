@@ -66,18 +66,23 @@
      <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
      <view class="flex flex-align-center top-capsule" style="height:{{titleBarHeight}}px">
 	
-	   <view class="flex flex-align-center flex-justify-around top-custom-btns">
-	   	 <view class="flex flex-align-center flex-justify-center top-custom-btn top-custom-btn-left" id="headerBtnLeftCont">
-	   	 	<image src="/images/back.svg" id="headerBtnLeft"></image>	
-	   	 </view>
-	   	 <view class="top-custom-btn-place">
-	   	 	
-	   	 </view>
-	   	 <view class="flex flex-align-center flex-justify-center top-custom-btn" id="headerBtnRightCont">
-	   	 	<image src="/images/index3.svg" id="headerBtnRight"></image>	
-	   	 </view>	
-	   </view>
-	 </view>
+		   <view class="flex flex-align-center flex-justify-around top-custom-btns">
+		   	 <view class="flex flex-align-center flex-justify-center top-custom-btn top-custom-btn-left" id="headerBtnLeftCont">
+		   	 	<image src="/images/back.svg" id="headerBtnLeft"></image>	
+		   	 </view>
+		   	 <view class="top-custom-btn-place">
+		   	 	
+		   	 </view>
+		   	 <view class="flex flex-align-center flex-justify-center top-custom-btn" id="headerBtnRightCont">
+		   	 	<image src="/images/index3.svg" id="headerBtnRight"></image>	
+		   	 </view>	
+		   </view>
+
+		   <!-- title -->
+		   <view class=" top-custom-title">
+		   	 {{ pageTitle || 'Noven 博客' }}
+		   </view>
+		 </view>
    </view>
 </template>
 

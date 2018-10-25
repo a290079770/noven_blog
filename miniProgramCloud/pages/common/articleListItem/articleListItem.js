@@ -16,7 +16,7 @@ Component({
          if( !Content ) return;
          let imgList = Content.filter( item => item.type == 'img');
          this.setData({
-            imgList:imgList.map( item => item.value )
+            imgList:imgList.map( item => item.value ).slice(0,3)
          })
       }
     },

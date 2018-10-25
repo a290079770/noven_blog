@@ -4,6 +4,7 @@
     "articleItem": "../common/articleItem/articleItem",
     "moodItem": "../common/moodItem/moodItem",
     "add-article": "../common/addArticleBtn/addArticleBtn",
-    "scroll-to-top": "../common/scrollToTop/scrollToTop"
+    "scroll-to-top": "../common/scrollToTop/scrollToTop",
+    "article-list-item": "../common/articleListItem/articleListItem"
   }
 }

@@ -4,6 +4,7 @@ const { Storage } = require('../../../noven/storage')
 
 Page({
   data:{
+    pageTitle:'',
     statusBarHeight:0,
     titleBarHeight:0,
     text:'',
@@ -15,6 +16,7 @@ Page({
     let isEdit = keys.includes('currentText');
 
     this.setData({
+      pageTitle:'编辑文本',
       statusBarHeight:Storage.getSync('statusBarHeight'),
       titleBarHeight: Storage.getSync('titleBarHeight'),
       index: options.index ?  + options.index : null,  //注意，url传过来的参数，都是字符串！！！

@@ -128,9 +128,7 @@ view {
    margin: 0 auto;
    width: 690rpx;
    overflow-x: hidden;
-   height: 400rpx;
-   box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.3);
-   /*width: 100%;*/
+   height: 420rpx;
 }
 
 .swiper-container swiper {
@@ -139,8 +137,8 @@ view {
 }
 
 .swiper-item-cont {
-  width: 100%;
-  height: 100%;
+  width: 560rpx;
+  height: 360rpx;
   background-size: cover !important;
   background-position: center !important;
 }
@@ -159,7 +157,7 @@ view {
 
 
 .index-title {
-   padding: 50rpx 0;  
+   padding: 30rpx 0;  
    height: 141rpx;
    width: 100%;
 }
@@ -188,6 +186,27 @@ view {
   box-sizing: border-box;
   border-top:1px solid #eee;
   color:#d13954;
+}
+
+
+.load-more-icon {
+  animation: loading 1s linear infinite;
+  -webkit-animation: loading 1s linear infinite;  
+  margin-right: 10rpx;
+  width: 24rpx;
+  height: 24rpx;
+}
+
+@keyframes loading
+{
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+@-webkit-keyframes loading
+{
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
 }
 
 

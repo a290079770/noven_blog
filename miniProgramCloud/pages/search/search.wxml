@@ -2,12 +2,12 @@
 
 <view class="search-box">
   <view bindtap="headerClick">
-    <template is="bg-header-detail" data="{{statusBarHeight,titleBarHeight}}"></template>
+    <template is="bg-header-detail" data="{{pageTitle,statusBarHeight,titleBarHeight}}"></template>
   </view>
   <view class="search-wrap flex flex-justify-between">
     <icon class="search-icon" size='16' type='search'></icon>
     <input 
-    class="search-inut font-l"
+    class="search-input font-l"
     type='text' 
     placeholder="请输入关键字进行搜索" 
     focus auto-focus 
@@ -15,7 +15,7 @@
     bindinput="searchInput" 
     confirm-type="搜索"  
     bindconfirm="getDataList" />
-    <view bindtap="clear" class="flex flex-align-center flex-justify-center search-clear">
+    <view catchtap="clear" class="flex flex-align-center flex-justify-center search-clear">
       <image class="search-clear-icon" mode="aspectFill" src="/images/close-white.svg"></image>
     </view>
     <text class="font-l cancle" bindtap="cancel">取消</text>
