@@ -57,7 +57,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;*/
-  font-size: 0.18rem;
+  font-size: 0.14rem;
 }
 .tabbar {
   img {

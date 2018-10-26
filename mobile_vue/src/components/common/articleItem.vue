@@ -4,15 +4,15 @@
 	  <div class="article-img">
 			<img :src="listItem.Url">
 	  </div>
-	  <div class="author-info">
+	  <div class="article-item-author-info">
 			<span class="article-word">article</span>
-			<span class="author">@{{ listItem.Author }}</span>
-			<span class="time">{{ listItem.Createtime }}</span>
+			<span class="article-item-author">@{{ listItem.Author }}</span>
+			<span class="article-item-time">{{ listItem.Createtime }}</span>
 	  </div>
-	  <div class="title">
+	  <div class="article-item-title">
 			{{ listItem.Title }}
 	  </div>
-	  <div class="brief">
+	  <div class="article-item-brief">
 			{{ listItem.Brief }}
 	  </div>
 	</div>
@@ -71,29 +71,29 @@ export default {
 				height: 100%;
 			  }
 			}
-			.author-info {
+			.article-item-author-info {
 			  margin-top: .1rem;
 		   	  text-align: center;
 			  .article-word {
 				color: #5ed49d;
 			  }
-			  .author, .time {
+			  .article-item-author, .article-item-time {
 				margin-left: .2rem;
 			  }
-			  .time {
-				font-size: .16rem;
+			  .article-item-time {
+				font-size: .12rem;
 			  }
 			}
-			.title {
+			.article-item-title {
 			  margin-top: .1rem;
 			  padding: 0 .2rem;
-			  font-size: .24rem;
+			  font-size: .18rem;
 			  text-align: center;
 			}
-			.brief {
-			  text-align: center;
+			.article-item-brief {
 			  margin-top: .2rem;
-			  font-size: .16rem;
+			  text-align: center;
+			  font-size: .12rem;
 			  color: #666;
 			}
 		  }

@@ -22,12 +22,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    let { NickName: nickname, Introduction } = app.globalData.userInfo
+    let { NickName: nickname, Introduction: brief } = app.globalData.userInfo
     // console.log(option)
     this.setData({
       type: + option.type,
       nickname,
-      ['currentLength.nickname']: this.getCurrentLength(nickname)
+      ['currentLength.nickname']: this.getCurrentLength(nickname),
+      brief,
+      ['currentLength.brief']: this.getCurrentLength(brief),
     })
   },
 
@@ -122,14 +124,14 @@ Page({
         break;
       case 4:
         this.setData({
-          brief: e.detail.value,
-          ['currentLength.brief']: inputLen
+          brief: _this.getSliceStr(e.detail.value, 280),
+          ['currentLength.brief']: inputLen > 280 ? 280 : inputLen
         })
         break;
       case 6:
         this.setData({
-          suggestion: e.detail.value,
-          ['currentLength.suggestion']: inputLen
+          suggestion: _this.getSliceStr(e.detail.value, 280),
+          ['currentLength.suggestion']: inputLen > 280 ? 280 : inputLen
         })
         break;
       default:
@@ -170,6 +172,12 @@ Page({
       this.requestUserInfo(app.globalData.userInfo.NickName, brief);
     } else if (this.data.type === 6) {
       console.log(666666)
+      wx.showToast({
+        title: '意见提交成功！',
+        icon: 'succes',
+        duration: 1000,
+        mask: true
+      })
     }
     
     setTimeout(function () {

@@ -1,6 +1,6 @@
 <template>
   <div class="article-wrap">
-    <div class="title">文章列表</div>
+    <div class="article-title">文章列表</div>
     <div class="list-nav">
       <mt-navbar v-model="selected" @click.native="chooseNav">
         <mt-tab-item id="newest">最新</mt-tab-item>
@@ -80,7 +80,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-  .title {
+  .article-title {
     margin-top: .5rem;
     text-align: center;
     font-size: .24rem;
@@ -106,7 +106,6 @@ export default {
       }
     }
     .mint-search {
-      margin-top: .14rem;
       height: 100%;
       .mint-searchbar {
         background: transparent;

@@ -1,19 +1,19 @@
 <template>
   <div class="detail-wrap">
-    <div class="title">{{ detailData.Title }}</div>
-    <div class="author-info">
-      <span class="article-word">article</span>
-      <span class="author">@{{ detailData.Author }}</span>
-      <span class="time">{{ detailData.CreateTime }}</span>
+    <div class="detail-title">{{ detailData.Title }}</div>
+    <div class="detail-author-info">
+      <span class="detail-article-word">article</span>
+      <span class="detail-author">@{{ detailData.Author }}</span>
+      <span class="detail-time">{{ detailData.CreateTime }}</span>
     </div>
-    <div class="read-collect-count">
-      <span class="read-count">阅读量：{{ detailData.ReadCount }}</span>
-      <span class="collect-count">收藏量：{{ detailData.CollectCount }}</span>
+    <div class="detail-read-collect-count">
+      <span class="detail-read-count">阅读量：{{ detailData.ReadCount }}</span>
+      <span class="detail-collect-count">收藏量：{{ detailData.CollectCount }}</span>
     </div>
     <div class="detail-img">
       <img :src="detailData.Url" alt="">
     </div>
-    <div class="content">
+    <div class="detail-content">
       {{ detailData.Content }}
     </div>
   </div>
@@ -47,25 +47,25 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-  .title {
+  .detail-title {
     margin-top: .5rem;
     text-align: center;
     font-size: .24rem;
   }
-  .author-info {
+  .detail-author-info {
     margin-top: .2rem;
     text-align: center;
-    .article-word {
+    .detail-article-word {
       color: #5ed49d;
     }
-    .author, .time {
+    .detail-author, .detail-time {
       margin-left: .2rem;
     }
-    .time {
+    .detail-time {
       font-size: .16rem;
     }
   }
-  .read-collect-count {
+  .detail-read-collect-count {
     margin-top: .2rem;
     text-align: center;
     font-size: .16rem;
@@ -84,7 +84,7 @@ export default {
       height: 100%;
     }
   }
-  .content {
+  .detail-content {
     margin: 0 auto;
     margin-top: .5rem;
     width: 3.64rem;

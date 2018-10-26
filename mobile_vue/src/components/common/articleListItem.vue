@@ -1,25 +1,25 @@
 <template>
 	<div class="article-list-box" @click="toDetail">
 		<div class="article-list-item">
-			<div class="title-row">
-        <span class="yuanchuang">原创</span>   
-        <span class="title">{{ listItem.Title }}</span>   
+			<div class="article-list-item-title-row">
+        <span class="article-list-item-yuanchuang">原创</span>   
+        <span class="article-list-item-title">{{ listItem.Title }}</span>   
       </div>
-      <div class="brief">
+      <div class="article-list-item-brief">
         {{ listItem.Brief }}
       </div>
-      <div class="imgs">
+      <div class="article-list-item-imgs">
         <img v-for="item in 3" :src="listItem.Url">
       </div>
       <!-- 作者、阅读量、收藏量 -->
-      <div class="other-info">
-        <span class="author">
+      <div class="article-list-item-other-info">
+        <span class="article-list-item-author">
           <img :src="listItem.Url">
           <span class="autor-name">{{ listItem.Author }}</span>
         </span>
-        <span class="tongji">
-          阅读量：<span class="read-count">{{ listItem.ReadCount }}</span>
-          收藏量：<span class="collect-count">{{ listItem.CollectCount }}</span>
+        <span class="article-list-item-tongji">
+          阅读量：<span class="article-list-item-read-count">{{ listItem.ReadCount }}</span>
+          收藏量：<span class="article-list-item-collect-count">{{ listItem.CollectCount }}</span>
         </span>
       </div>
 		</div>
@@ -65,10 +65,10 @@ export default {
       padding: .1rem 0;
       min-height: 1.4rem;
       /*border-bottom: 1px solid red;*/
-      .title-row {
+      .article-list-item-title-row {
         display: flex;
         align-items: center;
-        .yuanchuang {
+        .article-list-item-yuanchuang {
           padding: .04rem 0.2rem;
           font-size: .1rem;
           color: red;
@@ -76,10 +76,8 @@ export default {
           box-sizing: border-box;
           border-radius: 4px;
         }
-        .title {
-          margin-top: 0;
+        .article-list-item-title {
           margin-left: .1rem;
-          font-size: .14rem;
           width: 2.7rem;
           text-align: left;
           overflow: hidden;
@@ -87,7 +85,7 @@ export default {
           white-space: nowrap;
         }
       }
-      .brief {
+      .article-list-item-brief {
         margin-top: .1rem;
         font-size: .12rem;
         color: #666;
@@ -96,10 +94,10 @@ export default {
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
         overflow: hidden;
-        line-height: .24rem;
-        max-height: .72rem;
+        line-height: .2rem;
+        max-height: .6rem;
       }
-      .imgs {
+      .article-list-item-imgs {
         margin-top: .2rem;
         display: flex;
         justify-content: space-between;
@@ -111,28 +109,28 @@ export default {
         img:first-child {
         }
       }
-      .other-info {
+      .article-list-item-other-info {
         margin-top: .1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: .12rem;
-        .author {
+        .article-list-item-author {
           display: flex;
           align-items: center;
-          img {
+          & > img {
             width: .3rem;
             height: .3rem;
             border-radius: 50%;
             margin-right: .1rem;
           }
         }
-        .tongji {
-          .read-count {
+        .article-list-item-tongji {
+          .article-list-item-read-count {
             margin-right: .2rem;
             color: red;
           }
-          .collect-count {
+          .article-list-item-collect-count {
             margin-right: .1rem;
             color: red;
           }
