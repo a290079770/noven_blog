@@ -1,15 +1,46 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import LogAndReg from '@/components/LogAndReg'
+import index from '@/components/Index'
+import logAndReg from '@/components/LogAndReg'
+import article from '@/components/Article'
+import mine from '@/components/Mine'
+import detail from '@/components/Detail'
+import search from '@/components/Search'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'LogAndReg',
-      component: LogAndReg
-    }
+      path: '/logAndReg',
+      name: 'logAndReg',
+      component: logAndReg
+    },
+  	{
+      path: '/index',
+      name: 'index',
+      component: index
+    },
+    {
+      path: '/article',
+      name: 'article',
+      component: article
+    },
+    {
+      path: '/mine',
+      name: 'mine',
+      component: mine
+    },
+    {
+      path: '/detail',
+      name: 'detail',
+      component: detail
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: search
+    },
+    { path: '*', redirect: '/index' }
   ]
 })

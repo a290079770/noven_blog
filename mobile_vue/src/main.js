@@ -6,7 +6,8 @@ import router from './router'
 import Mint from 'mint-ui';
 Vue.use(Mint);
 import 'mint-ui/lib/style.css'; 
-import './assets/my-mint.less';//全局修改mint-UI样式
+// import './assets/css/my-mint.less';//全局修改mint-UI样式
+import './assets/css/reset.css';
 
 Vue.config.productionTip = false
 
