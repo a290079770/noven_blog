@@ -2,14 +2,14 @@
   <!-- 头像区 -->
   <view class="mine-info-wrap">
     <view class="mine-info-img-wrap">
-      <image class="mine-info-img" src="{{userInfo.avatarUrl}}" mode="aspectFill" bindtap="editTouxiang"></image>
+      <image class="mine-info-img" src="{{userInfo.CoverUrl}}" mode="aspectFill" bindtap="editTouxiang"></image>
     </view>
     <view wx:if="{{!isLogin}}" class="login-btn" bindtap="toLogin">点击登录</view>
     <view wx:else class="nick-name-wrap">
-      <view class="nick-name">{{userInfo.nickName}}</view>
+      <view class="nick-name">{{userInfo.NickName}}</view>
       <view class="current-time-wrap login-btn">
         <image class="address-icon" src="/images/mine/local.svg"></image>
-        <text>2018-10-12</text>
+        <text>{{userInfo.ThisTime}}</text>
       </view>
     </view>
   </view>

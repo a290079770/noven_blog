@@ -1,4 +1,4 @@
-// const app = getApp();
+const app = getApp();
 Page({
   data: {
     userEmail: '',
@@ -21,12 +21,18 @@ Page({
     console.log(this.data.userEmail, this.data.userPwd)
   },
   shouquan({ detail : { userInfo } }) {
-    console.log(userInfo)
+    // console.log(userInfo)
     if (!userInfo) return;
     wx.setStorageSync("userInfo", userInfo);
-    wx.navigateBack({
-      delta: 1
-    })
+    app.globalData.isLogin = true;
+    app.globalData.userInfo = userInfo;
+    app.getCode();
+    setTimeout(function() {
+      wx.navigateBack({
+        delta: 1
+      })
+    }, 1000)
+    
   },
   nologin() {
     wx.navigateBack({

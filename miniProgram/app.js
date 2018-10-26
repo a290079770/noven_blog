@@ -3,14 +3,19 @@ App({
   globalData: {
     userInfo: null,
     isLogin: false,
-    code: ''
+    code: '',
+    token: ''
   },
 
   onLaunch: function () {
-    this.getLocation();
-    this.getCode();
+    var storageUesrInfo = wx.getStorageSync("userInfo");
+    if(storageUesrInfo) {
+      this.globalData.userInfo = storageUesrInfo;
+      this.globalData.isLogin = true;
+      this.getCode();
+    }
   },
-
+  // 跳转到详情页面
   toDetails(articleId) {
     wx.navigateTo({
       url: "/pages/details/details?id=" + articleId
@@ -78,24 +83,14 @@ App({
       }
     })
   },
-
-  // 获取地理位置
-  getLocation() {
-    wx.openSetting({
-      success(res) {
-        console.log(res)
-      },
-      fail(err) {
-        console.log(err);// openSetting:fail can only be invoked by user TAP gesture.
-      }
-    })
-  },
-  
+  // 获取用户的code，登录博客管理系统
   getCode() {
+    let _this = this;
     // 获取用户的code
     wx.login({
       success(wxRes) {
-        console.log(wxRes.code)
+        // console.log(wxRes.code)
+        // 登录博客管理系统
         wx.request({
           url: 'http://novenblog_api.com/user/login',
           method: 'POST',
@@ -103,30 +98,36 @@ App({
             Code: wxRes.code
           },
           success(loginRes) {
-            console.log(loginRes.data.isExist)
-            if(loginRes.data.isExist) {
-              wx.request({
-                url: 'http://novenblog_api.com/user/detail',
-                method: 'POST',
-                data: {
-                  Token: loginRes.data.Token
-                },
-                success(detailRes) {
-                  console.log(detailRes)
-                }
-              })
-            }else {
+            let { data } = loginRes.data;
+            // console.log(data)
+            _this.globalData.token = data.token;
+            // 如果用户不存在系统中，调用更新用户信息接口，将微信信息存入系统
+            if (!data.isExist) {
               wx.request({
                 url: 'http://novenblog_api.com/user/updateUserInfo',
                 method: 'POST',
                 data: {
-                  Token: loginRes.data.Token,
-                  UserInfo: null
+                  token: data.token,
+                  userInfo:{
+                    NickName: _this.globalData.userInfo.nickName || '',
+                    Sex: _this.globalData.userInfo.gender || 0,
+                    CoverUrl: _this.globalData.userInfo.avatarUrl || '',
+                    Age: 18,
+                    Introduction: ""
+                  }
                 },
                 success(updateUserInfoRes) {
                   console.log(updateUserInfoRes)
+                  wx.setStorageSync('userInfo', updateUserInfoRes.data.data);
+                  _this.globalData.userInfo = updateUserInfoRes.data.data;
                 }
               })
+              
+            }else {
+              // 如果用户存在系统中，将系统信息存入this.globalData.userInfo
+              _this.globalData.userInfo = data;
+              wx.setStorageSync('userInfo', data);
+              // console.log(_this.globalData.userInfo)
             }
           }
         })

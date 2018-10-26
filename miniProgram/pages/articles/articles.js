@@ -7,16 +7,20 @@ Page({
   onLoad: function () {
     this.getDataList();
   },
+  // 下拉刷新
   onPullDownRefresh() {
     this.getDataList();
   },
+  // 文章到达底部，自动加载更多
   onReachBottom() {
     this.data.articleList.push({
-      title: 222,
-      id: 222,
-      brief: '我的文章的简介222',
-      readCount: 222,
-      collectCount: 22222
+      Title: 222,
+      Author: '我是作者',
+      Id: 222,
+      Brief: '我的文章的简介222',
+      ReadCount: 222,
+      CollectCount: 22222,
+      CreateTime: '2018-10-20'
     })
     let newArticleList = this.data.articleList;
     this.setData({
@@ -27,7 +31,6 @@ Page({
   //获取文章列表
   getDataList() {
     let _this = this;
-
     app.request({
       url: 'http://novenblog_api.com/arcticle/arcticleList',
       method: 'GET',

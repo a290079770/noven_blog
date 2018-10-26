@@ -19,7 +19,7 @@
       <movable-view
         class="is-collection"
         direction="all">
-          <image class="collection-img" src="/images/detail/zan-kong.svg"></image>
+          <image title="收藏" class="collection-img" src="/images/detail/zan-kong.svg"></image>
       </movable-view>
     </movable-area>
   </view>

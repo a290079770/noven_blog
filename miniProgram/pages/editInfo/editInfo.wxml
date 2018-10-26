@@ -3,15 +3,16 @@
   <view wx:if="{{type === 3}}" class="egit-info-item">
     <input class="edit-nickname"
       focus
-      maxlength="12"
+      maxlength="-1"
       placeholder="请输入昵称"
       placeholder-style="color:#bbb;font-size:30rpx;"
       selection-start="{{0}}"
       selection-end="{{12}}"
-      value="小林"></input>
+      value="{{nickname}}"
+      bindinput="inputAction"></input>
     <view class="text-wrap">
       <text>您最多可以输入12个字符</text>
-      <text><text class="current-length">0</text> / 12</text>
+      <text><text class="current-length">{{currentLength.nickname}}</text> / 12</text>
     </view>
   </view>
   <view wx:elif="{{type === 6}}" class="edit-info-item">
@@ -28,7 +29,7 @@
     </textarea>
     <view class="text-wrap">
       <text>您最多可以输入280个字符</text>
-      <text><text class="current-length">0</text> / 280</text>
+      <text><text class="current-length">{{currentLength.suggestion}}</text> / 280</text>
     </view>
   </view>
   <view wx:elif="{{type === 4}}" class="edit-info-item">
@@ -45,7 +46,7 @@
     </textarea>
     <view class="text-wrap">
       <text>您最多可以输入280个字符</text>
-      <text><text class="current-length">0</text> / 280</text>
+      <text><text class="current-length">{{currentLength.brief}}</text> / 280</text>
     </view>
   </view>
   <view>

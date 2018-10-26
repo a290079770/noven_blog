@@ -1,24 +1,23 @@
 const app = getApp();
+var { dateFormat } = require('../../utils/dateUtil');
 Page({
   data: {
-    userInfo: app.globalData.userInfo,
-    isLogin: app.globalData.isLogin
+    userInfo: null,
+    isLogin: false
   },
   onLoad: function () {
     
   },
   onShow() {
     //如果Storage中有值，且userInfo为null的时候，刷新用户
-    var uesrInfo = wx.getStorageSync("userInfo");
-    // console.log(uesrInfo)
-    if(uesrInfo && !this.userInfo) {
+    var storageUesrInfo = wx.getStorageSync("userInfo");
+    if (storageUesrInfo) {
+      console.log(storageUesrInfo)
       this.setData({
-        userInfo: uesrInfo,
-        isLogin: true
+        userInfo: storageUesrInfo,
+        isLogin: true,
+        ['userInfo.ThisTime']: dateFormat(storageUesrInfo.ThisTime, 'yyyy-mm-dd')
       })
-
-      app.globalData.userInfo = uesrInfo;
-      app.globalData.isLogin = true;
     }
   },
   toLogin: function() {
