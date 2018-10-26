@@ -10,7 +10,8 @@ Page({
         ReadCount: 1,
         CollectCount: 222
       },
-    ]
+    ],
+    publishList: []
   },
   onLoad: function (option) {
     // console.log(option.type)

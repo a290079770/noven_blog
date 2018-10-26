@@ -3,7 +3,9 @@ var { dateFormat } = require('../../utils/dateUtil');
 Page({
   data: {
     userInfo: null,
-    isLogin: false
+    isLogin: false,
+    publishCount: 3,
+    collectionCount: 1
   },
   onLoad: function () {
     
@@ -60,6 +62,7 @@ Page({
     }
   },
   editTouxiang() {
+    let _this = this;
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
@@ -68,7 +71,9 @@ Page({
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths
         console.log(tempFilePaths)
-        
+        _this.setData({
+          ['userInfo.CoverUrl']: tempFilePaths
+        })
       }
     })
   }
