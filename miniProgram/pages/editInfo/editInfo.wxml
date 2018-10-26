@@ -1,6 +1,6 @@
 <!--pages/editInfo/editInfo.wxml-->
 <view class="edit-info-wrap">
-  <view wx:if="{{type === 3}}" class="egit-info-item">
+  <view wx:if="{{type === 3}}" class="edit-info-item">
     <input class="edit-nickname"
       focus
       maxlength="-1"

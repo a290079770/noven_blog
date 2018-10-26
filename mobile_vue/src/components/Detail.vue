@@ -78,7 +78,6 @@ export default {
     margin-top: .5rem;
     width: 3.64rem;
     height: 1.72rem;
-    border: 1px solid red;
     img {
       width: 100%;
       height: 100%;

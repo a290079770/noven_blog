@@ -7,7 +7,8 @@
     "pages/details/details",
     "pages/myStatistics/myStatistics",
     "pages/aboutUs/aboutUs",
-    "pages/editInfo/editInfo"
+    "pages/editInfo/editInfo",
+    "pages/addArticle/addArticle"
   ],
   "window":{
     "backgroundTextStyle":"light",

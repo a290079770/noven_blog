@@ -63,7 +63,7 @@ App({
         if (res.statusCode !== 200) {
           //此时wx.request返回失败
           wx.showToast({
-            title: option.wxDescrition || '调取接口失败',
+            title: options.wxDescrition || '调取接口失败',
           })
         } else {
           //表示接口已经调通，再根据接口返回数据，进行下一步验证

@@ -1,0 +1,10 @@
+.add-article-wrap {
+  padding: 0 30rpx;
+}
+.add-article-title-input {
+  margin: 50rpx 0 10rpx;
+  padding: 10rpx 20rpx;
+  border: 1px solid rgba(216, 130, 130, 0.774);
+  border-radius: 10rpx;
+}
+  

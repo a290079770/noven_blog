@@ -23,7 +23,7 @@ Page({
    */
   onLoad: function (option) {
     let { NickName: nickname, Introduction: brief } = app.globalData.userInfo
-    // console.log(option)
+    console.log(app.globalData.userInfo)
     this.setData({
       type: + option.type,
       nickname,
@@ -156,8 +156,10 @@ Page({
       },
       success(updateUserInfoRes) {
         console.log(updateUserInfoRes)
-        wx.setStorageSync('userInfo', updateUserInfoRes.data.data);
-        app.globalData.userInfo = updateUserInfoRes.data.data;
+        if (updateUserInfoRes.data.data) {
+          wx.setStorageSync('userInfo', updateUserInfoRes.data.data);
+          app.globalData.userInfo = updateUserInfoRes.data.data;
+        }
       }
     })
   },

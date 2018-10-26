@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "article-item": "../component/articleItem/articleItem"
+    "article-item": "../component/articleItem/articleItem",
+    "add-article-btn": "../component/addArticleBtn/addArticleBtn"
   }
 }

@@ -1,0 +1,13 @@
+<view class='add-article-wrap'>
+  <view class='add-article-title'>
+    <input class="add-article-title-input"
+      focus
+      maxlength="-1"
+      placeholder="请输入文章标题"
+      placeholder-style="color:#bbb;font-size:30rpx;"
+      selection-start="{{0}}"
+      selection-end="{{12}}"
+      value="{{addArticleTitle}}"
+      bindinput="inputAction"></input>
+  </view>
+</view>

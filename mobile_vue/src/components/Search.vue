@@ -9,23 +9,45 @@
         >
       </mt-search>
     </div>
-    <div class="research-res">
-      搜索结果
+    <div class="search-res">
+      <article-list-item v-for="(item, index) in searchList" :key="index" :listItem="item"></article-list-item>
     </div>
   </div>
 </template>
 
 <script>
+import articleListItem from './common/articleListItem.vue';
 export default {
   name: 'search',
   data () {
     return {
       value: '',
-      
+      searchList: [
+        {
+          Id: 3,
+          Url: "http://temp.im/364x212",
+          Author: "我是文章的作者",
+          Title: "我是文章的标题",
+          Createtime: "2018-10-24",
+          ReadCount: 999,
+          CollectCount: 88,
+          Brief: "我是文章的简介"
+        },
+        {
+          Id: 4,
+          Url: "http://temp.im/364x212",
+          Author: "我是文章的作者",
+          Title: "我是文章的标题我是文章的标题我是文章的标题我是文章的标题",
+          Createtime: "2018-10-24",
+          ReadCount: 9,
+          CollectCount: 8,
+          Brief: "我是文章的简介。我是文章的简介。我是文章的简介。我是文章的简介。我是文章的简介。我是文章的简介。我是文章的简介。我是文章的简介。"
+        }
+      ]
     }
   },
   components:{
-    
+    'article-list-item': articleListItem
   },
   methods:{
 
@@ -40,8 +62,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
   .search-wrap {
-    padding: 0 .2rem;
     .search-box {
+      padding: 0 .2rem;
       margin-top: .3rem;
       height: .5rem;
       .mint-searchbar {

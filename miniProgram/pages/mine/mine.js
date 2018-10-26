@@ -15,8 +15,9 @@ Page({
     var storageUesrInfo = wx.getStorageSync("userInfo");
     if (storageUesrInfo) {
       console.log(storageUesrInfo)
+      console.log(app.globalData)
       this.setData({
-        userInfo: storageUesrInfo,
+        userInfo: app.globalData.userInfo,
         isLogin: true,
         ['userInfo.ThisTime']: dateFormat(storageUesrInfo.ThisTime, 'yyyy-mm-dd')
       })
@@ -73,6 +74,28 @@ Page({
         console.log(tempFilePaths)
         _this.setData({
           ['userInfo.CoverUrl']: tempFilePaths
+        })
+
+        wx.request({
+          url: 'http://novenblog_api.com/user/updateUserInfo',
+          method: 'POST',
+          data: {
+            token: app.globalData.token,
+            userInfo: {
+              NickName: app.globalData.userInfo.NickName || '',
+              Sex: app.globalData.userInfo.Sex || 0,
+              CoverUrl: tempFilePaths || app.globalData.userInfo.CoverUrl || '',
+              Age: app.globalData.userInfo.Age || 18,
+              Introduction: app.globalData.userInfo.Introduction || ''
+            }
+          },
+          success(updateUserInfoRes) {
+            console.log(updateUserInfoRes)
+            if (updateUserInfoRes.data.data) {
+              wx.setStorageSync('userInfo', updateUserInfoRes.data.data);
+              app.globalData.userInfo = updateUserInfoRes.data.data;
+            }
+          }
         })
       }
     })

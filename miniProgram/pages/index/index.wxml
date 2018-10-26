@@ -22,4 +22,5 @@
     <article-item  wx:for="{{articleList}}" wx:key="id" item="{{item}}"></article-item>
   </view>
   <image wx:else class="articlelist-skeleton" src="../../images/articleItem-skeleton.jpg"></image>
+  <add-article-btn />
 </view>

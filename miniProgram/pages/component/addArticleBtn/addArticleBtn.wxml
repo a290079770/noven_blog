@@ -1,0 +1,9 @@
+<movable-area class="add-article-btn-wrap">
+  <movable-view
+    class="add-article-btn"
+    direction="all"
+    bindtap="addArticle">
+      <!-- <text class="add-article">+</text> -->
+      <image mode="" src="/images/add.svg" class="add-article"></image>
+  </movable-view>
+</movable-area>
