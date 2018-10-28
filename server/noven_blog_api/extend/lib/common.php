@@ -39,7 +39,7 @@ class Common
      * @Author   罗文
      * @DateTime 2018-04-26
      * @param    [String]     $table     [要查询的表名]
-     * @param    [String]     $field     [要取出的字段]
+     * @param    [array]     $field     [要取出的字段]
      * @param    array     $query  [要查询的数组，注意是and查询]
      * @param    integer    $cp        [当前第几页]
      * @param    integer    $ps        [每页多少条]
@@ -47,7 +47,7 @@ class Common
      * @param    string     $order      [排序方式]
      * @return   [Boolean]                [description]
      */
-    public function getDataList($table,$query = array(),$field='',$timeQuery=array('CreateTime','>=','1970-10-1'),$cp = 1,$ps = 20,$orderCol= "Id" , $order = "desc") 
+    public function getDataList($table,$query = array(),$field=array(),$timeQuery=array('CreateTime','>=','1970-10-1'),$cp = 1,$ps = 20,$orderCol= "Id" , $order = "desc") 
     {
 
         if(!$table) return false;
@@ -62,8 +62,17 @@ class Common
         //处理时间范围查询,解构数组
         list($timeFields,$timeCondition,$timeArea) = $timeQuery;
 
+        list($isRuledOut) = $field;
+
+        if(is_bool( $isRuledOut)) {
+          //如果数组的第一项是布尔值，则说明是用来确定是剔除指定列的，此时需要删除第一项
+          array_shift($field);
+        }else {
+          $isRuledOut = false;
+        }
+
         $arr = Db::name($table)
-               ->field($field)
+               ->field($field,$isRuledOut)
                ->where($query)
                ->whereTime($timeFields,$timeCondition,$timeArea)
                ->order($orderCol,$order)
@@ -129,7 +138,7 @@ class Common
      */
     public function delete($table)
     {
-       if(!request()->isPost()) {
+      if(!request()->isPost()) {
         $this->setResponse(21,'请求方式错误！');
         return;
       }
@@ -160,6 +169,122 @@ class Common
           // 回滚事务
           Db::rollback();
       }
+    }
+
+
+    /**
+     * [collect 收藏资源]
+     * @param  [Number] $id   [资源id]
+     * @param  [Number] $type [1 - 文章  2 - 心情 ]
+     * @param  [Boolean] isCollect [true - 收藏  false - 取消收藏]
+     * @return [type]       [description]
+     */
+    public function collect($id,$type = 1,$isCollect) 
+    {
+      //获取用户uid
+      //验证token
+      $tokenData = validJWT::valid();
+
+      if(!$tokenData) return false;
+      $uid = $tokenData['uid'];
+      $arr = Db::name('collections')
+            ->where('CollectionId', $id)
+            ->where('UserId',$uid)
+            ->where('CollectionType',$type)
+            ->select();
+
+      //判断是新增还是移除      
+      if(!$isCollect) {
+         //移除
+         if(count($arr) > 0) {
+            Db::startTrans();
+            try{
+                $number = Db::name('collections')
+                ->where('CollectionId', $id)
+                ->where('UserId',$uid)
+                ->where('CollectionType',$type)
+                ->delete();
+
+                if( $number > 0) {
+                  $this->setResponse(200,'取消收藏成功！');
+                }else {
+                  $this->setResponse(21,'取消收藏失败！');
+                }
+                // 提交事务
+                Db::commit();    
+            } catch (\Exception $e) {
+                $this->setResponse(21,'操作数据库失败！');
+                // 回滚事务
+                Db::rollback();
+            }
+            
+         } else {
+           $this->setResponse(21,'您还未收藏过该资源！');
+         }
+         return;
+      }      
+
+
+      //新增
+      if(count($arr) > 0) {
+        //已经收藏过该资源
+        $typeName = $type == 1 ? '文章' : '心情';
+        $this->setResponse(21,'您已经收藏过该'.$typeName);  
+      }else {
+        //添加收藏
+        Db::startTrans();
+        try{
+            $res = Db::name('collections')
+                   ->insert([ 
+                     'CollectionId' => $id,
+                     'UserId' => $uid,
+                     'CollectionType' => $type
+                   ]);
+
+            $this->setResponse(200,'收藏成功！');
+            // 提交事务
+            Db::commit();    
+        } catch (\Exception $e) {
+            $this->setResponse(21,'操作数据库失败！');
+            // 回滚事务
+            Db::rollback();
+        }
+      }
+    }
+
+
+    /**
+     * [getCollectList 获取用户收藏资源]
+     * @param  [Number] $type [0 - 全部 1 - 文章  2 - 心情 ]
+     * @return [type]       [description]
+     */
+    public function getCollectList($type = 0) 
+    {
+      //获取用户uid
+      //验证token
+      $tokenData = validJWT::valid();
+
+      if(!$tokenData) return false;
+      $uid = $tokenData['uid'];
+
+      $arr = Db::name('collections')
+             ->where('userId',$uid)
+             ->where('CollectionType',$type)
+             ->select();
+
+
+      //注意这是获取到了所有收藏资源的id，需要收集这些id，去查询真正的资源详情
+      $collectionIds = [];
+      foreach ($arr as $key => $value) {
+        array_push($collectionIds, $value['CollectionId']);
+      };      
+
+      //查询真正的资源集合
+      $resourceList = Db::name('arcticles')
+             ->where('Id','in',$collectionIds)
+             ->select();
+
+      $this->setResponse(200,'ok',$resourceList,count($resourceList));       
     }
 }
 

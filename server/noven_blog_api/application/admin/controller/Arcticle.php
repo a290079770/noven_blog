@@ -6,6 +6,8 @@ use think\Db;
 
 use think\Validate;
 use lib\common;
+use lib\jwtTool;
+use lib\validJWT;
 
 class Arcticle extends Controller
 {   
@@ -16,10 +18,36 @@ class Arcticle extends Controller
        $this->common = new Common();
     }
 
+    /**
+     * [arcticleList 获取文章列表]
+     * @Author   罗文
+     * @DateTime 2018-09-26
+     * @neccessaryParam    
+     * @possibleParam  [Number]  ps  每页条数  
+     * @possibleParam  [Number]  cp  当前页  
+     * @possibleParam  [String]  keywords  搜索关键字  
+     * @possibleParam  [Number]  authorId  要查询的作者id  
+     * @possibleParam  [Boolean]  isMy  是否是查当前用户  
+     * @possibleParam  [Date]  startTime  搜索开始时间  
+     * @possibleParam  [Date]  endTime  搜索结束时间  
+     * @possibleParam  [String]  order  排序方式  精选 - CollectCount  热门 - ReadCount  
+     */
     public function arcticleList()
     {
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
         $authorId = request()->get('authorId') ? request()->get('authorId') : '';
+
+        //如果传入了isMy，则需要计算token，优先级比authorId高
+        if( request()->get('isMy') === 'true') {
+          //获取用户uid
+          //验证token
+          $tokenData = validJWT::valid();
+
+          if(!$tokenData) return;
+          $uid = $tokenData['uid'];
+          $authorId = $uid;
+        }
+
 
         //时间范围筛选
         $startTime = request()->get('startTime');
@@ -33,11 +61,14 @@ class Arcticle extends Controller
            $time = ['CreateTime','>=',$startTime];
         }
 
+        //数组的第一项可以是布尔值，用来指定是否是剔除，true - 是
+        $field = [true,'Content'];
+
         // 支持标题，简介，作者，时间范围
         $res = $this->common->getDataList('arcticles',[
             'Title|Author|Brief' => ['like','%'.$keywords.'%'],
             'AuthorId' => ['like','%'.$authorId.'%'],
-          ],'Id,Title,Brief,Author,CreateTime,ReadCount,AuthorId',$time
+          ],$field,$time
         );
 
         if(!(bool)$res) $this->common->setResponse(21,'获取列表失败，请联系管理员！');
@@ -168,6 +199,39 @@ class Arcticle extends Controller
     {
        $this->common->delete('arcticles');
     }
+
+    /**
+     * [collect 收藏文章]
+     * @param  [Number] id [要收藏的文章id]
+     * @param  [Boolean] isCollect [true - 收藏  false - 取消收藏]
+     * @return [type]    [description]
+     */
+    public function collect()
+    {   
+        if(!request()->post('id')) {
+           $this->common->setResponse(21,'要收藏的id为空！');
+           return;
+        }
+
+        $isCollect = request()->post('isCollect');
+
+        //添加或移除收藏
+        $collectId = request()->post('id');
+
+        $this->common->collect($collectId,1,$isCollect);
+    }
+
+    /**
+     * [collectList 获取用户的收藏列表]
+     * @Author   罗文
+     * @DateTime 2018-04-17
+     * @return   [type]     [description]
+     */
+    public function collectList()
+    {
+        $this->common->getCollectList(1);
+    }
+
 
 
     //验证必须的数据是否传入

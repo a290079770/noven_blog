@@ -26,6 +26,7 @@ return [
         'validOldPwd'   => ['admin/user/validOldPwd', ['method' => 'post']],  //修改/验证旧密码
         'updatePwd'   => ['admin/user/updatePwd', ['method' => 'post']],  //修改/重置密码
         'delete'   => ['admin/user/delete', ['method' => 'post']],  //删除用户
+        'updateUserInfo'   => ['admin/user/updateUserInfo', ['method' => 'post']],  //删除用户
     ],
     
     //文章相关接口
@@ -35,6 +36,8 @@ return [
         'createOrUpdate'   => ['admin/arcticle/createOrUpdate', ['method' => 'post']],  //新增或修改
         'detail' => ['admin/arcticle/detail', ['method' => 'get']],  // 文章详情
         'delete'   => ['admin/arcticle/delete', ['method' => 'post']],  //删除文章
+        'collect'   => ['admin/arcticle/collect', ['method' => 'post']],  //收藏文章
+        'collectList'   => ['admin/arcticle/collectList', ['method' => 'get']],  //获取用户文章收藏列表
     ],
 
     //心情相关接口

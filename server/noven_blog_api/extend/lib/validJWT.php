@@ -11,23 +11,23 @@ use lib\common;
 class ValidJWT
 {
    public static function valid() {
-      $token = request()->header('token');
+      $token = request()->header('token') ? request()->header('token') : request()->post('token');
+      $common = new Common();
 
       //如果token为空，则返回false
-      if(empty($token)) return false;
+      if(!$token || empty($token)) {
+         $common->setResponse(21,'token为空！');
+         return false;
+      }
 
       //如果token不为空，则解析token
       $decToken = [];
 
       $jwt = new JwtTool();
-      $common = new Common();
-
       $decToken = $jwt->dec($token);
-
       if(is_string($decToken)) {
          $decToken = $decToken == 'Signature verification failed' ? '无效的token，请重新登录！':$decToken;
-
-         $common->setResponse(201,$decToken);
+         $common->setResponse(21,$decToken);
          return false;
       }else {
          return $decToken;

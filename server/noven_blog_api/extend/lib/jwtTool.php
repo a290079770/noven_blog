@@ -43,12 +43,10 @@ class JwtTool
     */
    public function dec($str = '') {
    	  if(!is_string($str)) return '无效的token，请重新登录！';
-
       $decoded = null;
 
       //先查询数据库，看有没有这条token
       $res = Db::name('tokens')->where('token',$str)->find();
-
       if(!$res) return '无效的token，请重新登录！';
 
       try {
@@ -64,7 +62,6 @@ class JwtTool
       }catch(\Exception $e){
         $decoded = $e->getMessage();
       }
-
    	  return $decoded;
    }
 }

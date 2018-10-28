@@ -109,17 +109,36 @@ class User extends Controller
 
       if(!$arr) {
          //如果没有，则需要新建一个用户
-         $res = Db::name('users')->insert([
-           'OpenId'=> $openId
-         ]);
+         //生成随机账号
+         $account = $this->randomStr(16);
 
-         $userId = Db::name('users')->getLastInsID();
+         Db::startTrans();
+         try{
+           $res = Db::name('users')->insert([
+             'OpenId'=> $openId,
+             'Account' => $account,
+             'Password' =>'7C4A8D09CA3762AF61E59520943DC26494F8941B',   //123456的sha1加密
+             'LastTime' => '',
+             'LastIp' => '',
+             'ThisTime' => date('Y-m-d H:i:s',time()),
+             'ThisIp' => request()->ip()
+           ]);
 
-         //生成一个token
-         $token = $this->jwt->enc(['uid' => $userId]);
-         Db::name('tokens')->insert(['uid' => $userId,'token'=> $token]);
+           $userId = Db::name('users')->getLastInsID();
 
-         $this->common->setResponse(200,'登录成功',['token' => $token , 'isExist' =>false]);
+           //生成一个token
+           $token = $this->jwt->enc(['uid' => $userId]);
+           Db::name('tokens')->insert(['uid' => $userId,'token'=> $token]);
+
+           $this->common->setResponse(200,'登录成功',['token' => $token , 'isExist' =>false]);
+
+           // 提交事务
+           Db::commit(); 
+         } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $this->common->setResponse(21,'操作数据库失败！');
+          }
        }
        else if($arr['Status'] == 2) {
          $this->common->setResponse(21,'您的账号已被锁定，请联系管理人员！');
@@ -148,7 +167,10 @@ class User extends Controller
              //设置上次和本次登录的ip
              $arr['LastTime'] = $arr['ThisTime'];
              $arr['LastIp'] = $arr['ThisIp'];
-             $arr['ThisTime'] = date('Y-m-d H:i:s',time());
+         
+
+
+              $arr['ThisTime'] = date('Y-m-d H:i:s',time());
              $arr['ThisIp'] = request()->ip();
 
              Db::name('users')
@@ -160,9 +182,12 @@ class User extends Controller
               // 回滚事务
               Db::rollback();
               $this->common->setResponse(21,'操作数据库失败！');
+              return;
           }
 
-         $this->common->setResponse(200,'登录成功',['token'=>$token, 'isExist'=> true]);
+         $arr['token'] = $token; 
+         $arr['isExist'] = true; 
+         $this->common->setResponse(200,'登录成功',$arr);
        }
     }
 
@@ -265,6 +290,57 @@ class User extends Controller
          $this->common->setResponse(200,'ok',$userInfo);
       }    
     }
+
+
+    /**
+     * [updateUserInfo 修改用户信息]
+     * @Author   罗文
+     * @DateTime 2018-04-17
+     * @return   [type]     [description]
+     */
+    public function updateUserInfo()
+    {
+      //验证token
+      $tokenData = validJWT::valid();
+      if(!$tokenData) return;
+
+      $uid = $tokenData['uid'];
+
+      //获取userInfo
+      $userInfo = request()->post('userInfo/a');
+
+      if( !$userInfo ) {
+        $this->common->setResponse(21,'要更新的数据为空！'); 
+        return;
+      }
+      //更新用户数据
+      // 启动事务
+      Db::startTrans();
+      try{
+          //验证通过，存数据库
+          $res = Db::name('users')
+                 ->where('Id',$uid)
+                 ->update($userInfo);
+          if($res > 0) {
+             //业务需要，重新返回用户详情
+             $arr = Db::name('users')
+              ->where('Id',$uid)
+              ->find();
+             $this->common->setResponse(200,'修改成功！',$arr);
+          }else {
+             $this->common->setResponse(21,'未修改任何数据');
+          }
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          // 回滚事务
+          Db::rollback();
+          $this->common->setResponse(21,$e->getMessage());
+          return;
+      }
+
+    }
+
 
     /**
      * [createOrUpdate 新增或修改管理员]
@@ -504,6 +580,30 @@ class User extends Controller
         // }
 
         return true;
+    }
+
+     /**
+     * [getSliceStr 生成指定长度随机字符串]
+     * @Author   罗文
+     * @DateTime 2018-09-30
+     * @param    {[Number]}   len [指定长度]
+     * @return   {[type]}   [description]
+     */
+    public function randomStr($len) {
+      $preinstallStr = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-$';
+      $str = '';
+
+      for($i = 0 ; $i < $len ; $i ++) {
+         $random = rand(0,64);
+         $str .= $preinstallStr[$random];
+      }
+
+      //查询是否有这个账号
+      $find = Db::name('users')->where('Account',$str)->find();
+
+      if($find) $this->randomStr($len);
+
+      return $str;
     }
 
      
