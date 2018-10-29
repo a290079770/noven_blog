@@ -24,6 +24,7 @@
 .article-list-item-image {
   width: 80%;
   height: 80%;
+  border-radius: 10rpx;
 }
 .article-list-item-right {
   padding: 25rpx 20rpx 25rpx 0;
@@ -46,7 +47,7 @@
 }
 .article-list-item-des {
   margin-top: 10rpx;
-  font-size: 30rpx;
+  font-size: 26rpx;
   color: #666;
   /* 2行省略 */
   display: -webkit-box;

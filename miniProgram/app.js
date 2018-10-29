@@ -58,7 +58,9 @@ App({
     delete options.success;
     wx.request({
       ...options,
-
+      header: options.header || {
+        token: this.globalData.token
+      },
       success(res) {
         if (res.statusCode !== 200) {
           //此时wx.request返回失败
@@ -136,5 +138,33 @@ App({
         console.log(err)
       }
     })
-  }
+  },
+  // 获取字符当前长度
+  getCurrentLength(str) {
+    if (!str) return 0;
+    if (typeof str != "string") {
+      str += "";
+    }
+    return str.replace(/[^\x00-\xff]/g, "01").length;
+  },
+  // 截取字符
+  getSliceStr(str, len) {
+    let sum = 0;
+    for (let i = 0; i < str.length; i++) {
+      var c = str.charCodeAt(i);     //单字节加1      
+      if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
+        //单字节   
+        sum++;
+      } else {
+        //双字节
+        sum += 2;
+      }
+
+      if (sum > len) {
+        return str.slice(0, i);
+        break;
+      }
+    }
+    return str;
+  },
 })

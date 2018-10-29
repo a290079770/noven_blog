@@ -4,10 +4,37 @@
       focus
       maxlength="-1"
       placeholder="请输入文章标题"
-      placeholder-style="color:#bbb;font-size:30rpx;"
+      placeholder-style="color:#bbb;font-size:28rpx;"
       selection-start="{{0}}"
       selection-end="{{12}}"
-      value="{{addArticleTitle}}"
-      bindinput="inputAction"></input>
+      value="{{ addArticleTitle }}"
+      name="addArticleTitle"
+      bindinput="inputTitleAction"></input>
+    <view class="text-wrap">
+      <text>您最多可以输入30个字符</text>
+      <text><text class="current-length">{{ currentLength.addArticleTitle }}</text> / 30</text>
+    </view>
+  </view>
+  
+  <view class='add-article-cover-wrap' bindtap='updateCover'>
+    <text wx:if='{{ true }}'>+上传封面</text>
+    <image wx:else class='add-article-cover'  src='{{ addArticleCover }}'></image>
+  </view>
+
+  <view class='add-article-brief'>
+    <textarea placeholder-style="color:#bbb;font-size:28rpx;"
+      class="add-article-brief-input"
+      maxlength="-1"
+      selection-start="{{0}}"
+      selection-end="{{280}}"
+      placeholder="请输入文章简介！" 
+      value="{{ addArticleBrief }}"
+      name="addArticleBrief"
+      bindinput="inputBriefAction">
+    </textarea>
+    <view class="text-wrap">
+      <text>您最多可以输入280个字符</text>
+      <text><text class="current-length">{{ currentLength.addArticleBrief }}</text> / 280</text>
+    </view>
   </view>
 </view>

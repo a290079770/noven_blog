@@ -1,3 +1,4 @@
+const app = getApp();
 // pages/aboutUs/aboutUs.js
 Page({
 
@@ -5,7 +6,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    addArticleTitle: ''
+    addArticleTitle: '',
+    addArticleBrief: '',
+    currentLength: {
+      addArticleTitle: 0,
+      addArticleBrief: 0
+    },
+    addArticleCover: 'http://temp.im/650x340'
   },
 
   /**
@@ -62,5 +69,37 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  // 获取输入框的值
+  inputTitleAction(e) {
+    let inputLen = app.getCurrentLength(e.detail.value);
+    this.setData({
+      addArticleTitle: app.getSliceStr(e.detail.value, 30),
+      ['currentLength.addArticleTitle']: inputLen > 30 ? 30 : inputLen,
+    })
+  },
+  // 获取输入框的值
+  inputBriefAction(e) {
+    let inputLen = app.getCurrentLength(e.detail.value);
+    this.setData({
+      addArticleBrief: app.getSliceStr(e.detail.value, 280),
+      ['currentLength.addArticleBrief']: inputLen > 280 ? 280 : inputLen,
+    })
+  },
+  // 上传封面
+  updateCover() {
+    let _this = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        // tempFilePath可以作为img标签的src属性显示图片
+        const tempFilePaths = res.tempFilePaths;
+        _this.setData({
+          addArticleCover: tempFilePaths
+        })
+      }
+    })
   }
 })

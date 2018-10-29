@@ -27,9 +27,9 @@ Page({
     this.setData({
       type: + option.type,
       nickname,
-      ['currentLength.nickname']: this.getCurrentLength(nickname),
+      ['currentLength.nickname']: app.getCurrentLength(nickname),
       brief,
-      ['currentLength.brief']: this.getCurrentLength(brief),
+      ['currentLength.brief']: app.getCurrentLength(brief),
     })
   },
 
@@ -81,56 +81,28 @@ Page({
   onShareAppMessage: function () {
 
   },
-  // 获取字符当前长度
-  getCurrentLength(str) {
-    if (!str) return 0;
-    if (typeof str != "string") {
-      str += "";
-    }
-    return str.replace(/[^\x00-\xff]/g, "01").length;
-  },
-  // 截取字符
-  getSliceStr(str, len) {
-    let sum = 0;
-    for (let i = 0; i < str.length; i++) {
-      var c = str.charCodeAt(i);     //单字节加1      
-      if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
-        //单字节   
-        sum++;
-      }  else {
-        //双字节
-        sum += 2;
-      }
-
-      if (sum > len) {
-        return str.slice(0, i);
-        break;
-      }
-    }
-    return str;
-  },
   // 获取输入框的值
   inputAction(e) {
-    let inputLen = this.getCurrentLength(e.detail.value);
-    let _this = this;
+    let inputLen = app.getCurrentLength(e.detail.value);
+    // let _this = this;
     // console.log(e.detail.value)
     // console.log(this.data.type)
     switch (this.data.type) {
       case 3:
         this.setData({
-          nickname: _this.getSliceStr(e.detail.value, 12),
+          nickname: app.getSliceStr(e.detail.value, 12),
           ['currentLength.nickname']: inputLen > 12 ? 12 : inputLen
         })
         break;
       case 4:
         this.setData({
-          brief: _this.getSliceStr(e.detail.value, 280),
+          brief: app.getSliceStr(e.detail.value, 280),
           ['currentLength.brief']: inputLen > 280 ? 280 : inputLen
         })
         break;
       case 6:
         this.setData({
-          suggestion: _this.getSliceStr(e.detail.value, 280),
+          suggestion: app.getSliceStr(e.detail.value, 280),
           ['currentLength.suggestion']: inputLen > 280 ? 280 : inputLen
         })
         break;
@@ -145,7 +117,6 @@ Page({
       url: 'http://novenblog_api.com/user/updateUserInfo',
       method: 'POST',
       data: {
-        token: app.globalData.token,
         userInfo: {
           NickName: updateNickname || app.globalData.userInfo.NickName,
           Sex: app.globalData.userInfo.Sex || 0,
@@ -153,6 +124,9 @@ Page({
           Age: app.globalData.userInfo.Age || 18,
           Introduction: updateBrief || app.globalData.userInfo.Introduction || ''
         }
+      },
+      header: {
+        token: app.globalData.token
       },
       success(updateUserInfoRes) {
         console.log(updateUserInfoRes)

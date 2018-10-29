@@ -4,16 +4,16 @@
   <view class="article-list-item-wrap">
     <view class="article-list-item" bindtap="toDetails">
       <view class="article-list-item-left">
-        <image mode="aspectFill" class="article-list-item-image" src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg" />
+        <image mode="aspectFill" class="article-list-item-image" src="{{ data.Url || 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg' }}" />
       </view>
       <view class="article-list-item-right">
-        <view class="article-list-item-title">{{data.Title}}</view>
+        <view class="article-list-item-title">{{ data.Title }}</view>
         <view class="author-info">
           <!-- <text class="article">article</text> -->
-          <text class="author">作者：{{data.Author}}</text>
+          <text class="author">作者：{{ data.Author || '暂无作者信息' }}</text>
           <!-- <text class="time mg-letf20">{{data.CreateTime}}</text> -->
         </view>
-        <view class="article-list-item-des">{{data.Brief}}</view>
+        <view class="article-list-item-des">{{ data.Brief || '暂无简介' }}</view>
         <view class="article-list-item-tongji">
           <text class="reading">阅读量：{{data.ReadCount || 0}}</text>
           <text class="collection">收藏量：{{data.CollectCount || 0}}</text>

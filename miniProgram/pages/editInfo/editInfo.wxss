@@ -3,13 +3,15 @@
   padding: 0 30rpx;
 }
 .edit-info-wrap textarea {
-  width: 640rpx;
+  min-width: 650rpx;
 }
 .edit-nickname, .edit-brief {
   margin: 50rpx 0 10rpx;
   padding: 10rpx 20rpx;
   border: 1px solid rgba(216, 130, 130, 0.774);
   border-radius: 10rpx;
+  font-size: 28rpx;
+  line-height: 40rpx;
 }
 .text-wrap {
   display: flex;

@@ -1,25 +1,37 @@
 <view class="detail-wrap">
-  <view wx:if="{{hasGotData}}">
-    <view class="detail-title">{{detailData.Title}}</view>
+  <view wx:if="{{ hasGotData }}">
+    <view class="detail-title">{{ detailData.Title }}</view>
     <view class="about-article">
       <text class="article">article</text>
-      <text class="author mg-letf20">@{{detailData.Author}}</text>
-      <text class="time mg-letf20">{{detailData.CreateTime}}</text>
+      <text class="author mg-letf20">@{{ detailData.Author || '暂无作者信息' }}</text>
+      <text class="time mg-letf20">{{ detailData.CreateTime }}</text>
     </view>
     <view class="tongji-wrap">
       <view class="tongji">
-        <text>收藏量：<text>{{detailData.CollectCount || 0}}</text></text>
-        <text class="reading">阅读量：<text>{{detailData.ReadCount || 0}}</text></text>
+        <text>收藏量：<text>{{ detailData.CollectCount || 0 }}</text></text>
+        <text class="reading">阅读量：<text>{{ detailData.ReadCount || 0 }}</text></text>
       </view>
     </view>
-    <view class="detail-image-wrap"><image class="detail-image" src="{{detailData.Url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg'}}" /></view>
-    <view class="detail-text">{{detailData.Content}}</view>
+    <view class="detail-image-wrap">
+      <image class="detail-image" src="{{ detailData.Url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg' }}" />
+    </view>
+    <view wx:if='{{ conIsArray }}' class='detail-paragraph-wrap'>
+      <view wx:for="{{ detailData.Content }}" wx:key="id">
+        <view wx:if='{{ item.type == "text" }}' class='detail-paragraph'>{{ item.value }}</view>
+        <view wx:else class='detail-paragraph'>
+          <image mode='widthFix' src='{{ item.value }}' />
+          {{ item.desc || '暂无图片描述' }}
+        </view>
+      </view>
+    </view>
+    <view wx:else class="detail-text">{{ detailData.Content }}</view>
     <!-- 是否收藏 -->
     <movable-area class="is-collection-wrap">
       <movable-view
         class="is-collection"
-        direction="all">
-          <image title="收藏" class="collection-img" src="/images/detail/zan-kong.svg"></image>
+        direction="all"
+        bindtap='isCollect'>
+          <image title="收藏" class="collection-img" src="{{ detailData.HasCollect ? '/images/detail/zan-full.svg' : '/images/detail/zan-kong.svg' }}"></image>
       </movable-view>
     </movable-area>
   </view>

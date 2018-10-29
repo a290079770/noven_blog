@@ -1,10 +1,44 @@
 .add-article-wrap {
   padding: 0 30rpx;
 }
-.add-article-title-input {
+.add-article-wrap textarea {
+  min-width: 650rpx;
+}
+.add-article-title-input, .add-article-brief-input {
   margin: 50rpx 0 10rpx;
   padding: 10rpx 20rpx;
   border: 1px solid rgba(216, 130, 130, 0.774);
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  line-height: 40rpx;
+}
+.add-article-brief-input {
+  margin-top: 30rpx;
+}
+.text-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20rpx 30rpx;
+  font-size: 26rpx;
+  color: rgb(75, 6, 10);
+}
+.current-length {
+  color: rgb(211, 27, 27);
+}
+.add-article-cover-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  font-size: 28rpx;
+  height: 340rpx;
+  border: 1px solid rgba(216, 130, 130, 0.774);
+  border-radius: 10rpx;
+}
+.add-article-cover {
+  width: 100%;
+  height: 100%;
   border-radius: 10rpx;
 }
   

@@ -7,6 +7,9 @@ Page({
   onLoad: function () {
     this.getDataList();
   },
+  onShow: function () {
+    this.getDataList();
+  },
   // 下拉刷新
   onPullDownRefresh() {
     this.getDataList();
@@ -14,6 +17,7 @@ Page({
   // 文章到达底部，自动加载更多
   onReachBottom() {
     this.data.articleList.push({
+      Url: "http://pic.qiantucdn.com/58pic/19/56/46/64458PICZaU_1024.jpg",
       Title: 222,
       Author: '我是作者',
       Id: 222,

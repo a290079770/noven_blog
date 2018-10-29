@@ -5,7 +5,7 @@
       focus
       maxlength="-1"
       placeholder="请输入昵称"
-      placeholder-style="color:#bbb;font-size:30rpx;"
+      placeholder-style="color:#bbb;font-size:28rpx;"
       selection-start="{{0}}"
       selection-end="{{12}}"
       value="{{nickname}}"
@@ -16,7 +16,7 @@
     </view>
   </view>
   <view wx:elif="{{type === 6}}" class="edit-info-item">
-    <textarea placeholder-style="color:#bbb;font-size:30rpx;"
+    <textarea placeholder-style="color:#bbb;font-size:28rpx;"
       class="edit-brief"
       auto-focus
       focus
@@ -33,7 +33,7 @@
     </view>
   </view>
   <view wx:elif="{{type === 4}}" class="edit-info-item">
-    <textarea placeholder-style="color:#bbb;font-size:30rpx;"
+    <textarea placeholder-style="color:#bbb;font-size:28rpx;"
       class="edit-brief"
       auto-focus
       focus

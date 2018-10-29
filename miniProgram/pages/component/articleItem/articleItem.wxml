@@ -1,12 +1,12 @@
 <view class="article-wrap">
     <view class="article-item" bindtap="toDetail">
-      <view class="article-image-wrap"><image class="article-image" src="{{item.url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg'}}"/></view>
+      <view class="article-image-wrap"><image class="article-image" src="{{ item.Url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg'}}"/></view>
       <view class="about-article">
         <text class="article">article</text>
-        <text class="author mg-letf20">@{{item.Author}}</text>
-        <text class="time mg-letf20">{{item.CreateTime}}</text>
+        <text class="author mg-letf20">@{{ item.Author || '暂无作者信息' }}</text>
+        <text class="time mg-letf20">{{ item.CreateTime }}</text>
       </view>
-      <view class="title">{{item.Title}}</view>
-      <view class="des">{{item.Brief}}</view>
+      <view class="title">{{ item.Title }}</view>
+      <view class="des">{{ item.Brief || '暂无简介' }}</view>
     </view>
   </view>

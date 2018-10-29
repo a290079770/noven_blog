@@ -14,11 +14,11 @@
   <view class="article-image-wrap">
     <image class="article-image" src="../../images/article/articlelist.png"></image>
   </view>
-  <view wx:if="{{hasGotData}}">
+  <view wx:if="{{ hasGotData }}">
     <article-list-item
-      wx:for="{{articleList}}"
-      wx:key="{{id}}"
-      data="{{item}}">
+      wx:for="{{ articleList }}"
+      wx:key="{{ id }}"
+      data="{{ item }}">
     </article-list-item>
   </view>
   <image wx:else class="articlelist-skeleton" src="../../images/article/articleListItem-skeleton.jpg"></image>
