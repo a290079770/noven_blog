@@ -10,7 +10,7 @@
     class="search-input font-l"
     type='text' 
     placeholder="请输入关键字进行搜索" 
-    focus auto-focus 
+    focus="{{isFocus}}"
     value="{{searchKeywords}}"
     bindinput="searchInput" 
     confirm-type="搜索"  

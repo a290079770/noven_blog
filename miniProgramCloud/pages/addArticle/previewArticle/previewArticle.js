@@ -53,9 +53,12 @@ Page({
     })
 
     app.callCloudFunction({
-      name:'createOrUpdateArticle',
-      data:{
-        detail:this.data.detail
+      // 传递给云函数的event参数
+      data: { 
+        cloudFunc:'createOrUpdateArticle',
+        cloudData:{
+          detail:this.data.detail
+        }
       }
     })
     .then( ({ data }) => {

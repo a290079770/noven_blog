@@ -10,7 +10,6 @@
      wx:if="{{choiceArticleList.length > 0}}"
      class="slide-wrap"
      indicator-dots="true" 
-     autoplay="{{false}}" 
      circular
      current="{{current}}"
      interval="4000"
@@ -109,7 +108,7 @@
      </view>
 
      <view class="flex flex-align-center flex-justify-center index-more font-lg" bindtap="goToArticleList" data-type="0"> 
-       <text class="index-more-text"> 更多热门文章 </text>    
+       <text class="index-more-text"> 更多最新文章 </text>    
        <view class="arrow-right"></view>  
        <view class="arrow-right"></view>   
      </view>

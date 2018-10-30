@@ -28,8 +28,13 @@
   		<view class="font gray9">
   			{{item.Author}}
   		</view>
+
+      
   	</view>
   	<view class="flex flex-align-center font-l gray9">
+      <view class="font gray9 art-li-info-createtime">
+        {{item.CreateTime}}
+      </view>
   		<view class="flex flex-align-center flex-justify-end article-info-zan">
   	   	<image src="/images/zan-kong.svg" class=" article-info-icon"></image>
   	   	<view class="article-info-number" style="color:#768fc3">

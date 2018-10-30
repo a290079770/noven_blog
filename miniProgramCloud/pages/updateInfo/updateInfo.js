@@ -79,11 +79,13 @@ Page({
     wx.showLoading();
     
     app.callCloudFunction({
-      name:'updateUserInfo',
-      data
+      // 传递给云函数的event参数
+      data: { 
+        cloudFunc:'updateUserInfo',
+        cloudData:data
+      }
     })
     .then(res => {
-      console.log(res)
       return app.showToast('修改成功')
     })
     .then(() => {

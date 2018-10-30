@@ -96,13 +96,14 @@ Page({
    */
   getDataList(orderBy) {
     app.callCloudFunction({
-      // 要调用的云函数名称
-      name: 'getArticleList',
       // 传递给云函数的event参数
-      data: {
-        orderBy,
-        ps:5
-      }
+      data: { 
+        cloudFunc:'getArticleList',
+        cloudData:{
+          orderBy,
+          ps:5,
+        }
+      }  
     }).then(res => {
       console.log(res)
       res.data = res.data.map(item => {

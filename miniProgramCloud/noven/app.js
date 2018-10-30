@@ -111,6 +111,7 @@ const callCloudFunction = (params) => {
 
   //之所以要额外包装一层，主要是可能需要添加系统参数
   return wx.cloud.callFunction({
+    name: params.name || 'router',
     ...systemInfo,
     ...params,
     // 要调用的云函数名称
@@ -194,61 +195,127 @@ const showModal = (params) =>{
 /**
  * [uploadImgCloud 上传图片操作]
  * @Author   罗文
- * @DateTime 2018-10-12
- * @return   {[type]}   [description]
+ * @DateTime 2018-10-26
+ * @param    {Boolean}  isSplit [是否将上传操作拆分为2步，如果是，则只进行选择，不进行上传，返回选择的临时路径]
+ * @return   {[type]}           [description]
  */
-const uploadImgCloud = function () {
+const uploadImgCloud = function (isSplit) {
   return new Promise((resolve,reject) => {
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success (res) {
+        // tempFilePath可以作为img标签的src属性显示图片
+        const tempFilePaths = res.tempFilePaths[0]
+        
+        if(isSplit) {
+          resolve(tempFilePaths);
+          return;
+        }
+
         wx.showLoading({
           title:'上传中...',
           mask:true
         })
 
-        // tempFilePath可以作为img标签的src属性显示图片
-        const tempFilePaths = res.tempFilePaths[0]
-        let ext = tempFilePaths.slice(tempFilePaths.lastIndexOf('.'));
-
-        const url = 'images/'+ randomStr(16) +'_photo_'+ Date.now() + ext;
-
-        //上传文件到服务器
-        wx.cloud.uploadFile({
-          cloudPath: url,
-          filePath: tempFilePaths, // 小程序临时文件路径
-        })
-        .then(res => {
-          //获取到上传文件的fileID
-          let { fileID } = res;
-          return Promise.resolve(fileID);
-        })
-        .then( res =>{
-          //根据文件id获取url
-          callCloudFunction({
-            name:'uploadPhoto',
-            data: {
-              fileID:res
-            }
-          })
-          .then(res => {
-            resolve(res);
-          })
-          .catch(error => {
-            showToast('',2);
-            reject(error);
-          })
-
-        })
-        .catch(error => {
-          showToast('',2);
-          reject(error);
-        })
-        
+        //如果不拆分，直接进行上传，并返回真实路径
+        uploadFile(tempFilePaths,resolve,reject);
       }
     })
+  })
+}
+
+const uploadFile = function(tempFilePaths,resolve,reject) {
+  let ext = tempFilePaths.slice(tempFilePaths.lastIndexOf('.'));
+  const url = 'images/'+ randomStr(16) +'_photo_'+ Date.now() + ext;
+
+  //上传文件到服务器
+  wx.cloud.uploadFile({
+    cloudPath: url,
+    filePath: tempFilePaths, // 小程序临时文件路径
+  })
+  .then(res => {
+    //获取到上传文件的fileID
+    let { fileID } = res;
+    return Promise.resolve(fileID);
+  })
+  .then( res =>{
+    //根据文件id获取url
+    return callCloudFunction({
+      // 传递给云函数的event参数
+      data: { 
+        cloudFunc:'uploadPhoto',
+        cloudData:{
+          fileID:res
+        }
+      }
+    })
+  })
+  .then(res => {
+    resolve(res);
+  })
+  .catch(error => {
+    showToast(error.description,2);
+    reject(error);
+  })
+}
+
+/**
+ * [getAccessToken 获取access_token,注意这个方法，目前云开发不支持获取！！！]
+ * @Author   罗文
+ * @DateTime 2018-10-26
+ * @return   {[type]}   [description]
+ */
+const getAccessToken = function() {
+  return new Promise((resolve,reject)=>{
+     callCloudFunction({
+       name:'getAccessToken',
+     })
+     .then( res =>{
+      console.log(res)
+       resolve(res.data)
+     })
+     .catch(err => {
+      console.log(err)
+       showToast(err.description,2)
+       reject({description:'获取access_token失败'});
+     })
+  })
+}
+
+//因为目前云开发不支持获取！！！，所以暂时废纸
+/**
+ * [msgSecCheck 检查一段文本是否含有违法违规内容。应用场景举例：用户个人资料违规文字检测；媒体新闻类用户发表文章，评论内容检测；游戏类用户编辑上传的素材(如答题类小游戏用户上传的问题及答案)检测等]
+ * @Author   罗文
+ * @DateTime 2018-10-26
+ * @param    {[type]}   text [description]
+ * @return   {[type]}        [description]
+ */
+const msgSecCheck = function(text) {
+  return new Promise((resolve,reject)=>{
+     if(!text) reject({description:'待验证文本为空'});
+
+     getAccessToken()
+     .then( res => {
+       //验证文本
+       wx.request({
+         url:'https://api.weixin.qq.com/wxa/msg_sec_check?access_token='+ res,
+         method:'POST',
+         data:{
+          access_token:res,
+          content:text
+         },
+         success(validRes) {
+           console.log('验证文本');
+           console.log(validRes)
+         }
+       })
+     })
+     .catch(error => {
+       console.log(error)
+       showToast(error.description,2);
+     })
   })
 }
 
@@ -260,5 +327,7 @@ module.exports = {
   callCloudFunction,
   showToast,
   showModal,
-  uploadImgCloud
+  uploadImgCloud,
+  uploadFile,
+  msgSecCheck
 }

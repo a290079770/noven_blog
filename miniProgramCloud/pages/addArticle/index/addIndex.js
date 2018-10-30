@@ -50,7 +50,7 @@ Page({
           })
 
           this.setData({
-            
+            pageTitle:'修改文章',
             newArticle:data,
             contentList,
             showBtns:false,

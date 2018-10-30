@@ -55,10 +55,10 @@ Page({
     });
     //记录到云
     app.callCloudFunction({
-      // 要调用的云函数名称
-      name: 'createOrUpdateUser',
-      // 传递给云函数的event参数
-      data: userInfo
+      data: { 
+        cloudFunc:'createOrUpdateUser',
+        cloudData:userInfo
+      }
     }).then(res => {
       console.log(res.data)
       Storage.set('userInfo',res.data);

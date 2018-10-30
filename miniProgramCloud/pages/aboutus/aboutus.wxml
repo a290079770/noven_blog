@@ -13,7 +13,13 @@
       关于 Noven Blog 博客
     </view>
     <view class="aboutus-text">
-      Noven Blog 是一个方便记录博客、文章、心情的涵盖大部分平台的系统，由个人开发维护。如果您在使用的过程中遇到问题或有更好的建议，欢迎联系作者 290079770@qq.com。
+      Noven Blog 是一个方便记录博客、文章、心情的涵盖大部分平台的系统，由个人开发维护。
+    </view>
+    <view class="aboutus-text">
+      此为小程序版本，由于开发技术限制及微信开放程度，可能与其他版本存在些微差异。
+    </view>
+    <view class="aboutus-text">
+      如果您在使用的过程中遇到问题或有更好的建议，欢迎联系作者qq 290079770 或者电子邮箱 290079770@qq.com。
     </view>
   </view>
 </view>

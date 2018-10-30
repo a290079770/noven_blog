@@ -115,13 +115,14 @@ Page({
     
     let order = [ 'newest' , 'choice', 'hot'];
     app.callCloudFunction({
-      // 要调用的云函数名称
-      name: 'getArticleList',
       // 传递给云函数的event参数
-      data: {
-        orderBy:order[index],
-        ps,
-        cp
+      data: { 
+        cloudFunc:'getArticleList',
+        cloudData:{
+          orderBy:order[index],
+          ps,
+          cp
+        }
       }
     }).then(res => {
       console.log(res)

@@ -31,7 +31,10 @@ App({
   getUserInfo() {
     //从云端获取用户数据
     appUtil.callCloudFunction({
-      name:'getUserInfo',
+      data: { 
+        cloudFunc:'getUserInfo',
+        cloudData:{}
+      }
     })
     .then(res => {
        let { data } = res;
@@ -49,6 +52,7 @@ App({
        }
     })
     .catch(err => {
+      console.log(err)
       appUtil.showToast(err.description,2);
     })
   },
@@ -65,6 +69,7 @@ App({
       wx.cloud.init({
         //设置环境
         env: 'test-e35d4b',
+        // env: 'product-e35d4b',
         //记录用户
         traceUser: true
       })

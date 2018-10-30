@@ -47,12 +47,13 @@ Page({
       return 
     }
     app.callCloudFunction({
-      // 要调用的云函数名称
-      name: 'getArticleDetail',
       // 传递给云函数的event参数
-      data: {
-        id
-      }
+      data: { 
+        cloudFunc:'getArticleDetail',
+        cloudData:{
+          id
+        }
+      } 
     }).then(res => {
        console.log(res.data)
        let { Title , CreatTime , Url , Content , AuthorId} = res.data;
@@ -116,11 +117,14 @@ Page({
     })
 
     app.callCloudFunction({
-      name:'addOrCancelCollection',
-      data:{
-        isAdd,
-        id:this.data.id
-      }
+      // 传递给云函数的event参数
+      data: { 
+        cloudFunc:'addOrCancelCollection',
+        cloudData:{
+          isAdd,
+          id:this.data.id
+        }
+      } 
     })
     .then(res => {
       console.log(res)
@@ -159,11 +163,15 @@ Page({
     })
     .then(()=>{
       //删除文章
+      wx.showLoading({title:'正在删除...',mask:true});
       return app.callCloudFunction({
-        name:'deleteArticle',
-        data:{
-          ids: [this.data.detail._id]
-        }  
+        // 传递给云函数的event参数
+        data: { 
+          cloudFunc:'deleteArticle',
+          cloudData:{
+            ids: [this.data.detail._id]
+          }
+        } 
       })
     })
     .then( res => {
@@ -172,10 +180,7 @@ Page({
     .then(() => {
       Storage.set('articleHasUpdate',true);
       app.goTo({
-        path:'/pages/article/myList/myList',
-        query:{
-          type:1
-        },
+        path:'/pages/article/articleList/articleList',
         isReplace:true
       });
     })

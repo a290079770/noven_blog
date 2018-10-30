@@ -49,12 +49,13 @@ Page({
     let count = {};
 
     app.callCloudFunction({
-      // 要调用的云函数名称
-      name: url,
       // 传递给云函数的event参数
-      data: {
-        isMy:true,
-        count:true
+      data: { 
+        cloudFunc:url,
+        cloudData:{
+          isMy:true,
+          count:true
+        }
       }
     }).then(res => {
       type == 1 ? count.publishCount = res.data : count.collectCount = res.data;
@@ -105,10 +106,13 @@ Page({
    */
   updateUserInfo(data) {
     app.callCloudFunction({
-      name:'updateUserInfo',
-      data
+      data: { 
+        cloudFunc:'updateUserInfo',
+        cloudData:data
+      }
     })
     .then(res => {
+      console.log(res)
       //更新Storage 和 Userinfo
       let newUserInfo = Object.assign({},this.data.userInfo,data);
 
@@ -125,6 +129,7 @@ Page({
       })
     })
     .catch(error => {
+      console.log(error)
       app.showToast('',2);
     })
   },

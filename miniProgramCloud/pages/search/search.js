@@ -9,6 +9,7 @@ Page({
     searchKeywords: '',
     dataList:[],
     hasGotData:false,
+    isFocus:true
   },
   onLoad(options) {
     this.setData({
@@ -37,11 +38,13 @@ Page({
     })
 
     app.callCloudFunction({
-      // 要调用的云函数名称
-      name: 'getArticleList',
       // 传递给云函数的event参数
-      data: {
-        keywords:this.data.searchKeywords
+      data: { 
+        cloudFunc:'getArticleList',
+        cloudData:{
+          keywords:this.data.searchKeywords,
+          ps:999
+        }
       }
     }).then(res => {
       console.log(res)
@@ -80,11 +83,19 @@ Page({
   clear() {
     if( !this.data.searchKeywords ) return;
     this.setData({
-      searchKeywords: ''
+      searchKeywords: '',
     })
+
+    //清除搜索框后重新拉起键盘
+    setTimeout(()=>{
+      this.setData({
+        isFocus: true,
+      })
+    },0)
   },
   //取消按钮
   cancel() {
+    console.log(11111)
     app.goBack();
   },
 
