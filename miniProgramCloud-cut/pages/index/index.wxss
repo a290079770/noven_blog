@@ -1,0 +1,97 @@
+/**index.wxss**/
+.swiper-art-cont {
+   width:440rpx;
+   height: 220rpx;
+   box-sizing: border-box;
+   border: 10rpx solid transparent;
+   outline: 10rpx solid rgba(255,255,255,0.9);
+}
+
+.swiper-art-center {
+   width:100%;
+   height: 100%;
+   background: rgba(255,255,255,0.9); 
+}
+
+.swiper-art-center view {
+   margin: 0 auto;
+   width: 80%;
+}
+
+.swiper-art-type {
+  height: 50rpx;
+  line-height: 60rpx;
+  text-align: center;
+  color: #d13954;
+}
+
+.swiper-art-title {
+  height: 65rpx;
+  line-height: 65rpx;
+  text-align: center;
+}
+
+.swiper-art-brief {
+  text-align: center;
+}
+
+.swiper-skeleton {
+  width: 100%;
+  height: 100%;
+}
+
+.index-title-image {
+   width: 423rpx;
+   height: 100%;
+}
+
+.index-article-cont {
+   width:680rpx;
+   margin: 0 auto;
+   height: auto;
+}
+
+
+.index-more {
+   margin-top: 30rpx;
+   margin-bottom: 20rpx;
+   height: 50rpx;
+   color: #d13954;
+}
+
+.index-more-text {
+   margin-right: 10rpx;
+   padding: 5rpx 0;
+   border-bottom: 1px solid #d13954;
+}
+
+.index-article-list-item {
+  border-bottom: 1px solid #dedede;
+}
+
+.index-title-nopadding {
+  padding-bottom: 0;
+}
+
+ /* 面板指示点样式 */
+.slide-wrap .wx-swiper-dots.wx-swiper-dots-horizontal{
+  margin-bottom: 2rpx;
+}
+.slide-wrap .wx-swiper-dot{
+  width:20rpx;
+  display: inline-flex;
+  height: 10rpx; 
+  justify-content:space-between;
+}
+.slide-wrap .wx-swiper-dot-active {
+  width: 40rpx;
+}
+.slide-wrap .wx-swiper-dot::before{
+  content: '';
+  flex-grow: 1;  
+  background: rgba(255,255,255,0.6);
+  border-radius: 5rpx;
+}
+.slide-wrap .wx-swiper-dot-active::before{
+  background:rgba(209,57,84,0.8);
+}

@@ -1,0 +1,47 @@
+<import src="../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="updateinfo">
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{pageTitle,statusBarHeight,titleBarHeight}}"></template>
+  </view>
+
+  <view class="updateinfo-cont">
+    <view class="updateinfo-nickname" wx:if="{{type == 3}}"> 
+      <input 
+      placeholder-style="color:#bbb;font-size:30rpx;"
+      type='text' 
+      class="updateinfo-nickname-input"
+      placeholder="请输入您的昵称！" 
+      selection-start="{{0}}"
+      selection-end="{{12}}"
+      focus
+      value="{{nickName}}"
+      bindinput="inputAction"
+      />
+    </view>
+
+    <view class="updateinfo-abstract" wx:if="{{type == 4}}">
+      <textarea
+       placeholder-style="color:#bbb;font-size:30rpx;"
+       class="updateinfo-nickname-textarea"
+       auto-focus
+       focus
+       maxlength="-1"
+       selection-start="{{0}}"
+       selection-end="{{280}}"
+       placeholder="请输入您的简介！" 
+       value="{{brief}}"
+       bindinput="inputAction"
+       />
+    </view>
+
+
+    <view class="flex flex-align-center flex-justify-between updateinfo-notice">
+      <text> 您最多可以输入<text class="updateinfo-notice-hasinput">{{ type == 3 ? nickNameLen : briefLen}}</text>个字符 </text>    
+      <text> <text class="updateinfo-notice-hasinput"> {{ currentLen }} </text>     / {{ type == 3 ? nickNameLen : briefLen}}</text>     
+    </view>
+    <view>
+      <button bindtap="updateAction">提交修改</button>
+    </view>
+  </view>
+</view>

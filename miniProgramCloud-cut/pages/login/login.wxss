@@ -1,0 +1,124 @@
+.login-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.login {
+  height: 100vh;
+  width: 100%;
+}
+
+/*.index-title {
+  padding: 0
+}*/
+
+.index-title-image1 {
+   width: 206rpx;
+   height: 100%;
+}
+
+.login-content {
+  width: 100%;
+  overflow-x: hidden;
+
+}
+
+.login-content-wrap {
+  transition: all 0.5s;
+  width: 200%;
+}
+
+.btns-cont {
+   width: 100%;
+   height: auto
+}
+
+.login-btn-weixin {
+  margin: 50rpx auto;
+  width: 400rpx;
+  color:white;
+  background: #768fc3;
+}
+
+.login-btn-normal {
+  margin: 50rpx auto;
+  width: 400rpx;
+  color:white;
+  background: #d13954;
+}
+
+.login-account-form-wrap {
+  margin-top: 50rpx;
+  width: 100%;
+}
+
+.login-account-form {
+  width: 600rpx;
+  /*height: 500rpx;*/
+}
+
+.login-form-item-cont {
+  /*height: 300rpx;*/
+  width: 100%;
+}
+
+
+.login-show-form {
+  transform: translateX(-750rpx);
+}
+
+.updateinfo-nickname-input{
+  margin:50rpx 0;
+  padding: 20rpx 20rpx;
+  border:2rpx solid #d13954;
+  border-radius: 10rpx;
+  color: #d13954;
+}
+
+.login-btn-confirm {
+  margin: 0;
+  width: 100%;
+}
+
+.login-back-auth {
+   height: 100rpx;
+   line-height: 100rpx;
+   color: #d13954;
+   font-size: 30rpx;
+}
+
+.login-input-cont {
+   position: relative;
+}
+
+/*.login-input-cont:last-child {
+  margin-top: -50rpx;
+}
+*/
+.login-input-cont-text {
+   transition: all 0.5s;
+   position: absolute;
+   color:#d13954;
+}
+
+.login-input-cont-text-inac {
+   left: 20rpx;
+   top: 30rpx;
+   font-size:30rpx;
+}
+
+.login-input-cont-text-ac {
+   left: 0rpx;
+   top: -45rpx;
+   font-size:22rpx;
+   color:#768fc3;
+}
+
+.cancle-login {
+  margin-top: -20rpx;
+  text-align: center; 
+  color: #d13954;
+  font-size: 30rpx;
+}

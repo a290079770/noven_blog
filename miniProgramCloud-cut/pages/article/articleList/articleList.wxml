@@ -1,0 +1,62 @@
+<!--logs.wxml-->
+<import src="../../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="article-list header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);">
+
+   <view>
+     <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl}}"/>
+   </view>
+
+
+   <view class="article-list-navbar">
+     <view class="flex flex-align-center flex-justify-between article-list-navbar-cont">
+       <view class="flex flex-align-center article-list-navbar-item-cont ">
+         <view 
+         wx:for="{{['最新','精选','热门']}}" 
+         wx:key="item"
+         class="font article-list-navbar-item {{ index == activeIndex ? 'article-list-navbar-item-active':'' }}"
+         bindtap="changeNavAction"
+         data-index="{{index}}"
+         >
+           {{item}}
+         </view>
+
+         <!-- navbar底部边框 -->
+         <view style="transform: translate({{ activeIndex * 106 }}rpx)" class="article-list-navbar-item article-list-navbar-item-place"></view>
+       </view>
+
+       <view class="flex flex-align-center flex-justify-center article-list-search">
+         <view class="flex flex-align-center gray9 font article-list-search-input" bindtap="goSearch">
+           <image class="article-list-search-icon" mode="aspectFit" src="/images/search.svg"></image>
+           <text> 搜索您感兴趣的文章 </text>    
+         </view>
+       </view>
+     </view>
+   </view>
+
+
+   <view class="article-list-cont">
+  
+     <view wx:for="{{hotArticleList}}" wx:key="_id" style="{{ index < hotArticleList.length - 1 ? 'border-bottom: 1px solid #dedede;':''}}">
+       <article-list-item 
+       bind:handleClick="handleArticleClick"  
+       item="{{item}}" 
+       data-id="{{item._id}}"
+       />
+     </view>
+   </view>
+  
+
+<!--    <view class="flex flex-align-center flex-justify-center font-xs gray9">
+     <image mode="aspectFill" src="/images/loading.svg" class="load-more-icon"></image>
+     <text> 加载更多... </text>      
+   </view> 
+   <view class="flex flex-align-center flex-justify-center font-xs gray9">
+     ^_^ 没有更多了...
+   </view> -->  
+
+   <template is="bg-footer"/>
+
+   <add-article />
+   <scroll-to-top bind:handleClick="hideScrollToTop" hidden="{{!isShowScrollTop}}" />
+</view>

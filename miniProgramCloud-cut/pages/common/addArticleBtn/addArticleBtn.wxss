@@ -1,0 +1,23 @@
+@import '../common.wxss'
+
+.add-move-area {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	width: 200rpx;
+	height: 200rpx;
+}
+
+.add-article-cont {
+	height: 100rpx;
+	width: 100rpx;
+	border-radius: 50%;
+	background: #d13954;
+	color: white;
+	box-shadow: 0 10px 30px rgba(248,76,91,.6);
+}
+
+.add-article {
+	width: 50rpx;
+	height: 50rpx;
+}

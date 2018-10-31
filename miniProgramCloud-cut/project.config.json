@@ -1,0 +1,89 @@
+{
+	"cloudfunctionRoot": "cloud-functions/",
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.3.2",
+	"appid": "wx6a4441008b589a6d",
+	"projectname": "miniProgram-cut",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 7,
+			"list": [
+				{
+					"id": 0,
+					"name": "我的",
+					"pathName": "pages/my/my",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "添加文章-首页",
+					"pathName": "pages/addArticle/index/addIndex",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "添加文章-内容编辑",
+					"pathName": "pages/addArticle/text/addText",
+					"query": "index=0&isEdit=true"
+				},
+				{
+					"id": -1,
+					"name": "添加文章-预览",
+					"pathName": "pages/addArticle/previewArticle/previewArticle",
+					"query": "index=0&isEdit=true"
+				},
+				{
+					"id": 4,
+					"name": "文章-详情",
+					"pathName": "pages/article/articleDetail/articleDetail",
+					"query": "id=W8QppZ25dhqgK1vc"
+				},
+				{
+					"id": -1,
+					"name": "文章列表",
+					"pathName": "pages/article/articleList/articleList",
+					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "全文索引",
+					"pathName": "pages/search/search",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "意见反馈",
+					"pathName": "pages/feedback/feedback"
+				}
+			]
+		}
+	}
+}

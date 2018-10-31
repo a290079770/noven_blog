@@ -1,0 +1,163 @@
+.article-img {
+	width: 100%;
+	height: 100%;
+}
+
+.article-detail-cont {
+	margin: 0 auto;
+	width: 690rpx;
+	min-height: 300rpx;
+}
+.article-detail-title {
+	padding: 30rpx 0;
+	font-size: 40rpx;
+}
+
+.article-info {
+	font-size: 28rpx;
+	color:#666;
+}
+
+.article-cover {
+	margin: 20rpx 0;
+	height: 430rpx;
+	width: 100%;
+	overflow: visible;
+}
+
+
+.article-brief {
+	margin: 20rpx 0;
+	line-height: 45rpx;
+}
+
+.article-info-time {
+	font-size: 26rpx;
+	color:#999;
+}
+
+.article-info-left {
+	width: 55%;
+}
+
+.article-info-numbercont {
+	width: 40%;
+}
+
+.article-info-zan {
+	width: 50%;
+}
+
+.article-info-icon {
+	margin-right:10rpx;
+	width: 28rpx;
+	height: 28rpx;
+}
+
+.article-content {
+	margin-top: 20rpx;
+}
+
+.article-content-item {
+	margin: 15rpx 0;
+}
+
+.article-content-text-item {
+	text-indent: 54rpx;
+	line-height: 44rpx;
+}
+
+.article-content-imgs {
+	width: 100%;
+	/*height: 240rpx;*/
+}
+
+.article-content-imgs-desc {
+	margin: 15rpx 0;
+	text-align: center;
+}
+
+
+.article-zan {
+	margin: 40rpx 0;
+	width: 100%;
+	height: 100rpx;
+}
+
+
+.article-zan-icon {
+	margin-right: 10rpx;
+	width: 46rpx;
+	height: 46rpx;
+}
+
+.article-zan-cont {
+	width: 200rpx;
+	height: 80rpx;
+	border: 2rpx solid #ccc;
+	border-radius: 40rpx;
+}
+
+.article-item-skeleton {
+	width: 100%;
+	height: 1280rpx;
+}
+
+.article-move-area {
+	position: fixed;
+	right: 0;
+	bottom: 200rpx;
+	width: 200rpx;
+	height: 150rpx;
+}
+
+.article-article-cont {
+	position: relative;
+	z-index: 2;
+	transition: all .5s;
+	height: 100rpx;
+	width: 100rpx;
+	border-radius: 50%;
+	background: #768fc3;
+	color: white;
+	box-shadow: 0 10px 30px rgba(118,143,195,.6);
+}
+
+.article-article-cont-active {
+	background: #d13954;
+	box-shadow: 0 10px 30px rgba(248,76,91,.6);
+}
+
+.article-icon {
+	width: 60rpx;
+	height: 60rpx;
+}
+
+.article-edit-btn-cont,.article-del-btn-cont {
+	position: absolute;
+	left: 20rpx;
+	top: 20rpx;
+	transition: all 0.5s;
+	width: 60rpx;
+	height: 60rpx;
+	background: #768fc3;
+	border-radius: 50%;
+	opacity: 1;
+}
+
+.article-edit-btn {
+	width: 40rpx;
+	height: 40rpx;
+}
+
+.article-edit-btn-cont-active {
+	top: -85rpx;
+	opacity: 1;
+}
+
+.article-del-btn-cont-active {
+	left: -85rpx;
+	top: 20rpx;
+	opacity: 1;
+	background: #d13954;
+}

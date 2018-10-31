@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "article-list-item": "../common/articleListItem/articleListItem"
+  }
+}

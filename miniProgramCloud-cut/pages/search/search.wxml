@@ -1,0 +1,42 @@
+<import src="../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="search-box">
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{pageTitle,statusBarHeight,titleBarHeight}}"></template>
+  </view>
+  <view class="search-wrap flex flex-justify-between">
+    <icon class="search-icon" size='16' type='search'></icon>
+    <input 
+    class="search-input font-l"
+    type='text' 
+    placeholder="请输入关键字进行搜索" 
+    focus="{{isFocus}}"
+    value="{{searchKeywords}}"
+    bindinput="searchInput" 
+    confirm-type="搜索"  
+    bindconfirm="getDataList" />
+    <view catchtap="clear" class="flex flex-align-center flex-justify-center search-clear">
+      <image class="search-clear-icon" mode="aspectFill" src="/images/close-white.svg"></image>
+    </view>
+    <text class="font-l cancle" bindtap="cancel">取消</text>
+  </view>
+
+  <view class="font-xs gray9 search-notice">
+    暂时不支持关键字查询，请尽量输入完整，后续跟进微信官方改进。
+  </view>
+
+  <view wx:if="{{hasGotData && dataList.length > 0}}" class="search-article-list">
+    <view wx:for="{{dataList}}" wx:key="_id" style="{{ index < dataList.length - 1 ? 'border-bottom: 1px solid #dedede;':''}}">
+     <article-list-item 
+     bind:handleClick="handleArticleClick"  
+     item="{{item}}" 
+     data-id="{{item._id}}"
+     />
+   </view>
+  </view>
+
+  <view wx:if="{{hasGotData && dataList.length < 1}}" class="flex  flex-align-center flex-justify-center flex-column search-article-list-nodata">
+    <image class="search-article-list-nodata-icon" mode="aspectFill" src="/images/no-search.svg"></image>
+    <text class="font-lg gray9"> 暂无数据 </text>    
+  </view>
+</view>

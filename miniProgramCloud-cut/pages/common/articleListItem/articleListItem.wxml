@@ -1,0 +1,57 @@
+<view wx:if="{{!item.isSkeleton}}" class="art-li" bindtap="handleClick">
+  <view class="flex flex-align-center art-li-title">
+  	<text class="art-li-title-yuanchuang"> 原创 </text>
+  	<text class="flex-1 text-ess-1 font-lg"> {{item.Title}}</text>				
+  </view>
+  <view wx:if="{{item.Brief}}" class="art-li-brief font gray9 text-ess-2">
+  	{{item.Brief}}
+  </view>
+
+  <view wx:if="{{imgList.length > 0}}" class="flex flex-align-center art-li-imgs">
+  	<image 
+    wx:for="{{imgList}}" 
+    wx:key="item" 
+    mode="aspectFill"
+    src="{{item}}" 
+    class="art-li-imgs-item"
+    style="margin-right: {{ index < imgList.length - 1 ? 25:0 }}rpx"
+    catchtap="previewItemImg"
+    data-index="{{index}}"
+    ></image>
+  </view>
+
+  <view class="flex flex-align-center flex-justify-between art-li-info font-xs">
+  	<view class="flex flex-align-center">
+  		<view class="art-li-author-cover">
+  			<image class="full-img" mode="aspectFill" src="{{ item.AuthorInfo && item.AuthorInfo.avatarUrl}}"></image>
+  		</view>
+  		<view class="font gray9">
+  			{{item.Author}}
+  		</view>
+
+      
+  	</view>
+  	<view class="flex flex-align-center font-l gray9">
+      <view class="font gray9 art-li-info-createtime">
+        {{item.CreateTime}}
+      </view>
+  		<view class="flex flex-align-center flex-justify-end article-info-zan">
+  	   	<image src="/images/zan-kong.svg" class=" article-info-icon"></image>
+  	   	<view class="article-info-number" style="color:#768fc3">
+  	   	  {{item.CollectCount}}
+  	   	</view>
+  	  </view>
+
+  	  <view class="flex flex-align-center flex-justify-end article-info-zan">
+  	   	<image src="/images/view.svg" class=" article-info-icon"></image>
+  	   	<view class="article-info-number" style="color:#d13954">
+  	   	  {{item.ReadCount}}
+  	   	</view>
+  	  </view>
+  	</view>
+  </view>
+</view>
+
+<view wx:else bindtap="handleClick">
+	<image src="/images/article-list-skeleton.jpg" mode="apsectFill" class=" article-li-item-skeleton"></image>
+</view>

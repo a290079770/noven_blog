@@ -1,0 +1,28 @@
+<import src="../../common/bgTemplate/bgTemplate.wxml"/>
+
+<view class="updateinfo">
+  <view bindtap="headerClick">
+    <template is="bg-header-detail" data="{{pageTitle,statusBarHeight,titleBarHeight}}"></template>
+  </view>
+
+  <view class="updateinfo-cont">
+
+    <view class="updateinfo-abstract">
+      <textarea
+       placeholder-class="placeholder-class"
+       class="updateinfo-nickname-textarea"
+       auto-focus
+       auto-height
+       focus
+       maxlength="-1"
+       placeholder="请输入内容！" 
+       value="{{text}}"
+       bindinput="textareaInput"
+       />
+    </view>
+
+    <view>
+      <button class="updateinfo-submit" bindtap="sumbitAction">提交修改</button>
+    </view>
+  </view>
+</view>
