@@ -78,32 +78,5 @@
       <image mode="aspectFill" src="/images/skeletonDetail.jpg" class="article-item-skeleton"></image>
    </view>
 
-   <movable-area class="article-move-area" bindtap="openEditBtns" wx:if="{{ isCurrentAuthor }}">
-     <movable-view 
-      class="flex flex-align-center flex-justify-center article-article-cont {{ isEditTap ? 'article-article-cont-active':''}}"
-      direction="all"
-      inertia
-      x="{{0}}"
-      y="{{0}}"
-      >
-         <image mode="aspectFit" src="/images/edit.svg" class="article-icon"></image>
-      </movable-view>
 
-
-      <view  
-      catchtap="toEditAction"
-      class="flex flex-align-center flex-justify-center article-edit-btn-cont {{isEditTap ? 'article-edit-btn-cont-active' : ''}}"
-      >
-        <image mode="aspectFit" src="/images/write-white.svg" class="article-edit-btn"></image>
-      </view>
-
-      <view  
-      catchtap="deleteAction"
-      class="flex flex-align-center flex-justify-center article-del-btn-cont {{isEditTap ? 'article-del-btn-cont-active' : ''}}"
-      >
-        <image mode="aspectFit" src="/images/delete.svg" class="article-edit-btn"></image>
-      </view>
-   </movable-area>
-
-   <add-article />
 </view>

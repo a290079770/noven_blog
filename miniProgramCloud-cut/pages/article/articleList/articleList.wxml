@@ -57,6 +57,5 @@
 
    <template is="bg-footer"/>
 
-   <add-article />
    <scroll-to-top bind:handleClick="hideScrollToTop" hidden="{{!isShowScrollTop}}" />
 </view>
