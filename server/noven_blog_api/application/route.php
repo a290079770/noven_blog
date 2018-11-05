@@ -63,8 +63,15 @@ return [
     ],
 
     //标签相关接口
+    '[images]' => [
+        'uploadFile' => ['admin/images/uploadFile', ['method' => 'post']],  // 上传文件
+    ],
+
+
+    //标签相关接口
     '[other]' => [
         'timeLine' => ['admin/other/timeLine', ['method' => 'get']],  // 时间轴列表
+        'addFeedBack' => ['admin/other/addFeedBack', ['method' => 'post']],  // 意见反馈
     ],
 
     //重定向到这个接口

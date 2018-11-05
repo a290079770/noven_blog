@@ -39,6 +39,7 @@ class JwtTool
     * @Author   xxx
     * @DateTime 2018-08-06T18:26:19+0800
     * @param    string                   $str [要解密的token]
+    * @param    boolean                   $isValidHasLogin [是否是验证现有的token，如果是，则不提示是否过期]
     * @return   [type]                        [解密出的原始数据]
     */
    public function dec($str = '') {
@@ -63,5 +64,28 @@ class JwtTool
         $decoded = $e->getMessage();
       }
    	  return $decoded;
+   }
+
+
+   /**
+    * [decPure 解密现有token，返回解密数据]
+    * @Author   xxx
+    * @DateTime 2018-08-06T18:26:19+0800
+    * @param    string                   $str [要解密的token]
+    * @return   [type]                        [解密出的原始数据]
+    */
+   public function decPure($str = '') {
+      if(!is_string($str)) return null;
+      $decoded = null;
+
+      try {
+        $decoded = JWT::decode($str, $this->key, array('HS256'));
+
+        $decoded = (array)$decoded;
+      }catch(\Exception $e){
+        
+      }
+
+      return $decoded;
    }
 }

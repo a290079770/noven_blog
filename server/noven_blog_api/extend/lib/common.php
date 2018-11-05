@@ -43,7 +43,7 @@ class Common
      * @param    array     $query  [要查询的数组，注意是and查询]
      * @param    integer    $cp        [当前第几页]
      * @param    integer    $ps        [每页多少条]
-     * @param    string     $orderCol   [排序的列]
+     * @param    string     $orderCol   [排序的列，newest - CreateTime  hot - ReadCount  choose - CollectCount]
      * @param    string     $order      [排序方式]
      * @return   [Boolean]                [description]
      */
@@ -140,16 +140,42 @@ class Common
     {
       if(!request()->isPost()) {
         $this->setResponse(21,'请求方式错误！');
-        return;
+        return false;
       }
 
       //验证id
       if(!request()->post('Id')) {
         $this->setResponse(21,'要删除的编号不能为空！');
-        return;
+        return false;
       }
 
+      //验证token
+      $tokenData = validJWT::valid();
+      if(!$tokenData) return false;
+      //获取用户id，且必须是该用户所写的文章才能删除，管理员除外
+      $uid = $tokenData['uid'];
+      //获取用户信息,主要获取角色信息
+      $userInfo = Db::name('users')
+          ->where('Id',$uid)
+          ->find();
 
+      //查找该文章
+      $find = Db::name($table)
+          ->where('Id',request()->post('Id'))
+          ->find(); 
+
+      if($find) {
+        //验证作者id
+        if($uid !== $find['AuthorId'] && $userInfo['UserType'] == 1) {
+          $this->setResponse(21,'您无权删除该文章！');
+          return false;
+        }
+      }else {
+        $this->setResponse(21,'未获取到要删除的资源');
+        return false;
+      }    
+          
+      //安全验证通过，执行删除   
       // 启动事务
       Db::startTrans();
       try{
@@ -157,17 +183,21 @@ class Common
           ->where('Id',request()->post('Id'))
           ->delete();
 
-          if($res) {
-            $this->setResponse(200,'删除成功！');
-          }else {
+          if($res < 1) {
             $this->setResponse(21,'删除失败！');
+            Db::rollback();
+            return false;
           }
+
           // 提交事务
           Db::commit();
+          return true;
       } catch (\Exception $e) {
           $this->setResponse(21,'删除失败！');
           // 回滚事务
           Db::rollback();
+
+          return false;
       }
     }
 
@@ -193,6 +223,16 @@ class Common
             ->where('CollectionType',$type)
             ->select();
 
+      $dataArr = Db::name('arcticles')
+                ->where('Id', $id)
+                ->select();   
+      if(count($dataArr) < 1) {
+         $this->setResponse(21,'未找到要收藏的资源！');
+         return;
+      }
+
+      $resData = $dataArr[0];        
+
       //判断是新增还是移除      
       if(!$isCollect) {
          //移除
@@ -205,11 +245,26 @@ class Common
                 ->where('CollectionType',$type)
                 ->delete();
 
-                if( $number > 0) {
-                  $this->setResponse(200,'取消收藏成功！');
-                }else {
+                if( $number < 1) {
                   $this->setResponse(21,'取消收藏失败！');
+                  Db::rollback();
+                  return;
                 }
+
+                //该资源收藏量减1
+                $count = Db::name('arcticles')
+                ->where('Id', $id)
+                ->setDec('CollectCount');
+
+                if($count < 1) {
+                  $this->setResponse(21,'修改收藏量失败！');
+                  Db::rollback();
+                  return;
+                }
+
+                $resData['HasCollect'] = false;
+                $resData['CollectCount'] --;
+                $this->setResponse(200,'取消收藏成功！',$resData);
                 // 提交事务
                 Db::commit();    
             } catch (\Exception $e) {
@@ -241,7 +296,20 @@ class Common
                      'CollectionType' => $type
                    ]);
 
-            $this->setResponse(200,'收藏成功！');
+            //该资源收藏量加1
+            $count = Db::name('arcticles')
+            ->where('Id', $id)
+            ->setInc('CollectCount');
+
+            if($count < 1) {
+              $this->setResponse(21,'修改收藏量失败！');
+              Db::rollback();
+              return;
+            }
+
+            $resData['HasCollect'] = true;       
+            $resData['CollectCount'] ++;       
+            $this->setResponse(200,'收藏成功！',$resData);
             // 提交事务
             Db::commit();    
         } catch (\Exception $e) {

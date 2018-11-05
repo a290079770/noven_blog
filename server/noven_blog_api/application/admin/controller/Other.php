@@ -4,6 +4,8 @@ use think\Controller;
 use think\request;
 use think\Db;
 use lib\common;
+use lib\jwtTool;
+use lib\validJWT;
 
 class Other extends Controller
 {
@@ -122,5 +124,46 @@ class Other extends Controller
        
        //处理结果数组，只保留Id,标题，创建时间，作者，减少字节数
        return $res;       
+    }
+
+
+    /**
+     * [addFeedBack 意见反馈]
+     * @Author   罗文
+     * @DateTime 2018-04-22
+     * @param    [string]     token []
+     * @param    [string]     Text  [意见文本]
+     * @return   [string]     ImgUrls  [意见图片链接字符串，多个链接用英文逗号隔开]
+     */
+    public function addFeedBack()
+    { 
+       //验证token
+       $tokenData = validJWT::valid();
+       if(!$tokenData) return;
+       $uid = $tokenData['uid'];
+
+       $post = request()->post();
+       //验证必填字段      
+       if(!isset($post['Text']) || !$post['Text']) {
+          $this->common->setResponse(21,'意见内容不能为空');
+          return;
+       }
+
+       $post['UserId'] = $uid;
+
+       //写入数据库
+       // 启动事务
+       Db::startTrans();
+       try{
+          $res = Db::name('feedbacks')->insert($post);
+
+          $this->common->setResponse(200,'提交成功');
+          // 提交事务
+          Db::commit();    
+       } catch (\Exception $e) {
+          $this->common->setResponse(21,'操作数据库失败！');
+          // 回滚事务
+          Db::rollback();
+       }
     }
 }

@@ -99,11 +99,20 @@ class Arcticle extends Controller
      * [createOrUpdate 新增或修改文章]
      * @Author   罗文
      * @DateTime 2018-04-17
+     * 'Title'  => 'require|length:1,255',
+       'Author'  => 'require|length:1,20',
+       'AuthorId' => 'require',
+       'Content' => 'require',
      * @return   [type]     [description]
      */
     public function createOrUpdate()
-    {
-       //验证请求方式和账号密码不能为空
+    {   
+       //验证token
+       $tokenData = validJWT::valid();
+       if(!$tokenData) return;
+       $uid = $tokenData['uid'];
+
+       //验证必填字段      
        if(!$this->validateData()) return;
 
        $arcticle = request()->post();
@@ -129,8 +138,10 @@ class Arcticle extends Controller
         }
 
        }else {
-         $arcticle['CreateTime'] =  date('Y-m-d H:i:s',time());
+         $arcticle['CreateTime'] = date('Y-m-d H:i:s',time());
          $arcticle['ReadCount'] = 0;
+         $arcticle['CollectCount'] = 0;
+         $arcticle['AuthorId'] = $uid;
 
          // 启动事务
          Db::startTrans();
@@ -168,24 +179,66 @@ class Arcticle extends Controller
         return false;
       }
 
+      $id = request()->get('Id');
+
       $res = Db::name('arcticles')
-          ->where('Id',request()->get('Id'))
+          ->where('Id',$id)
           ->select();
 
       if(count($res) === 0) {
          $this->common->setResponse(21,'未获取到文章详情！');
       }else {
-        //获取到了用户的基本信息，还需要获取用户标签信息
+         //该文章阅读量加1
+         // 启动事务
+         Db::startTrans();
+         try{
+            $count = Db::name('arcticles')
+            ->where('Id',$id)
+            ->setInc('ReadCount');
+
+            if($count < 1) {
+              $this->common->setResponse(21,'修改阅读量失败！');
+              Db::rollback();
+              return;
+            }
+            // 提交事务
+            Db::commit();
+         } catch (\Exception $e) {
+            $this->common->setResponse(21,'修改阅读量失败！');
+            // 回滚事务
+            Db::rollback();
+         }
+
+
+         //获取到了文章相关标签信息
          $arcticleInfo = $res[0];
+         $arcticleInfo['HasCollect'] = false;
 
-         $tagList = Db::name('tags')
-          ->where('ArcTicleId',request()->get('Id'))
-          ->select();
+         // $tagList = Db::name('tags')
+         //  ->where('ArcTicleId',$id)
+         //  ->select();
 
-         $arcticleInfo['TagList'] = $tagList;
+         // $arcticleInfo['TagList'] = $tagList;
+
+         //如果有传入token，则需要获取该用户是否已经收藏过该资源
+         $token = request()->header('token') ? request()->header('token') : request()->post('token');
+         if($token) {
+            //验证token
+            $tokenData = validJWT::valid();
+            if(!$tokenData) return;
+            $uid = $tokenData['uid'];
+            //返回该用户是否已经收藏过
+            $res = Db::name('collections')
+              ->where('CollectionId',$id)
+              ->where('UserId',$uid)
+              ->select();
+
+            $arcticleInfo['HasCollect'] = count($res) > 0;
+         }
+
+
          $this->common->setResponse(200,'ok',$arcticleInfo);
       }    
-      
     }
 
 
@@ -197,7 +250,26 @@ class Arcticle extends Controller
      */
     public function delete()
     {
-       $this->common->delete('arcticles');
+       $hasDelete = $this->common->delete('arcticles');
+
+       if($hasDelete) {
+         //要移除所有用户对该资源的收藏
+         // 启动事务
+          Db::startTrans();
+          try{
+              $res = Db::name('collections')
+              ->where('CollectionId',request()->post('Id'))
+              ->delete();
+
+              $this->common->setResponse(200,'删除成功！');
+              // 提交事务
+              Db::commit();
+          } catch (\Exception $e) {
+              $this->common->setResponse(21,'删除收藏失败！');
+              // 回滚事务
+              Db::rollback();
+          }   
+       }
     }
 
     /**
@@ -246,7 +318,6 @@ class Arcticle extends Controller
         $rule = [
             'Title'  => 'require|length:1,255',
             'Author'  => 'require|length:1,20',
-            'AuthorId' => 'require',
             'Content' => 'require',
         ];
 
@@ -255,7 +326,6 @@ class Arcticle extends Controller
             'Title.length'     => '文章标题长度只能在1-255个字符之间，一个汉字为3个字符',
             'Author.require' => '文章作者不能为空！',
             'Author.length'     => '文章作者长度只能在1-20个字符之间，一个汉字为3个字符',
-            'AuthorId.require'   => '作者编号不能为空！',
             'Content.require'   => '文章内容不能为空',
         ];
 
