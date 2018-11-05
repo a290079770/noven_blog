@@ -6,15 +6,16 @@
         <text>请上传</text>
         <text>头像</text>
       </view>
-      <image wx:else class="mine-info-img" src="{{userInfo.CoverUrl}}" mode="aspectFill" bindtap="editTouxiang"></image>
+      <image wx:else class="mine-info-img" src="{{ userInfo.CoverUrl }}" mode="aspectFill" bindtap="editTouxiang"></image>
       
     </view>
-    <view wx:if="{{!isLogin}}" class="login-btn" bindtap="toLogin">点击登录</view>
+    <view wx:if="{{ !isLogin }}" class="login-btn" bindtap="toLogin">点击登录</view>
     <view wx:else class="nick-name-wrap">
-      <view class="nick-name">{{userInfo.NickName}}</view>
+      <view class="nick-name">{{ userInfo.NickName }}</view>
       <view class="current-time-wrap login-btn">
-        <image class="address-icon" src="/images/mine/local.svg"></image>
-        <text>{{userInfo.ThisTime}}</text>
+        <image wx:if="{{ !userInfo.City }}" class="address-icon" src="/images/mine/local.svg"></image>
+        <text>{{ userInfo.City }}</text>
+        <text>{{ userInfo.ThisTime }}</text>
       </view>
     </view>
   </view>
@@ -30,7 +31,7 @@
     <view class="mine-tongji-item" data-type="2" bindtap="goTo">
       <image class="mine-tongji-item-img" src="../../images/mine/like.svg"></image>
       <view class="mine-tongji-item-text">
-        <text class="number">{{ collectionCount }}</text>
+        <text class="number">{{ collectCount }}</text>
         <text>我的收藏</text>
       </view>
     </view>
@@ -58,4 +59,6 @@
       <text class="mine-list-item-text">意见反馈</text>
     </view>
   </view>
+
+  <add-article-btn />
 </view>

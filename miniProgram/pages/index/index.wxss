@@ -36,6 +36,13 @@
   height: 626rpx;
   border: 1px solid #ddd;
 }
+.load-more-wrap {
+  margin: 20rpx 0 50rpx;
+  text-align: center;
+  font-size: 36rpx;
+  color: rgba(172, 5, 33, 0.8);
+  text-decoration: underline;
+}
 
  /* 面板指示点样式 */
 .slide-wrap .wx-swiper-dots.wx-swiper-dots-horizontal{

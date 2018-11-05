@@ -32,6 +32,11 @@
   height: 100%;
   box-sizing: border-box;
 }
+.article-list-item-title-wrap {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
 .article-list-item-title {
   color: rgb(179, 31, 31);
   /* 2行省略 */
@@ -62,4 +67,9 @@
 }
 .collection {
   margin-left: 30rpx;
+}
+.cancle-icon {
+  display: absolute;
+  right: 0;
+  top: 5rpx;
 }

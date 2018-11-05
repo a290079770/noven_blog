@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "关于我的"
+  "navigationBarTitleText": "关于我的",
+  "usingComponents": {
+    "add-article-btn": "../component/addArticleBtn/addArticleBtn"
+  }
 }

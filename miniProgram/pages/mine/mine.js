@@ -4,8 +4,8 @@ Page({
   data: {
     userInfo: null,
     isLogin: false,
-    publishCount: 3,
-    collectionCount: 1
+    publishCount: 0,
+    collectCount: 0
   },
   onLoad: function () {
     
@@ -14,14 +14,17 @@ Page({
     //如果Storage中有值，且userInfo为null的时候，刷新用户
     var storageUesrInfo = wx.getStorageSync("userInfo");
     if (storageUesrInfo) {
-      console.log(storageUesrInfo)
-      console.log(app.globalData)
+      // console.log(storageUesrInfo)
+      // console.log(app.globalData)
       this.setData({
         userInfo: app.globalData.userInfo,
         isLogin: true,
         ['userInfo.ThisTime']: dateFormat(storageUesrInfo.ThisTime, 'yyyy-mm-dd')
       })
     }
+
+    this.getPublishData();
+    this.getCollectData();
   },
   toLogin: function() {
     wx.navigateTo({
@@ -71,33 +74,96 @@ Page({
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths
-        console.log(tempFilePaths)
-        _this.setData({
-          ['userInfo.CoverUrl']: tempFilePaths
-        })
-
-        wx.request({
-          url: 'http://novenblog_api.com/user/updateUserInfo',
-          method: 'POST',
-          data: {
-            token: app.globalData.token,
-            userInfo: {
-              NickName: app.globalData.userInfo.NickName || '',
-              Sex: app.globalData.userInfo.Sex || 0,
-              CoverUrl: tempFilePaths || app.globalData.userInfo.CoverUrl || '',
-              Age: app.globalData.userInfo.Age || 18,
-              Introduction: app.globalData.userInfo.Introduction || ''
-            }
+        // console.log(tempFilePaths)
+        
+        wx.uploadFile({
+          url: 'http://novenblog_api.com/images/uploadFile',
+          filePath: tempFilePaths[0],
+          name: 'file',
+          formData: {
+            'fileData': 'test'
           },
-          success(updateUserInfoRes) {
-            console.log(updateUserInfoRes)
-            if (updateUserInfoRes.data.data) {
-              wx.setStorageSync('userInfo', updateUserInfoRes.data.data);
-              app.globalData.userInfo = updateUserInfoRes.data.data;
+          success(res) {
+            let data = JSON.parse(res.data)
+            // console.log(data)
+
+            if(data.code !== 200) {
+              wx.showToast({
+                title: data.description,
+              })
+            }else {
+              
+              // 头像上传成功后调用更新用户信息接口
+              wx.request({
+                url: 'http://novenblog_api.com/user/updateUserInfo',
+                method: 'POST',
+                data: {
+                  userInfo: {
+                    NickName: app.globalData.userInfo.NickName,
+                    Sex: app.globalData.userInfo.Sex || 0,
+                    CoverUrl: data.data.url.replace(/\\/g,'/') || '',
+                    Age: app.globalData.userInfo.Age || 18,
+                    Introduction: app.globalData.userInfo.Introduction || ''
+                  }
+                },
+                header: {
+                  token: app.globalData.token
+                },
+                success(updateUserInfoRes) {
+                  // console.log(updateUserInfoRes)
+                  if(updateUserInfoRes.data.data) {
+                    wx.setStorageSync('userInfo', updateUserInfoRes.data.data);
+                    app.globalData.userInfo = updateUserInfoRes.data.data;
+                    _this.setData({
+                      userInfo: updateUserInfoRes.data.data
+                    })
+                    wx.showToast({
+                      title: '头像上传成功！',
+                    })
+                  }else {
+                    wx.showToast({
+                      title: updateUserInfoRes.data.description,
+                    })
+                  }
+                }
+              })
             }
           }
         })
       }
     })
-  }
+  },
+  // 我的发布量
+  getPublishData() {
+    let _this = this;
+    app.request({
+      url: 'http://novenblog_api.com/arcticle/arcticleList',
+      method: 'GET',
+      data: {
+        isMy: true,
+        // ReadCount: true,
+        // CollectCount: true,
+      },
+      success(res) {
+        // console.log(res)
+        _this.setData({
+          publishCount: res.recordCount
+        })
+      }
+    })
+  },
+  // 我的收藏量
+  getCollectData() {
+    let _this = this;
+    app.request({
+      url: 'http://novenblog_api.com/arcticle/collectList',
+      method: 'GET',
+      success(res) {
+        // console.log(res)
+        _this.setData({
+          collectCount: res.recordCount,
+        })
+      }
+    })
+  },
 })

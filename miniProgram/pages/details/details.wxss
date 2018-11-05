@@ -61,18 +61,26 @@
   font-size: 30rpx;
   line-height: 40rpx;
 }
-.is-collection-wrap {
+.is-collection-wrap, .edit-icon-wrap {
   width: 200rpx;
   height: 200rpx;
   position: fixed;
   bottom: 20rpx;
   left: 30rpx;
 }
-.is-collection {
+.edit-icon-wrap {
+  left: 230rpx;
+}
+.is-collection, .edit-icon-circle {
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, .2);
+}
+.edit-icon-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .collection-img {
   width: 50rpx;

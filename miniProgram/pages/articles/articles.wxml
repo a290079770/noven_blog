@@ -1,19 +1,17 @@
 <view class="article-wrap">
-  <!-- <view class="article-image-wrap">
-    <image class="article-image" src="../../images/article/hotarc.jpg"></image>
-  </view>
-  <view class="scroll-image-wrap">
-     <article-list-item wx:for="{{articleList}}" wx:key="{{id}}" data="{{item}}"></article-list-item>
-  </view>
-  <view class="article-image-wrap">
-    <image class="article-image" src="../../images/article/choiceness.jpg"></image>
-  </view>
-  <view class="scroll-image-wrap">
-     <article-list-item wx:for="{{articleList}}" wx:key="{{id}}" data="{{item}}"></article-list-item>
-  </view> -->
+  <!-- 文章列表 -->
   <view class="article-image-wrap">
     <image class="article-image" src="../../images/article/articlelist.png"></image>
   </view>
+
+  <!-- 最新、热门、精选 -->
+  <view class='orderby-wrap' bindtap='orderList'>
+    <view class='orderby-item {{ orderBy == "CreateTime" ? "orderby-item-active" : "" }}' data-type='CreateTime'>最新</view>
+    <view class='orderby-item {{ orderBy == "ReadCount" && "orderby-item-active" }}' data-type='ReadCount'>热门</view>
+    <view class='orderby-item {{ orderBy == "CollectCount" ? "orderby-item-active" : "" }}' data-type='CollectCount'>精选</view>
+  </view>
+
+  <!-- 文章列表项 -->
   <view wx:if="{{ hasGotData }}">
     <article-list-item
       wx:for="{{ articleList }}"
@@ -23,4 +21,9 @@
   </view>
   <image wx:else class="articlelist-skeleton" src="../../images/article/articleListItem-skeleton.jpg"></image>
   <!-- <button bindtap="toDetails">details</button> -->
+
+  <!-- 新增文章btn -->
+  <add-article-btn />
+  <to-top-btn hidden="{{ !isShowScrollTopBtn }}" />
+
 </view>

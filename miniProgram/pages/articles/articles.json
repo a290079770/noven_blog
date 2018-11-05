@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "我的文章",
   "usingComponents": {
-    "article-list-item": "../component/articleListItem/articleListItem"
+    "article-list-item": "../component/articleListItem/articleListItem",
+    "add-article-btn": "../component/addArticleBtn/addArticleBtn",
+    "to-top-btn": "../component/toTopBtn/toTopBtn"
   }
 }

@@ -11,8 +11,8 @@
       indicator-active-color="{{indicatorActiveColor}}" circular="true"
       autoplay="{{true}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{imgUrls}}" wx:key="{{id}}">
-        <swiper-item bindtap="toDetail">
-          <image src="{{item}}" class="slide-image"/>
+        <swiper-item bindtap="toDetail" data-id="{{ item.Id }}">
+          <image src="{{ item.Url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg' }}" class="slide-image"/>
         </swiper-item>
       </block>
     </swiper>
@@ -22,5 +22,10 @@
     <article-item  wx:for="{{articleList}}" wx:key="id" item="{{item}}"></article-item>
   </view>
   <image wx:else class="articlelist-skeleton" src="../../images/articleItem-skeleton.jpg"></image>
+
+  <view class='load-more-wrap'>
+    <text class='load-more' bindtap='toArticleList'>加载更多</text>
+  </view>
+
   <add-article-btn />
 </view>

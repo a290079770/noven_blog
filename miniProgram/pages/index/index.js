@@ -5,9 +5,9 @@ Page({
     hasGotData: false,
     title: "博客的标题拉阿拉",
     imgUrls: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      // 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      // 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+      // 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
     ],
     articleList: [],
     // indicatorColor: "rgba(226, 30, 30, .3)",
@@ -17,10 +17,12 @@ Page({
   },
   onShow() {
     this.getDataList();
+    this.getDataList("CollectCount");// 获取轮播图（精选文章列表）
   },
   // 轮播图跳转详情页面
-  toDetail() {
-    app.toDetails(10)
+  toDetail(e) {
+    // console.log(e.currentTarget.dataset.id)
+    app.toDetails(e.currentTarget.dataset.id)
   },
   // 下拉刷新
   onPullDownRefresh() {
@@ -28,38 +30,39 @@ Page({
   },
   // 文章到达底部，自动加载更多
   onReachBottom() {
-    this.data.articleList.push({
-      Url: "http://pic.qiantucdn.com/58pic/19/56/46/64458PICZaU_1024.jpg",
-      Title: 222,
-      Author: '我是作者',
-      Id: 222,
-      Brief: '我的文章的简介222',
-      ReadCount: 222,
-      CollectCount: 22222,
-      CreateTime: '2018-10-20'
-    })
-    let newArticleList = this.data.articleList;
-    this.setData({
-      articleList: newArticleList
+    
+  },
+  toArticleList() {
+    wx.switchTab({
+      url: "/pages/articles/articles"
     })
   },
   //获取文章列表
-  getDataList() {
+  getDataList(order = 'CreateTime') {
     let _this = this;
-
     app.request({
       url: 'http://novenblog_api.com/arcticle/arcticleList',
       method: 'GET',
+      data: {
+        order
+      },
       success(res) {
         // console.log(res)
-        res = res.map(item => {
+        res.list = res.list.map(item => {
           item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd');
           return item;
         })
-        _this.setData({
-          articleList: res,
-          hasGotData: true
-        })
+        if (order == "CreateTime") {
+          _this.setData({
+            articleList: res.list,
+            hasGotData: true
+          })
+        }else {
+          _this.setData({
+            imgUrls: res.list.slice(0, 5),
+            hasGotData: true
+          })
+        }
       }
     })
   }

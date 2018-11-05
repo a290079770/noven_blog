@@ -55,6 +55,7 @@ App({
     //   }
     // }
 
+    // console.log(this.globalData.token)
     delete options.success;
     wx.request({
       ...options,

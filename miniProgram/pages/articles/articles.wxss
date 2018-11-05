@@ -1,8 +1,27 @@
-.article-image-wrap {
+.article-image-wrap, .orderby-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30rpx;
+}
+.orderby-wrap {
+  margin: 50rpx 0;
+  justify-content: flex-start;
+  font-size: 30rpx;
+  border-bottom: 1px solid rgb(156, 35, 35);
+}
+.orderby-item {
+  width: 140rpx;
+  height: 80rpx;
+  text-align: center;
+  letter-spacing: 5rpx;
+}
+.orderby-item:first-child {
+  margin-left: 40rpx;
+}
+.orderby-item-active {
+  font-size: 40rpx;
+  color: rgb(179, 31, 31);
+  border-bottom: 3px solid rgb(204, 122, 135);
 }
 .article-image {
   width: 392rpx;

@@ -27,10 +27,6 @@
       value="{{suggestion}}"
       bindinput="inputAction">
     </textarea>
-    <view class="text-wrap">
-      <text>您最多可以输入280个字符</text>
-      <text><text class="current-length">{{currentLength.suggestion}}</text> / 280</text>
-    </view>
   </view>
   <view wx:elif="{{type === 4}}" class="edit-info-item">
     <textarea placeholder-style="color:#bbb;font-size:28rpx;"

@@ -29,11 +29,11 @@ Page({
         // res.Content = '你好！'
         try {
           res.Content = JSON.parse(res.Content);
-          console.log(Array.isArray(res.Content))
+          // console.log(Array.isArray(res.Content))
         }catch(err) {
-          console.log(err);
+          // console.log(err);
         }
-        console.log(res)
+        // console.log(res)
         _this.setData({
           detailData: res,
           hasGotData: true,
@@ -67,5 +67,13 @@ Page({
         })
       }
     })
+  },
+  // 修改
+  editArticle() {
+    // console.log(this.data.detailData)
+    wx.setStorageSync("detailData", this.data.detailData);
+    wx.navigateTo({
+      url: '/pages/addArticle/addArticle?title=修改文章'
+    });
   }
 })

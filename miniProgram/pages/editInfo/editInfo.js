@@ -13,7 +13,6 @@ Page({
     suggestion: '',
     currentLength: {
       nickname: 4,
-      suggestion: 0,
       brief: 0
     }
   },
@@ -102,8 +101,7 @@ Page({
         break;
       case 6:
         this.setData({
-          suggestion: app.getSliceStr(e.detail.value, 280),
-          ['currentLength.suggestion']: inputLen > 280 ? 280 : inputLen
+          suggestion: e.detail.value
         })
         break;
       default:
@@ -129,10 +127,14 @@ Page({
         token: app.globalData.token
       },
       success(updateUserInfoRes) {
-        console.log(updateUserInfoRes)
+        // console.log(updateUserInfoRes)
         if (updateUserInfoRes.data.data) {
           wx.setStorageSync('userInfo', updateUserInfoRes.data.data);
           app.globalData.userInfo = updateUserInfoRes.data.data;
+        } else {
+          wx.showToast({
+            title: updateUserInfoRes.data.description,
+          })
         }
       }
     })
@@ -147,13 +149,25 @@ Page({
     } else if (this.data.type === 4) {
       this.requestUserInfo(app.globalData.userInfo.NickName, brief);
     } else if (this.data.type === 6) {
-      console.log(666666)
-      wx.showToast({
-        title: '意见提交成功！',
-        icon: 'succes',
-        duration: 1000,
-        mask: true
+      // 意见反馈接口
+      app.request({
+        url: 'http://novenblog_api.com/other/addFeedBack',
+        method: 'POST',
+        data: {
+          Text: suggestion,
+          ImgUrls: ''
+        },
+        success(res) {
+          wx.showToast({
+            title: '意见提交成功！',
+            icon: 'succes',
+            duration: 1000,
+            mask: true
+          })
+          
+        }
       })
+      
     }
     
     setTimeout(function () {

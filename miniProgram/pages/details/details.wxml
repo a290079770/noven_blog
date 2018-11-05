@@ -6,15 +6,18 @@
       <text class="author mg-letf20">@{{ detailData.Author || '暂无作者信息' }}</text>
       <text class="time mg-letf20">{{ detailData.CreateTime }}</text>
     </view>
+
     <view class="tongji-wrap">
       <view class="tongji">
         <text>收藏量：<text>{{ detailData.CollectCount || 0 }}</text></text>
         <text class="reading">阅读量：<text>{{ detailData.ReadCount || 0 }}</text></text>
       </view>
     </view>
+    
     <view class="detail-image-wrap">
       <image class="detail-image" src="{{ detailData.Url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg' }}" />
     </view>
+
     <view wx:if='{{ conIsArray }}' class='detail-paragraph-wrap'>
       <view wx:for="{{ detailData.Content }}" wx:key="id">
         <view wx:if='{{ item.type == "text" }}' class='detail-paragraph'>{{ item.value }}</view>
@@ -25,15 +28,31 @@
       </view>
     </view>
     <view wx:else class="detail-text">{{ detailData.Content }}</view>
-    <!-- 是否收藏 -->
-    <movable-area class="is-collection-wrap">
-      <movable-view
-        class="is-collection"
-        direction="all"
-        bindtap='isCollect'>
-          <image title="收藏" class="collection-img" src="{{ detailData.HasCollect ? '/images/detail/zan-full.svg' : '/images/detail/zan-kong.svg' }}"></image>
-      </movable-view>
-    </movable-area>
+    
   </view>
   <image wx:else class="detail-skeleton" src="../../images/detail/detail-skeleton.jpg"></image>
+
+  <!-- 是否收藏 -->
+  <movable-area class="is-collection-wrap">
+    <movable-view
+      class="is-collection"
+      direction="all"
+      bindtap='isCollect'>
+        <image title="收藏" class="collection-img" src="{{ detailData.HasCollect ? '/images/detail/collect-full.svg' : '/images/detail/collect-kong.svg' }}"></image>
+    </movable-view>
+  </movable-area>
+
+  <!-- 修改按钮 -->
+  <movable-area class="edit-icon-wrap">
+    <movable-view
+      class="edit-icon-circle"
+      direction="all"
+      bindtap='editArticle'>
+        <i-icon type="brush" size="28" color="rgb(204, 122, 135)" />
+    </movable-view>
+  </movable-area>
+
+  <!-- 新增文章按钮 -->
+  <add-article-btn />
+
 </view>
