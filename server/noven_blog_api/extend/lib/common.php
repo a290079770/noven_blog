@@ -55,6 +55,10 @@ class Common
         $cp = request()->get('cp') ? request()->get('cp') : 1;
         $ps = request()->get('ps') ? request()->get('ps') : 20;
         $orderCol = request()->get('order') ? request()->get('order') : 'Id';
+        if(!in_array($orderCol, ['Id','CreateTime','ReadCount','CollectCount'])) {
+          // $this->setResponse(21,'要order的有效值是CreateTime、ReadCount、CollectCount');
+          return false;
+        }
 
         //如果传入个null，就需要处理
         $timeQuery = isset($timeQuery) ? $timeQuery : array('CreateTime','>=','1970-10-1');
@@ -85,7 +89,7 @@ class Common
              ->whereTime($timeFields,$timeCondition,$timeArea)  
              ->count();        
 
-        $this->setResponse(200,'ok',$arr,$count);
+        $this->setResponse(200,'ok',['list'=> $arr , 'recordCount' => $count],$count);
 
         return true;
     }
@@ -293,7 +297,8 @@ class Common
                    ->insert([ 
                      'CollectionId' => $id,
                      'UserId' => $uid,
-                     'CollectionType' => $type
+                     'CollectionType' => $type,
+                     'CreateTime' => date('Y-m-d H:i:s',time()),
                    ]);
 
             //该资源收藏量加1
@@ -335,24 +340,46 @@ class Common
       if(!$tokenData) return false;
       $uid = $tokenData['uid'];
 
+      $cp = request()->get('cp') ? request()->get('cp') : 1;
+      $ps = request()->get('ps') ? request()->get('ps') : 20;
+
       $arr = Db::name('collections')
              ->where('userId',$uid)
              ->where('CollectionType',$type)
-             ->select();
+             ->order('CreateTime','desc')
+             ->page($cp,$ps)
+             ->select();  
+
+      $count = Db::name('collections')
+             ->where('userId',$uid)
+             ->where('CollectionType',$type)
+             ->order('CreateTime','desc')
+             ->count();      
 
 
       //注意这是获取到了所有收藏资源的id，需要收集这些id，去查询真正的资源详情
       $collectionIds = [];
       foreach ($arr as $key => $value) {
         array_push($collectionIds, $value['CollectionId']);
-      };      
+      };  
 
       //查询真正的资源集合
       $resourceList = Db::name('arcticles')
              ->where('Id','in',$collectionIds)
              ->select();
 
-      $this->setResponse(200,'ok',$resourceList,count($resourceList));       
+      //数据库对in表达式，不是按照id顺序依次返回，需要手动排序
+      $sort = [];
+      for( $i = 0 ; $i < count($collectionIds) ; $i ++) {
+         for( $j = 0 ; $j < count($resourceList) ; $j ++) {
+           if($resourceList[$j]['Id'] == $collectionIds[$i]) {
+             array_push($sort,$resourceList[$j]);
+             break;
+           }
+         }
+      }
+
+      $this->setResponse(200,'ok',['list'=>$sort, 'recordCount' => $count],$count);       
     }
 }
 

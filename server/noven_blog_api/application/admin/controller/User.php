@@ -169,8 +169,16 @@ class User extends Controller
                 //新增
                 Db::name('tokens')->insert(['uid' => $arr['Id'],'token'=> $token]);
              }else {
-                //更新
-                Db::name('tokens')->where('uid',$arr['Id'])->setField('token', $token);
+                //验证是否已经过期,如果是才更新，否则不更新
+                $tokenData = $this->jwt->decPure($searchRes['token']);
+
+                //不能解密或解密出的过期时间比当前小（已过期），就更新
+                if(!$tokenData || $tokenData['expireTime'] < time()) {
+                  Db::name('tokens')->where('uid',$arr['Id'])->setField('token', $token);
+                }else {
+                  //未过期，不更新token
+                  $token = $searchRes['token'];
+                }
              }
 
              //设置上次和本次登录的ip
