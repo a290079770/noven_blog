@@ -96,7 +96,7 @@
 	          	this.loginForm.pass = hex_sha1(this.loginForm.pass);
 	          }
 	          // console.log(this.loginForm.pass);
-	          this.$http.post('/user/login',{
+	          this.$http.post('/user/loginAdmin',{
                 Account:this.loginForm.account,
                 Password:this.loginForm.pass
               }).then((res) => {

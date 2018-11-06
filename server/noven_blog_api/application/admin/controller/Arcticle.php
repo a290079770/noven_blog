@@ -119,7 +119,20 @@ class Arcticle extends Controller
 
        //如果有传入Id,则是修改
        if(isset($arcticle['Id'])) {
-         // 启动事务
+        if($arcticle['AuthorId'] != $uid) {
+          //如果不是作者本人在进行修改操作，就需要验证权限，UserType > 2
+           //获取用户信息,主要获取角色信息
+          $userInfo = Db::name('users')
+              ->where('Id',$uid)
+              ->find();
+
+          if($userInfo['UserType'] == 1) {
+            $this->common->setResponse(21,'您无权修改该文章！');
+            return;
+          }
+        }
+
+        // 启动事务
         Db::startTrans();
         try{
             $res = Db::name('arcticles')->where('Id',$arcticle['Id'])->update($arcticle);

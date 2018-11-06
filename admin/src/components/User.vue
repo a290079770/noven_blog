@@ -75,7 +75,7 @@
                   </el-tag>
                 </template>
             </el-table-column>
-  			    <el-table-column label="操作" width="271">
+  			    <el-table-column label="操作" width="200">
 		          <template slot-scope="scope">
                 <el-button
                   plain
@@ -93,14 +93,14 @@
 		              type="warning"
 		              @click="resetPwd(scope.$index, scope.row)">重置密码
 		          	</el-button>
-                <el-button
+<!--                 <el-button
                    plain
                   style="margin-left:0"
                   icon="el-icon-delete"
                   size="mini"
                   type="danger"
                   @click="userDelete(scope.$index, scope.row)">删除
-                </el-button>
+                </el-button> -->
 		          </template>
 		        </el-table-column>
   			 </el-table>

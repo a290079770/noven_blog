@@ -8,6 +8,7 @@ use think\Validate;
 use lib\common;
 use lib\jwtTool;
 use lib\validJWT;
+use lib\authValid;
 
 class User extends Controller
 {
@@ -22,7 +23,7 @@ class User extends Controller
        $this->common = new Common();
        $this->jwt = new JwtTool();
     }
-    //用户登录
+    //用户登录 - 前台
     public function login()
     {  
        //验证是否是第三方登录，如果是，走第三方登录流程
@@ -47,53 +48,9 @@ class User extends Controller
        else if(request()->post('Password') !== $arr['Password']) {
          $this->common->setResponse(21,'账号或密码错误！');
        }else {
-       	 unset($arr['Password']);
-         //返回数据
-         
-         //生成一个token
-         $token = $this->jwt->enc(['uid' => $arr['Id']]);
+       	 $token = $this->updateToken($arr);
 
-         //写入token到数据库
-         //先查询是否有这个uid的token，如果有则更新，无则新增
-         $searchRes = Db::name('tokens')->where('uid',$arr['Id'])->find();
-
-         // 启动事务
-          Db::startTrans();
-          try{
-             if(!$searchRes) {
-                //新增
-                Db::name('tokens')->insert(['uid' => $arr['Id'],'token'=> $token]);
-             }else {
-                //验证是否已经过期,如果是才更新，否则不更新
-                $tokenData = $this->jwt->decPure($searchRes['token']);
-
-                //不能解密或解密出的过期时间比当前小（已过期），就更新
-                if(!$tokenData || $tokenData['expireTime'] < time()) {
-                  Db::name('tokens')->where('uid',$arr['Id'])->setField('token', $token);
-                }else {
-                  //未过期，不更新token
-                  $token = $searchRes['token'];
-                }
-             }
-
-             //设置上次和本次登录的ip
-             $arr['LastTime'] = $arr['ThisTime'];
-             $arr['LastIp'] = $arr['ThisIp'];
-             $arr['ThisTime'] = date('Y-m-d H:i:s',time());
-             $arr['ThisIp'] = request()->ip();
-
-             Db::name('users')
-             ->where('Id',$arr['Id'])
-             ->update($arr);
-             // 提交事务
-             Db::commit();    
-          } catch (\Exception $e) {
-              // 回滚事务
-              Db::rollback();
-              $this->common->setResponse(21,'操作数据库失败！');
-          }
-
-         $this->common->setResponse(200,'登录成功',['token'=>$token]);
+         if($token) $this->common->setResponse(200,'登录成功',['token'=>$token]);
        }
     }
 
@@ -208,6 +165,90 @@ class User extends Controller
        }
     }
 
+
+    //用户登录 - 后台
+    public function loginAdmin()
+    {  
+
+       //验证请求方式和账号密码不能为空
+       if(!$this->validateAccount()) return;
+
+       //匹配账号密码
+       $arr = Db::name('users')->where('Account',request()->post('Account'))->find();
+
+       if(!$arr) {
+         $this->common->setResponse(21,'您还未注册！');
+       }
+       else if($arr['Status'] == 2) {
+         $this->common->setResponse(21,'您的账号已被锁定，请联系管理人员！');
+       }
+       else if(request()->post('Password') !== $arr['Password']) {
+         $this->common->setResponse(21,'账号或密码错误！');
+       }
+       else if( $arr['UserType'] < 2) {
+         $this->common->setResponse(21,'您的权限不足！');
+       }else {
+         //更新token
+         $token = $this->updateToken($arr);
+
+         if($token) $this->common->setResponse(200,'登录成功',['token'=>$token]);
+       }
+    }
+
+    //登录时的token更新函数
+    //$arr 当前登录用户
+    private function updateToken($arr) {
+       unset($arr['Password']);
+       //返回数据
+       
+       //生成一个token
+       $token = $this->jwt->enc(['uid' => $arr['Id']]);
+
+       //写入token到数据库
+       //先查询是否有这个uid的token，如果有则更新，无则新增
+       $searchRes = Db::name('tokens')->where('uid',$arr['Id'])->find();
+
+       // 启动事务
+        Db::startTrans();
+        try{
+           if(!$searchRes) {
+              //新增
+              Db::name('tokens')->insert(['uid' => $arr['Id'],'token'=> $token]);
+           }else {
+              //验证是否已经过期,如果是才更新，否则不更新
+              $tokenData = $this->jwt->decPure($searchRes['token']);
+
+              //不能解密或解密出的过期时间比当前小（已过期），就更新
+              if(!$tokenData || $tokenData['expireTime'] < time()) {
+                Db::name('tokens')->where('uid',$arr['Id'])->setField('token', $token);
+              }else {
+                //未过期，不更新token
+                $token = $searchRes['token'];
+              }
+           }
+
+           //设置上次和本次登录的ip
+           $arr['LastTime'] = $arr['ThisTime'];
+           $arr['LastIp'] = $arr['ThisIp'];
+           $arr['ThisTime'] = date('Y-m-d H:i:s',time());
+           $arr['ThisIp'] = request()->ip();
+
+           Db::name('users')
+           ->where('Id',$arr['Id'])
+           ->update($arr);
+           // 提交事务
+           Db::commit();    
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $this->common->setResponse(21,'操作数据库失败！');
+            return false;
+        }
+
+        return $token;
+    }
+
+
     //用户注册
     public function reg()
     {
@@ -245,15 +286,18 @@ class User extends Controller
     //获取用户列表
     public function userList()
     {
-        //验证token
-        $tokenData = validJWT::valid();
-        if(!$tokenData) return;
+        //操作权限验证
+        $authValid = authValid::valid();
+        if(!$authValid) return;
 
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
 
+        //数组的第一项可以是布尔值，用来指定是否是剔除，true - 是
+        $field = [true,'Password'];
+
         $res = $this->common->getDataList('users',[
           'Account|NickName'  =>  ['like','%'.$keywords.'%'],
-         ]
+         ],$field
         );
 
         if(!(bool)$res) $this->common->setResponse(21,'获取列表失败，请联系管理员！');
@@ -261,12 +305,16 @@ class User extends Controller
 
     //获取今日登陆用户列表
     public function activeUserList()
-    {
+    {    
+        //操作权限验证
+        $authValid = authValid::valid();
+        if(!$authValid) return;
+
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
 
         $res = $this->common->getDataList('users',[
           'Account|NickName'  =>  ['like','%'.$keywords.'%'],
-        ],'',
+        ],[true,'Password'],
         [
           'ThisTime','today',null
         ]
@@ -460,11 +508,10 @@ class User extends Controller
     //修改密码
     public function updatePwd()
     {
-      if(!request()->isPost()) {
-        $this->common->setResponse(21,'请求方式错误！');
-        return;
-      }
-
+      //操作权限验证
+      $authValid = authValid::valid();
+      if(!$authValid) return;
+      
       //验证id
       if(!request()->post('Id')) {
         $this->common->setResponse(21,'用户编号不能为空！');
@@ -513,6 +560,10 @@ class User extends Controller
     //冻结、解锁用户
     public function lockUser()
     {
+      //操作权限验证
+      $authValid = authValid::valid();
+      if(!$authValid) return;
+
       //验证id
       if(!request()->post('Id')) {
         $this->common->setResponse(21,'用户编号不能为空！');

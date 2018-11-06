@@ -16,7 +16,8 @@ import router from './router'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-var apiUrl = 'http://120.77.180.233:8081';
+// var apiUrl = 'http://120.77.180.233:8081';
+var apiUrl = 'http://novenblog_api.com';
 
 axios.defaults.baseURL = apiUrl;
 

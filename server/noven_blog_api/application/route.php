@@ -20,6 +20,7 @@ return [
         'activeUserList'   => ['admin/user/activeUserList', ['method' => 'get']],  // 获取今日登录用户列表
         'detail' => ['admin/user/detail', ['method' => 'get']],  // 用户详情
         'login'   => ['admin/user/login', ['method' => 'post']], //登录
+        'loginAdmin'   => ['admin/user/loginAdmin', ['method' => 'post']], //后台用户登录
         'reg'   => ['admin/user/reg', ['method' => 'post']], //注册
         'createOrUpdate'   => ['admin/user/createOrUpdate', ['method' => 'post']],  //新增或修改
         'lockUser'   => ['admin/user/lockUser', ['method' => 'post']],  //锁定/解锁用户
