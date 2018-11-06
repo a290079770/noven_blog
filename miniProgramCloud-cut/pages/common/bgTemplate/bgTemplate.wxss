@@ -98,7 +98,7 @@
 }
 
 .my-nickname {
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
   text-align: center;
   height:50rpx;
   font-size: 36rpx;

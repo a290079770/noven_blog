@@ -5,7 +5,7 @@
  * 配置请求成功后res，实现诸如登录失败，登录超时，账户密码错误和请求错误等拦截器
  */
 //整个大项目的api地址
-import {defaultUrl} from '../../config.js'
+// import {defaultUrl} from '../../config.js'
 import axios from 'axios'
 import qs from 'qs'
 import { MessageBox } from 'element-ui'
@@ -16,7 +16,7 @@ import router from './router'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-var apiUrl = defaultUrl;
+var apiUrl = 'http://120.77.180.233:8081';
 
 axios.defaults.baseURL = apiUrl;
 

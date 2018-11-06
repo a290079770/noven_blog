@@ -68,8 +68,8 @@ App({
       //如果支持云
       wx.cloud.init({
         //设置环境
-        env: 'test-e35d4b',
-        // env: 'product-e35d4b',
+        // env: 'test-e35d4b',
+        env: 'product-e35d4b',
         //记录用户
         traceUser: true
       })

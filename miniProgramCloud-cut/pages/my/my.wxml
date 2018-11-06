@@ -2,10 +2,35 @@
 
 
 <view class="my header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);"  bindtap="headerClick">
-   <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl,isCover:true,isLogin,userInfo,date}}"/>
+   <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl,isCover:true,isLogin:true,userInfo,date}}"/>
 
    <view class="my-content">
-1
+     <view class="font-xs gray9 my-ming">
+     	夫志当存高远，慕先贤，绝情欲，弃疑滞，使庶几之志，揭然有所存，恻然有所感;忍屈伸，去细碎，广咨问，除嫌吝，虽有淹留，何损于美趣，何患于不济。若志不强毅，意不慷慨，徒碌碌滞于俗，默默束于情，永窜伏于平庸，不免于下流矣。——诸葛亮
+     </view>
+
+
+<!--      <view class="flex flex-align-center flex-justify-center gray9 my-about-title">
+     	关于Noven博客
+     </view> -->
+
+     <view class="font-xs gray9 my-about-text my-ming">
+     	Noven博客是个人开发的一个博客分享平台，目前已上线小程序端，即将（目前2018-11月）上线h5端版本，用户可在平台上记录并且分享自己的经验、心得、体会。
+     </view>
+     <view class="font-xs gray9 my-about-text my-ming">
+     	小程序端本意是采用最新的云开发技术，做出与h5体验一致的平台产品，但限于个人主体及微信审核严格，遂将已完成的与用户交互相关功能全部移除（占比70%），只保留最基础的阅读功能，已移除的功能会在体验版和后续上线的h5版本完善。
+     </view>
+     <view class="font-xs gray9 my-about-text my-ming">
+     	关于我自己，昵称唐青，2014年毕业于重庆某大学，从事Web前端四年有余，掌握HTML、CSS、JS、PHP、NodeJS、Vue、React、Webpack、D3...各种前端技能，十八般武艺，都耍得有模有样。
+     </view>
+     <view class="font-xs gray9 my-about-text my-ming">
+     	<view>
+     		QQ：290079770
+     	</view>
+     	<view>
+     		微信：yuzhichen832037
+     	</view>
+     </view>
 
    </view>
 

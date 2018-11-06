@@ -32,7 +32,7 @@
     }, 
     {
       "pagePath": "pages/my/my",
-      "text": "我的",
+      "text": "Noven",
       "iconPath":"images/n2.png",
       "selectedIconPath":"images/n1.png"
     }]
