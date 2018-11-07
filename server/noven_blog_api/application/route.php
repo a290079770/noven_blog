@@ -39,6 +39,7 @@ return [
         'delete'   => ['admin/arcticle/delete', ['method' => 'post']],  //删除文章
         'collect'   => ['admin/arcticle/collect', ['method' => 'post']],  //收藏文章
         'collectList'   => ['admin/arcticle/collectList', ['method' => 'get']],  //获取用户文章收藏列表
+        'upOrDownShelf'   => ['admin/arcticle/upOrDownShelf', ['method' => 'post']],  //上架或下架文章
     ],
 
     //心情相关接口

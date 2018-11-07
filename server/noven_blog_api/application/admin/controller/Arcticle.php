@@ -8,14 +8,17 @@ use think\Validate;
 use lib\common;
 use lib\jwtTool;
 use lib\validJWT;
+use lib\authValid;
 
 class Arcticle extends Controller
 {   
 
-	private $common = null;
+  private $common = null;
+	private $jwt = null;
 
 	public function __construct() {
        $this->common = new Common();
+       $this->jwt = new JwtTool();
     }
 
     /**
@@ -64,12 +67,34 @@ class Arcticle extends Controller
         //数组的第一项可以是布尔值，用来指定是否是剔除，true - 是
         $field = [true,'Content'];
 
+        //如果当前有传入token，则验证该用户是否是管理员，如果是，则返回所有文章，如果不是，则只返回上架的文章
+        $query = [
+          'Title|Author|Brief' => ['like','%'.$keywords.'%'],
+          'AuthorId' => ['like','%'.$authorId.'%'],
+        ];
+
+        $token = request()->header('token') || request()->post('token');
+        if($token) {
+          //验证token
+          $tokenData = $this->jwt->decPure($searchRes['token']);
+          if(!$tokenData || $tokenData['expireTime'] < time()) {
+            $query['IsUpShelf' => 1];
+          }else {
+            //此时去查询下这个用户的权限，如果是管理员则可以看到所有的，包括下架了的
+            $uid = $tokenData['uid'];
+            $userInfo = Db::name('users')
+            ->where('Id',$uid)
+            ->find();
+
+            if($userInfo['UserType'] < 2) $query['IsUpShelf' => 1];
+          }
+        }else {
+          $query['IsUpShelf' => 1];
+        }
+
         // 支持标题，简介，作者，时间范围
-        $res = $this->common->getDataList('arcticles',[
-            'Title|Author|Brief' => ['like','%'.$keywords.'%'],
-            'AuthorId' => ['like','%'.$authorId.'%'],
-          ],$field,$time
-        );
+        $res = $this->common->getDataList('arcticles',$query,$field,$time);
+        
 
         if(!(bool)$res) $this->common->setResponse(21,'获取列表失败，请联系管理员！');
     }
@@ -317,6 +342,53 @@ class Arcticle extends Controller
         $this->common->getCollectList(1);
     }
 
+    /**
+     * [upOrDownShelf 上下架文章]
+     * @Author   罗文
+     * @DateTime 2018-04-17
+     * @param [Number] Id [要操作的文章]
+     * @param [Number] isUpShelf [是否上下架   1 - 上架   -1 - 下架]
+     * @return   [type]     [description]
+     */
+    public function upOrDownShelf()
+    {
+      //操作权限验证
+      $authValid = authValid::valid();
+      if(!$authValid) return;
+
+      if(!request()->post('Id')) {
+         $this->common->setResponse(21,'要操作的文章Id为空！');
+         return;
+      }
+
+      $isUpShelf = request()->post('isUpShelf');
+      if( !$isUpShelf || !in_array($isUpShelf,[-1,1]) ) {
+         $this->common->setResponse(21,'操作不合法，只能上架或者下架！');
+         return;
+      }
+
+      Db::startTrans();
+      try{
+          $res = Db::name('arcticles')
+          ->where('Id',request()->post('Id'))
+          ->setField('IsUpShelf',$isUpShelf);
+
+          //如果是下架文章，则需要删除对应的所有收藏
+          if($isUpShelf == -1) {
+            $res = Db::name('collections')
+            ->where('CollectionId',request()->post('Id'))
+            ->delete();
+          }
+
+          $this->common->setResponse(200,'操作成功！');
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          $this->common->setResponse(21,'操作失败！');
+          // 回滚事务
+          Db::rollback();
+      } 
+    }
 
 
     //验证必须的数据是否传入
