@@ -100,17 +100,18 @@
                 Account:this.loginForm.account,
                 Password:this.loginForm.pass
               }).then((res) => {
+              	console.log(res.data);
                 if(res.data.code === 200) {
-                  this.$message({
-                    message: res.data.description,
-                    type: 'success',
-                    center: true
-                  });
+                  // this.$message({
+                  //   message: res.data.description,
+                  //   type: 'success',
+                  //   center: true
+                  // });
                   //存储token
                   localStorage.setItem('token',res.data.data.token);
                   //存储当前登录用户id
-                  sessionStorage.setItem('userId',res.data.data.Id);
-                  sessionStorage.setItem('account',res.data.data.Account);
+                  // sessionStorage.setItem('userId',res.data.data.Id);
+                  // sessionStorage.setItem('account',res.data.data.Account);
 
                   if(this.checked) {
                   	//记住帐号和密码

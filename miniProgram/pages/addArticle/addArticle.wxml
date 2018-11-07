@@ -39,7 +39,7 @@
   <!-- 修改文章 内容回显 -->
   <view class='add-article-con-wrap' wx:if="{{ hasStorageDetailData }}">
     <view wx:if="{{ conIsArray }}">
-      <view wx:for="{{ addArticle.Content }}" wx:key="id">
+      <view wx:for="{{ editPara }}" wx:key="id">
         <view class='flex' wx:if='{{ item.type == "text" }}'>
           <textarea placeholder-style="color:#bbb;font-size:28rpx;"
             class="add-article-brief-input"

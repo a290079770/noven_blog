@@ -63,7 +63,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     res => {
       // res.data.Code =34;
-     if (res.data.code == 201) { //连接超时
+       if (res.data.code == 21 && res.data.description.indexOf("token") !== -1) { //连接超时
           MessageBox.alert(res.data.description, '提示', {
             confirmButtonText: '确定',
             type: 'warning',

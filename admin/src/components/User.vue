@@ -12,7 +12,7 @@
   			<el-col :span="12">
   				<el-input
             size="small"
-			    	placeholder="请输入用户编号、手机号、昵称进行搜索..."
+			    	placeholder="请输入手机号、昵称关键字进行搜索..."
 			    	suffix-icon="el-icon-search"
 			    	v-model="keyword"
             @keyup.enter.native="search">
@@ -75,32 +75,32 @@
                   </el-tag>
                 </template>
             </el-table-column>
-  			    <el-table-column label="操作" width="200">
-		          <template slot-scope="scope">
+  			    <el-table-column label="操作" width="300">
+		          <template slot-scope="scope" v-if="scope.row.UserType <= activeUserType">
                 <el-button
                   plain
-                  :icon=" scope.row.Status == 1 ? 'el-icon-goods' : 'el-icon-remove'"
+                  icon="el-icon-view"
                   size="mini"
                   type="success"
+                  @click="seeDetail(scope.$index, scope.row)">查看详情
+                </el-button>
+                <el-button
+                  plain
+                  style="margin-left:0"
+                  :icon=" scope.row.Status == 1 ? 'el-icon-goods' : 'el-icon-remove'"
+                  size="mini"
+                  type="info"
                   @click="lockOrOpen(scope.$index, scope.row)"
                   >{{ scope.row.Status == 1 ? '锁定' : '解锁' }}
                 </el-button>
 		            <el-button
-                   plain
+                  plain
 		              style="margin-left:0"
 		              icon="el-icon-edit"
 		              size="mini"
 		              type="warning"
 		              @click="resetPwd(scope.$index, scope.row)">重置密码
 		          	</el-button>
-<!--                 <el-button
-                   plain
-                  style="margin-left:0"
-                  icon="el-icon-delete"
-                  size="mini"
-                  type="danger"
-                  @click="userDelete(scope.$index, scope.row)">删除
-                </el-button> -->
 		          </template>
 		        </el-table-column>
   			 </el-table>
@@ -122,6 +122,47 @@
 	        </el-pagination>
 	      </el-col>
 	    </el-row>
+
+      <!-- 用户详情弹框 -->
+      <el-dialog
+        top="10vh"
+        title="用户详情"
+        :visible.sync="userDetailDialog"
+        width="80%"
+        >
+        <div class="userDetail">
+          <div class="touxiang" :style="{'background': 'url(' + userDetailInfo.CoverUrl  + ') center center / cover no-repeat', 'width': '150px', 'height': '150px', 'border-radius': '50%', 'margin': '0 auto', 'margin-bottom': '20px'}">
+          </div>
+          <el-form label-position="right" label-width="100px" :model="userDetailInfo">
+            <el-form-item label="帐号">
+              <el-input v-model="userDetailInfo.Account" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="昵称">
+              <el-input v-model="userDetailInfo.NickName" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="用户类型">
+              <el-input v-model="userDetailInfo.UserType" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="简介">
+              <el-input v-model="userDetailInfo.Introduction" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="年龄">
+              <el-input v-model="userDetailInfo.Age" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="性别">
+              <el-input v-model="userDetailInfo.Sex" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="城市">
+              <el-input v-model="userDetailInfo.City" readonly></el-input>
+            </el-form-item>
+          </el-form>
+          
+          <span slot="footer" class="dialog-footer" style="display: flex; justify-content: flex-end">
+            <!-- <el-button @click="userDetailDialog = false">取 消</el-button> -->
+            <el-button type="primary" @click="userDetailDialog = false">确 定</el-button>
+          </span>
+        </div>
+      </el-dialog>
 	</div>
 </template>
 
@@ -134,6 +175,9 @@ export default {
 		        currentPage:1,
             ps:10,
             totality: 1,
+            activeUserType: 1,
+            userDetailInfo: {},
+            userDetailDialog: false
 	      }
 	    },
 	    methods: {
@@ -150,21 +194,29 @@ export default {
             }
           }).then((res) => {
             console.log(res.data);
-            this.tableData3 = [];
-            // res.data.data.forEach((item,index) => {
-            //   if(item.UserType === 1) {
-            //     item.UserType = '普通用户';
-            //   } else if (item.UserType === 2) {
-            //     item.UserType = '管理员';
-            //   } else if (item.UserType === 3) {
-            //     item.UserType = '超级管理员';
-            //   }
-            // });
-            this.tableData3 = res.data.data;
+            if(res.data.code === 200) {
+              this.tableData3 = [];
+              // res.data.data.forEach((item,index) => {
+              //   if(item.UserType === 1) {
+              //     item.UserType = '普通用户';
+              //   } else if (item.UserType === 2) {
+              //     item.UserType = '管理员';
+              //   } else if (item.UserType === 3) {
+              //     item.UserType = '超级管理员';
+              //   }
+              // });
+              this.tableData3 = res.data.data.list;
 
-            this.totality = res.data.recordCount;
-            this.currentPage = cp || this.currentPage;
-            this.ps = ps || this.ps;
+              this.totality = res.data.recordCount;
+              this.currentPage = cp || this.currentPage;
+              this.ps = ps || this.ps;
+            } else {
+              this.$message({
+                message: res.data.description,
+                type: 'error',
+                center: true
+              });
+            }
           })
         },
 
@@ -200,7 +252,7 @@ export default {
               console.log(res.data);
               if(res.data.code === 200) {
                 this.$message({
-                  message: res.data.description,
+                  message: userStatus + "成功！",
                   type: 'success',
                   center: true
                 });
@@ -241,7 +293,7 @@ export default {
                   type: 'success',
                   center: true
                 });
-                this.getUserList();
+                // this.getUserList();
               } else {
                 this.$message({
                   message: res.data.description,
@@ -254,12 +306,33 @@ export default {
           }).catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消重置密码！'
+              message: '已取消重置密码！',
+              center: true
             });
           });
   			},
-        userDelete(index, row) {
+        seeDetail(index, row) {
           console.log(index, row);
+          this.userDetailDialog = true;
+          this.$http.get('/user/detail', {
+            params: {
+              Id: row.Id
+            }
+          }).then((res) => {
+            console.log(res.data);
+            if(res.data.code === 200) {
+              this.userDetailInfo = res.data.data;
+              this.userDetailInfo.CoverUrl = this.userDetailInfo.CoverUrl || 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541610478229&di=46134ec1a7b7c9a8823de9d8ad15629d&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0152b457d1129b0000012e7e2d081f.jpg%401280w_1l_2o_100sh.jpg';
+              this.userDetailInfo.UserType = this.userDetailInfo.UserType == 3 ? '超级管理员' : (this.userDetailInfo.UserType == 2 ? '管理员' : '普通用户')
+            } else {
+              this.$message({
+                message: res.data.description,
+                type: 'error',
+                center: true
+              });
+            }
+
+          })
         },
 
       	//分页
@@ -278,9 +351,12 @@ export default {
           // this.keyword = '';
         },
 	    },
-
-      mounted() {
+      created() {
         this.getUserList();
+        this.activeUserType = JSON.parse(sessionStorage.getItem('userDetail')).UserType;
+      },
+      mounted() {
+        
       }
   	}
 </script>
@@ -290,5 +366,8 @@ export default {
 	.cell {
     font-size: 12px;
     padding: 0 5px;
+  }
+  .userDetail {
+
   }
 </style>

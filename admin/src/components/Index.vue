@@ -18,7 +18,7 @@
 	        </div>
 			<div class="index-total-resource-right">
 	        	<div class="right-statistics">
-	        		<p class="statistics-info">199</p>
+	        		<p class="statistics-info">{{ statistics.articles }}</p>
 	        		<p class="statistics-description">Articles</p>
 	        	</div>
 	        </div>
@@ -32,7 +32,7 @@
 	        </div>
 			<div class="index-total-resource-right">
 	        	<div class="right-statistics">
-	        		<p class="statistics-info">199</p>
+	        		<p class="statistics-info">{{ statistics.moods }}</p>
 	        		<p class="statistics-description">Moods</p>
 	        	</div>
 	        </div>
@@ -47,7 +47,7 @@
 	        </div>
 	        <div class="index-total-resource-right">
 	        	<div class="right-statistics">
-	        		<p class="statistics-info">199</p>
+	        		<p class="statistics-info">{{ statistics.banners }}</p>
 	        		<p class="statistics-description">Banners</p>
 	        	</div>
 	        </div>
@@ -192,14 +192,53 @@ export default {
           ]
         },
         statisticsTimeRange: '',
-        dataList: []
+        dataList: [],
+        statistics: {
+        	articles: 0,
+        	moods: 0,
+        	banners: 0
+        }
     }
   },
   mounted(){
-
+  	this.getActiveUser();
+  	this.getArcticleList();
   },
   methods: {
-
+    // 当前活跃用户详情
+    getActiveUser() {
+      this.$http.get('/user/activeUserList').then((res) => {
+          console.log(res.data);
+          if(res.data.code === 200) {
+            // this.NickName = res.data.Data.NickName;
+            this.dataList = res.data.data.list
+          }
+      })
+    },
+    //获取 文章 列表
+	getArcticleList(keyword,cp,ps) {
+		// keywords,cp,ps
+		cp = cp || 1;
+		ps = ps || 10;
+		this.$http.get('/arcticle/arcticleList',{
+		  params:{
+		     keywords:keyword,
+		     cp:cp,
+		     ps:ps
+		  }
+		}).then((res) => {
+			console.log(res.data);
+			if(res.data.code === 200) {
+			  this.statistics.articles = res.data.recordCount;
+            } else {
+              this.$message({
+                message: res.data.description,
+                type: 'error',
+                center: true
+              });
+            }
+		})
+	},
   }
 }
 </script>

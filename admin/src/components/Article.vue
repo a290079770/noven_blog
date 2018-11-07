@@ -12,7 +12,7 @@
 		<el-col :span="12">
 			<el-input
       		 	size="small"
-		    	placeholder="请输入关键字进行搜索..."
+		    	placeholder="请输入标题、作者、简介关键字进行搜索..."
 		    	suffix-icon="el-icon-search"
 		    	v-model="keyword"
             	@keyup.enter.native="search">
@@ -47,8 +47,7 @@
 		    </el-table-column>
 		    <el-table-column
 		      prop="Brief"
-		      label="简介"
-		      width="108">
+		      label="简介">
 		      <!-- <template slot-scope="scope">{{ scope.row.Brief }}</template> -->
 		    </el-table-column>
 		    <el-table-column
@@ -76,10 +75,10 @@
 	          	<el-button
 	           	  plain
 	              style="margin-left:0"
-	              icon="el-icon-edit"
+	              :icon=" scope.row.IsUpShelf == 1 ? 'el-icon-download' : 'el-icon-upload2'"
 	              size="mini"
-	              type="warning"
-	              @click="articleEdit(scope.$index, scope.row)">修改
+	              :type="scope.row.IsUpShelf == 1 ? 'warning' : 'primary'"
+	              @click="upOrDownShelf(scope.$index, scope.row)">{{ scope.row.IsUpShelf == 1 ? "下架" : "上架" }}
 	          	</el-button>
 	            <el-button
 	           	  plain
@@ -124,40 +123,47 @@
 		    <el-input v-model="articleDetailInfo.Id"></el-input>
 		  </el-form-item> -->
 		  <el-form-item label="标题">
-		    <el-input v-model="articleDetailInfo.Title"></el-input>
+		    <el-input v-model="articleDetailInfo.Title" readonly></el-input>
 		  </el-form-item>
 		  <el-form-item label="作者">
-		    <el-input v-model="articleDetailInfo.Author"></el-input>
+		    <el-input v-model="articleDetailInfo.Author" readonly></el-input>
 		  </el-form-item>
 		  <el-form-item label="简介">
-		    <textarea v-model="articleDetailInfo.Brief"></textarea>
+		    <el-input type="textarea " v-model="articleDetailInfo.Brief" readonly></el-input>
 		  </el-form-item>
 		  <el-form-item label="内容">
-		    <textarea v-model="articleDetailInfo.Content"></textarea>
+		    <el-input type="textarea " v-model="articleDetailInfo.Content" readonly></el-input>
 		  </el-form-item>
 		  <!-- <el-form-item label="所属用户ID">
 		    <el-input v-model="articleDetailInfo.AuthorId"></el-input>
 		  </el-form-item> -->
 		  <el-form-item label="创建时间">
-		    <el-input v-model="articleDetailInfo.CreateTime"></el-input>
+		    <el-input v-model="articleDetailInfo.CreateTime" readonly></el-input>
 		  </el-form-item>
 		  <el-form-item label="点击率">
-		    <el-input v-model="articleDetailInfo.ReadCount"></el-input>
+		    <el-input v-model="articleDetailInfo.ReadCount" readonly></el-input>
 		  </el-form-item>
 		  <el-form-item label="文章缩略图">
 		    <a :href="articleDetailInfo.Url" target="_blank">
-		    	<img :src="articleDetailInfo.ThumbUrl">
+		    	<!-- <img :src="articleDetailInfo.Url || 'http://temp.im/100x100'"> -->
+		    	<div class="suoluetu" :style="{'background': 'url(' + articleDetailInfo.Url  + ') center center / cover no-repeat'}">
+        		</div>
 		    	<span>点击打开新页面查看原图</span>
 		    </a>
 		  </el-form-item>
-		  <el-form-item label="文章标签列表">
+		  <!-- <el-form-item label="文章标签列表">
 		    <ul>
 		    	<li v-for="(item,index) in articleDetailInfo.TagList">
 		    		<el-tag size="mini">{{item.Title}}</el-tag>
 		    	</li>
 		    </ul>
-		  </el-form-item>
+		  </el-form-item> -->
 		</el-form>
+
+		<span slot="footer" class="dialog-footer" style="display: flex; justify-content: flex-end">
+		  <!-- <el-button @click="articleDetailDialog = false">取 消</el-button> -->
+		  <el-button type="primary" @click="articleDetailDialog = false">确 定</el-button>
+		</span>
 	  </div>
 	</el-dialog>
   </div>
@@ -174,11 +180,11 @@ export default {
 				totality: 1,
 				labelPosition: 'right',
 				articleDetailDialog: false,
-				articleDetailInfo: {}
+				articleDetailInfo: {},
 	      }
 	    },
 	    methods: {
-		//获取 用户 列表
+		//获取 文章 列表
 		getArcticleList(keyword,cp,ps) {
 			// keywords,cp,ps
 			cp = cp || 1;
@@ -192,7 +198,7 @@ export default {
 			}).then((res) => {
 				console.log(res.data);
 				this.tableData3 = [];
-				this.tableData3 = res.data.data;
+				this.tableData3 = res.data.data.list;
 
 				this.totality = res.data.recordCount;
 				this.currentPage = cp || this.currentPage;
@@ -202,37 +208,50 @@ export default {
 		// 获取文章详情
 		articleDetail(index, row) {
 			this.articleDetailDialog = true;
+			this.isShowSureBtn = false;
 			console.log(index, row);
 			this.$http.get('/arcticle/detail',{
 			  params:{
-			     Id: row.Id
+			    Id: row.Id
 			  }
 			}).then((res) => {
 				console.log(res.data);
-				this.articleDetailInfo = {};
-				this.articleDetailInfo = res.data.data;
+				if(res.data.code === 200) {
+					this.articleDetailInfo = {};
+					this.articleDetailInfo = res.data.data;
+				}else {
+					this.$message({
+	                  message: res.data.description,
+	                  type: 'error',
+	                  center: true
+	                });
+				}
 			})
 		},
 
-		articleEdit(index, row) {
-		  this.$http.post('/arcticle/createOrUpdate',row).then((res) => {
-          console.log(res.data);
-          if(res.data.code === 200) {
-            this.$message({
-              message: res.data.description,
-              type: 'success',
-              center: true
-            });
-            this.getArcticleList();
-          } else {
-            this.$message({
-              message: res.data.description,
-              type: 'error',
-              center: true
-            });
-          }
-
-         })
+		upOrDownShelf(index, row) {
+		  console.log(index, row);
+		  let isUpShelf = row.IsUpShelf == 1 ? -1 : 1;
+		  this.$http.post('/arcticle/upOrDownShelf',{
+			Id: row.Id,
+			IsUpShelf: isUpShelf
+		  }).then((res) => {
+			console.log(res.data);
+			if(res.data.code === 200) {
+				this.$message({
+	              message: res.data.description,
+	              type: 'success',
+	              center: true
+	            })
+				this.getArcticleList();
+			}else {
+				this.$message({
+	              message: res.data.description,
+	              type: 'error',
+	              center: true
+	            });
+			}
+		  })
 		},
 
 		// 删除文章
@@ -313,9 +332,11 @@ export default {
   		}
   	}
   	a {
+  		display: block;
   		color: blue;
-  		img {
-	  		width: 60px;
+  		.suoluetu {
+	  		width: 100px;
+	  		height: 100px;
 	  		cursor: pointer;
 	  	}
   	}

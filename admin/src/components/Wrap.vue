@@ -10,7 +10,7 @@
       </el-col>
       <el-col :span="10">
         <p class="header-right">
-          <span class="welcome">欢迎您：<span>{{username}}</span></span>
+          <span class="welcome">欢迎您：<span>{{ username }}</span></span>
           <span class="exit" @click="exit"><i class="iconfont icon-tuichu1"></i>退出</span>
         </p>
       </el-col>
@@ -19,10 +19,10 @@
     <el-row class="content">
       <!-- 左侧导航栏开始 -->
       <div class="left-aside">
-       <div class="touxiang">
+        <div class="touxiang" :style="{'background': 'url(' + touxiang  + ') center center / cover no-repeat'}">
         </div>
 
-        <p class="admin-name">{{username}}</p>
+        <p class="admin-name">{{ username }}</p>
 
         <el-menu
           router
@@ -32,7 +32,7 @@
           @close="handleClose"
           background-color="#2b333e"
           text-color="#999"
-          active-text-color="#fff"
+          active-text-color="#ff5d6a"
           >
 
           <el-menu-item index="/wrap/index" >
@@ -51,11 +51,11 @@
             <i class="iconfont icon-article mr8"></i>
             <span slot="title">文章管理</span>
           </el-menu-item>
-          <el-menu-item index="/wrap/mood">
+          <el-menu-item index="/wrap/mood" disabled>
             <i class="iconfont icon-xinqing mr8"></i>
             <span slot="title">心情管理</span>
           </el-menu-item>
-          <el-menu-item index="/wrap/banner">
+          <el-menu-item index="/wrap/banner" disabled>
             <i class="iconfont icon-banner mr8"></i>
             <span slot="title">banner管理</span>
           </el-menu-item>
@@ -81,24 +81,29 @@
 export default {
   data() {
     return {
+      touxiang: '',
       username: ''
     }
   },
   methods: {
-    // 用户详情
-    getuserdetail() {
-      // this.$http.get('/user/detail',{
-      //   params: {
-      //     id:sessionStorage.getItem('userId'),
-      //   }
-      // }).then((res) => {
-      //     // console.log(res.data);
-      //     if(res.data.Code === 200) {
-      //       this.NickName = res.data.Data.NickName;
-      //           }
-      //           // console.log(this.NickName);
-      //           if(!this.NickName) this.$router.push('/login');
-      // })
+    // 获取用户详情
+    getUserDetail() {
+      this.$http.get('/user/detail').then((res) => {
+        console.log(res.data);
+        if(res.data.code === 200) {
+          sessionStorage.setItem('userDetail', JSON.stringify(res.data.data));
+
+          this.username = res.data.data.NickName;
+          this.touxiang = res.data.data.CoverUrl || 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541610478229&di=46134ec1a7b7c9a8823de9d8ad15629d&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0152b457d1129b0000012e7e2d081f.jpg%401280w_1l_2o_100sh.jpg';
+        } else {
+          this.$message({
+            message: res.data.description,
+            type: 'error',
+            center: true
+          });
+        }
+
+      })
     },
     exit() {
       this.$confirm('是否退出?', '提示', {
@@ -107,14 +112,15 @@ export default {
             type: 'warning'
         }).then(() => {
           this.$router.push('/login');
-            this.$message({
-              type: 'success',
-              message: '退出到登录页面!'
-            });
+            // this.$message({
+            //   type: 'success',
+            //   message: '退出到登录页面!'
+            // });
         }).catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消退出！'
+              message: '已取消退出！',
+              center: true
             });
         });
     },
@@ -125,8 +131,11 @@ export default {
       console.log(key, keyPath);
     }
   },
+  created() {
+    this.getUserDetail();
+  },
   mounted() {
-    this.username = localStorage.getItem('account');
+    // this.username = localStorage.getItem('account');
   }
 }
 </script>
@@ -192,7 +201,6 @@ export default {
         background: url(../assets/images/26.jpg);
         background-size: cover;
         background-position: center;
-        cursor:pointer;
 
         span {
           display: block;
@@ -209,6 +217,10 @@ export default {
         line-height: 30px;
         text-align: center;
         color:#eee;
+      }
+
+      .el-menu-item:hover {
+        color: @bgcolor !important;
       }
     }
     .right-aside {

@@ -8,7 +8,8 @@ Page({
     publishList: [],
     cp: 1,
     ps: 4,
-    recordCount: 0
+    recordCount: 0,
+    hasGotData: false,
   },
   onLoad: function (option) {
     // console.log(option.type)
@@ -52,7 +53,8 @@ Page({
         // console.log(res)
         _this.setData({
           publishList: isLoadmore ? _this.data.publishList.concat(res.list) : res.list,
-          recordCount: res.recordCount
+          recordCount: res.recordCount,
+          hasGotData: true
         })
       }
     })
@@ -75,7 +77,8 @@ Page({
         // console.log(res)
         _this.setData({
           collectList: isLoadmore ? _this.data.collectList.concat(res.list) : res.list,
-          recordCount: res.recordCount
+          recordCount: res.recordCount,
+          hasGotData: true
         })
       }
     })

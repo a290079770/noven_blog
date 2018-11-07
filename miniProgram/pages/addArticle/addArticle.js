@@ -16,7 +16,8 @@ Page({
     hasStorageDetailData: false,
     paragraph: '',
     imgDes: '',
-    img: ''
+    img: '',
+    editPara: []
   },
 
   /**
@@ -43,7 +44,11 @@ Page({
         ['currentLength.Brief']: app.getCurrentLength(storageDetailData.Brief),
         hasStorageDetailData: true,
       })
-
+      if (this.data.conIsArray) {
+        this.setData({
+          editPara: storageDetailData.Content
+        })
+      }
       wx.removeStorageSync("detailData");
     }
     
@@ -114,9 +119,18 @@ Page({
     })
   },
   inputParaAction(e) {
-    this.setData({
-      paragraph: e.detail.value,
-    })
+    console.log(e.detail.value)
+    if (this.data.conIsArray) {
+      // 修改文本段落
+      this.setData({
+        paragraph: e.detail.value,
+      })
+    }else {
+      // 新增文本段落
+      this.setData({
+        paragraph: e.detail.value,
+      })
+    }
   },
   inputImgDescAction(e) {
     let inputLen = app.getCurrentLength(e.detail.value);
@@ -162,7 +176,7 @@ Page({
     })
   },
   addArticleImg() {
-    console.log(111111111)
+    console.log('新增或修改文章图片')
     let _this = this;
     wx.chooseImage({
       count: 1,
