@@ -32,7 +32,6 @@ class User extends Controller
          return;
        }
 
-
        //验证请求方式和账号密码不能为空
        if(!$this->validateAccount()) return;
 
@@ -87,7 +86,8 @@ class User extends Controller
              'LastTime' => '',
              'LastIp' => '',
              'ThisTime' => date('Y-m-d H:i:s',time()),
-             'ThisIp' => request()->ip()
+             'ThisIp' => request()->ip(),
+             'CreateTime' => date('Y-m-d H:i:s',time())
            ]);
 
            $userId = Db::name('users')->getLastInsID();
@@ -286,43 +286,38 @@ class User extends Controller
     //获取用户列表
     public function userList()
     {
-        //操作权限验证
-        $authValid = authValid::valid();
-        if(!$authValid) return;
-
-        $keywords = request()->get('keywords') ? request()->get('keywords') : '';
-
-        //数组的第一项可以是布尔值，用来指定是否是剔除，true - 是
-        $field = [true,'Password'];
-
-        $res = $this->common->getDataList('users',[
-          'Account|NickName'  =>  ['like','%'.$keywords.'%'],
-         ],$field
-        );
-
-        if(!(bool)$res) $this->common->setResponse(21,'获取列表失败，请联系管理员！');
+        $this->getUserList();
     }
 
     //获取今日登陆用户列表
     public function activeUserList()
     {    
-        //操作权限验证
-        $authValid = authValid::valid();
+        $this->getUserList(true);
+    }
+
+    /**
+     * [detail 获取用户列表]
+     * @Author   罗文
+     * @DateTime 2018-04-17
+     * @param [Boolean] isGetActive 是否是获取活跃用户
+     * @return   [type]     [description]
+     */
+    private function getUserList($isGetActive = false) {
+       //操作权限验证
+       $authValid = authValid::valid();
         if(!$authValid) return;
 
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
+        $timeQuery = $isGetActive ? [
+          'ThisTime','today',null
+        ]:null;
 
         $res = $this->common->getDataList('users',[
           'Account|NickName'  =>  ['like','%'.$keywords.'%'],
-        ],[true,'Password'],
-        [
-          'ThisTime','today',null
-        ]
-        );
+        ],[true,'Password'],$timeQuery);
 
         if(!(bool)$res) $this->common->setResponse(21,'获取列表失败，请联系管理员！');
-    }
-
+    }  
 
     /**
      * [detail 获取用户详情]
@@ -332,13 +327,23 @@ class User extends Controller
      */
     public function detail()
     {
-      if(!request()->get('Id')) {
-        $this->common->setResponse(21,'缺少用户Id');
-        return false;
+      $tokenData = validJWT::valid();
+      if(!$tokenData) return;
+      $uid = $tokenData['uid'];
+      $findId = $uid;
+      //如果有Id,则需要验证权限，如果没有，则取token里的id
+      $searchId = request()->get('Id');
+
+      if($searchId && $searchId != $uid ) {
+         //此时是去查询别人的详情，需要验证权限
+         $authValid = authValid::valid();
+         if(!$authValid) return;
+
+         $findId = $searchId;
       }
 
       $res = Db::name('users')
-          ->where('Id',request()->get('Id'))
+          ->where('Id',$findId)
           ->select();
 
       if(count($res) === 0) {
@@ -347,11 +352,11 @@ class User extends Controller
          //获取到了用户的基本信息，还需要获取用户标签信息
          $userInfo = $res[0];
 
-         $tagList = Db::name('tags')
-          ->where('UserId',request()->get('Id'))
-          ->select();
+         // $tagList = Db::name('tags')
+         //  ->where('UserId',request()->get('Id'))
+         //  ->select();
 
-         $userInfo['TagList'] = $tagList;
+         // $userInfo['TagList'] = $tagList;
          $this->common->setResponse(200,'ok',$userInfo);
       }    
     }

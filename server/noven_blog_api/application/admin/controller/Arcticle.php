@@ -73,12 +73,12 @@ class Arcticle extends Controller
           'AuthorId' => ['like','%'.$authorId.'%'],
         ];
 
-        $token = request()->header('token') || request()->post('token');
+        $token = request()->header('token') ? request()->header('token') : request()->post('token');
         if($token) {
           //验证token
-          $tokenData = $this->jwt->decPure($searchRes['token']);
+          $tokenData = $this->jwt->decPure($token);
           if(!$tokenData || $tokenData['expireTime'] < time()) {
-            $query['IsUpShelf' => 1];
+            $query['IsUpShelf'] = 1;
           }else {
             //此时去查询下这个用户的权限，如果是管理员则可以看到所有的，包括下架了的
             $uid = $tokenData['uid'];
@@ -86,10 +86,10 @@ class Arcticle extends Controller
             ->where('Id',$uid)
             ->find();
 
-            if($userInfo['UserType'] < 2) $query['IsUpShelf' => 1];
+            if($userInfo['UserType'] < 2) $query['IsUpShelf'] = 1;
           }
         }else {
-          $query['IsUpShelf' => 1];
+          $query['IsUpShelf'] = 1;
         }
 
         // 支持标题，简介，作者，时间范围
@@ -366,6 +366,15 @@ class Arcticle extends Controller
          $this->common->setResponse(21,'操作不合法，只能上架或者下架！');
          return;
       }
+
+      //查一下有没有这个文章
+      $find = Db::name('arcticles')
+          ->where('Id',request()->post('Id'))
+          ->select();
+      if( count($find) < 1 ) {
+         $this->common->setResponse(21,'没有这个Id对应的资源！');
+         return;
+      }   
 
       Db::startTrans();
       try{
