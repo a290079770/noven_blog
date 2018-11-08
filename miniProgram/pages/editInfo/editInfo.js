@@ -112,7 +112,7 @@ Page({
   // 封装 修改个人信息：修改昵称、修改简介 的接口
   requestUserInfo(updateNickname, updateBrief) {
     wx.request({
-      url: 'http://novenblog_api.com/user/updateUserInfo',
+      url:  app.globalData.baseUrl + '/user/updateUserInfo',
       method: 'POST',
       data: {
         userInfo: {
@@ -151,7 +151,7 @@ Page({
     } else if (this.data.type === 6) {
       // 意见反馈接口
       app.request({
-        url: 'http://novenblog_api.com/other/addFeedBack',
+        url:  app.globalData.baseUrl + '/other/addFeedBack',
         method: 'POST',
         data: {
           Text: suggestion,

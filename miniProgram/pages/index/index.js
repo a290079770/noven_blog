@@ -41,7 +41,7 @@ Page({
   getDataList(order = 'CreateTime') {
     let _this = this;
     app.request({
-      url: 'http://novenblog_api.com/arcticle/arcticleList',
+      url: app.globalData.baseUrl + '/arcticle/arcticleList',
       method: 'GET',
       data: {
         order

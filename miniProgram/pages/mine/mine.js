@@ -77,7 +77,7 @@ Page({
         // console.log(tempFilePaths)
         
         wx.uploadFile({
-          url: 'http://novenblog_api.com/images/uploadFile',
+          url:  app.globalData.baseUrl + '/images/uploadFile',
           filePath: tempFilePaths[0],
           name: 'file',
           formData: {
@@ -95,7 +95,7 @@ Page({
               
               // 头像上传成功后调用更新用户信息接口
               wx.request({
-                url: 'http://novenblog_api.com/user/updateUserInfo',
+                url:  app.globalData.baseUrl + '/user/updateUserInfo',
                 method: 'POST',
                 data: {
                   userInfo: {
@@ -137,7 +137,7 @@ Page({
   getPublishData() {
     let _this = this;
     app.request({
-      url: 'http://novenblog_api.com/arcticle/arcticleList',
+      url:  app.globalData.baseUrl + '/arcticle/arcticleList',
       method: 'GET',
       data: {
         isMy: true,
@@ -156,7 +156,7 @@ Page({
   getCollectData() {
     let _this = this;
     app.request({
-      url: 'http://novenblog_api.com/arcticle/collectList',
+      url:  app.globalData.baseUrl + '/arcticle/collectList',
       method: 'GET',
       success(res) {
         // console.log(res)

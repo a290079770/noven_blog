@@ -19,7 +19,7 @@ Component({
       app.toDetails(this.properties.data.Id);
       
       // wx.navigateTo({
-      //   url: "/pages/details/details?id=" + this.properties.data.id
+      //   url:  app.globalData.baseUrl + "d=" + this.properties.data.id
       // })
     },
     // 删除
@@ -45,7 +45,7 @@ Component({
       console.log('删除我的发布')
       let _this = this;
       app.request({
-        url: 'http://novenblog_api.com/arcticle/delete',
+        url:  app.globalData.baseUrl + '/arcticle/delete',
         method: 'POST',
         data: {
           Id: articleId,
@@ -67,7 +67,7 @@ Component({
       console.log('删除我的收藏')
       let _this = this;
       app.request({
-        url: 'http://novenblog_api.com/arcticle/collect',
+        url:  app.globalData.baseUrl + '/arcticle/collect',
         method: 'POST',
         data: {
           id: articleId,

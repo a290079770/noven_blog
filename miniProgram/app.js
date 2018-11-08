@@ -1,6 +1,8 @@
 //app.js
 App({
   globalData: {
+    // baseUrl: 'http://novenblog_api.com',
+    baseUrl: 'http://120.77.180.233:8081',
     userInfo: null,
     isLogin: false,
     code: '',
@@ -95,7 +97,7 @@ App({
         // console.log(wxRes.code)
         // 登录博客管理系统
         wx.request({
-          url: 'http://novenblog_api.com/user/login',
+          url:  _this.globalData.baseUrl + '/user/login',
           method: 'POST',
           data: {
             Code: wxRes.code
@@ -107,7 +109,7 @@ App({
             // 如果用户不存在系统中，调用更新用户信息接口，将微信信息存入系统
             if (!data.isExist) {
               wx.request({
-                url: 'http://novenblog_api.com/user/updateUserInfo',
+                url:  _this.globalData.baseUrl + '/user/updateUserInfo',
                 method: 'POST',
                 data: {
                   token: data.token,

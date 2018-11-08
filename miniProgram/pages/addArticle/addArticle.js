@@ -151,7 +151,7 @@ Page({
         const tempFilePaths = res.tempFilePaths;
         console.log(tempFilePaths)
         wx.uploadFile({
-          url: 'http://novenblog_api.com/images/uploadFile',
+          url: app.globalData.baseUrl + '/images/uploadFile',
           filePath: tempFilePaths[0],
           name: 'file',
           formData: {
@@ -187,7 +187,7 @@ Page({
         const tempFilePaths = res.tempFilePaths;
         console.log(tempFilePaths)
         wx.uploadFile({
-          url: 'http://novenblog_api.com/images/uploadFile',
+          url: app.globalData.baseUrl + '/images/uploadFile',
           filePath: tempFilePaths[0],
           name: 'file',
           formData: {
@@ -235,7 +235,7 @@ Page({
     console.log(addParams)
     _this.data.hasStorageDetailData ? console.log("修改") : console.log('新增');
     app.request({
-      url: 'http://novenblog_api.com/arcticle/createOrUpdate',
+      url: app.globalData.baseUrl + '/arcticle/createOrUpdate',
       method: 'POST',
       data: addParams,
       header: {

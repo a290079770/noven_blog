@@ -37,7 +37,7 @@ Page({
   getPublishData(isLoadmore = false) {
     let _this = this;
     app.request({
-      url: 'http://novenblog_api.com/arcticle/arcticleList',
+      url:  app.globalData.baseUrl + '/arcticle/arcticleList',
       method: 'GET',
       data: {
         isMy: true,
@@ -63,7 +63,7 @@ Page({
   getCollectData(isLoadmore = false) {
     let _this = this;
     app.request({
-      url: 'http://novenblog_api.com/arcticle/collectList',
+      url:  app.globalData.baseUrl + '/arcticle/collectList',
       method: 'GET',
       data: {
         cp: this.data.cp,

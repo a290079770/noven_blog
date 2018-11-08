@@ -16,7 +16,7 @@ Page({
   getDetail(id) {
     let _this = this;
     app.request({
-      url: 'http://novenblog_api.com/arcticle/detail',
+      url:  app.globalData.baseUrl + '/arcticle/detail',
       method: 'GET',
       data: {
         Id: id
@@ -47,7 +47,7 @@ Page({
     let hasCollect = this.data.detailData.HasCollect;
     let _this = this;
     app.request({
-      url: 'http://novenblog_api.com/arcticle/collect',
+      url:  app.globalData.baseUrl + '/arcticle/collect',
       method: 'POST',
       data: {
         id: this.data.articleId,
