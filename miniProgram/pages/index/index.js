@@ -3,7 +3,7 @@ var { dateFormat } = require('../../utils/dateUtil');
 Page({
   data: {
     hasGotData: false,
-    title: "博客的标题拉阿拉",
+    title: "oven Blog",
     imgUrls: [
       // 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
       // 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',

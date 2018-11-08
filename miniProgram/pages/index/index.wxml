@@ -2,8 +2,8 @@
 <view>
   <!-- 标题 -->
   <view class="title-wrap">
-    <view class="logo"><image class="logo-img" src="/images/n1.png" /></view>
-    <view class="title-text">{{title}}</view>
+    <!-- <view class="logo"><image class="logo-img" src="/images/n1.png" /></view>
+    <view class="title-text">{{title}}</view> -->
   </view>
   <!-- 轮播图 -->
   <view class="banner">
