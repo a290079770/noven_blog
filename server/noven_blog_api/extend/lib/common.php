@@ -170,7 +170,7 @@ class Common
 
       if($find) {
         //验证作者id
-        if($uid !== $find['AuthorId'] && $userInfo['UserType'] == 1) {
+        if($uid != $find['AuthorId'] && $userInfo['UserType'] == 1) {
           $this->setResponse(21,'您无权删除该文章！');
           return false;
         }
