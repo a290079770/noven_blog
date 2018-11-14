@@ -1,7 +1,7 @@
 {
   "name": "noven_pc",
   "version": "1.0.0",
-  "description": "My fine Nuxt.js project",
+  "description": "Noven技术生涯经验分享",
   "author": "罗文",
   "private": true,
   "scripts": {
