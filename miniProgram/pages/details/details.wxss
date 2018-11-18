@@ -1,3 +1,8 @@
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .mg-letf20 {
   margin-left: 20rpx;
 }
@@ -32,17 +37,25 @@
 .reading {
   margin-left: 40rpx;
 }
-.detail-image-wrap {
+.detail-cover-wrap {
   margin-top: 30rpx;
   padding: 0 30rpx;
   height: 400rpx;
+  overflow: hidden;
 }
-.detail-image {
+.detail-cover-box {
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 0, 0, .1);
+}
+.detail-cover {
+  width: 100%;
+  height: 100%;
+  background: #eee;
 }
 .detail-text {
-  margin-top: 30rpx;
+  margin-top: 20rpx;
   padding: 0 30rpx 40rpx;
   text-indent: 60rpx;
   color: rgb(4, 48, 4);
@@ -53,13 +66,25 @@
   margin-top: 20rpx;
   padding-bottom: 40rpx;
 }
-.detail-paragraph {
+.detail-paragraph-text, .detail-paragraph-img {
   margin-top: 20rpx;
+  display: flex;
   padding: 0 30rpx;
-  text-indent: 60rpx;
   color: rgb(4, 48, 4);
   font-size: 30rpx;
   line-height: 40rpx;
+}
+.detail-paragraph-text {
+  text-indent: 60rpx;
+}
+.detail-paragraph-img image {
+  margin-left: 60rpx;
+  width: 300rpx;
+  height: 300rpx;
+  background: #eee;
+}
+.detail-paragraph-img text {
+  text-indent: 20rpx;
 }
 .is-collection-wrap, .edit-icon-wrap {
   width: 200rpx;

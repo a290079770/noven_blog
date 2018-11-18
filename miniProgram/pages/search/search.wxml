@@ -1,0 +1,23 @@
+<!--pages/search.wxml-->
+<view class='search-wrap'>
+  <!-- 搜索行 -->
+  <view class='search-row'>
+    <input class="search-input"
+      maxlength="-1"
+      focus
+      auto-focus
+      placeholder="请输入标题或简介关键字进行搜索"
+      placeholder-style="color:#bbb;font-size:28rpx;"
+      value="{{ searchValue }}"
+      bindinput="searchAction"></input>
+    <view class='search-btn' bindtap='searchRes'>搜索</view>
+  </view>
+  <view wx:if="{{ hasGotData }}" class='search-explain'>
+    如下是关于“<text>{{ searchValue }}</text>”的搜索结果：
+  </view>
+  <view wx:else class='search-explain'>暂无搜索结果</view>
+</view>
+<!-- 搜索结果 -->
+<view class='search-list'>
+  <article-list-item wx:for="{{searchList}}" wx:key="{{id}}" data="{{ item }}"></article-list-item>
+</view>

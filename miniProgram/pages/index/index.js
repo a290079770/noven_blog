@@ -2,7 +2,8 @@ const app = getApp();
 var { dateFormat } = require('../../utils/dateUtil');
 Page({
   data: {
-    hasGotData: false,
+    hasGotBannerData: false,
+    hasGotListData: false,
     title: "oven Blog",
     imgUrls: [
       // 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
@@ -16,6 +17,7 @@ Page({
     duration: 1000//滑动动画时长
   },
   onShow() {
+    // 最新 CreateTime   热门 ReadCount   精选 CollectCount
     this.getDataList();
     this.getDataList("CollectCount");// 获取轮播图（精选文章列表）
   },
@@ -38,7 +40,8 @@ Page({
     })
   },
   //获取文章列表
-  getDataList(order = 'CreateTime') {
+  getDataList(order = 'ReadCount') {
+    // 最新 CreateTime   热门 ReadCount   精选 CollectCount
     let _this = this;
     app.request({
       url: app.globalData.baseUrl + '/arcticle/arcticleList',
@@ -52,15 +55,15 @@ Page({
           item.CreateTime = dateFormat(item.CreateTime, 'yyyy-mm-dd');
           return item;
         })
-        if (order == "CreateTime") {
+        if (order == "ReadCount") {
           _this.setData({
             articleList: res.list,
-            hasGotData: true
+            hasGotListData: true
           })
-        }else {
+        } else {// banner，精选文章列表
           _this.setData({
             imgUrls: res.list.slice(0, 5),
-            hasGotData: true
+            hasGotBannerData: true
           })
         }
       }

@@ -22,7 +22,8 @@ Page({
         ['userInfo.ThisTime']: dateFormat(storageUesrInfo.ThisTime, 'yyyy-mm-dd')
       })
     }
-
+    if (!this.data.isLogin) return;
+    
     this.getPublishData();
     this.getCollectData();
   },
@@ -34,10 +35,8 @@ Page({
   goTo(e) {
     let type = + e.currentTarget.dataset.type;
     // console.log(type)
-    if (!this.data.isLogin && (type === 1 || type === 2 || type === 3 || type === 4)) {
-      wx.navigateTo({
-        url: "/pages/login/login"
-      })
+    if (!this.data.isLogin && type !== 5) {
+      this.toLogin();
       return;
     }
 
@@ -66,6 +65,10 @@ Page({
     }
   },
   editTouxiang() {
+    if (!this.data.isLogin) {
+      this.toLogin();
+      return;
+    }
     let _this = this;
     wx.chooseImage({
       count: 1,
@@ -135,6 +138,10 @@ Page({
   },
   // 我的发布量
   getPublishData() {
+    if (!this.data.isLogin) {
+      this.toLogin();
+      return;
+    }
     let _this = this;
     app.request({
       url:  app.globalData.baseUrl + '/arcticle/arcticleList',
@@ -154,6 +161,10 @@ Page({
   },
   // 我的收藏量
   getCollectData() {
+    if (!this.data.isLogin) {
+      this.toLogin();
+      return;
+    }
     let _this = this;
     app.request({
       url:  app.globalData.baseUrl + '/arcticle/collectList',

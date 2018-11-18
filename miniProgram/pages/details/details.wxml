@@ -4,7 +4,7 @@
     <view class="about-article">
       <text class="article">article</text>
       <text class="author mg-letf20">@{{ detailData.Author || '暂无作者信息' }}</text>
-      <text class="time mg-letf20">{{ detailData.CreateTime }}</text>
+      <text class="time mg-letf20">{{ detailData.CreateTimeFormate }}</text>
     </view>
 
     <view class="tongji-wrap">
@@ -14,16 +14,23 @@
       </view>
     </view>
     
-    <view class="detail-image-wrap">
-      <image class="detail-image" src="{{ detailData.Url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg' }}" />
+    <view class="detail-cover-wrap flex">
+      <view class='detail-cover-box flex'>
+        <image
+          mode='widthFix'
+          class="detail-cover"
+          src="{{ detailData.Url || 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg' }}" />
+      </view>
     </view>
 
     <view wx:if='{{ conIsArray }}' class='detail-paragraph-wrap'>
       <view wx:for="{{ detailData.Content }}" wx:key="id">
-        <view wx:if='{{ item.type == "text" }}' class='detail-paragraph'>{{ item.value }}</view>
-        <view wx:else class='detail-paragraph'>
-          <image mode='widthFix' src='{{ item.value }}' />
-          {{ item.desc || '暂无图片描述' }}
+        <view wx:if='{{ item.type == "text" }}' class='detail-paragraph-text'>{{ item.value }}</view>
+        <view wx:else class='detail-paragraph-img'>
+          <view class='flex'>
+            <image mode='widthFix' src='{{ item.value }}' />
+          </view>
+          <text>{{ item.desc || '暂无图片描述' }}</text>
         </view>
       </view>
     </view>
@@ -43,7 +50,7 @@
   </movable-area>
 
   <!-- 修改按钮 -->
-  <movable-area class="edit-icon-wrap">
+  <movable-area wx:if="{{ detailData.CanEdit && detailData.AppCode == 3  }}" class="edit-icon-wrap">
     <movable-view
       class="edit-icon-circle"
       direction="all"

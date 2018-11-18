@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "搜索",
+  "usingComponents": {
+    "article-list-item": "../component/articleListItem/articleListItem",
+    "add-article-btn": "../component/addArticleBtn/addArticleBtn"
+  }
+}

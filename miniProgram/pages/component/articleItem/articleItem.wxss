@@ -8,16 +8,18 @@
   padding-bottom: 30rpx;
   margin-bottom: 30rpx;
   border: 1px solid rgba(206, 194, 196, 0.5);
+  border-radius: 10rpx;
   box-shadow: 0 8rpx 16rpx rgba(241, 136, 136, .3);
+  overflow: hidden;
 }
 .article-image-wrap {
   width: 100%;
   height: 400rpx;
+  background: #eee;
 }
 .article-image {
   width: 100%;
   height: 100%;
-  border-radius: 10rpx;
 }
 .about-article {
   margin-top: 10rpx;

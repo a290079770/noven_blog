@@ -1,6 +1,14 @@
-.title-wrap {
-  text-align: center;
-  color: rgb(119, 47, 21);
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.article-image-item {
+  width: 392rpx;
+  height: 141rpx;
+}
+.mt-20 {
+  margin-top: 20rpx;
 }
 .logo {
   width: 50rpx;
@@ -20,6 +28,35 @@
 .banner {
   margin-bottom: 50rpx;
 }
+.banner-related-wrap {
+  padding: 10rpx;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500rpx;
+  height: 260rpx;
+  border: 10rpx solid rgba(255, 255, 255, .8);
+  box-sizing: border-box;
+  background: transparent;
+}
+.banner-related {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, .8);
+}
+.banner-related-con {
+  text-align: center;
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, .8);
+  /* border: 1px solid blue; */
+}
+.text-article {
+  color: rgba(172, 5, 33, 0.8);
+}
 .slide-wrap {
   margin-top: 30rpx;
   height: 400rpx;
@@ -27,6 +64,16 @@
 .slide-image {
   width: 100%;
   height: 100%;
+}
+.banner-skeleton {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 50rpx;
+  width: 700rpx;
+  height: 400rpx;
+}
+.article-list-wrap {
+  margin-top: 30rpx;
 }
 .articlelist-skeleton {
   display: block;

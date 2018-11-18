@@ -1,0 +1,65 @@
+/* pages/addArticle/addPara/addPara.wxss */
+.add-para-wrap {
+  padding: 0 30rpx;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-para-item {
+  margin-top: 50rpx;
+}
+.add-para, .para-img-desc {
+  padding: 10rpx 10rpx;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  border-radius: 10rpx;
+  border: 1px solid rgba(216, 130, 130, 0.774);
+}
+.add-para-item-text {
+  width: 100%;
+}
+.add-para {
+  width: 100%;
+}
+.add-para-item-img {
+  justify-content: flex-start;
+  padding: 10rpx;
+  border-radius: 10rpx;
+  border: 1px solid rgba(216, 130, 130, 0.774);
+}
+.para-img-desc-box {
+  margin-left: 10rpx;
+  align-self: flex-start;
+  width: calc(100% - 310rpx);
+}
+.para-img-desc {
+  /* text-indent: 60rpx; */
+  width: 100%;
+  border: 1px solid #ddd;
+}
+.para-img-box {
+  width: 280rpx;
+  height: 280rpx;
+  border-radius: 10rpx;
+  border: 1px solid #ddd;
+}
+.para-img-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+
+.submit-btn {
+  margin-top: 50rpx;
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 34rpx;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 10rpx;
+  background: rgb(223, 76, 76);
+  border-radius: 10rpx;
+}

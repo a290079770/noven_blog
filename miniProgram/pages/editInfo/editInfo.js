@@ -12,7 +12,7 @@ Page({
     brief: '',
     suggestion: '',
     currentLength: {
-      nickname: 4,
+      nickname: 0,
       brief: 0
     }
   },
@@ -21,15 +21,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    let { NickName: nickname, Introduction: brief } = app.globalData.userInfo
-    console.log(app.globalData.userInfo)
     this.setData({
-      type: + option.type,
-      nickname,
-      ['currentLength.nickname']: app.getCurrentLength(nickname),
-      brief,
-      ['currentLength.brief']: app.getCurrentLength(brief),
+      type: + option.type
     })
+    if (option.type == 3) {
+      let { NickName: nickname, Introduction: brief } = app.globalData.userInfo
+      console.log(app.globalData.userInfo)
+      this.setData({
+        nickname,
+        ['currentLength.nickname']: app.getCurrentLength(nickname)
+      })
+    } else if (option.type == 4) {
+      let { NickName: nickname, Introduction: brief } = app.globalData.userInfo
+      console.log(app.globalData.userInfo)
+      this.setData({
+        brief,
+        ['currentLength.brief']: app.getCurrentLength(brief),
+      })
+    }
   },
 
   /**
@@ -145,10 +154,39 @@ Page({
     let brief = this.data.brief;
     let suggestion = this.data.suggestion;
     if (this.data.type === 3) {
+      if (!nickname.replace(/ /g, '')) { // 昵称为空时
+        wx.showToast({
+          title: '请输入您的昵称！',
+        })
+        return;
+      }
       this.requestUserInfo(nickname, app.globalData.userInfo.Introduction);
     } else if (this.data.type === 4) {
+      if (!brief.replace(/ /g, '')) {// 简介为空时
+        wx.showToast({
+          title: '请输入您的简介！',
+        })
+        return;
+      }
       this.requestUserInfo(app.globalData.userInfo.NickName, brief);
     } else if (this.data.type === 6) {
+      // 意见为空时
+      if (!suggestion.replace(/ /g, '')) {
+        wx.showToast({
+          title: '请输入您的意见！',
+        })
+        return;
+      } else if (!app.globalData.token) {// token 为空时，即未登录时
+        wx.showToast({
+          title: '请先登录！',
+        })
+        setTimeout(function() {
+          wx.navigateTo({
+            url: "/pages/login/login"
+          })
+        }, 1000)
+        return;
+      }
       // 意见反馈接口
       app.request({
         url:  app.globalData.baseUrl + '/other/addFeedBack',

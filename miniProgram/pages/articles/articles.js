@@ -1,4 +1,4 @@
-const app = getApp()
+const app = getApp();
 Page({
   data: {
     articleList:[],
@@ -10,10 +10,10 @@ Page({
     recordCount: 0
   },
   onLoad: function () {
-    this.getDataList();
-  },
-  onShow: function () {
     // this.getDataList();
+  },
+  onShow() {
+    this.getDataList();
   },
   // 下拉刷新
   onPullDownRefresh() {
@@ -41,6 +41,12 @@ Page({
         isShowScrollTopBtn: false
       })
     }
+  },
+
+  toSearch() {
+    wx.navigateTo({
+      url: "/pages/search/search"
+    })
   },
 
   //获取文章列表

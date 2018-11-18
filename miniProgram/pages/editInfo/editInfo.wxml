@@ -8,7 +8,7 @@
       placeholder-style="color:#bbb;font-size:28rpx;"
       selection-start="{{0}}"
       selection-end="{{12}}"
-      value="{{nickname}}"
+      value="{{ nickname }}"
       bindinput="inputAction"></input>
     <view class="text-wrap">
       <text>您最多可以输入12个字符</text>
@@ -21,10 +21,8 @@
       auto-focus
       focus
       maxlength="-1"
-      selection-start="{{0}}"
-      selection-end="{{280}}"
       placeholder="请输入您的意见！" 
-      value="{{suggestion}}"
+      value="{{ suggestion }}"
       bindinput="inputAction">
     </textarea>
   </view>
@@ -37,7 +35,7 @@
       selection-start="{{0}}"
       selection-end="{{280}}"
       placeholder="请输入您的简介！" 
-      value="{{brief}}"
+      value="{{ brief }}"
       bindinput="inputAction">
     </textarea>
     <view class="text-wrap">

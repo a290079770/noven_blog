@@ -1,29 +1,52 @@
 <!--index.wxml-->
 <view>
   <!-- 标题 -->
-  <view class="title-wrap">
-    <!-- <view class="logo"><image class="logo-img" src="/images/n1.png" /></view>
-    <view class="title-text">{{title}}</view> -->
+  <view class="article-list-wrap flex">
+    <image class="article-image-item" src="../../images/choiceness.jpg"></image>
   </view>
   <!-- 轮播图 -->
   <view class="banner">
-    <swiper class="slide-wrap pd-left20 pd-right20" indicator-dots="{{true}}" indicator-color="{{indicatorColor}}"
-      indicator-active-color="{{indicatorActiveColor}}" circular="true"
-      autoplay="{{true}}" interval="{{interval}}" duration="{{duration}}">
+    <swiper
+      wx:if="{{hasGotBannerData}}"
+      class="slide-wrap pd-left20 pd-right20"
+      indicator-dots="{{true}}"
+      indicator-color="{{indicatorColor}}"
+      indicator-active-color="{{indicatorActiveColor}}"
+      circular="true"
+      autoplay="{{true}}"
+      interval="{{interval}}"
+      duration="{{duration}}">
       <block wx:for="{{imgUrls}}" wx:key="{{id}}">
         <swiper-item bindtap="toDetail" data-id="{{ item.Id }}">
-          <image src="{{ item.Url || 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg' }}" class="slide-image"/>
+          <image
+            src="{{ item.Url || 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg' }}"
+            class="slide-image"/>
+          <view class='banner-related-wrap'>
+            <view class='banner-related'>
+              <view class='banner-related-con'>
+                <view class='text-article'>@article</view>
+                <view class='mt-20 text-ess-1'>{{ item.Title }}</view>
+                <view class='mt-20 text-ess-1'>作者：{{ item.Author }}</view>
+              </view>
+            </view>
+          </view>
         </swiper-item>
       </block>
     </swiper>
+    <image wx:else class="banner-skeleton" src="../../images/banner-skeleton.jpg"></image>
+  </view>
+  <view class="article-list-wrap flex">
+    <image class="article-image-item" src="../../images/hotarc.jpg"></image>
   </view>
   <!-- 文章列表 -->
-  <view wx:if="{{hasGotData}}">
-    <article-item  wx:for="{{articleList}}" wx:key="id" item="{{item}}"></article-item>
+  <view class='article-list-wrap'>
+    <view wx:if="{{hasGotListData}}">
+      <article-item  wx:for="{{articleList}}" wx:key="id" item="{{item}}"></article-item>
+    </view>
+    <image wx:else class="articlelist-skeleton" src="../../images/articleItem-skeleton.jpg"></image>
   </view>
-  <image wx:else class="articlelist-skeleton" src="../../images/articleItem-skeleton.jpg"></image>
 
-  <view class='load-more-wrap'>
+  <view class='load-more-wrap' wx:if="{{hasGotListData}}">
     <text class='load-more' bindtap='toArticleList'>加载更多</text>
   </view>
 

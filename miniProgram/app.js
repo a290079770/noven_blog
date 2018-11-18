@@ -62,7 +62,8 @@ App({
     wx.request({
       ...options,
       header: options.header || {
-        token: this.globalData.token
+        token: this.globalData.token,
+        appCode: 3, //1 - pc 2 - h5  3 - weixinmini  4 - admin
       },
       success(res) {
         if (res.statusCode !== 200) {

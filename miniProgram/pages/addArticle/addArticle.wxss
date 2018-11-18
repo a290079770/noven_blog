@@ -1,13 +1,14 @@
+page {
+  height: 100%;
+  /* background: #eee; */
+}
 .flex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .add-article-wrap {
-  padding: 0 30rpx;
-}
-.add-article-brief-input {
-  min-width: 650rpx;
+  padding: 0 30rpx 100rpx;
 }
 .add-article-title-input, .add-article-brief-input {
   margin: 50rpx 0 10rpx;
@@ -18,7 +19,9 @@
   line-height: 40rpx;
 }
 .add-article-brief-input {
-  margin-top: 30rpx;
+  margin-top: 20rpx;
+  width: 650rpx;
+  /* height: 100rpx; */
 }
 .text-wrap {
   display: flex;
@@ -32,18 +35,125 @@
   color: rgb(211, 27, 27);
 }
 .add-article-cover-wrap {
-  color: #666;
+  position: relative;
+  margin-top: 20rpx;
+  color: #999;
   font-size: 28rpx;
-  height: 340rpx;
+  height: 300rpx;
   border: 1px solid rgba(216, 130, 130, 0.774);
   border-radius: 10rpx;
+  overflow: hidden;
 }
 .add-article-cover {
   width: 100%;
   height: 100%;
   border-radius: 10rpx;
 }
+.remove-cover-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+/* 内容样式开始 */
+.content-wrap {
+  margin-top: 20rpx;
+}
+.content-para {
+  margin-top: 20rpx;
+  padding: 15rpx 0;
+  min-height: 30rpx;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+  border: 1px solid rgba(216, 130, 130, 0.774);
+}
+.content-para-text {
+  text-indent:30rpx;
+}
+.content-para-img {
+  justify-content: flex-start;
+  height: 300rpx;
+}
+.para-img {
+  margin-left: 10rpx;
+  width: 280rpx;
+  height: 280rpx;
+  border-radius: 10rpx;
+  border: 1px solid #ddd;
+}
+.add-para-img-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
+.paragraph-img {
+  width: 100%;
+  height: 100%;
+}
+.para-img-desc {
+  text-indent: 60rpx;
+  align-self: flex-start;
+}
+/* 内容样式结束 */
 
+.addarticle-icon-wrap {
+  margin-top: 30rpx;
+}
+.addarticle-icon {
+  flex-direction: column;
+  font-size: 28rpx;
+  color: #999;
+  border-radius: 10rpx;
+}
+.add-icon {
+  position: relative;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background: #ccc;
+}
+.add-con-icon {
+  width: 30rpx;
+  height: 30rpx;
+}
+.addpara-item {
+  position: absolute;
+  bottom: 0rpx;
+  left: 10rpx;
+  z-index: -999;
+  width: 35rpx;
+  height: 30rpx;
+}
+.addpara-text-item {
+  transform: translate(-30rpx, 70rpx);
+}
+.addpara-img-item {
+  transform: translate(30rpx, 70rpx);
+}
+.addpara-item-click {
+  width: 40rpx;
+  height: 60rpx;
+  z-index: 1;
+  transition: all .5s;
+}
+
+
+.add-article-btn {
+  position: fixed;
+  bottom: 0;
+  z-index: 99999;
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 34rpx;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 10rpx;
+  background: rgb(223, 76, 76);
+}
+
+
+
+
+/**修改文章 内容回显1样式
 .add-article-con-wrap {
   margin-top: 10rpx;
   font-size: 28rpx;
@@ -69,14 +179,16 @@
   margin-top: 30rpx;
   height: 300rpx;
   border-radius: 10rpx;
-  border: 1px solid #eee;
+  border: 1px solid rgba(216, 130, 130, 0.774);
 }
 .paragraph-img-box {
+  margin-left: 10rpx;
   margin-top: 10rpx;
   width: 280rpx;
   height: 280rpx;
   border-radius: 10rpx;
-  border: 1px solid rgba(216, 130, 130, 0.774);
+  border: 1px solid #ddd;
+  overflow: hidden;
 }
 .add-article-img-icon {
   width: 50rpx;
@@ -90,24 +202,12 @@
   padding: 10rpx;
   width: 400rpx;
   line-height: 40rpx;
-  /* border: 1px solid red; */
+  border: 1px solid red;
 }
 .paragraph-img {
   width: 100%;
   height: 100%;
-}
-
-
-.add-article-btn {
-  margin: 50rpx 0;
-  width: 100%;
-  height: 70rpx;
-  line-height: 70rpx;
-  font-size: 30rpx;
-  color: #fff;
-  text-align: center;
-  letter-spacing: 10rpx;
-  background: rgb(223, 76, 76);
   border-radius: 10rpx;
 }
+*/
   

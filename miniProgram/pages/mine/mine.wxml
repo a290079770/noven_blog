@@ -14,7 +14,7 @@
       <view class="nick-name">{{ userInfo.NickName }}</view>
       <view class="current-time-wrap login-btn">
         <image wx:if="{{ !userInfo.City }}" class="address-icon" src="/images/mine/local.svg"></image>
-        <text>{{ userInfo.City }}</text>
+        <text wx:else>{{ userInfo.City }}</text>
         <text>{{ userInfo.ThisTime }}</text>
       </view>
     </view>

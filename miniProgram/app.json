@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/articles/articles",
     "pages/mine/mine",
@@ -8,13 +8,15 @@
     "pages/myStatistics/myStatistics",
     "pages/aboutUs/aboutUs",
     "pages/editInfo/editInfo",
-    "pages/addArticle/addArticle"
+    "pages/addArticle/addArticle",
+    "pages/search/search",
+    "pages/addArticle/addPara/addPara"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Noven Blog",
-    "navigationBarTextStyle":"black",
+    "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true
   },
   "tabBar": {

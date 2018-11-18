@@ -25,9 +25,10 @@ Component({
     // 删除
     deleteArticle() {
       let _this = this;
-      let articleId = this.properties.data.Id
+      let articleId = this.properties.data.Id;
+      let showModalTitle = this.properties.data.type == 1 ? '确认删除该文章吗？' : '确认删除该收藏吗？';
       wx.showModal({
-        title: '确认删除该文章吗？',
+        title: showModalTitle,
         content: '',
         success(res) {
           if (res.confirm) {
