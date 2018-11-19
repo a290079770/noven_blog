@@ -8,7 +8,7 @@ page {
   align-items: center;
 }
 .add-article-wrap {
-  padding: 0 30rpx 100rpx;
+  padding: 0 30rpx 200rpx;
 }
 .add-article-title-input, .add-article-brief-input {
   margin: 50rpx 0 10rpx;
