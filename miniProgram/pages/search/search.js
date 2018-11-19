@@ -39,6 +39,13 @@ Page({
       }
     })
   },
+  // 清空输入框
+  clearSearchInput() {
+    if (!this.data.searchValue) return;
+    this.setData({
+      searchValue: ''
+    })
+  },
   searchRes() {
     if (!this.data.searchValue.replace(/ /g, '')){
       wx.showToast({

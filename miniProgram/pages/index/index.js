@@ -14,7 +14,8 @@ Page({
     // indicatorColor: "rgba(226, 30, 30, .3)",
     // indicatorActiveColor: "rgba(245, 3, 43, .7)",
     interval: 5000,//自动切换时间间隔
-    duration: 1000//滑动动画时长
+    duration: 1000,//滑动动画时长
+    isShowScrollTopBtn: false,
   },
   onShow() {
     // 最新 CreateTime   热门 ReadCount   精选 CollectCount
@@ -29,6 +30,19 @@ Page({
   // 下拉刷新
   onPullDownRefresh() {
     this.getDataList();
+  },
+  // 监听用户滑动页面事件
+  onPageScroll(e) {
+    // console.log(e.scrollTop)
+    if (e.scrollTop > 1200 && !this.data.isShowScrollTopBtn) {
+      this.setData({
+        isShowScrollTopBtn: true
+      })
+    } else if (e.scrollTop < 1200 && this.data.isShowScrollTopBtn) {
+      this.setData({
+        isShowScrollTopBtn: false
+      })
+    }
   },
   // 文章到达底部，自动加载更多
   onReachBottom() {

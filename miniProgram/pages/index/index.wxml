@@ -45,10 +45,12 @@
     </view>
     <image wx:else class="articlelist-skeleton" src="../../images/articleItem-skeleton.jpg"></image>
   </view>
-
+  <!-- 加载更多 -->
   <view class='load-more-wrap' wx:if="{{hasGotListData}}">
     <text class='load-more' bindtap='toArticleList'>加载更多</text>
   </view>
-
+  <!-- 新增文章btn -->
   <add-article-btn />
+  <!-- 回到顶部 -->
+  <to-top-btn hidden="{{ !isShowScrollTopBtn }}" />
 </view>

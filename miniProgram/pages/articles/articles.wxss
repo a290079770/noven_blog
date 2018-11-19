@@ -14,7 +14,7 @@
   font-size: 30rpx;
 }
 .orderby-item {
-  width: 140rpx;
+  width: 125rpx;
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
@@ -24,20 +24,31 @@
   margin-left: 40rpx;
 } */
 .orderby-item-active {
-  font-size: 40rpx;
+  font-size: 38rpx;
   color: rgb(179, 31, 31);
   border-bottom: 3px solid rgb(204, 122, 135);
 }
 .search {
+  display: flex;
+  align-items: center;
   flex: 1;
   margin-left: 20rpx;
-  padding-left: 15rpx;
+  padding-left: 10rpx;
   border: 1px solid rgba(216, 130, 130, 0.774);
   border-radius: 10rpx;
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #999;
   height: 50rpx;
-  line-height: 50rpx;
+  /* line-height: 50rpx; */
+}
+.search-icon {
+  margin-right: 10rpx;
+  /* margin-top: 30rpx; */
+}
+.article-list-search-icon {
+  margin-right: 10rpx;
+  width: 30rpx;
+  height: 30rpx;
 }
 .article-image {
   width: 392rpx;

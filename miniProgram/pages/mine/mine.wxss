@@ -8,7 +8,7 @@
   margin-bottom: 30rpx;
   /* border-bottom: 1px solid rgb(204, 122, 135); */
 }
-.mine-info-img-wrap, .nick-name-wrap, .current-time-wrap, .mine-tongji-item, .mine-tongji-item-text {
+.mine-info-img-wrap, .nick-name-wrap, .current-time-wrap, .mine-tongji-item, .mine-tongji-item-text, .mine-info-img-box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,12 +16,18 @@
 .mine-info-img-wrap {
   margin-left: 50rpx;
 }
+.mine-info-img-box {
+  width: 210rpx;
+  height: 210rpx;
+  border-radius: 50%;
+  border: 1px solid rgb(204, 122, 135);
+  box-shadow: 0 8rpx 16rpx rgba(241, 136, 136, .3);
+}
 .mine-info-img, .text-upload-touxiang {
   width: 200rpx;
   height: 200rpx;
   border-radius: 50%;
-  border: 1px solid rgb(204, 122, 135);
-  box-shadow: 0 8rpx 16rpx rgba(241, 136, 136, .3);
+  /* border: 1px solid rgb(204, 122, 135); */
 }
 .text-upload-touxiang {
   display: flex;
@@ -29,6 +35,7 @@
   align-items: center;
   flex-direction: column;
   color: rgb(204, 102, 119);
+  /* background: #efefef; */
 }
 .login-btn {
   margin-left: 50rpx;

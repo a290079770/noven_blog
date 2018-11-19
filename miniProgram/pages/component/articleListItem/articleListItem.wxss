@@ -25,6 +25,7 @@
   width: 80%;
   height: 80%;
   border-radius: 10rpx;
+  background: #eee;
 }
 .article-list-item-right {
   padding: 25rpx 20rpx 25rpx 0;

@@ -12,7 +12,9 @@
       <view class='orderby-item {{ orderBy == "CollectCount" ? "orderby-item-active" : "" }}' data-type='CollectCount'>精选</view>
     </view>
     <view class='search' bindtap='toSearch'>
-      搜索
+      <!-- <icon class='search-icon' type="search" size="14" color="" /> -->
+      <image class="article-list-search-icon" mode="aspectFit" src="/images/article/search.svg"></image>
+      <text>搜索您感兴趣的文章</text>
     </view>
   </view>
 
@@ -29,6 +31,7 @@
 
   <!-- 新增文章btn -->
   <add-article-btn />
+  <!-- 回到顶部 -->
   <to-top-btn hidden="{{ !isShowScrollTopBtn }}" />
 
 </view>
