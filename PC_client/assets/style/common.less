@@ -3,6 +3,7 @@
 @warning:#e6a23c;
 @danger:#f56c6c;
 @info:#768fc3;
+@pageWidth: 1165px;
 
 
 .flex {
@@ -61,6 +62,13 @@
 .flex-1 {
   flex: 1;
 }
+
+.flex-center {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 
 .pr {
@@ -127,6 +135,10 @@
   border-right: 1px solid #d13954;
 }
 
+.mc {
+  margin: 0 auto;
+}
+
 
 
 html {
@@ -139,6 +151,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  color: #333;
+  
 }
 
 *,
@@ -148,4 +162,13 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }

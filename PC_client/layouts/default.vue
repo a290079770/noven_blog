@@ -8,6 +8,8 @@
         <span>Noven Blog 技术生涯经验分享</span> 
       </div>
     </div>
+    
+    <navMenu/>    
 
     <nuxt/>
 
@@ -73,3 +75,12 @@
     </div>
   </div>
 </template>
+
+<script>
+  import navMenu from '@/components/navbar.vue'
+  export default {
+    components:{
+      navMenu
+    }
+  }
+</script>
