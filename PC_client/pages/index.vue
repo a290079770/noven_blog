@@ -15,13 +15,13 @@ export default {
 
   },
   created() {
-    this.$http.get('/arcticle/arcticleList',{
-      params:{
-        b:2
-      }
-    }).then((res) => {
-      console.log(res.data);
-    })
+    // this.$http.get('/arcticle/arcticleList',{
+    //   params:{
+    //     b:2
+    //   }
+    // }).then((res) => {
+    //   console.log(res.data);
+    // })
   },
   mounted() {
      console.log(111)
