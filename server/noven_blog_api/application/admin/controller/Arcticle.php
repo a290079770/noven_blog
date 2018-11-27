@@ -137,6 +137,13 @@ class Arcticle extends Controller
        if(!$tokenData) return;
        $uid = $tokenData['uid'];
 
+       //获取AppCode  平台类型  1 - PC   2-H5   3- 小程序   4 - admin
+       $appCode = request()->header('appCode');
+       if(!$appCode) {
+          $this->common->setResponse(21,'appCode不能为空！');
+          return;
+       }
+
        //验证必填字段      
        if(!$this->validateData()) return;
 
@@ -144,6 +151,13 @@ class Arcticle extends Controller
 
        //如果有传入Id,则是修改
        if(isset($arcticle['Id'])) {
+        //如果是修改操作，必须要验证AppCode,主要是限制小程序端，其他端创建的文章不能在小程序端进行修改，小程序端创建的文章，不能在其他端修改
+        $arcAppCode = $arcticle['AppCode'];
+        if(($appCode == 3 && $arcAppCode != 3) || ($appCode != 3 && $arcAppCode == 3)) {
+          $this->common->setResponse(21,'请在其他平台修改该文章！');
+          return;
+        }
+
         if($arcticle['AuthorId'] != $uid) {
           //如果不是作者本人在进行修改操作，就需要验证权限，UserType > 2
            //获取用户信息,主要获取角色信息
@@ -180,6 +194,7 @@ class Arcticle extends Controller
          $arcticle['ReadCount'] = 0;
          $arcticle['CollectCount'] = 0;
          $arcticle['AuthorId'] = $uid;
+         $arcticle['AppCode'] = $app;
 
          // 启动事务
          Db::startTrans();
@@ -413,6 +428,7 @@ class Arcticle extends Controller
             'Title'  => 'require|length:1,255',
             'Author'  => 'require|length:1,20',
             'Content' => 'require',
+            'AppCode' => 'require'
         ];
 
         $msg = [
@@ -421,6 +437,7 @@ class Arcticle extends Controller
             'Author.require' => '文章作者不能为空！',
             'Author.length'     => '文章作者长度只能在1-20个字符之间，一个汉字为3个字符',
             'Content.require'   => '文章内容不能为空',
+            'AppCode.require' => 'AppCode不能为空'
         ];
 
         $validate = new Validate($rule, $msg);

@@ -70,7 +70,7 @@
 
       <div class="flex flex-align-center flex-justify-center footer-copyright font">
         <span>Design by：Noven 唐青 </span>
-        <span class="footer-copyright-ml">备案号：川ICP备14011335号-2</span>
+        <a class="footer-copyright-ml" href="http://www.miitbeian.gov.cn/">备案号：蜀ICP备18035425号</a>
       </div>
     </div>
   </div>
