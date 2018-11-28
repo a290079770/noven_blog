@@ -1,9 +1,8 @@
 <template>
   <section class="pr intro-container">
-    <div class="flex-center intro-cont-title">
-      <b class="font-l intro-cont-title-text">我的简介</b>
+    <div class="font-l intro-cont-title">
+      我的简介
     </div>
-    <div class="intro-cont-title-place"></div>
     <slot/>
   </section>
 </template>
@@ -31,24 +30,25 @@ export default {
   @import '~assets/style/common.less';
   
   .intro-container {
-    margin-bottom: 40px;
+    transition: all .5s;
+    margin-bottom: 20px;
     height: auto;
     min-height: 80px;
     width: 100%;
-    border: @borderBold;
+    background: white;
+    border-radius: @borderRadius;
     .intro-cont-title {
-      position: absolute;
-      left: 0;
-      top: -17px;
+      margin-bottom: 5px;
       width: 100%;
-      height: 34px;
-      .intro-cont-title-text {
-        padding: 0 15px;
-        background: url(~assets/icon/body_bg.png);
-      }
+      height: 40px;
+      line-height: 55px;
+      text-align: center;
+      color: #000;
     }
-    .intro-cont-title-place {
-      height: 17px;
+
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: @boxShadow;
     }
   }
 </style>

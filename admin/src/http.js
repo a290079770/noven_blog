@@ -16,8 +16,8 @@ import router from './router'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-// var apiUrl = 'http://120.77.180.233:8081';
-var apiUrl = 'http://novenblog_api.com';
+var apiUrl = 'http://120.77.180.233:8081';
+// var apiUrl = 'http://novenblog_api.com';
 
 axios.defaults.baseURL = apiUrl;
 
@@ -35,7 +35,7 @@ axios.interceptors.request.use(
       if(localStorage.token) {
         //需要附加上token
         config.headers.token = localStorage.token;
-      }else if(apiName !== '/login') {
+      }else if(!['/login','/loginAdmin'].includes(apiName)) {
         //如果此时非登录接口，都需要token，如果没有token，则跳转登录界面
         MessageBox({
           message: '您的登录已过期，请重新登录！',

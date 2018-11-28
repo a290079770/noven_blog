@@ -6,6 +6,8 @@
 @pageWidth: 1165px;
 @borderBold: 1px solid #e0e0e0;
 @borderDashed: 1px dashed #e0e0e0;
+@borderRadius: 10px;
+@boxShadow: 0px 0px 50px #888;
 
 .flex {
   display: flex;
@@ -175,4 +177,19 @@ li {
 a {
   color: black;
   text-decoration: none;
+}
+
+::selection {
+    background:@primary; 
+    color:#fff;
+}
+
+::-moz-selection {
+    background:@primary; 
+    color:#fff;
+}
+
+::-webkit-selection {
+    background:@primary; 
+    color:#fff;
 }

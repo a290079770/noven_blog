@@ -14,7 +14,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/n1.png' }
-    ]
+    ],
   },
 
   /*
@@ -36,6 +36,7 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/http',
+    '@/plugins/particles',
   ],
 
   /*

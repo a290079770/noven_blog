@@ -1,7 +1,7 @@
 <template>
   <section class="flex-center arc-index-item">
     <section class="flex flex-align-center flex-justify-between arc-index-item-cont">
-      <div class="arc-index-item-cover" :style="{background: 'url(http://t2.hddhhn.com/uploads/tu/201707/200/10.jpg) no-repeat center', backgroundSize:'cover' }">
+      <div class="arc-index-item-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover' }">
         
       </div>
       <div class="arc-index-item-info-cont">
@@ -43,9 +43,16 @@ export default {
 <style lang="less" scoped>
   @import '~assets/style/common.less';
   .arc-index-item {
+    transition: all .5s;
+    margin-top: 20px;
     height: 280px;
     width: 100%;
-    border-top: @borderBold;
+    background: white;
+    border: @borderBold;
+    border-radius: @borderRadius;
+    &:hover {
+      border: 1px solid @primary;  
+    };
 
     .arc-index-item-cont {
       width: 700px;

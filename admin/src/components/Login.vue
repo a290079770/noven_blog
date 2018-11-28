@@ -189,7 +189,7 @@
 		margin-bottom: 10px;
 	}
 	.login-page {
-		background: url('../../../images/login_bg.jpg');
+		background: url('/static/login_bg.jpg');
 		background-size: cover;
 		.el-input__inner {
 			border: none;

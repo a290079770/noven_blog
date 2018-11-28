@@ -1,6 +1,6 @@
 <template>
   <section class="mc index">
-    <section> &nbsp; </section>
+    <section style="height: 30px"> </section>
     <section class="index-swiper">
       <el-carousel 
       :interval="0" 
@@ -31,7 +31,7 @@
     <section class="flex flex-justify-between index-body">
       <section class="index-list"> 
         <section class="index-list-item-first" >
-          <div class="index-list-item-first-cover" :style="{background: 'url(http://t2.hddhhn.com/uploads/tu/201707/200/10.jpg) no-repeat center', backgroundSize:'cover' }"></div>
+          <div class="index-list-item-first-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover' }"></div>
           <div class="index-list-item-first-info-cont">
             <p class="index-list-item-first-info gray6 font-xs">
               <span class="primary">article&nbsp;</span>
@@ -52,8 +52,8 @@
 
       <section class="index-intros">
         <intro-container>
-          <div class=" index-bloger-cont">
-            <figure class="index-bloger-cover" :style="{background: 'url(http://t2.hddhhn.com/uploads/tu/201707/200/10.jpg) no-repeat center', backgroundSize:'cover' }"></figure>
+          <div class="index-bloger-cont">
+            <figure class="index-bloger-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover' }"></figure>
             <h3 class="flex-center font-l index-bloger-name " >
               义的事总义的事总
             </h3>
@@ -84,6 +84,26 @@
             </el-tooltip>
           </div> 
         </intro-container>
+
+        <intro-container>
+          <div class="index-bloger-cont gray6 font">
+            <div class="index-bloger-motto-seperator"></div>
+            <p>积一时之跬步，臻千里之遥程</p>
+            <div class="index-bloger-motto-seperator"></div>
+            <p>积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程</p>
+            <div class="index-bloger-motto-seperator"></div>
+            <p>积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程</p>
+            <div class="index-bloger-motto-seperator"></div>
+            <p>积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程</p>
+            <div class="index-bloger-motto-seperator"></div>
+          </div>
+        </intro-container>
+
+        <intro-container>
+          <div class="index-bloger-cont index-bloger-arcs font gray6">
+            <p class="text-ess-1 index-bloger-arc" v-for="(item,index) in 10" :key="index">意义的事总在义的事总在思考一件有意义的事意义的事总在义的事总在思考一件有意义的事</p>
+          </div>
+        </intro-container>
       </section>
     </section>
   </section>
@@ -95,26 +115,27 @@ import introContainer from '~/components/introContainer'
 export default {
   data() {
     return {
+      
       bannerList:[
         {
           title:'xxx',
-          Url:'http://t2.hddhhn.com/uploads/tu/201707/200/10.jpg'
+          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
         },
         {
           title:'xxx',
-          Url:'http://t2.hddhhn.com/uploads/tu/201707/200/10.jpg'
+          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
         },
         {
           title:'xxx',
-          Url:'http://t2.hddhhn.com/uploads/tu/201707/200/10.jpg'
+          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
         },
         {
           title:'xxx',
-          Url:'http://t2.hddhhn.com/uploads/tu/201707/200/10.jpg'
+          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
         },
         {
           title:'xxx',
-          Url:'http://t2.hddhhn.com/uploads/tu/201707/200/10.jpg'
+          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
         },
 
       ]
@@ -139,7 +160,6 @@ export default {
     // })
   },
   mounted() {
-     console.log(111)
   }
 }
 </script>
