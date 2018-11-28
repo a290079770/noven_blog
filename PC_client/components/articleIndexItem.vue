@@ -48,10 +48,9 @@ export default {
     height: 280px;
     width: 100%;
     background: white;
-    border: @borderBold;
     border-radius: @borderRadius;
     &:hover {
-      border: 1px solid @primary;  
+     .box-hover(); 
     };
 
     .arc-index-item-cont {

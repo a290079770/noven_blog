@@ -54,6 +54,7 @@ export default {
     min-width: @pageWidth;
     background: url(~static/login_bg.jpg);
     background-position: 100% 0;
+    background-size: cover;
     overflow: hidden;
     color: white;
     .index-top-black-logo {

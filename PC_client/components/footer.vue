@@ -85,15 +85,17 @@ export default {
   @import '~assets/style/common.less';
   
   .footer-place {
-    height: 100px;
+    height: 520px;
   }
 
   .footer {
-    position: relative;
-    background: black;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     height: 420px;
     width: 100%;
     color: white;
+    background: black;
   }
 
   .footer-cont {

@@ -7,6 +7,7 @@
   	height:505px;
     border-radius: @borderRadius;
     overflow: hidden;
+    box-shadow: 5px 5px 20px #ccc;
   	.index-swiper-item {
   		width: 100%;
   		height: 100%;
@@ -54,11 +55,10 @@
         height: 575px;
         text-align: center;
         background: white;
-        border: @borderBold;
         border-radius: @borderRadius;
         overflow:hidden;
         &:hover {
-          border: 1px solid @primary;  
+          .box-hover();
         };
         .index-list-item-first-cover {
           height: 430px;
@@ -119,7 +119,7 @@
         text-align: left;
         .index-bloger-arc {
           transition: all .5s;
-          padding: 7px 0;
+          padding: 12px 0;
           border-bottom: @borderBold;
           &:hover {
             cursor:pointer;

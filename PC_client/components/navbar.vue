@@ -1,5 +1,5 @@
 <template>
-  <section class="flex-center mc nav-menu">
+  <section ref="navMenu" class="flex-center mc nav-menu" :class="{'nav-menu-fiexd':isFixed}">
     <section class="flex flex-align-center flex-justify-between nav-menu-cont">
       <ul class="flex flex-align-center pr nav-menu-items">
         <li 
@@ -54,7 +54,7 @@ export default {
         },
         {
           title:'书不尽言',
-          link:'/suggestion',
+          link:'/feedback',
           contRoutes:[]
         },
       ],
@@ -62,6 +62,8 @@ export default {
 
       keywords:'',
       isSearchInputFocus: false,
+      isFixed: false,
+      navBarTop: 0,
     }
   },
 
@@ -98,19 +100,54 @@ export default {
       this.$router.push({
         path: this.navList[index].link  
       })
+    },
+
+    //设置navbar是否是固定定位
+    setNavBarFixed() {
+      if(this.$refs.navMenu.getBoundingClientRect) {
+        let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        //根据当前元素位置，执行固定定位
+        this.isFixed = scrollTop > this.navBarTop;
+      }
+    },
+
+    //设置面板活跃项
+    setActive() {
+      //一刷新或者一进入，根据当然路由，设置活跃项
+      let { path } = this.$route;
+
+      let find = this.navList.find( item => {
+        return item.link  === path || item.contRoutes.find( citem => citem === path);
+      })
+
+      if( find ) this.selectedIndex = this.navList.findIndex( item => item.link === find.link)
     }
   },
   created() {
-    //一刷新或者一进入，根据当然路由，设置活跃项
-    let { path } = this.$route;
-
-    let find = this.navList.find( item => {
-      return item.link  === path || item.contRoutes.find( citem => citem === path);
-    })
-
-    if( find ) this.selectedIndex = this.navList.findIndex( item => item.link === find.link)
+    this.setActive()
   },
   mounted() {
+    if(this.$refs.navMenu.getBoundingClientRect) {
+        let { top } = this.$refs.navMenu.getBoundingClientRect();
+        this.navBarTop = top;
+    }  
+    this.setNavBarFixed();
+
+    window.onscroll = () => {
+      this.setNavBarFixed();
+    }
+  },
+
+  watch: {
+    $route() {
+      this.setActive();
+      if(this.$refs.navMenu.getBoundingClientRect) {
+        setTimeout(()=>{
+          let { top } = this.$refs.navMenu.getBoundingClientRect();
+          this.navBarTop = top;
+        },100)
+      }
+    }
   }
 }
 </script>
@@ -178,5 +215,13 @@ export default {
         height: 16px;
       }
     }
+  }
+
+  .nav-menu-fiexd {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    width: 100%;
   }
 </style>

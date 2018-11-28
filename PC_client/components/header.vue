@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="flex flex-align-end flex-justify-center mc logo-cont">
-      <img class="logo" src="~assets/icon/logo.svg">
+      <img class="logo" src="~assets/icon/logo.svg" @click="$router.push('/')">
     </div>
     <div class="flex flex-align-center flex-justify-center gray3 mc logo-text">
       <span>Noven Blog 技术生涯经验分享</span> 

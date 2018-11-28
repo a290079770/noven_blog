@@ -47,8 +47,7 @@ export default {
     }
 
     &:hover {
-      transform: scale(1.02);
-      box-shadow: @boxShadow;
+      .box-hover();
     }
   }
 </style>
