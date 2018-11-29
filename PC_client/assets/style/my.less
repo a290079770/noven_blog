@@ -1,27 +1,147 @@
-.feedback {
+.my {
+  margin-top: 40px;
   width: @pageWidth;
-  
-  .feedback-title {
-    margin-top: 40px;
-    padding: 20px 30px;
-    background: white;
-    border-bottom: @borderDashed;
-    .feedback-warning {
-      color: @warning;
+  background: white;
+
+  .my-cont {
+    padding: 40px 30px;
+
+    .my-edit-cont {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      width: 100px;
+      height: 30px;
+
+      .edit-icon {
+        margin-left: 10px;
+        cursor: pointer;
+        height: 30px;
+        width: 30px;
+      }
+
+      .edit-icon-close {
+        width: 22px;
+        height: 22px;
+      }
     }
-  }
 
-  .feedback-edit-container {
-    padding: 20px 30px;
-    background: white;
+    .my-cover {
+      transition: @transition;
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      &:hover {
+        cursor:pointer;
+        border-radius: @borderRadius;
+      }
+    }
 
-    .feedback-edit {
+    .my-cover-upload {
+      margin-top: 20px;
+      transition: @transition;
+      height: 150px;
+      width: 150px;
+      border: @borderDashed;
+      border-radius: 50%;
+      cursor: pointer;
+      .my-cover-upload-icon {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    .my-name-input,.my-abs-input {
+      transition: @transition;
+      padding: 0 12px;
+      border: @borderBold;
+      outline: none;
+      border-radius: 4px;
+    }
+
+    .my-name {
+      padding: 20px;
+      font-size: 36px;
+      .my-name-input {
+        height: 36px;
+        width: 200px;
+        text-align: center;
+        &:focus {
+          border-color:@primary;
+        }
+      }
+    }
+
+    .my-abs-input {
+      padding: 12px;
       width: 100%;
-      height: 300px;
+      height: 95px;
+      display: block;
+      margin-top: 10px;
     }
-  }
 
-  .feedback-list {
+    .my-abs {
+      padding-bottom: 30px;
+      text-align: center;
+      line-height: 24px;
+      border-bottom: @borderDashed;
+    }
 
+    .my-arc-title {
+      margin: 50px 0 30px;
+      font-size: 24px;
+    }
+
+    .my-arc-table {
+      width: 100%;
+      border-collapse: collapse;
+      th,td {
+        height: 60px;
+        border: @borderBold;
+        text-align: center;
+        font-weight: normal;
+      }
+
+      .my-check-icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+      }
+
+      .my-arc-item-title {
+        padding: 10px;
+      }
+
+      .my-table-btn {
+        margin-right: 8px;
+        transition: @transition;
+        width: 80px;
+        height: 30px;
+        border: none;
+        outline: none;
+        border-radius: 4px;
+        background-color: @primary;
+        color: white;
+        cursor: pointer;
+        &:hover{
+          box-shadow: 0px 3px 20px @primary;
+        }
+      }
+
+      .my-table-btn-del {
+        background: white;
+        color: #333;
+        border: @borderBold;
+        &:hover{
+          box-shadow: 0px 3px 20px #888;
+        }
+      }
+    }
+
+    .my-page {
+      align-self: flex-end;
+      margin-top: 40px;
+    }
   }
 }
