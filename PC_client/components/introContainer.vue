@@ -30,7 +30,7 @@ export default {
   @import '~assets/style/common.less';
   
   .intro-container {
-    transition: all .5s;
+    transition: @transition;
     margin-bottom: 20px;
     height: auto;
     min-height: 80px;

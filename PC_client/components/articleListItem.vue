@@ -1,5 +1,5 @@
 <template>
-  <section class="flex-center pr arc-list-item">
+  <section  class="flex-center pr arc-list-item">
     <div class="flex-center arc-list-item-date-cont font-xs">
       <div class="arc-list-item-date-corner">
         
@@ -30,7 +30,7 @@
             </span>
           </div>
           <div>
-            <button class="arc-list-item-btn font">立即阅读</button>
+            <button @click="$router.push('/detail')" class="arc-list-item-btn font">立即阅读</button>
           </div>
         </div>
       </section>
@@ -60,7 +60,7 @@ export default {
 <style lang="less" scoped>
   @import '~assets/style/common.less';
   .arc-list-item {
-    transition: all .5s;
+    transition: @transition;
     margin-bottom: 20px;
     height: 180px;
     width: 100%;

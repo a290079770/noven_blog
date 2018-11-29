@@ -1,5 +1,5 @@
 <template>
-  <section ref="navMenu" class="flex-center mc nav-menu" :class="{'nav-menu-fiexd':isFixed}">
+  <section ref="navMenu" class="flex-center mc pr nav-menu" :class="{'nav-menu-fiexd':isFixed}">
     <section class="flex flex-align-center flex-justify-between nav-menu-cont">
       <ul class="flex flex-align-center pr nav-menu-items">
         <li 
@@ -11,7 +11,7 @@
         >
           {{item.title}}
         </li>
-        <li class="nav-menu-item nav-menu-item-line" :style="{transform: 'translateX(-'+ (4 - selectedIndex) * 150 +'px)', left: navList.length * 150 + 'px'}"></li>
+        <li class="nav-menu-item nav-menu-item-line" :style="{transform: 'translateX(-'+ (navList.length - selectedIndex) * 150 +'px)', left: navList.length * 150 + 'px'}"></li>
       </ul>
       <section class="flex flex-align-center flex-justify-end nav-menu-right">
         <img @click="search" class="search-input-icon" src="~assets/icon/search.svg">
@@ -25,8 +25,15 @@
         @blur="isSearchInputFocus = false"
         @keyup.enter="search"
         >
+
+        <div class="flex-center nav-menu-login-cont" @click="$router.push('/login')">
+          <span v-if="false" class="primary">登录</span>
+          <figure v-else class="nav-menu-login-cover" :style="{background: 'url(https://img08.lechebangstatic.com/share/minapp/newCar/photo_3.jpg) no-repeat center', backgroundSize:'cover' }"></figure>
+        </div>
       </section>
     </section>
+
+    
   </section>
 </template>
 
@@ -55,6 +62,11 @@ export default {
         {
           title:'书不尽言',
           link:'/feedback',
+          contRoutes:[]
+        },
+        {
+          title:'我的创作',
+          link:'/my',
           contRoutes:[]
         },
       ],
@@ -169,7 +181,7 @@ export default {
       .nav-menu-item {
         position: relative;
         z-index: 2;
-        transition: all .5s;
+        transition: @transition;
         width: 150px;
         height:100%;
         cursor: pointer;
@@ -194,7 +206,7 @@ export default {
       width: 360px;
       height: 100%;
       .search-input {
-        transition: all .5s;
+        transition: @transition;
         height: 30px;
         width: 170px;
         text-indent: 30px;
@@ -213,6 +225,23 @@ export default {
         margin-right: -25px;
         width: 16px;
         height: 16px;
+      }
+
+      .nav-menu-login-cont {
+        margin-left: 20px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+
+        .nav-menu-login-cover {
+          transition: @transition;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          &:hover {
+            border-radius: 8px;
+          }
+        }
       }
     }
   }
