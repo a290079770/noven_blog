@@ -1,6 +1,6 @@
 <template>
-  <section class="container">
-    addArticle 
+  <section class="mc preview">
+    preview
   </section>
 </template>
 
@@ -21,6 +21,3 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-
-</style>
