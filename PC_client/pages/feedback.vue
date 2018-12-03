@@ -9,7 +9,6 @@
 
     <section class="feedback-edit-container">
       <section id="feedbackEditor" class="feedback-edit">
-        111
       </section>
     </section>
 
@@ -38,20 +37,20 @@ export default {
       
       function isWangEditor() {
         timer = setTimeout(()=> {
-          console.log(1)
           if(window.wangEditor) {
             clearTimeout(timer);
             resolve();
             return;
           }
-
           isWangEditor();
         }, 100)
       }
     })
   },
   data() {
-    return {}
+    return {
+      fbEditor: null
+    }
   },
   components: {
     'feedback-item':feedbackItem
@@ -61,7 +60,10 @@ export default {
   },
 
   mounted() {
-    console.log(2)
+    this.fbEditor = new wangEditor('#feedbackEditor')
+    //设置留言编辑器自定义配置
+    this.fbEditor.customConfig = this.getEditorConfig(2);
+    this.fbEditor.create()
   }
 }
 </script>

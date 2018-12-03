@@ -34,7 +34,7 @@
           <textarea maxlength="280" placeholder="请输入文章简介" class="gray6 add-arc-form-textarea">
             
           </textarea>
-          <p class="flex flex-justify-between add-arc-form-item-notice gray9 font-xs">
+          <p class="flex flex-justify-between add-arc-form-item-notice add-arc-form-item-notice-abs gray9 font-xs">
             <span>您最多可以输入<span class="primary">280</span>个字符</span>
             <span><span class="primary">0</span>/280</span>
           </p>
@@ -64,13 +64,9 @@
           <span>文章内容</span>
         </div>
         <div class="flex pr add-arc-form-item-right">
-          <textarea maxlength="280" placeholder="请输入文章简介" class="gray6 add-arc-form-textarea">
+          <div class="add-arc-editor" id="addArticleEditor">
             
-          </textarea>
-          <p class="flex flex-justify-between add-arc-form-item-notice gray9 font-xs">
-            <span>您最多可以输入<span class="primary">280</span>个字符</span>
-            <span><span class="primary">0</span>/280</span>
-          </p>
+          </div>
         </div>
       </div>
 
@@ -89,8 +85,29 @@
 <script>
 
 export default {
+  async asyncData ({ params }) {
+    await new Promise((resolve,reject)=> {
+      if(window.wangEditor) resolve();
+      let timer;
+
+      isWangEditor();
+      
+      function isWangEditor() {
+        timer = setTimeout(()=> {
+          if(window.wangEditor) {
+            clearTimeout(timer);
+            resolve();
+            return;
+          }
+          isWangEditor();
+        }, 100)
+      }
+    })
+  },
   data() {
-    return {}
+    return {
+      addEditor: null
+    }
   },
 
   methods:{
@@ -98,7 +115,10 @@ export default {
   },
 
   mounted() {
-     
+    this.addEditor = new wangEditor('#addArticleEditor')
+    //设置留言编辑器自定义配置
+    this.addEditor.customConfig = this.getEditorConfig(1);
+    this.addEditor.create()
   }
 }
 </script>

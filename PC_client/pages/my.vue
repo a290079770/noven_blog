@@ -101,7 +101,7 @@
     </section>
 
     <section class="flex-center add-article-cont">
-      <img @click="" class="add-article" src="~assets/icon/add.svg">
+      <img @click="$router.push('/addArticle')" class="add-article" src="~assets/icon/add.svg">
     </section>
 
     <section class="flex-center add-article-cont my-timeline">

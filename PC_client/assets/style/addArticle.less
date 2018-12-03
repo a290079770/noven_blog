@@ -28,7 +28,7 @@
       }
 
       .add-arc-form-item-right {
-        width: 650px;
+        width: 900px;
         height: 100%;
       }
 
@@ -53,8 +53,8 @@
           position: absolute;
           right: 15px;
           top: 15px;
-          width: 24px;
-          height: 24px;
+          width: 20px;
+          height: 20px;
           cursor: pointer;
           &:hover {
             animation: rotate360 .5s
@@ -63,12 +63,12 @@
 
         @keyframes rotate360 {
           from { transform:  rotate(0); }
-          from { transform:  rotate(-360deg); }
+          to { transform:  rotate(360deg); }
         }
       }
 
       .add-arc-submit-btns {
-        margin-top:10px;
+        margin-top:-10px;
 
         .add-arc-submit-btn {
           margin-right: 10px;
@@ -78,7 +78,7 @@
       .add-arc-form-input {
         transition: @transition;
         height: 36px;
-        width: 250px;
+        width: 650px;
         text-indent: 15px;
         background: transparent;
         border: @borderBold;
@@ -108,6 +108,23 @@
         bottom: -25px;
         left: 0;
         width: 250px;
+      }
+
+      .add-arc-form-item-notice-abs {
+        width: 650px;
+      }
+
+      .add-arc-editor {
+        width: 100%;
+
+        .w-e-text-container {
+          min-height: 300px !important;
+          height: auto !important;
+
+          .w-e-text {
+            min-height: 300px !important;
+          }
+        }
       }
     }
   }

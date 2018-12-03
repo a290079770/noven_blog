@@ -19,7 +19,11 @@ module.exports = {
       { 
         src: 'https://unpkg.com/wangeditor/release/wangEditor.min.js',
         defer:"defer"
-      }
+      },
+      { 
+        src: 'https://cdn.bootcss.com/js-xss/0.3.3/xss.min.js',
+        defer:"defer"
+      },
     ]
   },
 
@@ -44,6 +48,7 @@ module.exports = {
     '@/plugins/element-ui',
     '@/plugins/http',
     '@/plugins/particles',
+    '@/plugins/editorConfig',
   ],
 
   /*
