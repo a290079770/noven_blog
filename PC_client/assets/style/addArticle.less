@@ -1,0 +1,114 @@
+.add-arc {
+  margin-top: 40px;
+  width: @pageWidth;
+  background: white;
+
+  .add-arc-info-title {
+    padding: 20px 30px;
+    border-bottom: @borderDashed;
+    .add-arc-info-title-icon {
+      margin-right: 10px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+
+  .add-arc-form {
+    padding: 20px 30px; 
+
+    .add-arc-form-item {
+      margin: 20px 0 50px;
+
+      .add-arc-form-item-left {
+        margin-right: 30px;
+        width: 120px;
+        height: 32px;
+        font-size: 14px;
+      }
+
+      .add-arc-form-item-right {
+        width: 650px;
+        height: 100%;
+      }
+
+      .add-arc-form-cover {
+        transition: @transition;
+        height: 150px;
+        width: 150px;
+        border: @borderDashed;
+        cursor: pointer;
+        .add-arc-form-cover-upload-icon {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      .add-arc-form-cover-has {
+        width: 650px;
+        height: 400px;
+        border: @borderDashed;
+
+        .add-arc-form-cover-has-close {
+          position: absolute;
+          right: 15px;
+          top: 15px;
+          width: 24px;
+          height: 24px;
+          cursor: pointer;
+          &:hover {
+            animation: rotate360 .5s
+          };
+        }
+
+        @keyframes rotate360 {
+          from { transform:  rotate(0); }
+          from { transform:  rotate(-360deg); }
+        }
+      }
+
+      .add-arc-submit-btns {
+        margin-top:10px;
+
+        .add-arc-submit-btn {
+          margin-right: 10px;
+        }
+      }
+
+      .add-arc-form-input {
+        transition: @transition;
+        height: 36px;
+        width: 250px;
+        text-indent: 15px;
+        background: transparent;
+        border: @borderBold;
+        outline: none;
+        border-radius: 4px;
+        &:focus {
+          border: 1px solid @primary
+        }
+      }
+
+      .add-arc-form-textarea {
+        transition: @transition;
+        padding: 10px;
+        height: 130px;
+        width: 650px;
+        border: @borderBold;
+        outline: none;
+        border-radius: 4px;
+        line-height: 18px;
+        &:focus {
+          border: 1px solid @primary
+        }
+      }
+
+      .add-arc-form-item-notice {
+        position: absolute;
+        bottom: -25px;
+        left: 0;
+        width: 250px;
+      }
+    }
+  }
+}
