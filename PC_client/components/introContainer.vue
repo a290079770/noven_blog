@@ -1,7 +1,7 @@
 <template>
   <section class="pr intro-container">
     <div class="font-l intro-cont-title">
-      我的简介
+      {{title}}
     </div>
     <slot/>
   </section>
@@ -10,6 +10,12 @@
 <script>
 
 export default {
+  props:{
+    title:{
+      type:String,
+      default:'我的简介'
+    }
+  },
   data() {
     return {
       

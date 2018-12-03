@@ -14,13 +14,13 @@
                 @article
               </section>
               <h2 class="index-swiper-detail-title">
-                总在思考一件有意义的事
+                {{item.Title}}
               </h2>
               <p class="font gray6 text-ess-3 index-swiper-detail-abs" style="-webkit-box-orient: vertical">
-                总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事
+                {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
               </p>
               <p class="font gray9">
-                2018-10-28
+                {{item.CreateTime}}
               </p>
             </section>
           </section>
@@ -29,29 +29,29 @@
     </section>
 
     <section class="flex flex-justify-between index-body">
-      <section class="index-list"> 
-        <section class="index-list-item-first" >
-          <div class="index-list-item-first-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover' }"></div>
+      <section class="index-list" > 
+        <section class="index-list-item-first" v-if="firstArc" >
+          <div class="index-list-item-first-cover" :style="{background: `url(${firstArc.Url}) no-repeat center`, backgroundSize:'cover' }"></div>
           <div class="index-list-item-first-info-cont">
             <p class="index-list-item-first-info gray6 font-xs">
               <span class="primary">article&nbsp;</span>
-              <span>@疯狂的麦克斯&nbsp;</span>
-              <span class="gray9">2018-10-28</span>
+              <span>@{{firstArc.Author}}&nbsp;</span>
+              <span class="gray9">{{firstArc.CreateTime}}</span>
             </p>
             <h2 class="index-list-item-first-title text-ess-1">
-              总在思考一件有意义的事总在思考一件有意义的事总在
+              {{firstArc.Title}}
             </h2>
             <p class="gray6 font text-ess-2" style="-webkit-box-orient: vertical">
-              义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在
+              {{firstArc.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
             </p>
           </div>
         </section>
 
-        <article-index-item v-for="(item,index) in 5" :key="index"/>
+        <article-index-item :item="item" v-for="(item,index) in dataList.slice(1)" :key="index"/>
       </section>
 
       <section class="index-intros">
-        <intro-container>
+        <intro-container title="关于我">
           <div class="index-bloger-cont">
             <figure class="index-bloger-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover' }"></figure>
             <h3 class="flex-center font-l index-bloger-name " >
@@ -63,7 +63,7 @@
           </div>
         </intro-container>
 
-        <intro-container>
+        <intro-container title="联系方式">
           <div class="flex-center index-bloger-contact">
             <el-tooltip class="item" effect="dark" content="290079770" placement="top">
               <span class="flex flex-align-center flex-justify-center index-bloger-social-item">
@@ -85,23 +85,23 @@
           </div> 
         </intro-container>
 
-        <intro-container>
+        <intro-container title="座右铭">
           <div class="index-bloger-cont gray6 font">
             <div class="index-bloger-motto-seperator"></div>
-            <p>积一时之跬步，臻千里之遥程</p>
+            <p>积一时之跬步，臻千里之遥程。</p>
             <div class="index-bloger-motto-seperator"></div>
-            <p>积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程</p>
+            <p>生命不息，奋斗不止。</p>
             <div class="index-bloger-motto-seperator"></div>
-            <p>积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程</p>
+            <p>人类的希望像是一颗永恒的星，乌云掩不住它的光芒。个性是在今日，和平不是一个理想，一个梦，它是万人的愿望。</p>
             <div class="index-bloger-motto-seperator"></div>
-            <p>积一时之跬步，臻千里之遥程积一时之跬步，臻千里之遥程</p>
+            <p>天行健，君子以自强不息。</p>
             <div class="index-bloger-motto-seperator"></div>
           </div>
         </intro-container>
 
-        <intro-container>
+        <intro-container title="推荐阅读">
           <div class="index-bloger-cont index-bloger-arcs font gray6">
-            <p class="text-ess-1 index-bloger-arc" v-for="(item,index) in 10" :key="index">意义的事总在义的事总在思考一件有意义的事意义的事总在义的事总在思考一件有意义的事</p>
+            <p class="text-ess-1 index-bloger-arc" v-for="(item,index) in recommendList" :key="index">{{item.Title}}</p>
           </div>
         </intro-container>
       </section>
@@ -112,33 +112,20 @@
 <script>
 import ArticleIndexItem from '~/components/articleIndexItem'
 import introContainer from '~/components/introContainer'
+import { getArticleList } from '~/assets/service/articleService'
+
 export default {
   data() {
     return {
-      
+      //首页banner图列表
       bannerList:[
-        {
-          title:'xxx',
-          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
-        },
-        {
-          title:'xxx',
-          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
-        },
-        {
-          title:'xxx',
-          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
-        },
-        {
-          title:'xxx',
-          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
-        },
-        {
-          title:'xxx',
-          Url:'http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg'
-        },
+      ],
 
-      ]
+      //首页文章列表
+      dataList:[],
+
+      //推荐阅读文章列表
+      recommendList: []
     }
   },
 
@@ -148,18 +135,47 @@ export default {
   },
 
   methods:{
+    /**
+     * [getArticleList 获取文章列表]
+     * @param  {[StriNg]} listName [对应this.data里的三个列表]
+     * @return {[type]}          [description]
+     */
+    async getArticleList(listName) {
+      let orderBy = [
+          {
+            listName:'dataList',
+            order:'CreateTime',
+            ps:10
+          },
+          {
+            listName:'bannerList',
+            order:'ReadCount',
+            ps:5
+          },
+          {
+            listName:'recommendList',
+            order:'CollectCount',
+            ps:10
+          },
+      ];
 
+      let { order , ps } = orderBy.find(item => item.listName == listName);
+      let { list } = await getArticleList(ps,1,'',order);
+      this[listName] = list;
+    }
+  },
+  computed:{
+    firstArc() {
+      return this.dataList[0]
+    }
   },
   created() {
-    // this.$http.get('/arcticle/arcticleList',{
-    //   params:{
-    //     b:2
-    //   }
-    // }).then((res) => {
-    //   console.log(res.data);
-    // })
+    this.getArticleList('dataList');
+    this.getArticleList('bannerList');
+    this.getArticleList('recommendList');
   },
   mounted() {
+    console.log(this)
   }
 }
 </script>

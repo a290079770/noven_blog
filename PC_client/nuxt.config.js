@@ -49,6 +49,7 @@ module.exports = {
     '@/plugins/http',
     '@/plugins/particles',
     '@/plugins/editorConfig',
+    '@/plugins/utils',
   ],
 
   /*

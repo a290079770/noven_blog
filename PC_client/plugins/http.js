@@ -8,12 +8,12 @@
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
-import { MessageBox } from 'element-ui'
+import { MessageBox , Message } from 'element-ui'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-// var apiUrl = 'http://120.77.180.233:8081';
-var apiUrl = 'http://novenblog_api.com';
+var apiUrl = 'http://120.77.180.233:8081';
+// var apiUrl = 'http://novenblog_api.com';
 
 axios.defaults.baseURL = apiUrl;
 
@@ -56,22 +56,29 @@ axios.interceptors.request.use(
  */
 axios.interceptors.response.use(
     res => {
-      // res.data.Code =34;
-       if (res.data.code == 21 && res.data.description.indexOf("token") !== -1) { //连接超时
-          MessageBox.alert(res.data.description, '提示', {
+      let { data: { code, data , description}} = res;   
+      if (code == 21) {
+        //连接超时
+        if(description.indexOf("token") !== -1){
+          MessageBox.alert(description, '提示', {
             confirmButtonText: '确定',
             type: 'warning',
           }).then(()=>{
             router.push('/login');
           })
-      }else{ //请求成功
-        return res;
+        }else {
+          //其他错误轻提示 
+          Message.error(description);   
+        }
+      }else{  
+        //请求成功
+        return data;
       }
     },
     error => {
       if(error.toString().indexOf('Network Error') !== -1) {
          Message({
-            message: '网络请求错误，请刷新或重新登录！',
+            message: '网络请求错误，请刷新重试！',
             type: 'error'
           }); 
       }

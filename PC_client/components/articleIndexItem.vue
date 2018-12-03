@@ -1,20 +1,20 @@
 <template>
   <section @click="$router.push('/detail')" class="flex-center arc-index-item">
     <section class="flex flex-align-center flex-justify-between arc-index-item-cont">
-      <div class="arc-index-item-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover' }">
+      <div class="arc-index-item-cover" :style="{background: `url(${ item.Url}) no-repeat center`, backgroundSize:'cover' }">
         
       </div>
       <div class="arc-index-item-info-cont">
         <p class=" gray6 font-xs arc-index-item-info">
           <span class="primary">article&nbsp;</span>
-          <span>@疯狂的麦克斯&nbsp;</span>
-          <span class="gray9">2018-10-28</span>
+          <span>@{{item.Author}}&nbsp;</span>
+          <span class="gray9">{{item.CreateTime}}</span>
         </p>
         <h2 class="arc-index-item-title text-ess-1">
-          疯狂的麦克斯疯狂的麦克斯疯狂的麦克斯疯狂的麦克斯text-ess-1
+          {{item.Title}}
         </h2>
         <p class="gray6 font text-ess-2 arc-index-item-abs" style="-webkit-box-orient: vertical">
-          义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有思考一件有意义的事总在思考一件有意义的事总在义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在义的事总在思考一件有意义的事总在思考一件有意义的事总在思考一件有意义的事总在
+          {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
         </p>
       </div>
     </section>
@@ -24,9 +24,14 @@
 <script>
 
 export default {
+  props:{
+    item:{
+      type:Object
+    }
+  },
   data() {
     return {
-      
+      defaultCover:this.getDefaultCover()
     }
   },
 
@@ -36,7 +41,7 @@ export default {
   },
   mounted() {
     
-  }
+  },
 }
 </script>
 
@@ -49,6 +54,7 @@ export default {
     width: 100%;
     background: white;
     border-radius: @borderRadius;
+    cursor: pointer;
     &:hover {
      .box-hover(); 
     };
@@ -58,7 +64,7 @@ export default {
       height: 205px;
       .arc-index-item-cover {
         margin-right: 25px;
-        width: 365px;
+        width: 300px;
         height: 100%;
       }
 
