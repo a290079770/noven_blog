@@ -99,6 +99,14 @@
         </el-pagination>
       </section> 
     </section>
+
+    <section class="flex-center add-article-cont">
+      <img @click="" class="add-article" src="~assets/icon/add.svg">
+    </section>
+
+    <section class="flex-center add-article-cont my-timeline">
+      <img @click="$router.push('/timeline')" class="add-article" src="~assets/icon/timeline.svg">
+    </section>
   </section>
 </template>
 

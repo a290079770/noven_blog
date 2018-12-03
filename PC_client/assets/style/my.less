@@ -144,4 +144,49 @@
       margin-top: 40px;
     }
   }
+
+
+  .add-article-cont {
+    transition: @transition;
+    position: fixed;
+    bottom: 140px;
+    right: 100px;
+    z-index: 9;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: @primary;
+    color: white;
+    box-shadow: 0 10px 30px rgba(248,76,91,.6);
+    cursor: pointer;
+    &:hover {
+      transform:scale(1.2);
+      background: @info;
+      box-shadow: 0 10px 30px @info;
+    };
+
+    &:hover .add-article{
+      animation: addArcBtn .5s;
+    };
+  }
+
+  .add-article {
+    width: 25px;
+    height: 25px;
+  }
+
+  .my-timeline {
+    background: @info;
+    bottom: 60px;
+    box-shadow: 0 10px 30px @info;
+    &:hover {
+      background: @primary;
+      box-shadow: 0 10px 30px @primary;
+    };
+  }
+
+  @keyframes addArcBtn {
+    from { transform: rotate(0); }
+    to { transform: rotate(360deg); }
+  }
 }

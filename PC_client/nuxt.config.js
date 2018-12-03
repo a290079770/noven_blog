@@ -13,8 +13,14 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/n1.png' }
+      { rel: 'icon', type: 'image/x-icon', href: '/n1.png' },
     ],
+    script: [
+      { 
+        src: 'https://unpkg.com/wangeditor/release/wangEditor.min.js',
+        defer:"defer"
+      }
+    ]
   },
 
   /*
@@ -26,8 +32,9 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    'element-ui/lib/theme-chalk/index.css',
+    '~theme/index.css',
     '~/assets/style/App.less',
+    '~/assets/iconfont/iconfont.css',
   ],
 
   /*

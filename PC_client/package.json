@@ -18,6 +18,7 @@
     "@nuxtjs/axios": "^5.0.0"
   },
   "devDependencies": {
+    "element-theme-chalk": "^2.4.11",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "2.6.2",
     "less": "^3.8.1",

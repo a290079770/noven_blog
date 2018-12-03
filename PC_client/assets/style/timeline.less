@@ -1,0 +1,58 @@
+.time-line {
+  margin-top: 40px;
+  width: @pageWidth;
+  background: white;
+
+  .time-line-cont {
+    padding: 20px 30px;
+
+    .time-line-title {
+      font-size: 24px;
+      &::before {
+        margin-right: 20px;
+        content:'——';
+        font-weight: normal;
+      }
+
+      &::after {
+        margin-left: 20px;
+        content:'——';
+        font-weight: normal;
+      }
+    }
+
+    .time-line-item {
+      .time-line-year {
+        font-size: 24px;
+        height: 80px;
+        line-height: 80px;
+        border-bottom: @borderDashed;
+      }
+
+      .time-line-months {
+        padding-left: 40px;
+
+        .time-line-months-title {
+          font-size: 20px;
+          height: 60px;
+          line-height: 60px;
+          border-bottom: @borderDashed;
+        }
+
+        .time-line-months-cont {
+          width: 100%;
+          margin: 30px 0;
+          min-height: 60px;
+          border-left: 5px solid @primary;
+          tr {
+            height: 40px;
+            
+          }
+          td {
+            padding-left: 20px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@
     </section>
 
     <section class="feedback-edit-container">
-      <section class="feedback-edit">
+      <section id="feedbackEditor" class="feedback-edit">
         111
       </section>
     </section>
@@ -27,7 +27,29 @@
 
 <script>
 import feedbackItem from '~/components/feedbackItem'
+
 export default {
+  async asyncData ({ params }) {
+    await new Promise((resolve,reject)=> {
+      if(window.wangEditor) resolve();
+      let timer;
+
+      isWangEditor();
+      
+      function isWangEditor() {
+        timer = setTimeout(()=> {
+          console.log(1)
+          if(window.wangEditor) {
+            clearTimeout(timer);
+            resolve();
+            return;
+          }
+
+          isWangEditor();
+        }, 100)
+      }
+    })
+  },
   data() {
     return {}
   },
@@ -39,7 +61,7 @@ export default {
   },
 
   mounted() {
-    
+    console.log(2)
   }
 }
 </script>
