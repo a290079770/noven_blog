@@ -4,33 +4,36 @@
       <div class="arc-list-item-date-corner">
         
       </div>
-      2018-11-28
+      {{item.CreateTime}}
     </div>
 
     <section class="flex flex-justify-between arc-list-item-cont">
-      <section class="arc-list-item-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover' }">
-        1
+      <section class="arc-list-item-cover" :style="{background: `url(${item.Url}) no-repeat center`, backgroundSize:'cover' }">
       </section>
       <section class="flex flex-justify-between flex-column arc-list-item-info-cont">
         <h2 class="font-lg text-ess-1">
-          SEO常见的白帽优化技巧有哪些SEO常见的白帽优化技巧有哪些SEO常见的白帽优化技巧有哪些SEO常见的白帽优化技巧有哪些
+          {{item.Title}}
         </h2>
         <p class="gray6 font text-ess-2 arc-list-item-abs" style="-webkit-box-orient: vertical">
-          义的事总在思考一件有意义的事义的事总在思考一件有意义的事义的事总在思考一件有意义的事义的事总在思考一件有意义的事
+          {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
         </p>
         <div class="flex flex-justify-between gray6 font">
           <div class="flex">
             <span class="flex flex-align-center arc-list-item-view-icon-cont ">
+              <img class="arc-list-item-view-icon" style="width: 19px" src="~assets/icon/write-gray.svg">
+              <span>{{item.Author}}</span>
+            </span>
+            <span class="flex flex-align-center arc-list-item-view-icon-cont ">
               <img class="arc-list-item-view-icon" src="~assets/icon/view.svg">
-              <span>12234次浏览</span>
+              <span>{{item.ReadCount}}次浏览</span>
             </span>
             <span class="flex flex-align-center arc-list-item-view-icon-cont">
               <img class="arc-list-item-view-icon" src="~assets/icon/zan-kong.svg">
-              <span>212次收藏</span>
+              <span>{{item.CollectCount}}次收藏</span>
             </span>
           </div>
           <div>
-            <button @click="$router.push('/detail')" class="arc-list-item-btn font">立即阅读</button>
+            <button @click="goTo('/detail')" class="arc-list-item-btn font">立即阅读</button>
           </div>
         </div>
       </section>
@@ -41,6 +44,11 @@
 <script>
 
 export default {
+  props:{
+    item:{
+      type:Object
+    }
+  },
   data() {
     return {
       

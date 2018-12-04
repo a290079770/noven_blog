@@ -49,18 +49,30 @@
 </template>
 
 <script>
-
+import {getArticleDetail} from '~/assets/service/articleService'
 export default {
   data() {
     return {}
   },
 
   methods:{
-
+    async getArticleDetail() {
+      let res = await getArticleDetail();
+      console.log(res)
+    }
   },
+  created() {
+    let { id } = this.$route.query;
+    if( !id ) {
+      this.$message.error('文章id不能为空！');
+      return 
+    }
 
+    this.id = id;
+    this.getArticleDetail();
+  },
   mounted() {
-     console.log(111)
+    
   }
 }
 </script>

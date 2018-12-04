@@ -8,7 +8,6 @@
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
-import { MessageBox , Message } from 'element-ui'
 // axios 配置
 axios.defaults.timeout = 5000;
 
@@ -60,7 +59,7 @@ axios.interceptors.response.use(
       if (code == 21) {
         //连接超时
         if(description.indexOf("token") !== -1){
-          MessageBox.alert(description, '提示', {
+          Vue.prototype.$alert(description, '提示', {
             confirmButtonText: '确定',
             type: 'warning',
           }).then(()=>{
@@ -68,7 +67,7 @@ axios.interceptors.response.use(
           })
         }else {
           //其他错误轻提示 
-          Message.error(description);   
+          Vue.prototype.$message.error(description);   
         }
       }else{  
         //请求成功
@@ -77,10 +76,10 @@ axios.interceptors.response.use(
     },
     error => {
       if(error.toString().indexOf('Network Error') !== -1) {
-         Message({
-            message: '网络请求错误，请刷新重试！',
-            type: 'error'
-          }); 
+         Vue.prototype.$message({
+          message: '网络请求错误，请刷新重试！',
+          type: 'error'
+         }); 
       }
   });
 

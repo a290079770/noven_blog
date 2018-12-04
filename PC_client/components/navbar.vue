@@ -87,7 +87,16 @@ export default {
      * @return   {[type]}   [description]
      */
     search() {
-      console.log(this.keywords)
+      let { keywords } = this;
+      if(keywords)
+        this.$router.push({
+          path:'/list',
+          query:{
+            keywords
+          }
+        })
+      else
+        this.$router.push('/list')
     },
     /**
      * [changeSelectedIndex 修改当然活跃项]

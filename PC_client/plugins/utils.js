@@ -290,7 +290,7 @@ function getDayOfWeek(date) {
 }
 
 /**
- * kind-of shortcut
+ * kind-of 判断一个变量的类型
  * @param  {*} val
  * @return {String}
  */
@@ -321,11 +321,62 @@ function kindOf(val) {
 
 
 /** ------------------------  其他  -------------------------- */
+
+//每次访问，取出一张随机图
 function  getDefaultCover() {
   const coverPath = '/arc-default';
   const num = 4; //一共4张，随机生成一张
 
   return coverPath + Math.ceil(Math.random() * 4) +'.jpg';
+}
+
+
+/**
+ * [goTo 页面跳转]
+ * @Author   罗文
+ * @DateTime 2018-12-04
+ * @param    {[String]}   path  [要跳转的路径]
+ * @param    {[String | Object ]}   query [携带的参数]
+ * @return   {[type]}         [description]
+ */
+function goTo(path,query) {
+  if(!path) return;
+
+  console.log( Vue.$route)
+  let { $router } = Vue.prototype;
+
+  if(!query) {
+    $router.push(path);
+    return;
+  }
+
+  //有参数，判断是字符串还是对象
+  let type = kindOf(query);
+
+  if( !['string','object','Object'].includes(type)) {
+    console.error('跳转参数错误，只能是字符串或对象')
+    return;
+  }
+
+  let extQuery = query;
+
+  if(type == 'string') {
+    if(query.indexOf('=') == -1) {
+      console.error('跳转参数错误，字符串必须是a=b&c=d形式')
+      return 
+    }
+
+    let arr = query.split('&');
+    arr.forEach(item => {
+      let [ key, value ] = item.split('=');
+      extQuery[key] = value
+    });
+  }
+
+  $router.push({
+    path,
+    query:extQuery
+  });
 }
 
 
@@ -359,6 +410,7 @@ let utils = {
 
   //其他
   getDefaultCover,    // 获取文章默认封面图
+  goTo,    // 跳转页面
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);

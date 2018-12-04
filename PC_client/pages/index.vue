@@ -53,12 +53,14 @@
       <section class="index-intros">
         <intro-container title="关于我">
           <div class="index-bloger-cont">
-            <figure class="index-bloger-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover' }"></figure>
+            <figure class="index-bloger-cover">
+              <img class="index-bloger-cover-img" src="/cover.jpg">
+            </figure>
             <h3 class="flex-center font-l index-bloger-name " >
-              义的事总义的事总
+              Noven
             </h3>
             <p class="gray6 font">
-              一件有意义的事总在思考一件有意义的事总在义的事总在思考一件有意义的事总在思考一件有意义的
+              关于我自己，昵称唐青，2014年毕业于重庆某大学，从事Web前端四年有余，掌握HTML、CSS、JS、PHP、NodeJS、Vue、React、Webpack、D3...各种前端技能，十八般武艺，都耍得有模有样。
             </p>
           </div>
         </intro-container>
@@ -175,7 +177,7 @@ export default {
     this.getArticleList('recommendList');
   },
   mounted() {
-    console.log(this)
+    
   }
 }
 </script>

@@ -37,3 +37,18 @@ export const getArticleList = function(ps=10,cp=1,keywords='',order='CreateTime'
     return { list , recordCount };
   })
 }
+
+/**
+ * [arcticleList 获取文章详情]
+ * @Author   罗文
+ * @DateTime 2018-09-26
+ * @neccessaryParam  [Number]  id  文章id
+ */
+export const getArticleDetail = function(id) {
+  return Vue.prototype.$http.get('/arcticle/detail',{
+    params:{
+      Id:id
+    }
+  })
+}
+
