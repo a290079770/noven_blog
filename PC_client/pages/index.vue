@@ -7,8 +7,8 @@
       height="505px"
       trigger="click"
       >
-        <el-carousel-item v-for="(item,index) in bannerList" :key="'banner'+index">
-          <section :style="{background: 'url('+ item.Url +') no-repeat center', backgroundSize:'cover' }" class="flex-center index-swiper-item">
+        <el-carousel-item v-for="(item,index) in bannerList" :key="'banner'+index"  >
+          <section @click="goTo('/detail',`id=${item.Id}`)" :style="{background: 'url('+ item.Url +') no-repeat center', backgroundSize:'cover' }" class="flex-center index-swiper-item">
             <section class="flex-center flex-column index-swiper-detail-cont">
               <section class="index-swiper-detail-author font">
                 @article
@@ -30,7 +30,7 @@
 
     <section class="flex flex-justify-between index-body">
       <section class="index-list" > 
-        <section class="index-list-item-first" v-if="firstArc" >
+        <section class="index-list-item-first" v-if="firstArc"  @click="goTo('/detail',`id=${firstArc.Id}`)">
           <div class="index-list-item-first-cover" :style="{background: `url(${firstArc.Url}) no-repeat center`, backgroundSize:'cover' }"></div>
           <div class="index-list-item-first-info-cont">
             <p class="index-list-item-first-info gray6 font-xs">
@@ -103,7 +103,7 @@
 
         <intro-container title="推荐阅读">
           <div class="index-bloger-cont index-bloger-arcs font gray6">
-            <p class="text-ess-1 index-bloger-arc" v-for="(item,index) in recommendList" :key="index">{{item.Title}}</p>
+            <p @click="goTo('/detail',`id=${item.Id}`)" class="text-ess-1 index-bloger-arc" v-for="(item,index) in recommendList" :key="index">{{item.Title}}</p>
           </div>
         </intro-container>
       </section>

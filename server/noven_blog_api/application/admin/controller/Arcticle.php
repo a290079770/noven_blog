@@ -9,6 +9,7 @@ use lib\common;
 use lib\jwtTool;
 use lib\validJWT;
 use lib\authValid;
+use lib\appCodeValid;
 
 class Arcticle extends Controller
 {   
@@ -41,7 +42,8 @@ class Arcticle extends Controller
         $authorId = request()->get('authorId') ? request()->get('authorId') : '';
 
         //如果传入了isMy，则需要计算token，优先级比authorId高
-        if( request()->get('isMy') === 'true') {
+        $isMy = request()->get('isMy') === 'true';
+        if( $isMy ) {
           //获取用户uid
           //验证token
           $tokenData = validJWT::valid();
@@ -67,31 +69,35 @@ class Arcticle extends Controller
         //数组的第一项可以是布尔值，用来指定是否是剔除，true - 是
         $field = [true,'Content'];
 
-        //如果当前有传入token，则验证该用户是否是管理员，如果是，则返回所有文章，如果不是，则只返回上架的文章
         $query = [
           'Title|Author|Brief' => ['like','%'.$keywords.'%'],
-          'AuthorId' => ['like','%'.$authorId.'%'],
         ];
+        //查询某个Id或isMy
+        if( $authorId ) $query['AuthorId'] = $authorId;
 
-        $token = request()->header('token') ? request()->header('token') : request()->post('token');
-        if($token) {
-          //验证token
-          $tokenData = $this->jwt->decPure($token);
-          if(!$tokenData || $tokenData['expireTime'] < time()) {
-            $query['IsUpShelf'] = 1;
+        if(!$isMy) {
+          //在非isMy下，如果当前有传入token，则验证该用户是否是管理员，如果是，则返回所有文章，如果不是，则只返回上架的文章
+          $token = request()->header('token') ? request()->header('token') : request()->post('token');
+          if($token) {
+            //验证token
+            $tokenData = $this->jwt->decPure($token);
+            if(!$tokenData || $tokenData['expireTime'] < time()) {
+              $query['IsUpShelf'] = 1;
+            }else {
+              //此时去查询下这个用户的权限，如果是管理员则可以看到所有的，包括下架了的
+              $uid = $tokenData['uid'];
+              $userInfo = Db::name('users')
+              ->where('Id',$uid)
+              ->find();
+
+              if($userInfo['UserType'] < 2) $query['IsUpShelf'] = 1;
+            }
           }else {
-            //此时去查询下这个用户的权限，如果是管理员则可以看到所有的，包括下架了的
-            $uid = $tokenData['uid'];
-            $userInfo = Db::name('users')
-            ->where('Id',$uid)
-            ->find();
-
-            if($userInfo['UserType'] < 2) $query['IsUpShelf'] = 1;
+            $query['IsUpShelf'] = 1;
           }
         }else {
           $query['IsUpShelf'] = 1;
         }
-
         // 支持标题，简介，作者，时间范围
         $res = $this->common->getDataList('arcticles',$query,$field,$time);
         
@@ -138,11 +144,9 @@ class Arcticle extends Controller
        $uid = $tokenData['uid'];
 
        //获取AppCode  平台类型  1 - PC   2-H5   3- 小程序   4 - admin
-       $appCode = request()->header('appCode');
-       if(!$appCode) {
-          $this->common->setResponse(21,'appCode不能为空！');
-          return;
-       }
+       $appCodeValid = appCodeValid::valid();
+       if(!$appCodeValid) return;
+       $appCode = $appCodeValid['AppCode'];
 
        //验证必填字段      
        if(!$this->validateData()) return;
@@ -151,8 +155,16 @@ class Arcticle extends Controller
 
        //如果有传入Id,则是修改
        if(isset($arcticle['Id'])) {
+        //先查询数据库，看有没有这个文章
+        $dbArticle = Db::name('arcticles')->where('Id',$arcticle['Id'])->find();
+        if(!$dbArticle) {
+          $this->common->setResponse(21,'查询文章数据失败！');
+          return;
+        }
+
+        $arcAppCode = $dbArticle['AppCode'];
+
         //如果是修改操作，必须要验证AppCode,主要是限制小程序端，其他端创建的文章不能在小程序端进行修改，小程序端创建的文章，不能在其他端修改
-        $arcAppCode = $arcticle['AppCode'];
         if(($appCode == 3 && $arcAppCode != 3) || ($appCode != 3 && $arcAppCode == 3)) {
           $this->common->setResponse(21,'请在其他平台修改该文章！');
           return;
@@ -174,16 +186,19 @@ class Arcticle extends Controller
         // 启动事务
         Db::startTrans();
         try{
-            $res = Db::name('arcticles')->where('Id',$arcticle['Id'])->update($arcticle);
-
-           if($res == 1) {
-             $this->common->setResponse(200,'修改成功！');
-           }else {
-             $this->common->setResponse(21,'修改失败！');
+           //去除AppCode修改
+           $updateArrKeys = ['Title','Brief','Content','Url','ThumbUrl'];
+           $updateArr = [];
+           foreach ($arcticle as $k => $v) {
+             if( in_array($k,$updateArrKeys) ) $updateArr[$k] = $arcticle[$k];
            }
-            // 提交事务
-            Db::commit();    
+
+           $res = Db::name('arcticles')->where('Id',$arcticle['Id'])->update($updateArr);
+           $this->common->setResponse(200,'修改成功！');
+           // 提交事务
+           Db::commit();    
         } catch (\Exception $e) {
+          var_dump($e->getMessage());
             $this->common->setResponse(21,'操作数据库失败！');
             // 回滚事务
             Db::rollback();
@@ -194,7 +209,7 @@ class Arcticle extends Controller
          $arcticle['ReadCount'] = 0;
          $arcticle['CollectCount'] = 0;
          $arcticle['AuthorId'] = $uid;
-         $arcticle['AppCode'] = $app;
+         $arcticle['AppCode'] = $appCode;
 
          // 启动事务
          Db::startTrans();
@@ -260,12 +275,15 @@ class Arcticle extends Controller
             $this->common->setResponse(21,'修改阅读量失败！');
             // 回滚事务
             Db::rollback();
+            return;
          }
 
 
          //获取到了文章相关标签信息
          $arcticleInfo = $res[0];
+         $arcticleInfo['ReadCount'] ++ ;
          $arcticleInfo['HasCollect'] = false;
+         $arcticleInfo['CanEdit'] = false;
 
          // $tagList = Db::name('tags')
          //  ->where('ArcTicleId',$id)
@@ -280,6 +298,9 @@ class Arcticle extends Controller
             $tokenData = validJWT::valid();
             if(!$tokenData) return;
             $uid = $tokenData['uid'];
+            //是否可修改文章
+            if($uid == $arcticleInfo['AuthorId']) $arcticleInfo['CanEdit'] = true;
+
             //返回该用户是否已经收藏过
             $res = Db::name('collections')
               ->where('CollectionId',$id)
@@ -362,7 +383,7 @@ class Arcticle extends Controller
      * @Author   罗文
      * @DateTime 2018-04-17
      * @param [Number] Id [要操作的文章]
-     * @param [Number] isUpShelf [是否上下架   1 - 上架   -1 - 下架]
+     * @param [Number] IsUpShelf [是否上下架   1 - 上架   -1 - 下架]
      * @return   [type]     [description]
      */
     public function upOrDownShelf()
@@ -376,7 +397,7 @@ class Arcticle extends Controller
          return;
       }
 
-      $isUpShelf = request()->post('isUpShelf');
+      $isUpShelf = request()->post('IsUpShelf');
       if( !$isUpShelf || !in_array($isUpShelf,[-1,1]) ) {
          $this->common->setResponse(21,'操作不合法，只能上架或者下架！');
          return;
@@ -428,7 +449,6 @@ class Arcticle extends Controller
             'Title'  => 'require|length:1,255',
             'Author'  => 'require|length:1,20',
             'Content' => 'require',
-            'AppCode' => 'require'
         ];
 
         $msg = [
@@ -436,8 +456,7 @@ class Arcticle extends Controller
             'Title.length'     => '文章标题长度只能在1-255个字符之间，一个汉字为3个字符',
             'Author.require' => '文章作者不能为空！',
             'Author.length'     => '文章作者长度只能在1-20个字符之间，一个汉字为3个字符',
-            'Content.require'   => '文章内容不能为空',
-            'AppCode.require' => 'AppCode不能为空'
+            'Content.require'   => '文章内容不能为空'
         ];
 
         $validate = new Validate($rule, $msg);

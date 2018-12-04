@@ -50,5 +50,33 @@ export const getArticleDetail = function(id) {
       Id:id
     }
   })
+  .then(res => {
+    let { AppCode , CreateTime , Url , Content } = res;
+    CreateTime = Vue.prototype.dateFormat(CreateTime,'yyyy-mm-dd')
+    Url = Url || Vue.prototype.getDefaultCover()
+
+    //针对微信小程序平台发布的文章，其是json字符串，需要进行额外的处理
+    if(AppCode == 3) {
+      try {
+        let parseContent = JSON.parse(Content);
+        Content = parseContent.reduce( ( prevStr,current) => {
+          if(current.type == 'text') {
+            return prevStr + `<p>${current.value}</p>`
+          }else {
+            return prevStr + `<p><img src="${current.value}"/><br/><span style="padding-left:26px">${current.desc}</span></p>`
+          }
+        },'')
+      }catch(e) {
+        console.log(e)
+      }
+    }
+
+    return Object.assign({},res,{
+       AppCode,
+       CreateTime,
+       Url,
+       Content 
+    });
+  })
 }
 

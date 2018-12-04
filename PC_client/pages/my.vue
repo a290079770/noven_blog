@@ -60,7 +60,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="font">
+          <tr v-for="(item,index) in dataList" class="font">
             <td>
               <img class="my-check-icon" src="~assets/icon/checked.svg">
             </td>
@@ -71,24 +71,11 @@
               <button class="my-table-btn my-table-btn-del">删除</button>
             </td>
           </tr>
-
-          <tr class="font">
-            <td>
-              <img class="my-check-icon" src="~assets/icon/checked.svg">
-            </td>
-            <td class="my-arc-item-title">一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这</td>
-            <td>2018-11-29 16:35</td>
-            <td>
-              <button class="my-table-btn ">编辑</button>
-              <button class=" my-table-btn my-table-btn-del">删除</button>
-            </td>
-          </tr>
         </tbody>
       </table>
 
       <section class="flex flex-justify-end my-page">
         <el-pagination
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page.sync="cp"
           :page-size="ps"
@@ -111,10 +98,11 @@
 </template>
 
 <script>
-
+import { getArticleList } from '~/assets/service/articleService'
 export default {
   data() {
     return {
+      dataList:[],
       isEdit: false,
       cp: 1,
       ps: 10,
@@ -124,14 +112,28 @@ export default {
   },
 
   methods:{
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    /**
+     * [getArticleList 获取文章列表]
+     * @return {[type]}          [description]
+     */
+    async getArticleList() {
+      let { list , recordCount } = await getArticleList(this.ps,this.cp,'','CreateTime',true);
+
+      this.dataList = list;
+      this.total = recordCount;
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     }
   },
-
+  created() {
+    this.getArticleList();
+  },
   mounted() {
      console.log(111)
   }

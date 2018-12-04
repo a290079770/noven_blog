@@ -91,55 +91,17 @@
 	    login(formName) {
 	      this.$refs[formName].validate((valid) => {
 	        if (valid) {
-	        	console.log(this.loginForm.account,this.loginForm.pass);
 	        	//密码加密
 	          if(this.loginForm.pass && (this.loginForm.pass !== localStorage.getItem('pwd'))) {
-	          	this.loginForm.pass = hex_sha1(this.loginForm.pass);
+	          	this.loginForm.pass = sha1(this.loginForm.pass).toUpperCase();
 	          }
 	          // console.log(this.loginForm.pass);
 	          this.$http.post('/user/login',{
                 Account:this.loginForm.account,
                 Password:this.loginForm.pass
-              }).then((res) => {
-              	console.log(res.data);
-                if(res.data.code === 200) {
-                  // this.$message({
-                  //   message: res.data.description,
-                  //   type: 'success',
-                  //   center: true
-                  // });
-                  //存储token
-                  localStorage.setItem('token',res.data.data.token);
-                  //存储当前登录用户id
-                  // sessionStorage.setItem('userId',res.data.data.Id);
-                  // sessionStorage.setItem('account',res.data.data.Account);
-
-                  if(this.checked) {
-                  	//记住帐号和密码
-                  	localStorage.setItem('account',this.loginForm.account);
-                  	localStorage.setItem('pwd',this.loginForm.pass);
-
-                  } else {
-
-                  	// localStorage.removeItem('account');
-                  	localStorage.removeItem('pwd');
-                  }
-                  this.$router.push('/wrap');
-                  //this.$router.push({
-		          //   path:'/wrap',
-		          //   query:{
-		          //     id:res.data.data.Id,
-		          //   }
-		          // });
-
-                } else {
-                  this.$message({
-                    message: res.data.description,
-                    type: 'error',
-                    center: true
-                  });
-                }
-
+              }).then(({ token }) => {
+                this.setCookie('token',token);
+                this.goTo('/')
               })
 	        } else {
 	          console.log('error submit!!');

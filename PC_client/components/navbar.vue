@@ -1,39 +1,42 @@
 <template>
-  <section ref="navMenu" class="flex-center mc pr nav-menu" :class="{'nav-menu-fiexd':isFixed}">
-    <section class="flex flex-align-center flex-justify-between nav-menu-cont">
-      <ul class="flex flex-align-center pr nav-menu-items">
-        <li 
-        v-for="(item,index) in navList" 
-        :key="index"  
-        class="flex-center font-l nav-menu-item" 
-        :class="{'nav-menu-item-active': selectedIndex === index }"
-        @click="changeSelectedIndex(index)"
-        >
-          {{item.title}}
-        </li>
-        <li class="nav-menu-item nav-menu-item-line" :style="{transform: 'translateX(-'+ (navList.length - selectedIndex) * 150 +'px)', left: navList.length * 150 + 'px'}"></li>
-      </ul>
-      <section class="flex flex-align-center flex-justify-end nav-menu-right">
-        <img @click="search" class="search-input-icon" src="~assets/icon/search.svg">
-        <input 
-        class="search-input" 
-        :class="{ 'search-input-focus' : isSearchInputFocus}" 
-        type="text" 
-        placeholder="请输入关键字搜索文章"
-        v-model="keywords" 
-        @focus="isSearchInputFocus = true"
-        @blur="isSearchInputFocus = false"
-        @keyup.enter="search"
-        >
+  <section class="pr">
+    <section class="flex-center mc pr nav-menu"></section>
 
-        <div class="flex-center nav-menu-login-cont" @click="$router.push('/login')">
-          <span v-if="false" class="primary">登录</span>
-          <figure v-else class="nav-menu-login-cover" :style="{background: 'url(https://img08.lechebangstatic.com/share/minapp/newCar/photo_3.jpg) no-repeat center', backgroundSize:'cover' }"></figure>
-        </div>
+    <section ref="navMenu" class="flex-center mc pr nav-menu nav-menu-abs" :class="{'nav-menu-fiexd':isFixed}">
+      <section class="flex flex-align-center flex-justify-between nav-menu-cont">
+        <ul class="flex flex-align-center pr nav-menu-items">
+          <li 
+          v-for="(item,index) in navList" 
+          :key="index"  
+          class="flex-center font-l nav-menu-item" 
+          :class="{'nav-menu-item-active': selectedIndex === index }"
+          @click="changeSelectedIndex(index)"
+          >
+            {{item.title}}
+          </li>
+          <li class="nav-menu-item nav-menu-item-line" :style="{transform: 'translateX(-'+ (navList.length - selectedIndex) * 150 +'px)', left: navList.length * 150 + 'px'}"></li>
+        </ul>
+        <section class="flex flex-align-center flex-justify-end nav-menu-right">
+          <img @click="search" class="search-input-icon" src="~assets/icon/search.svg">
+          <input 
+          class="search-input" 
+          :class="{ 'search-input-focus' : isSearchInputFocus}" 
+          type="text" 
+          placeholder="请输入关键字搜索文章"
+          v-model="keywords" 
+          @focus="isSearchInputFocus = true"
+          @blur="isSearchInputFocus = false"
+          @keyup.enter="search"
+          >
+
+          <div class="flex-center nav-menu-login-cont" @click="$router.push('/login')">
+            <span v-if="false" class="primary">登录</span>
+            <figure v-else class="nav-menu-login-cover" :style="{background: 'url(https://img08.lechebangstatic.com/share/minapp/newCar/photo_3.jpg) no-repeat center', backgroundSize:'cover' }"></figure>
+          </div>
+        </section>
       </section>
     </section>
 
-    
   </section>
 </template>
 
@@ -148,7 +151,7 @@ export default {
     this.setActive()
   },
   mounted() {
-    if(this.$refs.navMenu.getBoundingClientRect) {
+    if(this.$refs.navMenu &&  this.$refs.navMenu.getBoundingClientRect) {
         let { top } = this.$refs.navMenu.getBoundingClientRect();
         this.navBarTop = top;
     }  
@@ -255,11 +258,18 @@ export default {
     }
   }
 
+  .nav-menu-abs {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
   .nav-menu-fiexd {
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 9;
+    z-index: 1000;
     width: 100%;
   }
 </style>

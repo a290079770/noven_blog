@@ -24,6 +24,10 @@ module.exports = {
         src: 'https://cdn.bootcss.com/js-xss/0.3.3/xss.min.js',
         defer:"defer"
       },
+      { 
+        src: 'https://cdn.bootcss.com/js-sha1/0.6.0/sha1.min.js',
+        defer:"defer"
+      },
     ]
   },
 

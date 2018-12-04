@@ -27,14 +27,15 @@ axios.interceptors.request.use(
 
       let apiName = config.url.slice(config.url.lastIndexOf('/'));
 
-      if(localStorage.token) {
+      let token = Vue.prototype.getCookie('token');
+      if(token) {
         //需要附加上token
-        config.headers.token = localStorage.token;
+        config.headers.token = token;
       }
       
       // 如果方法为get，使用qs.stringify实现跨域访问
       if(config.method  === 'get'){
-        config.params.a = 1;
+        
       }
 
       // 如果方法为post，使用qs.stringify实现跨域访问

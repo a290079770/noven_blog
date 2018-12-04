@@ -33,7 +33,7 @@
             </span>
           </div>
           <div>
-            <button @click="goTo('/detail')" class="arc-list-item-btn font">立即阅读</button>
+            <button @click="goTo('/detail',`id=${item.Id}`)" class="arc-list-item-btn font">立即阅读</button>
           </div>
         </div>
       </section>

@@ -317,6 +317,44 @@ function kindOf(val) {
 
 
 
+/** ------------------------  cookie操作  -------------------------- */
+
+
+/*cookie操作*/
+function setCookie(key, value, time) {
+  var r = key + "=" + escape(value);
+  if(time > 0) {
+    var i = new Date();
+    i.setTime(i.getTime() + time * 24 * 3600 * 1000);
+    r = r + "; expires=" + i.toGMTString() + "; path=/";
+  } else {
+    r = r + "; path=/";
+  }
+  document.cookie = r;
+};
+
+function getCookie(key) {
+  var t = document.cookie;
+  var n = t.split("; ");
+  try {
+    for(var r = 0; r < n.length; r++) {
+      var i = n[r].split("=");
+      if(i[0] == key) return unescape(i[1]);
+    }
+  } catch(e) {
+    return "";
+  }
+  return "";
+};
+
+function delCookie(key) {
+  var t = new Date();
+  t.setTime(t.getTime() - 10000);
+  document.cookie = key + "=; expires=" + t.toGMTString() + "; path=/";
+};
+
+
+
 
 
 
@@ -342,8 +380,7 @@ function  getDefaultCover() {
 function goTo(path,query) {
   if(!path) return;
 
-  console.log( Vue.$route)
-  let { $router } = Vue.prototype;
+  let { $router } =Vue.prototype.$nuxt;
 
   if(!query) {
     $router.push(path);
@@ -366,6 +403,7 @@ function goTo(path,query) {
       return 
     }
 
+    extQuery = {};
     let arr = query.split('&');
     arr.forEach(item => {
       let [ key, value ] = item.split('=');
@@ -403,10 +441,13 @@ let utils = {
   getSliceStr, //剪切字符串，需要计算中文长度
   randomStr, //生成指定长度随机字符串
 
-
-
   //Date日期操作
   dateFormat:dateFormat(), //格式化日期 dateFormat('2015/04/14', 'yyyy-mm-dd HH:MM')
+
+  //cookie操作
+  setCookie,  //设置cookie
+  getCookie,  //获取某个key的cookie
+  delCookie,  //移除cookie
 
   //其他
   getDefaultCover,    // 获取文章默认封面图

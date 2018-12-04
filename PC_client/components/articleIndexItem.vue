@@ -1,5 +1,5 @@
 <template>
-  <section @click="$router.push('/detail')" class="flex-center arc-index-item">
+  <section @click="goTo('/detail',`id=${item.Id}`)" class="flex-center arc-index-item">
     <section class="flex flex-align-center flex-justify-between arc-index-item-cont">
       <div class="arc-index-item-cover" :style="{background: `url(${ item.Url}) no-repeat center`, backgroundSize:'cover' }">
         
