@@ -34,4 +34,5 @@ export default () => {
 
   Vue.prototype.$message = Message;
   Vue.prototype.$alert = MessageBox.alert;
+  Vue.prototype.$confirm = MessageBox.confirm;
 }

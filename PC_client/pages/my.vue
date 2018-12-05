@@ -52,7 +52,7 @@
         <thead>
           <tr class="font-lg">
             <th width="150">
-              <img class="my-check-icon" src="~assets/icon/check.svg">
+              <img @click="selectAll" class="my-check-icon" :src=" selectedAll ? '/checked.svg' :'/check.svg'">
             </th>
             <th width="600">标题</th>
             <th width="150">创建时间</th>
@@ -62,10 +62,10 @@
         <tbody>
           <tr v-for="(item,index) in dataList" class="font">
             <td>
-              <img class="my-check-icon" src="~assets/icon/checked.svg">
+              <img @click="selectItem(index)" class="my-check-icon" :src=" item.selected ? '/checked.svg' :'/check.svg'">
             </td>
-            <td class="my-arc-item-title">一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这</td>
-            <td>2018-11-29 16:35</td>
+            <td class="my-arc-item-title">{{item.Title}}</td>
+            <td>{{item.CreateTime}}</td>
             <td>
               <button class="my-table-btn">编辑</button>
               <button class="my-table-btn my-table-btn-del">删除</button>
@@ -106,8 +106,8 @@ export default {
       isEdit: false,
       cp: 1,
       ps: 10,
-      total: 100,
-      nickName:''
+      total: 0,
+      nickName:'',
     }
   },
 
@@ -119,7 +119,10 @@ export default {
     async getArticleList() {
       let { list , recordCount } = await getArticleList(this.ps,this.cp,'','CreateTime',true);
 
-      this.dataList = list;
+      this.dataList = list.map(item => {
+        item.selected = false;
+        return item;
+      });
       this.total = recordCount;
 
       window.scrollTo({
@@ -127,8 +130,32 @@ export default {
         behavior: "smooth"
       })
     },
+
+    //切换单个选中
+    selectItem(index) {
+      let { selected } = this.dataList[index];
+      this.$set(this.dataList[index],'selected',!selected);
+    },
+    //切换所有选中
+    selectAll() {
+      this.dataList = this.dataList.map(item => {
+        item.selected = !this.selectedAll;
+        return item;
+      })
+    },
+
+    //上传成功
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    //当前页码
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+    }
+  },
+  computed: {
+    selectedAll() {
+      return this.dataList.every(item => item.selected);
     }
   },
   created() {

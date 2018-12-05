@@ -8,6 +8,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
+
 // axios 配置
 axios.defaults.timeout = 5000;
 
@@ -64,7 +65,8 @@ axios.interceptors.response.use(
             confirmButtonText: '确定',
             type: 'warning',
           }).then(()=>{
-            router.push('/login');
+            let { $router } = Vue.prototype.$nuxt;
+            $router.push('/login');
           })
         }else {
           //其他错误轻提示 
