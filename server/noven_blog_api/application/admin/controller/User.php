@@ -352,6 +352,9 @@ class User extends Controller
          //获取到了用户的基本信息，还需要获取用户标签信息
          $userInfo = $res[0];
 
+         unset($userInfo['Password']);
+         unset($userInfo['OpenId']);
+
          // $tagList = Db::name('tags')
          //  ->where('UserId',request()->get('Id'))
          //  ->select();

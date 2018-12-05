@@ -7,40 +7,41 @@
         <img @click="isEdit = false" class="edit-icon" src="~assets/icon/ok.svg" v-if="isEdit">
       </section>
 
-      <figure class="my-cover">
-        <img src="https://img08.lechebangstatic.com/share/minapp/newCar/photo_3.jpg" class="full-img">
-      </figure>
-
+      <figure class="my-cover" :style="{background: `url(${userInfo.CoverUrl}) no-repeat center`, backgroundSize:'cover' }"></figure>
       <el-upload
         v-if="isEdit"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        :action="uploadParams.action"
+        :multiple="uploadParams.multiple"
+        :name="uploadParams.name"
+        :accept="uploadParams.accept"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
-        <div class="flex-center my-cover-upload" :style="{background: 'url(https://img08.lechebangstatic.com/share/minapp/newCar/photo_3.jpg) no-repeat center', backgroundSize:'cover' }">
+        >
+        <div class="flex-center my-cover-upload" :style="{background: `url(${editUserInfo.CoverUrl}) no-repeat center`, backgroundSize:'cover' }">
           <img class="my-cover-upload-icon" src="~assets/icon/add-gray.svg">
         </div>
       </el-upload>
 
       <h2 class="flex flex-column flex-align-center primary my-name">
-        Noven
+        {{userInfo.NickName}}
         <p v-if="isEdit">
           <input 
           maxlength="12" 
           class="my-name-input" 
           type="text" 
-          v-model="nickName"
+          v-model="editUserInfo.NickName"
           >
         </p>
       </h2>
 
       <p class="font gray9 my-abs">
-        这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介这是一段简介
+        {{userInfo.Introduction || '我才懒得写简介~~~'}}
 
         <textarea 
         v-if="isEdit" 
         maxlength="280" 
         class="font gray6 my-abs-input"
+        v-model="editUserInfo.Introduction"
         ></textarea>
       </p>
 
@@ -68,7 +69,7 @@
             <td>{{item.CreateTime}}</td>
             <td>
               <button class="my-table-btn">编辑</button>
-              <button class="my-table-btn my-table-btn-del">删除</button>
+              <button @click="deleteArc(item.Id)" class="my-table-btn my-table-btn-del">删除</button>
             </td>
           </tr>
         </tbody>
@@ -98,7 +99,7 @@
 </template>
 
 <script>
-import { getArticleList } from '~/assets/service/articleService'
+import { getArticleList , deleteArticle } from '~/assets/service/articleService'
 export default {
   data() {
     return {
@@ -107,7 +108,13 @@ export default {
       cp: 1,
       ps: 10,
       total: 0,
-      nickName:'',
+      userInfo: JSON.parse(localStorage.userInfo),
+      editUserInfo: {
+        NickName:'',
+        CoverUrl:'',
+        Introduction: ''
+      },
+      uploadParams: this.getUploadParams()
     }
   },
 
@@ -131,6 +138,20 @@ export default {
       })
     },
 
+    //删除一篇文章
+    deleteArc(id) {
+      this.$confirm('确定删除该文章及其相关数据？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return deleteArticle(id);
+      }).then(() => {
+        this.$message.success('操作成功！');
+        this.getArticleList();
+      })
+    },
+
     //切换单个选中
     selectItem(index) {
       let { selected } = this.dataList[index];
@@ -138,28 +159,39 @@ export default {
     },
     //切换所有选中
     selectAll() {
+      let current = this.selectedAll;
       this.dataList = this.dataList.map(item => {
-        item.selected = !this.selectedAll;
+        item.selected = !current;
         return item;
       })
     },
 
     //上传成功
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+      let { code , description , data } = res;
+      if( code !== 200) {
+        this.$message.error(description);
+        return 
+      }
+
+      this.$set(this.editUserInfo,'CoverUrl',data.url.replace(/\\/g,'/'));
     },
     //当前页码
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.cp = val;
+      this.getArticleList();
     }
   },
   computed: {
     selectedAll() {
       return this.dataList.every(item => item.selected);
-    }
+    },
+
   },
   created() {
     this.getArticleList();
+
+    this.editUserInfo = this.pick(this.userInfo,['NickName','CoverUrl','Introduction'])
   },
   mounted() {
      console.log(111)

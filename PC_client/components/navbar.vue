@@ -58,14 +58,14 @@ export default {
           contRoutes:[]
         },
         {
-          title:'关于我们',
-          link:'/aboutus',
-          contRoutes:['a']
-        },
-        {
           title:'书不尽言',
           link:'/feedback',
           contRoutes:[]
+        },
+        {
+          title:'关于我们',
+          link:'/aboutus',
+          contRoutes:['a']
         },
         {
           title:'我的创作',

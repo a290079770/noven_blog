@@ -6,35 +6,20 @@
       </h1>
 
   
-      <section class="time-line-item" v-for="(item,index) in 3">
+      <section class="time-line-item" v-for="(item,index) in timeLine">
         <section class="time-line-year">
-          2018
+          {{item.Year}}
         </section>
-        <section class="time-line-months">
+        <section v-for="(yitem,yindex) in item.Children" class="time-line-months">
           <section class="time-line-months-title">
-            10月
+            {{yitem.Month}}月
           </section>
-          <table class="time-line-months-cont">
+          <table border="0" class="time-line-months-cont">
             <tbody>
-              <tr>
-                <td width="200">1</td>
-                <td width="650">2</td>
-                <td width="">3</td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
+              <tr @click="goTo('/detail',`id=${ditem.Id}`)" v-for="(ditem,dindex) in yitem.Children">
+                <td width="200">{{ditem.CreateTime}}</td>
+                <td width="650">{{ditem.Title}}</td>
+                <td width="">{{ditem.Author}}</td>
               </tr>
             </tbody>
           </table>
@@ -46,8 +31,16 @@
 </template>
 
 <script>
+import { getTimeLine } from '~/assets/service/userService'
 export default {
-
+  data() {
+    return {
+      timeLine:[]
+    }
+  },
+  async created() {
+    this.timeLine = await getTimeLine();
+  }
 }
 </script>
 

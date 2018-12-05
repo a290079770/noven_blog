@@ -325,7 +325,7 @@ function setCookie(key, value, time) {
   var r = key + "=" + escape(value);
   if(time > 0) {
     var i = new Date();
-    i.setTime(i.getTime() + time * 24 * 3600 * 1000);
+    i.setTime(i.getTime() + time );
     r = r + "; expires=" + i.toGMTString() + "; path=/";
   } else {
     r = r + "; path=/";
@@ -418,6 +418,17 @@ function goTo(path,query) {
 }
 
 
+//获取上传所需要配置的参数
+function getUploadParams() {
+  return {
+    action: apiUrl +'/images/uploadFile',
+    multiple: false,
+    data: {},
+    name: 'file',
+    drag: true,
+    accept:".jpg,.jpeg,.png,.gif,.JPG,.JPEG,.GIF"
+  }
+}
 
 
 
@@ -452,6 +463,7 @@ let utils = {
   //其他
   getDefaultCover,    // 获取文章默认封面图
   goTo,    // 跳转页面
+  getUploadParams,   //返回文件上传的配置
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);

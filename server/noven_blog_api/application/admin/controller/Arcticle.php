@@ -317,7 +317,7 @@ class Arcticle extends Controller
 
 
     /**
-     * [delete 删除一个用户或管理员]
+     * [delete 删除一篇文章]
      * @Author   罗文
      * @DateTime 2018-04-17
      * @return   [type]     [description]

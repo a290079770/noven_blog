@@ -26,14 +26,14 @@ class Other extends Controller
     public function timeLine()
     { 
 
-      if(!request()->get('Id')) {
-        $this->common->setResponse(21,'缺少用户Id');
-        return;
-      }
+      //验证token
+      $tokenData = validJWT::valid();
+      if(!$tokenData) return;
+      $uid = $tokenData['uid'];
 
       //获取用户所有的文章和心情
-      $arcticleList = $this->getDataList('arcticles',1);
-      $moodList = $this->getDataList('moods',2);
+      $arcticleList = $this->getDataList('arcticles',1,$uid);
+      $moodList = $this->getDataList('moods',2,$uid);
       
       //得到所有文章和心情的数组
       $combine = array_merge($arcticleList,$moodList);
@@ -111,15 +111,16 @@ class Other extends Controller
      * @DateTime 2018-04-22
      * @param    [string]     $table [要查询的表名]
      * @param    [int]     $type  [1 - 文章  2 - 心情]
+     * @param    [int]     $uid  [用户id]
      * @return   [type]            [description]
      */
-    private function getDataList($table,$type)
+    private function getDataList($table,$type,$uid)
     { 
-       $fieldStr = $type == 1 ? 'Id,Title,CreateTime,AuthorId' : 'Id,Content,CreateTime,AuthorId';
+       $fieldStr = $type == 1 ? 'Id,Title,CreateTime,AuthorId,Author' : 'Id,Content,CreateTime,AuthorId';
 
        $res = Db::name($table)
               ->field($fieldStr)
-              ->where('AuthorId',request()->get('Id'))
+              ->where('AuthorId',$uid)
               ->select();
        
        //处理结果数组，只保留Id,标题，创建时间，作者，减少字节数

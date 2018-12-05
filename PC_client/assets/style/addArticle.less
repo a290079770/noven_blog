@@ -15,6 +15,7 @@
 
 
   .add-arc-form {
+    @formRightItem: 600px;
     padding: 20px 30px; 
 
     .add-arc-form-item {
@@ -45,7 +46,7 @@
       }
 
       .add-arc-form-cover-has {
-        width: 650px;
+        width: @formRightItem;
         height: 400px;
         border: @borderDashed;
 
@@ -78,7 +79,7 @@
       .add-arc-form-input {
         transition: @transition;
         height: 36px;
-        width: 650px;
+        width: @formRightItem;
         text-indent: 15px;
         background: transparent;
         border: @borderBold;
@@ -93,7 +94,7 @@
         transition: @transition;
         padding: 10px;
         height: 130px;
-        width: 650px;
+        width: @formRightItem;
         border: @borderBold;
         outline: none;
         border-radius: 4px;
@@ -107,11 +108,11 @@
         position: absolute;
         bottom: -25px;
         left: 0;
-        width: 250px;
+        width:  @formRightItem;
       }
 
       .add-arc-form-item-notice-abs {
-        width: 650px;
+        width: @formRightItem;
       }
 
       .add-arc-editor {

@@ -80,3 +80,15 @@ export const getArticleDetail = function(id) {
   })
 }
 
+
+/**
+ * [delete 删除一篇文章]
+ * @Author   罗文
+ * @DateTime 2018-09-26
+ * @neccessaryParam  [Number]  id  文章id
+ */
+export const deleteArticle = function(id) {
+  return Vue.prototype.$http.post('/arcticle/delete',{
+    Id:id
+  })
+}

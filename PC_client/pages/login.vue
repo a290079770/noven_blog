@@ -43,107 +43,112 @@
 </template>
 
 <script>
-	export default {
-		layout:'normal',
-	  data() {
-	    var checkAccount = (rule, value, callback) => {
-	      if (!value) {
-	        return callback(new Error('帐号不能为空'));
-	      }
-	      callback();
-	    };
-	    var validatePass = (rule, value, callback) => {
-	      if (value === '') {
-	        callback(new Error('请输入密码'));
-	      }
-	      callback();
-	    };
+import { getUserDetail } from '~/assets/service/userService'
+export default {
+	layout:'normal',
+  data() {
+    var checkAccount = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('帐号不能为空'));
+      }
+      callback();
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      }
+      callback();
+    };
 
-	    return {
-	    	checked:true,
-	    	loginForm: {
-		        pass: '',
-		        account: '',
-		        verification: ''
-		     },
-	      	rules2: {
-		        pass: [
-		          { validator: validatePass, trigger: 'blur' }
-		        ],
-		        account: [
-		          { validator: checkAccount, trigger: 'blur' }
-		        ]
-		    },
-
-		    winWidth:window.innerWidth,
-		    winHeight:window.innerHeight,
-
-		    showObj: {
-		    	logo:false,
-		    	account: false,
-		    	password: false,
-		    	login: false
-		    }
-	    };
-	  },
-	  methods: {
-	  	// 登录
-	    login(formName) {
-	      this.$refs[formName].validate((valid) => {
-	        if (valid) {
-	        	//密码加密
-	          if(this.loginForm.pass && (this.loginForm.pass !== localStorage.getItem('pwd'))) {
-	          	this.loginForm.pass = sha1(this.loginForm.pass).toUpperCase();
-	          }
-	          // console.log(this.loginForm.pass);
-	          this.$http.post('/user/login',{
-                Account:this.loginForm.account,
-                Password:this.loginForm.pass
-              }).then(({ token }) => {
-                this.setCookie('token',token);
-                this.goTo('/')
-              })
-	        } else {
-	          console.log('error submit!!');
-	          return false;
-	        }
-	      });
+    return {
+    	checked:true,
+    	loginForm: {
+	        pass: '',
+	        account: '',
+	        verification: ''
+	     },
+      	rules2: {
+	        pass: [
+	          { validator: validatePass, trigger: 'blur' }
+	        ],
+	        account: [
+	          { validator: checkAccount, trigger: 'blur' }
+	        ]
 	    },
 
-	    // 动画
-	    loginAnimated(time) {
-          let refs = ['logo','account','password','login'];
-          let aniateClass = ['rollIn','bounceInRight','bounceInRight','bounceInUp'];
+	    winWidth:window.innerWidth,
+	    winHeight:window.innerHeight,
 
-	      for(let i = 0 ; i < refs.length ; i ++) {
-		  		setTimeout(()=>{
-		  			// this.$refs[refs[i]].className += " animated "+ aniateClass[i];
-		  			this.$refs[refs[i]].classList.add('animated');
-				   	this.$refs[refs[i]].classList.add(aniateClass[i]);
-		  			this.showObj[refs[i]] = true;
-
-		  			if(i == refs.length - 1) {
-	              setTimeout(()=> {
-				  			document.body.style.overflow = 'visible';
-				  		},1000)
-		  			}
-			   	}, i * time)
-	  	  }
-
-	      document.body.style.overflow = 'hidden';
+	    showObj: {
+	    	logo:false,
+	    	account: false,
+	    	password: false,
+	    	login: false
 	    }
-	  },
-	  mounted() {
-	  	this.loginForm.account = localStorage.getItem('account');
-	  	this.loginForm.pass = localStorage.getItem('pwd');
-	  	window.onresize = () => {
-	  		this.winWidth = window.innerWidth;
-	  		this.winHeight = window.innerHeight;
-	  	}
+    };
+  },
+  methods: {
+  	// 登录
+    login(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+        	//密码加密
+          if(this.loginForm.pass && (this.loginForm.pass !== localStorage.getItem('pwd'))) {
+          	this.loginForm.pass = sha1(this.loginForm.pass).toUpperCase();
+          }
 
-	  	this.loginAnimated(300);
-	  }
-	}
+          //发起登录
+          this.$http.post('/user/login',{
+            Account:this.loginForm.account,
+            Password:this.loginForm.pass
+          }).then(({ token }) => {
+            this.setCookie('token',token, 1000 * 3600 * 2);
+            return getUserDetail();
+          }).then(res => {
+          	localStorage.setItem('userInfo',JSON.stringify(res));
+            this.goTo('/')
+          })
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+
+    // 动画
+    loginAnimated(time) {
+      let refs = ['logo','account','password','login'];
+      let aniateClass = ['rollIn','bounceInRight','bounceInRight','bounceInUp'];
+
+      for(let i = 0 ; i < refs.length ; i ++) {
+	  		setTimeout(()=>{
+	  			// this.$refs[refs[i]].className += " animated "+ aniateClass[i];
+	  			this.$refs[refs[i]].classList.add('animated');
+			   	this.$refs[refs[i]].classList.add(aniateClass[i]);
+	  			this.showObj[refs[i]] = true;
+
+	  			if(i == refs.length - 1) {
+              setTimeout(()=> {
+			  			document.body.style.overflow = 'visible';
+			  		},1000)
+	  			}
+		   	}, i * time)
+  	  }
+
+      document.body.style.overflow = 'hidden';
+    }
+  },
+  mounted() {
+  	this.loginForm.account = localStorage.getItem('account');
+  	this.loginForm.pass = localStorage.getItem('pwd');
+  	window.onresize = () => {
+  		this.winWidth = window.innerWidth;
+  		this.winHeight = window.innerHeight;
+  	}
+
+  	this.loginAnimated(300);
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
