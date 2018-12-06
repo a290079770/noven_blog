@@ -33,7 +33,7 @@
     </section>
     <!-- <section class="mc detail-author ">
       <section class="flex detail-author-cont">
-        <figure class="detail-author-cover" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg) no-repeat center', backgroundSize:'cover'}"> </figure>
+        <figure class="detail-author-cover bg-full-img" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg)'}"> </figure>
         <section class="detail-author-info">
           <p>
             <span class="font-l">作者：</span>

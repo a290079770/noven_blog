@@ -8,7 +8,7 @@
       trigger="click"
       >
         <el-carousel-item v-for="(item,index) in bannerList" :key="'banner'+index"  >
-          <section @click="goTo('/detail',`id=${item.Id}`)" :style="{background: 'url('+ item.Url +') no-repeat center', backgroundSize:'cover' }" class="flex-center index-swiper-item">
+          <section @click="goTo('/detail',`id=${item.Id}`)" :style="{background: 'url('+ item.Url +')' }" class="flex-center index-swiper-item bg-full-img">
             <section class="flex-center flex-column index-swiper-detail-cont">
               <section class="index-swiper-detail-author font">
                 @article
@@ -31,7 +31,7 @@
     <section class="flex flex-justify-between index-body">
       <section class="index-list" > 
         <section class="index-list-item-first" v-if="firstArc"  @click="goTo('/detail',`id=${firstArc.Id}`)">
-          <div class="index-list-item-first-cover" :style="{background: `url(${firstArc.Url}) no-repeat center`, backgroundSize:'cover' }"></div>
+          <div class="index-list-item-first-cover bg-full-img" :style="{background: `url(${firstArc.Url})`}"></div>
           <div class="index-list-item-first-info-cont">
             <p class="index-list-item-first-info gray6 font-xs">
               <span class="primary">article&nbsp;</span>
@@ -54,13 +54,13 @@
         <intro-container title="关于我">
           <div class="index-bloger-cont">
             <figure class="index-bloger-cover">
-              <img class="index-bloger-cover-img" src="/cover.jpg">
+              <img class="index-bloger-cover-img" :src="userInfo.CoverUrl">
             </figure>
-            <h3 class="flex-center font-l index-bloger-name " >
-              Noven
+            <h3 class="flex-center font-lg primary index-bloger-name " >
+              {{userInfo.NickName}}
             </h3>
             <p class="gray6 font">
-              关于我自己，昵称唐青，2014年毕业于重庆某大学，从事Web前端四年有余，掌握HTML、CSS、JS、PHP、NodeJS、Vue、React、Webpack、D3...各种前端技能，十八般武艺，都耍得有模有样。
+              {{userInfo.Introduction || '我还没有留下简介信息～'}}
             </p>
           </div>
         </intro-container>
@@ -127,7 +127,13 @@ export default {
       dataList:[],
 
       //推荐阅读文章列表
-      recommendList: []
+      recommendList: [],
+
+      userInfo: {
+        CoverUrl:'http://120.77.180.233:8081/images/Yve4jIf6KHG3dz63_photo_1544078309.jpeg',
+        NickName:'Noven',
+        Introduction:'关于我自己，昵称唐青，2014年毕业于重庆某大学，从事Web前端四年有余，掌握HTML、CSS、JS、PHP、NodeJS、Vue、React、Webpack、D3...各种前端技能，十八般武艺，都耍得有模有样。'
+      }
     }
   },
 
@@ -172,6 +178,13 @@ export default {
     }
   },
   created() {
+    //获取用户信息,如果有就显示
+    try {
+      this.userInfo = JSON.parse(localStorage.userInfo);
+    }catch(e) {
+      //没有用户信息的话用默认的
+    }
+
     this.getArticleList('dataList');
     this.getArticleList('bannerList');
     this.getArticleList('recommendList');

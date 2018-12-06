@@ -49,7 +49,13 @@ const getLen = (str) => {
   if (typeof str != "string"){    
     str += "";  
   } 
-  return str.replace(/[^\x00-\xff]/g,"01").length;
+
+  let strLen = str.length;
+  let chinese = str.match(/[\u4e00-\u9fa5]/g);
+  let chineseLen = ( chinese && chinese.length ) || 0;
+
+  return strLen + chineseLen;
+  // return str.replace(/[^\u4e00-\u9fa5]/g,"01").length;
 }
 
 /**

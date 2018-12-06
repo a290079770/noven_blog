@@ -37,7 +37,8 @@
         transition: @transition;
         height: 150px;
         width: 150px;
-        border: @borderDashed;
+        border: @borderBold;
+        border-radius: 4px;
         cursor: pointer;
         .add-arc-form-cover-upload-icon {
           width: 30px;
@@ -49,6 +50,7 @@
         width: @formRightItem;
         height: 400px;
         border: @borderDashed;
+        border-radius: 4px;
 
         .add-arc-form-cover-has-close {
           position: absolute;
@@ -93,12 +95,13 @@
       .add-arc-form-textarea {
         transition: @transition;
         padding: 10px;
-        height: 130px;
+        height: 96px;
         width: @formRightItem;
         border: @borderBold;
         outline: none;
         border-radius: 4px;
         line-height: 18px;
+        resize: none;
         &:focus {
           border: 1px solid @primary
         }

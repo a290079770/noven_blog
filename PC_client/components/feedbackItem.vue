@@ -1,6 +1,6 @@
 <template>
   <section class="flex feedback-item">
-    <figure class="feedback-item-cover" :style="{background: 'url('+ data.cover +') no-repeat center', backgroundSize:'cover' }" ></figure>
+    <figure class="feedback-item-cover bg-full-img" :style="{background: 'url('+ data.cover +')'}" ></figure>
     <section class="feedback-item-content">
       <h3>{{data.nickName}}</h3>
       <p class="gray6 font feedback-item-content-list" v-html="data.content"></p>
@@ -13,7 +13,7 @@
 
       <section class="feedback-reply-list">
         <section v-for="(item,index) in data.children" class="flex feedback-reply-item">
-          <figure class="feedback-item-cover" :style="{background: 'url('+ item.cover +') no-repeat center', backgroundSize:'cover' }" ></figure>
+          <figure class="feedback-item-cover bg-full-img" :style="{background: 'url('+ item.cover +')'}" ></figure>
           <section class="feedback-item-content feedback-item-reply-content">
             <h3>{{item.nickName}}</h3>
             <p class="gray6 font feedback-item-content-list" v-html="item.content"></p>
@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~assets/style/common.less';
+  @import '~assets/style/varite.less';
   
   .feedback-item {
     padding: 20px 30px;

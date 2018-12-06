@@ -82,7 +82,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~assets/style/common.less';
+  @import '~assets/style/varite.less';
   
   .footer-place {
     height: 520px;

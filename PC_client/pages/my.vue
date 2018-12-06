@@ -3,11 +3,11 @@
     <section class="flex flex-column flex-align-center pr my-cont">
       <section class="flex flex-align-center flex-justify-end my-edit-cont">
         <img @click="isEdit = true" class="edit-icon" src="~assets/icon/write.svg" v-if="!isEdit">
-        <img @click="isEdit = false" class="edit-icon edit-icon-close" src="~assets/icon/close.svg" v-if="isEdit">
-        <img @click="isEdit = false" class="edit-icon" src="~assets/icon/ok.svg" v-if="isEdit">
+        <img @click="toggleEdit(2)" class="edit-icon edit-icon-close" src="~assets/icon/close.svg" v-if="isEdit">
+        <img @click="toggleEdit(1)" class="edit-icon" src="~assets/icon/ok.svg" v-if="isEdit">
       </section>
 
-      <figure class="my-cover" :style="{background: `url(${userInfo.CoverUrl}) no-repeat center`, backgroundSize:'cover' }"></figure>
+      <figure @click="isEdit = true" class="my-cover bg-full-img " :style="{background: `url(${userInfo.CoverUrl})`}"></figure>
       <el-upload
         v-if="isEdit"
         :action="uploadParams.action"
@@ -17,7 +17,7 @@
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         >
-        <div class="flex-center my-cover-upload" :style="{background: `url(${editUserInfo.CoverUrl}) no-repeat center`, backgroundSize:'cover' }">
+        <div class="flex-center my-cover-upload bg-full-img " :style="{background: `url(${editUserInfo.CoverUrl})`}">
           <img class="my-cover-upload-icon" src="~assets/icon/add-gray.svg">
         </div>
       </el-upload>
@@ -29,6 +29,7 @@
           maxlength="12" 
           class="my-name-input" 
           type="text" 
+          placeholder="请输入要修改的昵称" 
           v-model="editUserInfo.NickName"
           >
         </p>
@@ -41,6 +42,7 @@
         v-if="isEdit" 
         maxlength="280" 
         class="font gray6 my-abs-input"
+        placeholder="请输入要修改的简介" 
         v-model="editUserInfo.Introduction"
         ></textarea>
       </p>
@@ -100,6 +102,7 @@
 
 <script>
 import { getArticleList , deleteArticle } from '~/assets/service/articleService'
+import { updateUserInfo } from '~/assets/service/userService'
 export default {
   data() {
     return {
@@ -108,7 +111,7 @@ export default {
       cp: 1,
       ps: 10,
       total: 0,
-      userInfo: JSON.parse(localStorage.userInfo),
+      userInfo: {},
       editUserInfo: {
         NickName:'',
         CoverUrl:'',
@@ -135,6 +138,52 @@ export default {
       window.scrollTo({
         top: 0,
         behavior: "smooth"
+      })
+    },
+
+    /**
+     * [toggleEdit 编辑用户信息，点击勾还是叉]
+     * @Author   罗文
+     * @DateTime 2018-12-06
+     * @param    {[Number]}   type [1 - 确定修改 2 - 取消修改]
+     * @return   {[type]}        [description]
+     */
+    toggleEdit(type) {
+      if(type == 2) {
+        this.resetEditUserInfo();
+        return;
+      }
+
+      //发起修改
+      //数据验证，这里只需要验证nickName
+      let { NickName } = this.editUserInfo;
+      
+      if(!NickName || !NickName.replace(/ /g,'')) {
+        this.$message.error('昵称不能为空');
+        return;
+      }
+
+      if(/[^A-Za-z0-9\u4e00-\u9fa5]/.test(NickName)) {
+        this.$message.error('昵称不能有特殊字符');
+        return;
+      }
+
+      if(this.getLen(NickName) > 12) {
+        this.$message.error('昵称不能超过12个字符，一个汉字为2个字符');
+        return;
+      }
+
+      this.updateUserInfo();
+    },
+
+    //修改用户信息
+    async updateUserInfo() {
+      this.userInfo = await updateUserInfo(this.editUserInfo);
+
+      this.$message.success('修改用户信息成功！');
+      this.$nextTick(function() {
+        localStorage.setItem('userInfo',JSON.stringify(this.userInfo));
+        this.resetEditUserInfo();
       })
     },
 
@@ -180,6 +229,12 @@ export default {
     handleCurrentChange(val) {
       this.cp = val;
       this.getArticleList();
+    },
+
+    //重置编辑用户信息
+    resetEditUserInfo() {
+      this.isEdit = false;
+      this.editUserInfo = this.pick(this.userInfo,['NickName','CoverUrl','Introduction'])
     }
   },
   computed: {
@@ -189,12 +244,22 @@ export default {
 
   },
   created() {
-    this.getArticleList();
-
-    this.editUserInfo = this.pick(this.userInfo,['NickName','CoverUrl','Introduction'])
+    //获取用户信息
+    try {
+      this.userInfo = JSON.parse(localStorage.userInfo);
+      this.getArticleList();
+      this.resetEditUserInfo();
+    }catch(e) {
+      this.$confirm('获取用户信息失败！','提示',{
+        showCancelButton: false,
+      })
+      .then(() => {
+        this.goTo('/login');
+      })
+    }
   },
   mounted() {
-     console.log(111)
+     
   }
 }
 </script>

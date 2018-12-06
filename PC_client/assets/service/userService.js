@@ -31,3 +31,20 @@ export const getTimeLine = function(id) {
     }
   })
 }
+
+
+/**
+ * [updateUserInfo 修改用户信息]
+ * @Author   罗文
+ * @DateTime 2018-09-26
+ * @neccessaryParam  [String]  token  当前用户的token,默认在headers里自动携带上传
+ * @possibleParam  [String]  NickName  昵称 
+ * @possibleParam  [String]  CoverUrl  封面 
+ * @possibleParam  [String]  Brief  简介 
+ */
+export const updateUserInfo = function(userInfo) {
+  return Vue.prototype.$http.post('/user/updateUserInfo',{
+    userInfo
+  })
+}
+

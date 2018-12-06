@@ -12,8 +12,8 @@ import qs from 'qs'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-// var apiUrl = 'http://120.77.180.233:8081';
-window.apiUrl = 'http://novenblog_api.com';
+window.apiUrl = 'http://120.77.180.233:8081';
+// window.apiUrl = 'http://novenblog_api.com';
 
 axios.defaults.baseURL = apiUrl;
 
@@ -25,7 +25,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.interceptors.request.use(
     config => {
       config.data = config.data || {};
-
+      config.headers.appCode = 1;
+      
       let apiName = config.url.slice(config.url.lastIndexOf('/'));
 
       let token = Vue.prototype.getCookie('token');

@@ -8,7 +8,7 @@
     </div>
 
     <section class="flex flex-justify-between arc-list-item-cont">
-      <section class="arc-list-item-cover" :style="{background: `url(${item.Url}) no-repeat center`, backgroundSize:'cover' }">
+      <section class="arc-list-item-cover bg-full-img" :style="{background: `url(${item.Url})`}">
       </section>
       <section class="flex flex-justify-between flex-column arc-list-item-info-cont">
         <h2 class="font-lg text-ess-1">
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~assets/style/common.less';
+  @import '~assets/style/varite.less';
   .arc-list-item {
     transition: @transition;
     margin-bottom: 20px;

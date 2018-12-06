@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~assets/style/common.less';
+  @import '~assets/style/varite.less';
   
   .header {
     height: 175px;

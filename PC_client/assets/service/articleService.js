@@ -92,3 +92,20 @@ export const deleteArticle = function(id) {
     Id:id
   })
 }
+
+
+/**
+ * [arcticleList 新增或修改文章]
+ * @Author   罗文
+ * @DateTime 2018-09-26
+ * @neccessaryParam  [String]  articleInfo.Title  文章标题
+ * @neccessaryParam  [String]  articleInfo.Author  文章作者
+ * @neccessaryParam  [String]  articleInfo.Content  文章内容
+ * @possibleParam  [Number]  articleInfo.Id  文章id，修改时有
+ * @possibleParam  [any]  其他修改时自动带的文章信息
+ */
+export const createOrUpdate = function(articleInfo) {
+  return Vue.prototype.$http.post('/arcticle/createOrUpdate',{
+    ...articleInfo
+  })
+}

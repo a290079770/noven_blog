@@ -29,9 +29,9 @@
           @keyup.enter="search"
           >
 
-          <div class="flex-center nav-menu-login-cont" @click="$router.push('/login')">
-            <span v-if="false" class="primary">登录</span>
-            <figure v-else class="nav-menu-login-cover" :style="{background: 'url(https://img08.lechebangstatic.com/share/minapp/newCar/photo_3.jpg) no-repeat center', backgroundSize:'cover' }"></figure>
+          <div class="flex-center nav-menu-login-cont" >
+            <span @click="goTo('/login')" v-if="!userInfo" class="primary">登录</span>
+            <figure @click="goTo('/my')"  v-else class="nav-menu-login-cover bg-full-img" :style="{background: `url(${userInfo.CoverUrl || '/n1.png'})` }"></figure>
           </div>
         </section>
       </section>
@@ -67,11 +67,11 @@ export default {
           link:'/aboutus',
           contRoutes:['a']
         },
-        {
-          title:'我的创作',
-          link:'/my',
-          contRoutes:[]
-        },
+        // {
+        //   title:'我的创作',
+        //   link:'/my',
+        //   contRoutes:[]
+        // },
       ],
       selectedIndex: 0,
 
@@ -79,6 +79,8 @@ export default {
       isSearchInputFocus: false,
       isFixed: false,
       navBarTop: 0,
+
+      userInfo: null
     }
   },
 
@@ -148,6 +150,13 @@ export default {
     }
   },
   created() {
+    //获取用户信息,如果有就显示
+    try {
+      this.userInfo = JSON.parse(localStorage.userInfo);
+    }catch(e) {
+      //没有用户信息的话用默认的
+    }
+
     this.setActive()
   },
   mounted() {
@@ -177,7 +186,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~assets/style/common.less';
+  @import '~assets/style/varite.less';
   .nav-menu {
     height: 66px;
     background: white;

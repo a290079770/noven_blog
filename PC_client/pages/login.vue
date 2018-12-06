@@ -138,6 +138,11 @@ export default {
       document.body.style.overflow = 'hidden';
     }
   },
+  created() {
+    //每次到了这个页面，直接认为用户退出了登录，清除用户信息
+    this.delCookie('token');
+    localStorage.removeItem('userInfo');
+  },
   mounted() {
   	this.loginForm.account = localStorage.getItem('account');
   	this.loginForm.pass = localStorage.getItem('pwd');

@@ -1,7 +1,7 @@
 <template>
   <section @click="goTo('/detail',`id=${item.Id}`)" class="flex-center arc-index-item">
     <section class="flex flex-align-center flex-justify-between arc-index-item-cont">
-      <div class="arc-index-item-cover" :style="{background: `url(${ item.Url}) no-repeat center`, backgroundSize:'cover' }">
+      <div class="arc-index-item-cover bg-full-img" :style="{background: `url(${ item.Url})`}">
         
       </div>
       <div class="arc-index-item-info-cont">
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~assets/style/common.less';
+  @import '~assets/style/varite.less';
   .arc-index-item {
     transition: @transition;
     margin-top: 20px;

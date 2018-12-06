@@ -34,5 +34,13 @@ export default () => {
 
   Vue.prototype.$message = Message;
   Vue.prototype.$alert = MessageBox.alert;
+
+  Vue.prototype.$confirm = function(msg,notice,option = {}) {
+    let custom = {
+      showClose:false,
+      lockScroll:true,
+    }
+    return MessageBox.confirm(msg,notice,Object.assign(custom,option))
+  }
   Vue.prototype.$confirm = MessageBox.confirm;
 }

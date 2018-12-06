@@ -17,7 +17,7 @@ function getEditorConfig(type) {
       'italic',  // 斜体
       'underline',  // 下划线
       'strikeThrough',  // 删除线
-      // 'justify',  // 对齐方式
+      'justify',  // 对齐方式
       'foreColor',  // 文字颜色
       'backColor',  // 背景颜色
       'link',  // 插入链接
@@ -50,28 +50,31 @@ function getEditorConfig(type) {
     //如果 还需要 将参数拼接到 url 中，可再加上如下配置
     uploadImgParamsWithUrl: false,
     //上传图片时，可自定义filename，即在使用formdata.append(name, file)添加图片文件时，自定义第一个参数
-    // uploadFileName:'',
+    uploadFileName:'file',
     //上传图片时刻自定义设置 header
     uploadImgHeaders: {
         // 'Accept': 'text/x-json'
     },
     //跨域上传中如果需要传递 cookie 需设置 withCredentials
-    withCredentials: true,
+    withCredentials: false,
     //自定义 timeout 时间
     uploadImgTimeout: 10000,
     //监听函数，见文档
-    // uploadImgHooks: {
-    //   before(xhr, editor, files) {},
-    //   success(xhr, editor, files) {// 图片上传并返回结果，图片插入成功之后触发},
-    //   fail(xhr, editor, files) {},
-    //   error(xhr, editor, files) {},
-    //   timeout(xhr, editor, files) {},
-    //   customInsert(xhr, editor, files) {
-    //     // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
-    //     // 但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
-    //     // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
-    //   },
-    // }
+    uploadImgHooks: {
+      // before(xhr, editor, files) {},
+      // success(xhr, editor, files) {// 图片上传并返回结果，图片插入成功之后触发},
+      // fail(xhr, editor, files) {},
+      // error(xhr, editor, files) {},
+      // timeout(xhr, editor, files) {},
+      customInsert(insertImg, result, editor) {
+        // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+        // 但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+        // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+        let { data: { url }} = result;
+
+        insertImg( url );
+      },
+    }
     //自定义提示方法
     // customAlert(info) {}
     //自定义上传图片事件,如果想完全自己控制图片上传的过程，可以使用如下代码
@@ -83,7 +86,7 @@ function getEditorConfig(type) {
      // 自定义菜单配置
      menus: type == 1 ? EditMenuList : FeedbackMenuList,
      //debug模式下，有 JS 错误会以throw Error方式提示出来。默认值为false，即不会抛出异常。
-     debug: false,
+     debug: true,
      //编辑区域的z-index默认为10000，可自定义修改，代码配置如下。需改之后，编辑区域和菜单的z-index会同时生效。     
      zIndex: 999, 
      //配置其他语言，见文档   
@@ -147,7 +150,7 @@ function getEditorConfig(type) {
     //使用 base64 保存图片,
     // uploadImgShowBase64: false,
     //配置上传图片的服务器地址
-    uploadImgServer: '/images/uploadFile',
+    uploadImgServer: apiUrl + '/images/uploadFile',
     //配置图片上传的其他数据
     ...uploadConfig,
   }
