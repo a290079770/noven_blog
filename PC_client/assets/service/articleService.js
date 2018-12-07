@@ -53,7 +53,6 @@ export const getArticleDetail = function(id) {
   .then(res => {
     let { AppCode , CreateTime , Url , Content } = res;
     CreateTime = Vue.prototype.dateFormat(CreateTime,'yyyy-mm-dd')
-    Url = Url || Vue.prototype.getDefaultCover()
 
     //针对微信小程序平台发布的文章，其是json字符串，需要进行额外的处理
     if(AppCode == 3) {
@@ -107,5 +106,20 @@ export const deleteArticle = function(id) {
 export const createOrUpdate = function(articleInfo) {
   return Vue.prototype.$http.post('/arcticle/createOrUpdate',{
     ...articleInfo
+  })
+}
+
+
+/**
+ * [collect 收藏或者取消收藏-点赞]
+ * @Author   罗文
+ * @DateTime 2018-09-26
+ * @neccessaryParam  [Number]  id  文章id
+ * @neccessaryParam  [Boolean]  isCollect  要收藏还是取消
+ */
+export const collect = function({ id , isCollect }) {
+  return Vue.prototype.$http.post('/arcticle/collect',{
+    id, 
+    isCollect
   })
 }

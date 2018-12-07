@@ -1,7 +1,7 @@
 <import src="../common/bgTemplate/bgTemplate.wxml"/>
 
 
-<view class="my header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);"  bindtap="headerClick">
+<view class="my header-bg" style="background: url(http://120.77.180.233:8081/images/YrYeI9tr3HPobcXB_photo_1544163485.png);"  bindtap="headerClick">
    <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl,isCover:true,isLogin,userInfo,date}}"/>
 
    <view class="my-content">

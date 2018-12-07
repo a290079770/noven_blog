@@ -31,7 +31,16 @@
 
           <div class="flex-center nav-menu-login-cont" >
             <span @click="goTo('/login')" v-if="!userInfo" class="primary">登录</span>
-            <figure @click="goTo('/my')"  v-else class="nav-menu-login-cover bg-full-img" :style="{background: `url(${userInfo.CoverUrl || '/n1.png'})` }"></figure>
+            
+            <el-popover
+              v-else 
+              placement="bottom"
+              trigger="hover">
+              <div @click="signOut" class="flex-center nav-menu-sign-out">
+                退出
+              </div>
+              <figure slot="reference" @click="goTo('/my')"  class="nav-menu-login-cover bg-full-img" :style="{background: `url(${userInfo.CoverUrl || '/n1.png'})` }"></figure>
+            </el-popover>
           </div>
         </section>
       </section>
@@ -147,17 +156,33 @@ export default {
       })
 
       if( find ) this.selectedIndex = this.navList.findIndex( item => item.link === find.link)
+    },
+
+    //每次路由切换，重新渲染用户信息
+    setUserInfo() {
+      //获取用户信息,如果有就显示
+      try {
+        this.userInfo = JSON.parse(localStorage.userInfo);
+      }catch(e) {
+        //没有用户信息的话用默认的
+        this.userInfo = null;
+      }
+    },
+
+    //退出登录
+    async signOut() {
+      let confirm = await this.$confirm('是否要退出？','提示');
+      if(!confirm) return; 
+
+      this.delCookie('token');
+      sessionStorage.clear();
+      localStorage.clear();
+      this.goTo('/');
     }
   },
   created() {
-    //获取用户信息,如果有就显示
-    try {
-      this.userInfo = JSON.parse(localStorage.userInfo);
-    }catch(e) {
-      //没有用户信息的话用默认的
-    }
-
-    this.setActive()
+    this.setActive();
+    this.setUserInfo()
   },
   mounted() {
     if(this.$refs.navMenu &&  this.$refs.navMenu.getBoundingClientRect) {
@@ -172,13 +197,13 @@ export default {
   },
 
   watch: {
-    $route() {
+    $route(nv) {
       this.setActive();
+      this.setUserInfo();
       if(this.$refs.navMenu.getBoundingClientRect) {
-        setTimeout(()=>{
-          let { top } = this.$refs.navMenu.getBoundingClientRect();
-          this.navBarTop = top;
-        },100)
+        let { path } = nv;
+        //首页要请求图片
+        this.navBarTop = path !== '/' ? 175 : window.innerHeight + 175;
       }
     }
   }
@@ -256,8 +281,8 @@ export default {
 
         .nav-menu-login-cover {
           transition: @transition;
-          width: 100%;
-          height: 100%;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           &:hover {
             border-radius: 8px;
@@ -280,5 +305,12 @@ export default {
     top: 0;
     z-index: 1000;
     width: 100%;
+  }
+
+  .nav-menu-sign-out {
+    &:hover {
+      cursor:pointer;
+      color: @primary;
+    };
   }
 </style>

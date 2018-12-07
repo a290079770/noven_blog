@@ -70,7 +70,7 @@
             <td class="my-arc-item-title">{{item.Title}}</td>
             <td>{{item.CreateTime}}</td>
             <td>
-              <button class="my-table-btn">编辑</button>
+              <button @click="goTo('/addArticle',`id=${item.Id}`)" class="my-table-btn">编辑</button>
               <button @click="deleteArc(item.Id)" class="my-table-btn my-table-btn-del">删除</button>
             </td>
           </tr>
@@ -134,11 +134,6 @@ export default {
         return item;
       });
       this.total = recordCount;
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      })
     },
 
     /**
@@ -244,6 +239,7 @@ export default {
 
   },
   created() {
+    sessionStorage.removeItem('previewArticleData');
     //获取用户信息
     try {
       this.userInfo = JSON.parse(localStorage.userInfo);

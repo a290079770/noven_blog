@@ -29,7 +29,7 @@
             </span>
             <span class="flex flex-align-center arc-list-item-view-icon-cont">
               <img class="arc-list-item-view-icon" src="~assets/icon/zan-kong.svg">
-              <span>{{item.CollectCount}}次收藏</span>
+              <span>{{item.CollectCount}}次点赞</span>
             </span>
           </div>
           <div>

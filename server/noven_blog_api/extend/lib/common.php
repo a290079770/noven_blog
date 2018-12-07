@@ -238,7 +238,7 @@ class Common
       $resData = $dataArr[0];        
 
       //判断是新增还是移除      
-      if(!$isCollect) {
+      if(!$isCollect || $isCollect === 'false') {
          //移除
          if(count($arr) > 0) {
             Db::startTrans();

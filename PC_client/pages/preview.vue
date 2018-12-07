@@ -47,28 +47,40 @@ export default {
         Author:''
       },
 
-      userInfo: {}
+      userInfo: {},
+
     }
   },
 
   methods:{
     //发布文章
     async createOrUpdate() {
+      let confirm = await this.$confirm('确定发布文章？','提示').catch(()=> false)
+      if(!confirm) return;
+
+      //发起新增或修改
       this.articleInfo.Author = this.userInfo.NickName;
-
-      let res = await createOrUpdate(this.articleInfo);
-
-      this.$message.success('新增文章成功！～');
-      this.goTo('/detail',{
-        id: res
+      let res = await createOrUpdate(this.articleInfo).catch(err => {
+        //捕获到异常
+        
+        return -1
       })
-    },
 
+      if( res !== -1) {
+        //新增成功
+        this.$message.success( res ? '新增文章成功！～' : '修改文章成功！～');
+        sessionStorage.removeItem('previewArticleData')
+
+        this.goTo('/detail',{
+          id: res || this.articleInfo.Id
+        },true)
+      }
+    },
 
     //返回去编辑
     backEdit() {
       sessionStorage.setItem('previewArticleData', JSON.stringify(this.articleInfo));
-      goTo('/addArticle');
+      this.goTo('/addArticle','',true);
     }
   },
   created() {
@@ -85,8 +97,8 @@ export default {
       })
     }
   },
-  mounted() {
-     
+  beforeDestroy() {
+    // sessionStorage.removeItem('previewArticleData');
   }
 }
 </script>

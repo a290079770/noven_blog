@@ -98,4 +98,31 @@
   pre {
   	background: #f1f1f1
   }
+
+  .detail-collect-cont {
+    transition: @transition;
+    position: fixed;
+    bottom: 140px;
+    right: 100px;
+    z-index: 9;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: @info;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 10px 30px @info;
+    &:hover {
+      transform:scale(1.2);
+      background: @primary;
+      box-shadow: 0 10px 30px @primary;
+    };
+
+  }
+
+  .detail-collect {
+    width: 25px;
+    height: 25px;
+  }
+
 }

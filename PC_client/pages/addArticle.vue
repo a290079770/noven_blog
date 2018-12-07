@@ -87,7 +87,7 @@
         </div>
         <div class="flex add-arc-form-item-right add-arc-submit-btns">
           <el-button type="primary add-arc-submit-btn" @click="previewArc">预览文章</el-button>
-          <el-button>放弃编辑</el-button>
+          <el-button @click="cancelEdit">放弃编辑</el-button>
         </div>
       </div>
     </section>
@@ -95,7 +95,7 @@
 </template>
 
 <script>
-
+import {getArticleDetail} from '~/assets/service/articleService'
 export default {
   async asyncData ({ params }) {
     await new Promise((resolve,reject)=> {
@@ -134,6 +134,7 @@ export default {
 
       uploadParams: this.getUploadParams(),
       isSubmit: false,
+      isNeedUpload: false, //是否需要发起上传
     }
   },
 
@@ -151,7 +152,7 @@ export default {
       if(!this.validNeccessaryField(articleInfo)) return;
 
       //上传封面
-      if(articleInfo.Url) {
+      if(this.isNeedUpload) {
         this.isSubmit = true;
         this.$refs.upload.submit();
       }else 
@@ -206,7 +207,13 @@ export default {
     //去预览，讲当前页面的数据存入本地
     toPreview() {
       sessionStorage.setItem('previewArticleData', JSON.stringify(this.articleInfo));
-      this.goTo('/preview');
+      this.goTo('/preview','',true);
+    },
+
+    //放弃编辑
+    async cancelEdit() {
+      let res = await this.$confirm('确定放弃编辑文章？','提示').catch(()=> false)
+      if(res) this.$router.go(-1);
     },
     /**
      * [inputAction 输入事件]
@@ -256,7 +263,8 @@ export default {
       let _this = this;
       rd.onloadend = function(e) {
           //加载完毕之后获取结果赋值给img
-        _this.$set(_this.articleInfo,'Url',this.result)
+        _this.$set(_this.articleInfo,'Url',this.result);
+        _this.isNeedUpload = true;
       }
     },
 
@@ -277,11 +285,38 @@ export default {
     },
   },
 
-  mounted() {
+  created() {
+    //如果previewArticleData 与 id 同时存在，优先取用previewArticleData
+    if(sessionStorage.previewArticleData) {
+      //从预览页返回编辑的时候，sessionStorage里会有 previewArticleData数据 
+      try {
+        this.articleInfo = JSON.parse(sessionStorage.previewArticleData);
+        sessionStorage.removeItem('previewArticleData')
+      }catch(e) {
+        this.$message.error('解析被修改文章的数据失败！');
+      }
+    }
+  },
+
+  async mounted() {
     this.addEditor = new wangEditor('#addArticleEditor')
     //设置留言编辑器自定义配置
     this.addEditor.customConfig = this.getEditorConfig(1);
     this.addEditor.create()
+
+    if(this.articleInfo.Content) {
+      this.addEditor.txt.html(this.articleInfo.Content)
+      return
+    }
+
+    if(this.$route.query.id) {
+      //修改文章的时候，url会携带文章id
+      let { id } = this.$route.query;
+      this.articleInfo = await getArticleDetail(id);
+      this.addEditor.txt.html(this.articleInfo.Content)
+    }
+
+    //如果都没有，则是新增
   },
 
   watch: {
@@ -291,6 +326,10 @@ export default {
     'articleInfo.Brief': function (nv) {
       this.inputAction(nv,4)
     },
+  },
+
+  beforeDestroy() {
+    // sessionStorage.removeItem('previewArticleData');
   }
 }
 </script>

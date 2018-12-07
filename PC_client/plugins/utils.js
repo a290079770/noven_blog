@@ -381,15 +381,17 @@ function  getDefaultCover() {
  * @DateTime 2018-12-04
  * @param    {[String]}   path  [要跳转的路径]
  * @param    {[String | Object ]}   query [携带的参数]
+ * @param    {[Boolean ]}   replace [是否是替换当前路由]
  * @return   {[type]}         [description]
  */
-function goTo(path,query) {
+function goTo(path,query,replace = false) {
+  console.log(replace)
   if(!path) return;
 
   let { $router } =Vue.prototype.$nuxt;
 
   if(!query) {
-    $router.push(path);
+    replace ? $router.replace(path) : $router.push(path);
     return;
   }
 
@@ -417,10 +419,12 @@ function goTo(path,query) {
     });
   }
 
-  $router.push({
+  let option = {
     path,
     query:extQuery
-  });
+  }
+
+  replace ? $router.replace(option) : $router.push(option);
 }
 
 

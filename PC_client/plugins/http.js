@@ -26,7 +26,7 @@ axios.interceptors.request.use(
     config => {
       config.data = config.data || {};
       config.headers.appCode = 1;
-      
+
       let apiName = config.url.slice(config.url.lastIndexOf('/'));
 
       let token = Vue.prototype.getCookie('token');
@@ -74,6 +74,7 @@ axios.interceptors.response.use(
         }else {
           //其他错误轻提示 
           Vue.prototype.$message.error(description);   
+          return Promise.reject(description);
         }
       }else{  
         //请求成功
@@ -87,6 +88,8 @@ axios.interceptors.response.use(
           type: 'error'
          }); 
       }
+
+      return Promise.reject('异常错误');
   });
 
 

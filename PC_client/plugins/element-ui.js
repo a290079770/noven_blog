@@ -15,6 +15,7 @@ import {
   Col,
   Message,
   MessageBox,
+  Popover,
 } from 'element-ui'
 // import locale from 'element-ui/lib/locale/lang/en'
 
@@ -31,6 +32,7 @@ export default () => {
   Vue.use(Upload)
   Vue.use(Row)
   Vue.use(Col)
+  Vue.use(Popover)
 
   Vue.prototype.$message = Message;
   Vue.prototype.$alert = MessageBox.alert;
