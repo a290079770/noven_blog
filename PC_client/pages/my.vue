@@ -250,7 +250,7 @@ export default {
         showCancelButton: false,
       })
       .then(() => {
-        this.goTo('/login');
+        this.goTo('/login','',true);
       })
     }
   },

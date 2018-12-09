@@ -195,6 +195,7 @@ class User extends Controller
        }
     }
 
+
     //登录时的token更新函数
     //$arr 当前登录用户
     private function updateToken($arr) {
@@ -283,6 +284,40 @@ class User extends Controller
       }
     }
 
+    /**
+     * [signout 退出登录]
+     * @return [type] [description]
+     */
+    public function signout()
+    {
+      $tokenData = validJWT::valid();
+      if(!$tokenData) return;
+      $uid = $tokenData['uid'];
+
+      //清除token
+      // 启动事务
+      Db::startTrans();
+      try{
+          $res = Db::name('tokens')
+          ->where('uid',$uid)
+          ->delete();
+
+          if($res < 1) {
+            $this->common->setResponse(21,'删除失败！');
+            Db::rollback();
+            return;
+          }
+
+          $this->common->setResponse(200,'ok');
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          $this->common->setResponse(21,'删除失败！');
+          // 回滚事务
+          Db::rollback();
+      }
+    }
+
     //获取用户列表
     public function userList()
     {
@@ -296,7 +331,7 @@ class User extends Controller
     }
 
     /**
-     * [detail 获取用户列表]
+     * [getUserList 获取用户列表]
      * @Author   罗文
      * @DateTime 2018-04-17
      * @param [Boolean] isGetActive 是否是获取活跃用户
@@ -360,6 +395,41 @@ class User extends Controller
          //  ->select();
 
          // $userInfo['TagList'] = $tagList;
+         $this->common->setResponse(200,'ok',$userInfo);
+      }    
+    }
+
+
+    /**
+     * [detailSimple 获取用户简易详情，只返回头像、昵称、简介]
+     * @Author   罗文
+     * @DateTime 2018-04-17
+     * @neccessaryParam  [Number]  Id  评论要查询的用户id  
+     * @return   [type]     [description]
+     */
+    public function detailSimple()
+    {
+      $uid = request()->get('Id');
+      if(!$uid || $uid == 0) {
+        $this->common->setResponse(21,'未获取到要查询用户Id');
+        return;
+      }
+
+
+      $res = Db::name('users')
+          ->where('Id',$uid)
+          ->find();
+
+      if(!$res) {
+         $this->common->setResponse(21,'未获取到用户详情！');
+      }else {
+         //获取到了用户的基本信息，只返回头像、昵称、简介
+         $userInfo = [
+          'NickName' => $res['NickName'],
+          'CoverUrl' => $res['CoverUrl'],
+          'Introduction' => $res['Introduction'],
+         ];
+
          $this->common->setResponse(200,'ok',$userInfo);
       }    
     }

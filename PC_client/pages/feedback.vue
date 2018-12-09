@@ -26,6 +26,7 @@
 
 <script>
 import feedbackItem from '~/components/feedbackItem'
+import { getCommentList } from '~/assets/service/commentService'
 
 export default {
   async asyncData ({ params }) {
@@ -49,16 +50,32 @@ export default {
   },
   data() {
     return {
-      fbEditor: null
+      fbEditor: null,
+      ps: 10,
+      cp: 1
     }
   },
   components: {
     'feedback-item':feedbackItem
   },
   methods:{
+    /**
+     * [getDataList 获取评论列表]
+     * @return {[type]} [description]
+     */
+    async getDataList() {
+      let list = await getCommentList({
+        type:1,
+        ps: this.ps,
+        cp: this.cp
+      });
 
+      console.log(list)
+    }
   },
-
+  created() {
+    this.getDataList();
+  },
   mounted() {
     this.fbEditor = new wangEditor('#feedbackEditor')
     //设置留言编辑器自定义配置

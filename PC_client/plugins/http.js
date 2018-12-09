@@ -12,8 +12,8 @@ import qs from 'qs'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-window.apiUrl = 'http://120.77.180.233:8081';
-// window.apiUrl = 'http://novenblog_api.com';
+// window.apiUrl = 'http://120.77.180.233:8081';
+window.apiUrl = 'http://novenblog_api.com';
 
 axios.defaults.baseURL = apiUrl;
 
@@ -68,8 +68,7 @@ axios.interceptors.response.use(
             confirmButtonText: '确定',
             type: 'warning',
           }).then(()=>{
-            let { $router } = Vue.prototype.$nuxt;
-            $router.push('/login');
+            Vue.prototype.goTo('/login','',true);
           })
         }else {
           //其他错误轻提示 

@@ -19,9 +19,11 @@ return [
         'userList'   => ['admin/user/userList', ['method' => 'get']],  // 用户列表
         'activeUserList'   => ['admin/user/activeUserList', ['method' => 'get']],  // 获取今日登录用户列表
         'detail' => ['admin/user/detail', ['method' => 'get']],  // 用户详情
+        'detailSimple' => ['admin/user/detailSimple', ['method' => 'get']],  // 获取用户简略详情
         'login'   => ['admin/user/login', ['method' => 'post']], //登录
         'loginAdmin'   => ['admin/user/loginAdmin', ['method' => 'post']], //后台用户登录
         'reg'   => ['admin/user/reg', ['method' => 'post']], //注册
+        'signout'   => ['admin/user/signout', ['method' => 'post']], //退出登录
         'createOrUpdate'   => ['admin/user/createOrUpdate', ['method' => 'post']],  //新增或修改
         'lockUser'   => ['admin/user/lockUser', ['method' => 'post']],  //锁定/解锁用户
         'validOldPwd'   => ['admin/user/validOldPwd', ['method' => 'post']],  //修改/验证旧密码
@@ -67,6 +69,12 @@ return [
     //标签相关接口
     '[images]' => [
         'uploadFile' => ['admin/images/uploadFile', ['method' => 'post']],  // 上传文件
+    ],
+
+    //标签相关接口
+    '[comment]' => [
+        'getComments' => ['admin/comment/getComments', ['method' => 'get']],  // 获取评论列表
+        'createComment' => ['admin/comment/createComment', ['method' => 'post']],  // 新增一条评论
     ],
 
 
