@@ -10,7 +10,7 @@
     <section class="feedback-edit-container">
       <section id="feedbackEditor" class="feedback-edit">
       </section>
-      <p class="flex flex-align-center flex-justify-end feedback-edit-btns">
+      <p class="flex flex-align-center feedback-edit-btns">
         <el-button size="small" @click="createFeedback(0)" type="primary">留言</el-button>
         <el-button size="small" @click="clearFeedback">清空</el-button>
       </p>

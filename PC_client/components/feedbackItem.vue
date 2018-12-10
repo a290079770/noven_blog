@@ -25,6 +25,20 @@
           </section>
         </section>
       </section>
+
+      <section v-if="true" class="feedback-reply-textarea">
+        <p>
+          <textarea 
+          v-if="true" 
+          class="font gray6 feedback-reply-input"
+          :placeholder="`回复@`" 
+          ></textarea>
+        </p>
+        <p class="flex flex-align-center feedback-item-edit-btns">
+          <el-button size="mini" @click="" type="primary">回复</el-button>
+          <el-button size="mini" @click="">清空</el-button>
+        </p>
+      </section>
     </section>
   </section>
 </template>
@@ -74,7 +88,7 @@ export default {
     }
 
     .feedback-item-content {
-      width: 1040px;
+      width: 980px;
     }
 
 
@@ -102,6 +116,24 @@ export default {
         .feedback-item-reply-content {
           width: 900px;
         }
+      }
+    }
+
+    .feedback-reply-textarea {
+      margin-top: 20px;
+
+      .feedback-reply-input {
+        transition: @transition;
+        padding: 10px 12px;
+        width: 100%;
+        height: 100px;
+        border: @borderBold;
+        outline: none;
+        border-radius: 4px;
+      }
+
+      .feedback-item-edit-btns {
+        margin-top: 10px;
       }
     }
   }
