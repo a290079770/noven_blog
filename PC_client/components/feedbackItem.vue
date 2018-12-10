@@ -7,36 +7,36 @@
 
       <p class="gray9 font-xs">
         <span>{{item.CreateTime}}</span>
-        <span class="primary font feedback-back">回复</span>
+        <span class="primary font feedback-back" @click="showReply(item.NickName)">回复</span>
       </p>
 
 
       <section class="feedback-reply-list">
-        <section v-for="(item,index) in item.Children" class="flex feedback-reply-item">
-          <figure class="feedback-item-cover bg-full-img" :style="{background: 'url('+ item.CoverUrl +')'}" ></figure>
+        <section v-for="(citem,cindex) in item.Children" class="flex feedback-reply-item">
+          <figure class="feedback-item-cover bg-full-img" :style="{background: 'url('+ citem.CoverUrl +')'}" ></figure>
           <section class="feedback-item-content feedback-item-reply-content">
-            <h3>{{item.NickName}}</h3>
-            <p class="gray6 font feedback-item-content-list" v-html="item.Content"></p>
+            <h3>{{citem.NickName}}</h3>
+            <p class="gray6 font feedback-item-content-list" v-html="`@回复<span class='info'>${citem.ReplyNickName || ''}</span>：${citem.Content}` "></p>
 
             <p class="gray9 font-xs">
-              <span>{{item.CreateTime}}</span>
-              <span class="primary font feedback-back">回复</span>
+              <span>{{citem.CreateTime}}</span>
+              <span class="primary font feedback-back" @click="showReply(citem.NickName)">回复</span>
             </p>
           </section>
         </section>
       </section>
 
-      <section v-if="true" class="feedback-reply-textarea">
+      <section v-if="item.isReplyShow" class="feedback-reply-textarea">
         <p>
           <textarea 
-          v-if="true" 
           class="font gray6 feedback-reply-input"
-          :placeholder="`回复@`" 
+          :placeholder="`回复@${item.replyNickName}`"
+          v-model="item.replyText" 
           ></textarea>
         </p>
         <p class="flex flex-align-center feedback-item-edit-btns">
-          <el-button size="mini" @click="" type="primary">回复</el-button>
-          <el-button size="mini" @click="">清空</el-button>
+          <el-button size="mini" type="primary" @click="replyAction">回复</el-button>
+          <el-button size="mini" @click="clearReplyText">清空</el-button>
         </p>
       </section>
     </section>
@@ -56,7 +56,22 @@ export default {
     }
   },
 
-  methods:{},
+  methods:{
+    //触发回复框显示
+    showReply(nickName) {
+      this.$emit('showReply',nickName);
+    },
+
+    //点击清空按钮
+    clearReplyText() {
+      this.$emit('clearReplyText');
+    },
+
+    //发起回复操作
+    replyAction() {
+      this.$emit('replyAction');
+    }
+  },
   created() {
     
   },

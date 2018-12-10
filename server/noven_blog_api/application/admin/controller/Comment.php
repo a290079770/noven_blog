@@ -46,7 +46,7 @@ class Comment extends Controller
     $cp = request()->get('cp') ? request()->get('cp') : 1;
 
     //如果传入了resourceId，则$type直接设置为2
-    if( $resourceId ) $type = 2;
+    if( $resourceId && $resourceId != -1 ) $type = 2;
 
     //如果设置了$type = 2文章评论，如果$appCode != 4，则必须要设置resourceId
     if( $type == 2 && $appCode != 4 && !$resourceId) {
@@ -79,11 +79,16 @@ class Comment extends Controller
     ->order('CreateTime','desc')
     ->select(); 
 
-    //统计数
+    //统计数，用作分页
     $count = Db::name('comments')
     ->where($arr)
     ->where('Pid',0)
     ->count(); 
+    
+    //统计所有评论总数，用作显示
+    $totalCount = Db::name('comments')
+    ->where('type',$type)
+    ->count();
 
     //同时查询这些顶层评论每一条的子评论
     foreach ($comments as $k => $v) {
@@ -96,7 +101,7 @@ class Comment extends Controller
     }
     
 
-    $this->common->setResponse(200,'ok',['list'=> $comments , 'recordCount' => $count],$count);
+    $this->common->setResponse(200,'ok',['list'=> $comments , 'recordCount' => $count , 'totalCount' => $totalCount],$count);
   }
 
 

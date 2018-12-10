@@ -22,7 +22,14 @@
     </section>
 
     <section class="feedback-list">
-      <feedback-item :key="index" v-for="(item,index) in dataList" :item="item"/>
+      <feedback-item 
+      :key="index" 
+      v-for="(item,index) in dataList" 
+      :item="item"
+      @showReply="showReply($event,index)"
+      @clearReplyText="clearReplyText(index)"
+      @replyAction="replyAction(index)"
+      />
 
       <section class="flex flex-justify-end feedback-page">
         <el-pagination
@@ -65,6 +72,18 @@ export default {
       }
     })
   },
+  props:{
+    //1 - 留言板  2 - 文章评论
+    type:{
+      type:Number,
+      default:1, 
+    },
+    //资源id
+    resourceId:{
+      type:Number,
+      default: -1
+    }
+  },
   data() {
     return {
       dataList:[],
@@ -86,14 +105,21 @@ export default {
      */
     async getDataList() {
       let { list , recordCount , totalCount } = await getCommentList({
-        type:1,
+        type: this.type,
         ps: this.ps,
-        cp: this.cp
+        cp: this.cp,
+        resourceId: this.resourceId
       });
 
-      this.dataList = list;
+      this.dataList = list.map(item => {
+        //添加回复框显示和@对象
+        item.isReplyShow = false;
+        item.replyNickName = '';
+        item.replyText = '';
+        return item;
+      });
       this.total = recordCount;
-      this.totalCount = totalCount;
+      this.totalCount = this.type == 2? recordCount : totalCount;
 
       this.$nextTick(function() {
         window.scrollTo({
@@ -105,34 +131,20 @@ export default {
 
     //创建留言
     async createFeedback(pid = 0) {
-      //验证登录
-      if(!this.isLogin) {
-        this.goTo('/login');
-        return 
-      }
-      //验证合法性
       let content = this.fbEditor.txt.text();
       let contentHtml = this.fbEditor.txt.html();
-      //非空
-      if(!content) {
-        this.$message.error('请添加文章内容');
-        return;
-      }
+        
+      //验证合法性，获取xss后的字符串
+      let xssStr = this.validFeedback(content,contentHtml); 
+      if(!xssStr) return;
+      this.content = xssStr;
 
-      //验证xss后是否非空
-      if(!filterXSS(contentHtml)){
-        this.$message.error('文章内容含有非法内容');
-        return;
-      }
-
-      this.content = filterXSS(contentHtml);
-
-        //发起请求
+      //发起请求
       let res = await createComment({
         content: this.content,
-        type: 1,
+        type: this.type,
         pid,
-        resourceId: - 1
+        resourceId: this.resourceId
       });
 
       this.fbEditor.txt.html('');
@@ -152,11 +164,100 @@ export default {
       }
     },
 
+    /**
+     * [validFeedback 验证留言的必要信息]
+     * @param  {[String]} content     [内容的纯文本，text类型]
+     * @param  {[String]} contentHtml [内容的Html]
+     * @return {[String]}             [xss处理后的内容]
+     */
+    validFeedback(content,contentHtml) {
+      //验证登录
+      if(!this.isLogin) {
+        this.goTo('/login');
+        return false; 
+      }
+      //非空
+      if(!content) {
+        this.$message.error('请添加留言内容');
+        return false;
+      }
+
+      //验证xss后是否非空
+      if(!filterXSS(contentHtml)){
+        this.$message.error('留言内容含有非法内容');
+        return false;
+      }
+
+      return filterXSS(contentHtml);
+    },
+
     //当前页码
     handleCurrentChange(val) {
       this.cp = val;
       this.getDataList();
     },
+
+    //显示当前评论的回复框
+    showReply(replyNickName,index) {
+      this.dataList = this.dataList.map(item => {
+        //添加回复框显示和@对象
+        item.isReplyShow = false;
+        item.replyNickName = '';
+        item.replyText = '';
+        return item;
+      });
+
+      let item = this.dataList[index];
+      item.replyNickName = replyNickName;
+      item.isReplyShow = true;
+
+      this.$set(this.dataList,index,item);
+    },
+    //清空当前回复框的内容
+    clearReplyText(index) {
+      this.$set(this.dataList[index],'replyText','');
+    },
+
+    //发起回复操作
+    async replyAction(index) {
+      //收集数据
+      let { replyNickName , replyText , Id } = this.dataList[index];
+
+      //验证合法性，获取xss后的字符串
+      let xssStr = this.validFeedback(replyText,replyText,2); 
+      if(!xssStr) return;
+
+      //发起请求
+      let res = await createComment({
+        content: xssStr,
+        type: this.type,
+        pid: Id,
+        resourceId: this.resourceId,
+        replyNickName
+      });
+
+      this.$message.success('回复成功！');
+
+      //这里为保持当前位置不变化，直接append一个Child进去
+      let { NickName , CoverUrl } = this.userInfo;
+      let reply = {
+        Id:res,
+        NickName,
+        CoverUrl,
+        CreateTime: this.dateFormat(Date.now(),'yyyy-mm-dd hh:MM:ss'),
+        ReplyNickName: replyNickName,
+        Content:xssStr
+      }    
+
+      this.dataList[index].Children.push(reply);
+
+      let item = this.dataList[index];
+      item.replyNickName = '';
+      item.replyText = '';
+      item.isReplyShow = false;
+
+      this.$set(this.dataList,index,item);
+    }
   },
   created() {
     this.getDataList();
@@ -170,6 +271,15 @@ export default {
   computed: {
     isLogin() {
       return this.getCookie('token');
+    },
+
+    userInfo() {
+      //获取用户信息
+      try {
+        return JSON.parse(localStorage.userInfo);
+      }catch(e) {
+        return {}
+      }
     }
   }
 }
