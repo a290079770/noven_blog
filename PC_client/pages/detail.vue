@@ -33,14 +33,14 @@
     </section>
     <section class="mc detail-author ">
       <section class="flex detail-author-cont">
-        <figure class="detail-author-cover bg-full-img" :style="{background: 'url(http://5b0988e595225.cdn.sohucs.com/images/20171208/1906e1bd2cb8412d9be3b12f42201fbe.jpeg)'}"> </figure>
+        <figure class="detail-author-cover bg-full-img" :style="{background: `url(${authorInfo.CoverUrl})`}"> </figure>
         <section class="detail-author-info">
           <p>
             <span class="font-l">作者：</span>
-            <span class="font-l primary">Noven</span>  
+            <span class="font-l primary">{{authorInfo.NickName}}</span>  
           </p>
 
-          <p class="font detail-author-abs">这是一段作者简介这是一段作者简介这是一段作者简介这是一段作者简介这是一段作者简介这是一段作者简介这是一段作者简介这是一段作者简介这是一段作者简介这是一段作者简介这是一段</p>
+          <p class="font detail-author-abs">{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}</p>
         </section>
       </section>
     </section>
@@ -53,10 +53,12 @@
 
 <script>
 import { getArticleDetail , collect } from '~/assets/service/articleService'
+import { detailSimple } from '~/assets/service/userService'
 export default {
   data() {
     return {
-      detail:{}
+      detail:{},
+      authorInfo:{}
     }
   },
 
@@ -64,8 +66,13 @@ export default {
     async getArticleDetail() {
       let res = await getArticleDetail(this.id);
 
-      res.CreateTime = this.dateFormat(res.CreateTime,'yyyy-mm-dd')
       this.detail = res;  
+      this.getSimpleDetail(res.AuthorId);
+    },
+
+    //获取作者基本信息
+    async getSimpleDetail(id) {
+      this.authorInfo = await detailSimple(id);
     },
 
     // 收藏
@@ -85,8 +92,6 @@ export default {
         id: Id,
         isCollect: !HasCollect
       });
-
-      
     },
   },
   created() {

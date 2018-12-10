@@ -17,7 +17,7 @@ module.exports = {
     ],
     script: [
       { 
-        src: 'https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.min.js',
+        src: 'https://cdn.bootcss.com/wangEditor/3.1.1/wangEditor.min.js',
         defer:"defer"
       },
       { 

@@ -106,7 +106,7 @@ export default {
             return getUserDetail();
           }).then(res => {
           	localStorage.setItem('userInfo',JSON.stringify(res));
-            this.goTo('/')
+            this.$router.go(-1);
           })
         } else {
           console.log('error submit!!');

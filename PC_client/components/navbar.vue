@@ -50,7 +50,7 @@
 </template>
 
 <script>
-
+import { signOut } from '~/assets/service/userService'
 export default {
   data() {
     return {
@@ -160,6 +160,12 @@ export default {
 
     //每次路由切换，重新渲染用户信息
     setUserInfo() {
+      if(!this.getCookie('token')) {
+        this.userInfo = null;
+        return;
+      }
+
+      
       //获取用户信息,如果有就显示
       try {
         this.userInfo = JSON.parse(localStorage.userInfo);
@@ -173,6 +179,9 @@ export default {
     async signOut() {
       let confirm = await this.$confirm('是否要退出？','提示');
       if(!confirm) return; 
+
+      //发起退出登录
+      await signOut();
 
       this.delCookie('token');
       sessionStorage.clear();
@@ -200,6 +209,7 @@ export default {
     $route(nv) {
       this.setActive();
       this.setUserInfo();
+
       if(this.$refs.navMenu.getBoundingClientRect) {
         let { path } = nv;
         //首页要请求图片

@@ -29,10 +29,10 @@ function getEditorConfig(type) {
       'code',  // 插入代码
   ];
   const FeedbackMenuList = [
-      'undo',  // 撤销
-      'redo',  // 重复
       'foreColor',  // 文字颜色
       'emoticon',  // 表情
+      'undo',  // 撤销
+      'redo',  // 重复
   ];
 
   //上传图片的配置信息
@@ -86,7 +86,7 @@ function getEditorConfig(type) {
      // 自定义菜单配置
      menus: type == 1 ? EditMenuList : FeedbackMenuList,
      //debug模式下，有 JS 错误会以throw Error方式提示出来。默认值为false，即不会抛出异常。
-     debug: true,
+     debug: false,
      //编辑区域的z-index默认为10000，可自定义修改，代码配置如下。需改之后，编辑区域和菜单的z-index会同时生效。     
      zIndex: 999, 
      //配置其他语言，见文档   
@@ -113,28 +113,19 @@ function getEditorConfig(type) {
     emotions: [
         {
             // tab 的标题
-            title: '默认',
-            // type -> 'emoji' / 'image'
-            type: 'image',
-            // content -> 数组
-            content: [
-                {
-                    alt: '[坏笑]',
-                    src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png'
-                },
-                {
-                    alt: '[舔屏]',
-                    src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/40/pcmoren_tian_org.png'
-                }
-            ]
-        },
-        {
-            // tab 的标题
             title: 'emoji',
             // type -> 'emoji' / 'image'
             type: 'emoji',
             // content -> 数组
-            content: ['😀', '😃', '😄', '😁', '😆']
+            content: '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁  😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐'.split(/\s/)
+        },
+        {
+            // tab 的标题
+            title: 'emoji手势',
+            // type -> 'emoji' / 'image'
+            type: 'emoji',
+            // content -> 数组
+            content: ['🙌', '👏', '👋', '👍', '👎', '👊', '✊', '️👌', '✋', '👐', '💪', '🙏', '️👆', '👇', '👈', '👉', '🖕', '🖐', '🤘']
         }
     ],
     // 自定义字体

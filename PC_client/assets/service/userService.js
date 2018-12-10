@@ -48,3 +48,28 @@ export const updateUserInfo = function(userInfo) {
   })
 }
 
+
+/**
+ * [detailSimple 获取用户简易详情，只返回头像、昵称、简介]
+ * @Author   罗文
+ * @DateTime 2018-04-17
+ * @neccessaryParam  [Number]  Id  评论要查询的用户id  
+ * @return   [type]     [description]
+ */
+export const detailSimple = function(id) {
+  return Vue.prototype.$http.get('/user/detailSimple',{
+    params:{
+      Id:id
+    }
+  })
+}
+
+
+/**
+* [signout 退出登录]
+* @return [type] [description]
+*/
+export const signOut = function(userInfo) {
+  return Vue.prototype.$http.post('/user/signout')
+}
+

@@ -29,7 +29,7 @@ export const getArticleList = function(ps=10,cp=1,keywords='',order='CreateTime'
     let { list, recordCount } = res;
     //解析数据，处理日期格式等
     list = list.map(item => {
-      item.CreateTime = Vue.prototype.dateFormat(item.CreateTime,'yyyy-mm-dd')
+      item.CreateTime = Vue.prototype.dateFormat(item.CreateTime.replace(/-/g,'/'),'yyyy-mm-dd')
       item.Url = item.Url || Vue.prototype.getDefaultCover()
       return item;
     })
@@ -51,31 +51,7 @@ export const getArticleDetail = function(id) {
     }
   })
   .then(res => {
-    let { AppCode , CreateTime , Url , Content } = res;
-    CreateTime = Vue.prototype.dateFormat(CreateTime,'yyyy-mm-dd')
-
-    //针对微信小程序平台发布的文章，其是json字符串，需要进行额外的处理
-    if(AppCode == 3) {
-      try {
-        let parseContent = JSON.parse(Content);
-        Content = parseContent.reduce( ( prevStr,current) => {
-          if(current.type == 'text') {
-            return prevStr + `<p>${current.value}</p>`
-          }else {
-            return prevStr + `<p><img src="${current.value}"/><br/><span style="padding-left:26px">${current.desc}</span></p>`
-          }
-        },'')
-      }catch(e) {
-        console.log(e)
-      }
-    }
-
-    return Object.assign({},res,{
-       AppCode,
-       CreateTime,
-       Url,
-       Content 
-    });
+    return Object.assign({},res,parseDetail(res));
   })
 }
 
@@ -122,4 +98,43 @@ export const collect = function({ id , isCollect }) {
     id, 
     isCollect
   })
+  .then(res => {
+    return Object.assign({},res,parseDetail(res));
+  })
+}
+
+
+/**
+ * [parseDetail 解析文章详情，主要是处理日期兼容safari和小程序端创建文章的问题]
+ * @Author   罗文
+ * @DateTime 2018-12-10
+ * @param    {[Object]}   res [文章详情]
+ * @return   {[type]}           [description]
+ */
+function parseDetail(res) {
+  let { AppCode , CreateTime , Url , Content } = res;
+  CreateTime = Vue.prototype.dateFormat(CreateTime.replace(/-/g,'/'),'yyyy-mm-dd')
+  
+  //针对微信小程序平台发布的文章，其是json字符串，需要进行额外的处理
+  if(AppCode == 3) {
+    try {
+      let parseContent = JSON.parse(Content);
+      Content = parseContent.reduce( ( prevStr,current) => {
+        if(current.type == 'text') {
+          return prevStr + `<p>${current.value}</p>`
+        }else {
+          return prevStr + `<p><img src="${current.value}"/><br/><span style="padding-left:26px">${current.desc}</span></p>`
+        }
+      },'')
+    }catch(e) {
+      console.log(e)
+    }
+  }
+
+  return {
+     AppCode,
+     CreateTime,
+     Url,
+     Content 
+  }
 }
