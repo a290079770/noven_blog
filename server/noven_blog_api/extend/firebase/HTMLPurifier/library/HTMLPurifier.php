@@ -1,5 +1,4 @@
 <?php
-namespace firebase\HTMLPurifier\library;
 /*! @mainpage
  *
  * HTML Purifier is an HTML filter that will take an arbitrary snippet of

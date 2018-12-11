@@ -65,9 +65,9 @@ export default {
 
       //发起新增或修改
       this.articleInfo.Author = this.userInfo.NickName;
+      this.articleInfo.Content = this.articleInfo.Content.replace(/\\/g,'/');
       let res = await createOrUpdate(this.articleInfo).catch(err => {
         //捕获到异常
-        
         return -1
       })
 

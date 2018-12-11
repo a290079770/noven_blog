@@ -10,7 +10,7 @@ use lib\jwtTool;
 use lib\validJWT;
 use lib\authValid;
 use lib\appCodeValid;
-// use lib\HTMLXssFilter;
+use lib\HTMLXssFilter;
 
 class Arcticle extends Controller
 {   
@@ -39,7 +39,6 @@ class Arcticle extends Controller
      */
     public function arcticleList()
     {
-        // HTMLXssFilter::filter();
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
         $authorId = request()->get('authorId') ? request()->get('authorId') : '';
 
@@ -154,6 +153,8 @@ class Arcticle extends Controller
        if(!$this->validateData()) return;
 
        $arcticle = request()->post();
+
+       $arcticle['Content'] = HTMLXssFilter($arcticle['Content']);
 
        //如果有传入Id,则是修改
        if(isset($arcticle['Id'])) {

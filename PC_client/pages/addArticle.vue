@@ -150,10 +150,11 @@ export default {
       articleInfo.CreateTime = Date.now();
 
       //获取编辑器的html
-      articleInfo.Content = this.addEditor.txt.html()    
+      articleInfo.Content = this.addEditor.txt.html();    
 
       //数据验证
       if(!this.validNeccessaryField(articleInfo)) return;
+
 
       //上传封面
       if(this.isNeedUpload) {
