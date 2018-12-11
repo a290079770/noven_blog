@@ -10,6 +10,7 @@ use lib\jwtTool;
 use lib\validJWT;
 use lib\authValid;
 use lib\appCodeValid;
+// use lib\HTMLXssFilter;
 
 class Arcticle extends Controller
 {   
@@ -38,6 +39,7 @@ class Arcticle extends Controller
      */
     public function arcticleList()
     {
+        // HTMLXssFilter::filter();
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
         $authorId = request()->get('authorId') ? request()->get('authorId') : '';
 
@@ -318,12 +320,18 @@ class Arcticle extends Controller
 
     /**
      * [delete 删除一篇文章]
-     * @Author   罗文
-     * @DateTime 2018-04-17
-     * @return   [type]     [description]
+     * @param  [Number] Id [要删除的当个文章Id,删除单个文章的时候用]
+     * @param  [String] Ids [要删除多个文章时候传，格式 Ids => '11,12,31...'，当Ids与Id同时存在，使用Ids]
+     * @return [type]    [description]
      */
     public function delete()
-    {
+    {   
+       if(request()->post('Ids')) {
+         //删除多篇文章
+         $this->deleteSelected();
+         return;
+       }
+
        $hasDelete = $this->common->delete('arcticles');
 
        if($hasDelete) {
@@ -344,6 +352,50 @@ class Arcticle extends Controller
               Db::rollback();
           }   
        }
+    }
+
+    /**
+     * [deleteSelected 删除多篇文章]
+     * @param  [String] Ids [要删除多个文章时候传，格式 Ids => '11,12,31...'，当Ids与Id同时存在，使用Ids]
+     * @return [type]    [description]
+     */
+    private function  deleteSelected() 
+    {
+       $ids = request()->post('Ids');
+       if(empty($ids) || preg_replace('/ /','',$ids) == '') {
+          $this->common->setResponse(21,'要删除的文章编号不能为空！');
+          return;
+       }
+
+       //得到如 [10,11,21...];
+       $Ids = explode(',',$ids);
+
+       //批量删除
+       // 启动事务
+       Db::startTrans();
+       try{
+          $delNum = Db::name('arcticles')
+          ->where('Id','in',$Ids)
+          ->delete();
+
+          if($delNum < 1) {
+            $this->common->setResponse(21,'未删除任何一篇文章！');
+            Db::rollback();
+            return;
+          }
+
+          $res = Db::name('collections')
+          ->where('CollectionId','in',$Ids)
+          ->delete();
+
+          $this->common->setResponse(200,'删除成功！');
+          // 提交事务
+          Db::commit();
+       } catch (\Exception $e) {
+          $this->common->setResponse(21,'删除失败！');
+          // 回滚事务
+          Db::rollback();
+       }  
     }
 
     /**

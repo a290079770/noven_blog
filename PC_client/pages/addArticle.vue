@@ -97,7 +97,11 @@
 <script>
 import {getArticleDetail} from '~/assets/service/articleService'
 export default {
-  async asyncData ({ params }) {
+  async asyncData ({ app , redirect}) {
+    //拦截非管理员用户
+    let isAuth = await app.validUserInfo();
+    if(!isAuth) redirect('/');
+
     await new Promise((resolve,reject)=> {
       if(window.wangEditor) resolve();
       let timer;

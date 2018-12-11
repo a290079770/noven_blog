@@ -385,7 +385,6 @@ function  getDefaultCover() {
  * @return   {[type]}         [description]
  */
 function goTo(path,query,replace = false) {
-  console.log(replace)
   if(!path) return;
 
   let { $router } =Vue.prototype.$nuxt;
@@ -440,12 +439,37 @@ function getUploadParams() {
   }
 }
 
+/**
+ * [validUserInfo 验证用户信息，用于拦截非管理员登录个人中心各个页面]
+ * @Author   罗文
+ * @DateTime 2018-12-11
+ * @return   {[type]}   [description]
+ */
+function validUserInfo() {
+  return new Promise( async (resolve,reject)=> {
+    //获取用户信息
+    try {
+      let { UserType } = JSON.parse(localStorage.userInfo);
+      if( !UserType || UserType < 2) {
+        resolve(false);
+        return;
+      }
 
+      //发起请求，去服务器拉最新用户信息，验证UserType
+      let res = await Vue.prototype.$http.get('/user/detail')
+      if( !res.UserType || res.UserType < 2 ) {
+        resolve(false);
+        return;
+      }
 
-
-
-
-
+      //写入最新信息，防止用户修改
+      localStorage.setItem('userInfo',JSON.stringify(res));
+      resolve(true);
+    }catch(e) {
+      resolve(false);
+    }
+  })
+}
 
 
 
@@ -477,6 +501,14 @@ let utils = {
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);
+
+
+
+//需要在async中使用的方法
+export default ({ app }, inject) => {
+    app.validUserInfo = validUserInfo 
+};
+
 
 // module.exports = {
 //   //object操作

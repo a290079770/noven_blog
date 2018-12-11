@@ -51,7 +51,7 @@
       </section>
 
       <section class="index-intros">
-        <intro-container title="关于我">
+        <intro-container :title=" isLogin ? '欢迎您' : '关于我'">
           <div class="index-bloger-cont">
             <figure class="index-bloger-cover">
               <img class="index-bloger-cover-img" :src="userInfo.CoverUrl">
@@ -65,7 +65,7 @@
           </div>
         </intro-container>
 
-        <intro-container title="联系方式">
+        <intro-container title="联系方式（Noven）">
           <div class="flex-center index-bloger-contact">
             <el-tooltip class="item" effect="dark" content="290079770" placement="top">
               <span class="flex flex-align-center flex-justify-center index-bloger-social-item">
@@ -175,6 +175,14 @@ export default {
   computed:{
     firstArc() {
       return this.dataList[0]
+    },
+    isLogin() {
+      try {
+        return JSON.parse(localStorage.userInfo);
+      }catch(e) {
+        //没有用户信息的话用默认的
+        return false;
+      }
     }
   },
   created() {
@@ -191,6 +199,6 @@ export default {
   },
   mounted() {
     
-  }
+  },
 }
 </script>

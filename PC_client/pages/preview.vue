@@ -36,6 +36,11 @@
 <script>
 import { createOrUpdate } from '~/assets/service/articleService'
 export default {
+  //拦截非管理员用户
+  async asyncData ({ app, redirect }) {
+    let isAuth = await app.validUserInfo();
+    if(!isAuth) redirect('/');
+  },
   data() {
     return {
       articleInfo:{

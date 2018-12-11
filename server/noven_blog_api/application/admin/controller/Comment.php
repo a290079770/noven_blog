@@ -86,8 +86,14 @@ class Comment extends Controller
     ->count(); 
     
     //统计所有评论总数，用作显示
+    //注意，传入了resourceId，且不是-1，则是在统计这个文章下的所有评论
+    //否则是查所有留言
+    $totalQuery = [
+      'type' => $type
+    ];
+    if( $resourceId && $resourceId != -1 ) $totalQuery['ResourceId'] = $resourceId;
     $totalCount = Db::name('comments')
-    ->where('type',$type)
+    ->where($totalQuery)
     ->count();
 
     //同时查询这些顶层评论每一条的子评论

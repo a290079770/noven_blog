@@ -62,10 +62,8 @@ export const getArticleDetail = function(id) {
  * @DateTime 2018-09-26
  * @neccessaryParam  [Number]  id  文章id
  */
-export const deleteArticle = function(id) {
-  return Vue.prototype.$http.post('/arcticle/delete',{
-    Id:id
-  })
+export const deleteArticle = function(params) {
+  return Vue.prototype.$http.post('/arcticle/delete',params)
 }
 
 

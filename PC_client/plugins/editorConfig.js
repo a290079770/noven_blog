@@ -88,7 +88,7 @@ function getEditorConfig(type) {
      //debug模式下，有 JS 错误会以throw Error方式提示出来。默认值为false，即不会抛出异常。
      debug: false,
      //编辑区域的z-index默认为10000，可自定义修改，代码配置如下。需改之后，编辑区域和菜单的z-index会同时生效。     
-     zIndex: 999, 
+     zIndex: 10, 
      //配置其他语言，见文档   
      //lang: {}, 
      //是否开启粘贴时样式过滤，当从其他网页复制文本内容粘贴到编辑器中，编辑器会默认过滤掉复制文本中自带的样式 

@@ -39,7 +39,7 @@
               <div @click="signOut" class="flex-center nav-menu-sign-out">
                 退出
               </div>
-              <figure slot="reference" @click="goTo('/my')"  class="nav-menu-login-cover bg-full-img" :style="{background: `url(${userInfo.CoverUrl || '/n1.png'})` }"></figure>
+              <figure slot="reference" @click="goToMy"  class="nav-menu-login-cover bg-full-img" :style="{background: `url(${userInfo.CoverUrl || '/n1.png'})` }"></figure>
             </el-popover>
           </div>
         </section>
@@ -64,7 +64,9 @@ export default {
         {
           title:'学海无涯',
           link:'/list',
-          contRoutes:[]
+          contRoutes:[
+            '/detail'
+          ]
         },
         {
           title:'书不尽言',
@@ -111,6 +113,17 @@ export default {
         })
       else
         this.$router.push('/list')
+    },
+    goToMy() {
+      //进个人中心的拦截
+      try {
+        let { UserType } = JSON.parse(localStorage.userInfo);
+        if( !UserType || UserType < 2 ) return
+      }catch(e) {
+        return
+      }
+
+      this.goTo('/my');
     },
     /**
      * [changeSelectedIndex 修改当然活跃项]
@@ -164,7 +177,6 @@ export default {
         this.userInfo = null;
         return;
       }
-
       
       //获取用户信息,如果有就显示
       try {
@@ -183,6 +195,7 @@ export default {
       //发起退出登录
       await signOut();
 
+      this.userInfo = null;
       this.delCookie('token');
       sessionStorage.clear();
       localStorage.clear();
@@ -207,14 +220,16 @@ export default {
 
   watch: {
     $route(nv) {
+      let { path } = nv;
+
       this.setActive();
       this.setUserInfo();
 
-      if(this.$refs.navMenu.getBoundingClientRect) {
-        let { path } = nv;
-        //首页要请求图片
-        this.navBarTop = path !== '/' ? 175 : window.innerHeight + 175;
-      }
+      //首页要请求图片
+      this.navBarTop = path !== '/' ? 175 : window.innerHeight + 175;
+
+      //关于搜索，如果不是list页，都清空
+      if(path != '/list') this.keywords = '';
     }
   }
 }

@@ -2,9 +2,9 @@
   <section class="mc feedback">
     <section class="feedback-title">
       <span>
-        远道而来，不如留下点什么...
+        {{ type == 1 ? '远道而来，不如留下点什么...' : '读到这里了，说点什么吧...' }}
       </span>
-      <span class="font-xs feedback-warning"> （温馨提示：禁止在留言和评论中散步恶意、违法信息）</span>
+      <span class="font-xs feedback-warning"> （温馨提示：禁止在留言和评论中散布恶意、违法信息）</span>
     </section>
 
     <section class="feedback-edit-container">
@@ -18,7 +18,7 @@
 
 
     <section ref="feedbackTitle" class="feedback-title">
-      留言板（<span class="primary">{{totalCount}}</span>）
+      {{ type == 1 ? '留言板' : '文章评论' }}（<span class="primary">{{totalCount}}</span>）
     </section>
 
     <section class="feedback-list">
@@ -51,9 +51,9 @@
 <script>
 import feedbackItem from '~/components/feedbackItem'
 import { getCommentList , createComment } from '~/assets/service/commentService'
-
+import Vue from 'vue';
 export default {
-  async asyncData ({ params }) {
+  async asyncData () {
     await new Promise((resolve,reject)=> {
       if(window.wangEditor) resolve();
       let timer;
@@ -103,7 +103,7 @@ export default {
      * [getDataList 获取评论列表]
      * @return {[type]} [description]
      */
-    async getDataList() {
+    async getDataList(needScroll = true) {
       let { list , recordCount , totalCount } = await getCommentList({
         type: this.type,
         ps: this.ps,
@@ -119,11 +119,21 @@ export default {
         return item;
       });
       this.total = recordCount;
-      this.totalCount = this.type == 2? recordCount : totalCount;
+      this.totalCount = totalCount;
 
+
+      if(!needScroll) return;
       this.$nextTick(function() {
+        //获取feedbackTitle的位置
+        let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        let totalTop = 0;
+
+        if(this.$refs.feedbackTitle &&  this.$refs.feedbackTitle.getBoundingClientRect) {
+          let { top } = this.$refs.feedbackTitle.getBoundingClientRect();
+          totalTop = top - 65 + scrollTop;
+        }  
         window.scrollTo({
-          top: 0,
+          top: totalTop,
           behavior: "smooth"
         })
       })
@@ -260,7 +270,7 @@ export default {
     }
   },
   created() {
-    this.getDataList();
+    this.getDataList(false);
   },
   mounted() {
     this.fbEditor = new wangEditor('#feedbackEditor')

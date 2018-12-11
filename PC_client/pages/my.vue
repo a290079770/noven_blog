@@ -77,6 +77,10 @@
         </tbody>
       </table>
 
+      <section v-if="isDelAllShow" class="my-del-all">
+        <el-button size="small" @click="deleteSelected">删除选中</el-button>
+      </section>
+
       <section class="flex flex-justify-end my-page">
         <el-pagination
           @current-change="handleCurrentChange"
@@ -104,6 +108,11 @@
 import { getArticleList , deleteArticle } from '~/assets/service/articleService'
 import { updateUserInfo } from '~/assets/service/userService'
 export default {
+  //拦截非管理员用户
+  async asyncData ({ app, redirect }) {
+    let isAuth = await app.validUserInfo();
+    if(!isAuth) redirect('/');
+  },
   data() {
     return {
       dataList:[],
@@ -189,7 +198,23 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        return deleteArticle(id);
+        return deleteArticle({ Id: id});
+      }).then(() => {
+        this.$message.success('操作成功！');
+        this.getArticleList();
+      })
+    },
+
+    //删除选中的文章
+    deleteSelected() {
+      this.$confirm('确定删除选中的文章？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        //收集选中的id集合
+        let ids = this.dataList.filter( item => item.selected).map(item => item.Id).join(',');
+        return deleteArticle({ Ids: ids });
       }).then(() => {
         this.$message.success('操作成功！');
         this.getArticleList();
@@ -237,6 +262,9 @@ export default {
       return this.dataList.every(item => item.selected);
     },
 
+    isDelAllShow() {
+      return this.dataList.some(item => item.selected);
+    }
   },
   created() {
     sessionStorage.removeItem('previewArticleData');
