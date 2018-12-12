@@ -17,8 +17,8 @@ require_once ROOT_PATH . 'extend/firebase/HTMLPurifier/library/HTMLPurifier.php'
 
 header('Access-Control-Allow-Origin:*');
 header('Access-Control-Allow-Methods:*');
-header('Access-Control-Allow-Headers:*');
-header('Access-Control-Allow-Credentials:false');
+header('Access-Control-Allow-Headers:Content-Type,token,appCode');
+header('Access-Control-Allow-Credentials:true');
 
 
 $resultCode = [
@@ -40,4 +40,5 @@ function HTMLXssFilter($html = '') {
 
 	return $clean_html;
 }
+
 

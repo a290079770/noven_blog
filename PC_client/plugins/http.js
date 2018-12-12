@@ -18,7 +18,7 @@ window.apiUrl = 'http://120.77.180.233:8081';
 axios.defaults.baseURL = apiUrl;
 
 // axios.defaults.baseURL = apiUrl;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
 // http request 拦截器
 
