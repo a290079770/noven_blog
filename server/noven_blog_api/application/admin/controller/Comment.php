@@ -140,6 +140,8 @@ class Comment extends Controller
     //验证字段
     if(!$this->validateData()) return;
 
+
+
     //如果传入了resourceId，必须验证文章是否存在，是否下架
     if(request()->post('resourceId') && request()->post('resourceId') != -1) {
       $ArticleId = request()->post('resourceId');
@@ -163,7 +165,7 @@ class Comment extends Controller
 
     //验证通过，组装数据
     $comment = [
-      'Content' => request()->post('content'),
+      'Content' => HTMLXssFilter(request()->post('content')),
       'Type' => request()->post('type'),
       'Pid' => request()->post('pid'),
       'ResourceId' => request()->post('resourceId'),

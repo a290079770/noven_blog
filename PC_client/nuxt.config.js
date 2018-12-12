@@ -10,7 +10,8 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,initial-scale=1.0' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
+      { hid: 'description', name: 'keywords', content: '文章，经验，' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/n1.png' },

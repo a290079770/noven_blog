@@ -67,7 +67,7 @@
             <td>
               <img @click="selectItem(index)" class="my-check-icon" :src=" item.selected ? '/checked.svg' :'/check.svg'">
             </td>
-            <td class="my-arc-item-title">{{item.Title}}</td>
+            <td class="my-arc-item-title" @click="goTo('/detail',`id=${item.Id}`)">{{item.Title}}</td>
             <td>{{item.CreateTime}}</td>
             <td>
               <button @click="goTo('/addArticle',`id=${item.Id}`)" class="my-table-btn">编辑</button>

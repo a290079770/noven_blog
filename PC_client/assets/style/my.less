@@ -115,7 +115,12 @@
       }
 
       .my-arc-item-title {
+        transition: @transition;
         padding: 10px;
+        cursor: pointer;
+        &:hover {
+          color: @primary;
+        };
       }
 
       .my-table-btn {

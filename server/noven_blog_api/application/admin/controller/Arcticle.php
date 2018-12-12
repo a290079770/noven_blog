@@ -10,7 +10,6 @@ use lib\jwtTool;
 use lib\validJWT;
 use lib\authValid;
 use lib\appCodeValid;
-use lib\HTMLXssFilter;
 
 class Arcticle extends Controller
 {   
