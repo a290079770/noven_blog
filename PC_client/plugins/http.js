@@ -12,7 +12,8 @@ import qs from 'qs'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-window.apiUrl = 'http://120.77.180.233:8081';
+// window.apiUrl = 'https://api.novenblog.xin';
+window.apiUrl = 'http://api.novenblog.xin';
 // window.apiUrl = 'http://novenblog_api.com';
 
 axios.defaults.baseURL = apiUrl;
