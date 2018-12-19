@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
 import { getTimeLine } from '~/assets/service/userService'
 export default {
   data() {

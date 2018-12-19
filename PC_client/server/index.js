@@ -6,6 +6,10 @@ const app = express()
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 8080
 
+// if (process.browser) {
+//   require('external_library')
+// }
+
 app.set('port', port)
 
 // Import and Set Nuxt.js options

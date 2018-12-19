@@ -54,6 +54,7 @@
 </template>
 
 <script>
+
 import { getArticleDetail , collect } from '~/assets/service/articleService'
 import { detailSimple } from '~/assets/service/userService'
 import FeedBack from './feedback';

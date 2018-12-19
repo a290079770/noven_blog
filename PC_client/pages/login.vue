@@ -43,6 +43,8 @@
 </template>
 
 <script>
+
+
 import { getUserDetail } from '~/assets/service/userService'
 export default {
 	layout:'normal',
@@ -76,8 +78,8 @@ export default {
 	        ]
 	    },
 
-	    winWidth:window.innerWidth,
-	    winHeight:window.innerHeight,
+	    winWidth:0,
+	    winHeight:0,
 
 	    showObj: {
 	    	logo:false,
@@ -136,19 +138,26 @@ export default {
   	  }
 
       document.body.style.overflow = 'hidden';
+    },
+
+    setWindow() {
+      this.winWidth = window.innerWidth
+      this.winHeight = window.innerHeight
     }
   },
   created() {
+    
+  },
+  mounted() {
+    this.setWindow();
+    
     //每次到了这个页面，直接认为用户退出了登录，清除用户信息
     this.delCookie('token');
     localStorage.removeItem('userInfo');
-  },
-  mounted() {
   	this.loginForm.account = localStorage.getItem('account');
   	this.loginForm.pass = localStorage.getItem('pwd');
   	window.onresize = () => {
-  		this.winWidth = window.innerWidth;
-  		this.winHeight = window.innerHeight;
+  		this.setWindow();
   	}
 
   	this.loginAnimated(300);

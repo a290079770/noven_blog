@@ -55,21 +55,26 @@ import Vue from 'vue';
 export default {
   async asyncData () {
     await new Promise((resolve,reject)=> {
-      if(window.wangEditor) resolve();
-      let timer;
+      resolve();
+      // if(process.browser) {
+      //   if(window.wangEditor) resolve();
+      //   let timer;
 
-      isWangEditor();
-      
-      function isWangEditor() {
-        timer = setTimeout(()=> {
-          if(window.wangEditor) {
-            clearTimeout(timer);
-            resolve();
-            return;
-          }
-          isWangEditor();
-        }, 100)
-      }
+      //   isWangEditor();
+        
+      //   function isWangEditor() {
+      //     timer = setTimeout(()=> {
+      //       if(window.wangEditor) {
+      //         clearTimeout(timer);
+      //         resolve();
+      //         return;
+      //       }
+      //       isWangEditor();
+      //     }, 100)
+      //   }
+      // }else {
+      //   resolve();
+      // }
     })
   },
   props:{
@@ -270,9 +275,10 @@ export default {
     }
   },
   created() {
-    this.getDataList(false);
+    
   },
   mounted() {
+    this.getDataList(false);
     this.fbEditor = new wangEditor('#feedbackEditor')
     //设置留言编辑器自定义配置
     this.fbEditor.customConfig = this.getEditorConfig(2);

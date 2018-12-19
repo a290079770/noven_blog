@@ -12,9 +12,9 @@ import qs from 'qs'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-// window.apiUrl = 'https://api.novenblog.xin';
-window.apiUrl = 'http://api.novenblog.xin';
-// window.apiUrl = 'http://novenblog_api.com';
+let apiUrl = 'https://api.novenblog.xin';
+// let apiUrl = 'http://api.novenblog.xin';
+// let apiUrl = 'http://novenblog_api.com';
 
 axios.defaults.baseURL = apiUrl;
 
@@ -94,3 +94,4 @@ axios.interceptors.response.use(
 
 
 Vue.prototype.$http = axios;
+Vue.prototype.apiUrl = apiUrl;

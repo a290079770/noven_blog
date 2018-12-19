@@ -121,13 +121,13 @@ export default {
   },
 
   created() {
-    this.getSearchList();
-    this.getArticleList('hotList');
-    this.getArticleList('recommendList');
+    
   },
 
   mounted() {
-    
+    this.getSearchList();
+    this.getArticleList('hotList');
+    this.getArticleList('recommendList');
   },
   watch:{
     $route({ query: { keywords }}) {

@@ -1,6 +1,6 @@
 <template>
   <section class="mc index">
-    <section style="height: 30px"> </section>
+    <section style="height: 40px"> </section>
     <section class="index-swiper">
       <el-carousel 
       :interval="0" 
@@ -112,10 +112,11 @@
 </template>
 
 <script>
+
 import ArticleIndexItem from '~/components/articleIndexItem'
 import introContainer from '~/components/introContainer'
 import { getArticleList } from '~/assets/service/articleService'
-
+console.log(process.browser)
 export default {
   data() {
     return {
@@ -130,7 +131,7 @@ export default {
       recommendList: [],
 
       userInfo: {
-        CoverUrl:'http://120.77.180.233:8081/images/Yve4jIf6KHG3dz63_photo_1544078309.jpeg',
+        CoverUrl:'https://api.novenblog.xin/images/Yve4jIf6KHG3dz63_photo_1544078309.jpeg',
         NickName:'Noven',
         Introduction:'关于我自己，昵称唐青，2014年毕业于重庆某大学，从事Web前端四年有余，掌握HTML、CSS、JS、PHP、NodeJS、Vue、React、Webpack、D3...各种前端技能，十八般武艺，都耍得有模有样。'
       }

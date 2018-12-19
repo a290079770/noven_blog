@@ -33,7 +33,9 @@
             </span>
           </div>
           <div>
-            <button @click="goTo('/detail',`id=${item.Id}`)" class="arc-list-item-btn font">立即阅读</button>
+            <nuxt-link :to="{ name:'detail',query:{id : item.Id} }">
+              <button class="arc-list-item-btn font">立即阅读</button>
+            </nuxt-link>
           </div>
         </div>
       </section>

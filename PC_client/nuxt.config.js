@@ -1,7 +1,7 @@
 const pkg = require('./package')
 
 module.exports = {
-  mode: 'spa',
+  // mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -50,11 +50,12 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui',
-    '@/plugins/http',
-    '@/plugins/particles',
-    '@/plugins/editorConfig',
-    '@/plugins/utils',
+    { src: '@/plugins/element-ui', ssr: true },
+    { src: '@/plugins/http', ssr: true },
+    { src: '@/plugins/particles', ssr: false },
+    { src: '@/plugins/editorConfig', ssr: false },
+    { src: '@/plugins/utils', ssr: true },
+    { src: '@/plugins/cookie', ssr: false },
   ],
 
   /*

@@ -105,6 +105,7 @@
 </template>
 
 <script>
+
 import { getArticleList , deleteArticle } from '~/assets/service/articleService'
 import { updateUserInfo } from '~/assets/service/userService'
 export default {

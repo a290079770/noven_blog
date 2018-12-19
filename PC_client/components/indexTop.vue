@@ -22,8 +22,8 @@
 export default {
   data() {
     return {
-      winWidth: window.innerWidth,
-      winHeight: window.innerHeight,
+      winWidth: 0,
+      winHeight: 0,
     }
   },
 
@@ -33,15 +33,21 @@ export default {
         top: this.winHeight,
         behavior: "smooth"
       })
+    },
+
+    setWindow() {
+      this.winWidth = window.innerWidth
+      this.winHeight = window.innerHeight
     }
   },
   created() {
     
   },
   mounted() {
+    this.setWindow();
+
     window.onresize = () => {
-      this.winWidth = window.innerWidth
-      this.winHeight = window.innerHeight
+      this.setWindow();
     }
   }
 }

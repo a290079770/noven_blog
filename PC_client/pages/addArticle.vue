@@ -103,22 +103,24 @@ export default {
     if(!isAuth) redirect('/');
 
     await new Promise((resolve,reject)=> {
-      if(window.wangEditor) resolve();
-      let timer;
+      resolve();
+      // if(window.wangEditor) resolve();
+      // let timer;
 
-      isWangEditor();
+      // isWangEditor();
       
-      function isWangEditor() {
-        timer = setTimeout(()=> {
-          if(window.wangEditor) {
-            clearTimeout(timer);
-            resolve();
-            return;
-          }
-          isWangEditor();
-        }, 100)
-      }
+      // function isWangEditor() {
+      //   timer = setTimeout(()=> {
+      //     if(window.wangEditor) {
+      //       clearTimeout(timer);
+      //       resolve();
+      //       return;
+      //     }
+      //     isWangEditor();
+      //   }, 100)
+      // }
     })
+    
   },
   data() {
     return {

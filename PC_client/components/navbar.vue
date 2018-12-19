@@ -5,15 +5,15 @@
     <section ref="navMenu" class="flex-center mc pr nav-menu nav-menu-abs" :class="{'nav-menu-fiexd':isFixed}">
       <section class="flex flex-align-center flex-justify-between nav-menu-cont">
         <ul class="flex flex-align-center pr nav-menu-items">
-          <li 
-          v-for="(item,index) in navList" 
-          :key="index"  
-          class="flex-center font-l nav-menu-item" 
-          :class="{'nav-menu-item-active': selectedIndex === index }"
-          @click="changeSelectedIndex(index)"
-          >
-            {{item.title}}
-          </li>
+          <nuxt-link v-for="(item,index) in navList" :key="index" :to="{name: item.link === '/' ? item.link : item.link.replace(/\//g,'')}">
+            <li 
+            class="flex-center font-l nav-menu-item" 
+            :class="{'nav-menu-item-active': selectedIndex === index }"
+            @click="changeSelectedIndex(index)"
+            >
+              {{item.title}}
+            </li>
+          </nuxt-link>
           <li class="nav-menu-item nav-menu-item-line" :style="{transform: 'translateX(-'+ (navList.length - selectedIndex) * 150 +'px)', left: navList.length * 150 + 'px'}"></li>
         </ul>
         <section class="flex flex-align-center flex-justify-end nav-menu-right">
@@ -30,7 +30,9 @@
           >
 
           <div class="flex-center nav-menu-login-cont" >
-            <span @click="goTo('/login')" v-if="!userInfo" class="primary">登录</span>
+            <nuxt-link v-if="!userInfo"  :to="{ name:'login'}">
+              <span class="primary">登录</span>
+            </nuxt-link>
             
             <el-popover
               v-else 
@@ -58,25 +60,31 @@ export default {
       navList:[
         {
           title:'首页',
-          link:'/',
-          contRoutes:['a']
+          link:'/index',
+          contRoutes:[]
         },
         {
           title:'学海无涯',
           link:'/list',
           contRoutes:[
-            '/detail'
+            '/list/',
+            '/detail',
+            '/detail/'
           ]
         },
         {
           title:'书不尽言',
           link:'/feedback',
-          contRoutes:[]
+          contRoutes:[
+            '/feedback/'
+          ]
         },
         {
           title:'关于我们',
           link:'/aboutus',
-          contRoutes:['a']
+          contRoutes:[
+            '/aboutus/'
+          ]
         },
         // {
         //   title:'我的创作',
@@ -134,7 +142,7 @@ export default {
      */
     changeSelectedIndex(index) {
       this.selectedIndex = index;
-      this.changeRoute(index);
+      // this.changeRoute(index);
     },
 
     /**
@@ -144,11 +152,11 @@ export default {
      * @param    {[Number]}   index [活跃项索引]
      * @return   {[type]}         [description]
      */
-    changeRoute(index) {
-      this.$router.push({
-        path: this.navList[index].link  
-      })
-    },
+    // changeRoute(index) {
+    //   this.$router.push({
+    //     path: this.navList[index].link  
+    //   })
+    // },
 
     //设置navbar是否是固定定位
     setNavBarFixed() {
@@ -204,13 +212,13 @@ export default {
   },
   created() {
     this.setActive();
-    this.setUserInfo()
   },
   mounted() {
-    if(this.$refs.navMenu &&  this.$refs.navMenu.getBoundingClientRect) {
-        let { top } = this.$refs.navMenu.getBoundingClientRect();
-        this.navBarTop = top;
-    }  
+    this.setUserInfo()
+
+    let { path } = this.$route;
+    this.navBarTop = path !== '/' ? 175 : window.innerHeight + 175;
+    
     this.setNavBarFixed();
 
     window.onscroll = () => {
@@ -244,6 +252,11 @@ export default {
 
     .nav-menu-cont {
       width:@pageWidth;
+      height: 100%;
+    }
+    
+    a {
+      display: inline-block;
       height: 100%;
     }
 
@@ -301,7 +314,8 @@ export default {
       .nav-menu-login-cont {
         margin-left: 20px;
         width: 40px;
-        height: 40px;
+        height: 100%;
+        line-height: 65px;
         cursor: pointer;
 
         .nav-menu-login-cover {

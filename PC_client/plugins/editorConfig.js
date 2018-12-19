@@ -141,7 +141,7 @@ function getEditorConfig(type) {
     //使用 base64 保存图片,
     // uploadImgShowBase64: false,
     //配置上传图片的服务器地址
-    uploadImgServer: apiUrl + '/images/uploadFile',
+    uploadImgServer: Vue.prototype.apiUrl + '/images/uploadFile',
     //配置图片上传的其他数据
     ...uploadConfig,
   }
