@@ -16,11 +16,13 @@
           </section>
           <table border="0" class="time-line-months-cont">
             <tbody>
-              <tr @click="goTo('/detail',`id=${ditem.Id}`)" v-for="(ditem,dindex) in yitem.Children">
-                <td width="200">{{ditem.CreateTime}}</td>
-                <td width="650">{{ditem.Title}}</td>
-                <td width="">{{ditem.Author}}</td>
-              </tr>
+              <nuxt-link v-for="(ditem,dindex) in yitem.Children" :key="dindex" :to="{ name:'detail',query:{id : ditem.Id} }">
+                <tr>
+                  <td width="200">{{ditem.CreateTime}}</td>
+                  <td width="650">{{ditem.Title}}</td>
+                  <td width="">{{ditem.Author}}</td>
+                </tr>
+              </nuxt-link>
             </tbody>
           </table>
         </section>
@@ -37,6 +39,11 @@ export default {
   data() {
     return {
       timeLine:[]
+    }
+  },
+  head() {
+    return {
+      title:'我的时间轴'
     }
   },
   async created() {

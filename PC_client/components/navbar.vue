@@ -30,7 +30,7 @@
           >
 
           <div class="flex-center nav-menu-login-cont" >
-            <nuxt-link v-if="!userInfo"  :to="{ name:'login'}">
+            <nuxt-link v-if="!userInfo" to="/login">
               <span class="primary">登录</span>
             </nuxt-link>
             

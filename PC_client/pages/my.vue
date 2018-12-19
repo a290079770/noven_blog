@@ -67,10 +67,14 @@
             <td>
               <img @click="selectItem(index)" class="my-check-icon" :src=" item.selected ? '/checked.svg' :'/check.svg'">
             </td>
-            <td class="my-arc-item-title" @click="goTo('/detail',`id=${item.Id}`)">{{item.Title}}</td>
+            <td class="my-arc-item-title">
+              <nuxt-link :to="{ name:'detail',query:{id : item.Id} }">{{item.Title}}</nuxt-link>
+            </td>
             <td>{{item.CreateTime}}</td>
             <td>
-              <button @click="goTo('/addArticle',`id=${item.Id}`)" class="my-table-btn">编辑</button>
+              <nuxt-link :to="{ name:'addArticle',query:{id : item.Id} }">
+                <button class="my-table-btn">编辑</button>
+              </nuxt-link>
               <button @click="deleteArc(item.Id)" class="my-table-btn my-table-btn-del">删除</button>
             </td>
           </tr>
@@ -121,13 +125,20 @@ export default {
       cp: 1,
       ps: 10,
       total: 0,
-      userInfo: {},
+      userInfo: {
+        NickName:'我'
+      },
       editUserInfo: {
         NickName:'',
         CoverUrl:'',
         Introduction: ''
       },
       uploadParams: this.getUploadParams()
+    }
+  },
+  head() {
+    return {
+      title: this.userInfo.NickName + '的个人空间'
     }
   },
 
@@ -268,6 +279,9 @@ export default {
     }
   },
   created() {
+    
+  },
+  mounted() {
     sessionStorage.removeItem('previewArticleData');
     //获取用户信息
     try {
@@ -282,9 +296,6 @@ export default {
         this.goTo('/login','',true);
       })
     }
-  },
-  mounted() {
-     
   }
 }
 </script>

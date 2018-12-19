@@ -27,13 +27,17 @@
       <section class="index-intros">
         <intro-container title="热门文章">
           <div class="index-bloger-cont index-bloger-arcs font gray6">
-            <p @click="goTo('/detail',`id=${item.Id}`)" class="text-ess-1 index-bloger-arc" v-for="(item,index) in hotList" :key="index">{{item.Title}}</p>
+            <nuxt-link v-for="(item,index) in recommendList" :key="index" :to="{ name:'detail',query:{id : item.Id} }">
+              <p class="text-ess-1 index-bloger-arc" >{{item.Title}}</p>
+            </nuxt-link>
           </div>
         </intro-container >
 
         <intro-container title="推荐阅读">
           <div class="index-bloger-cont index-bloger-arcs font gray6">
-            <p @click="goTo('/detail',`id=${item.Id}`)" class="text-ess-1 index-bloger-arc" v-for="(item,index) in recommendList" :key="index">{{item.Title}}</p>
+            <nuxt-link v-for="(item,index) in recommendList" :key="index" :to="{ name:'detail',query:{id : item.Id} }">
+              <p class="text-ess-1 index-bloger-arc" >{{item.Title}}</p>
+            </nuxt-link>
           </div>
         </intro-container>
       </section>
@@ -66,6 +70,11 @@ export default {
   components:{
     'intro-container':introContainer,
     'article-list-item':articleListItem,
+  },
+  head() {
+    return {
+      title:'学海无涯'
+    }
   },
 
   methods:{

@@ -65,8 +65,16 @@ export default {
 
   data() {
     return {
-      detail:{},
+      detail:{
+        Title:'Noven技术生涯经验分享'
+      },
       authorInfo:{}
+    }
+  },
+
+  head() {
+    return {
+      title:this.detail.Title
     }
   },
 

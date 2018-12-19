@@ -11,11 +11,15 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.0.0",
+    "autoprefixer": "^9.4.3",
     "cross-env": "^5.2.0",
-    "nuxt": "^2.0.0",
-    "express": "^4.16.3",
     "element-ui": "^2.4.6",
-    "@nuxtjs/axios": "^5.0.0"
+    "express": "^4.16.3",
+    "nuxt": "^2.0.0",
+    "postcss-hexrgba": "^1.0.1",
+    "postcss-nested": "^4.1.1",
+    "postcss-responsive-type": "^1.0.0"
   },
   "devDependencies": {
     "element-theme-chalk": "^2.4.11",

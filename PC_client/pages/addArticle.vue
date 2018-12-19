@@ -101,26 +101,6 @@ export default {
     //拦截非管理员用户
     let isAuth = await app.validUserInfo();
     if(!isAuth) redirect('/');
-
-    await new Promise((resolve,reject)=> {
-      resolve();
-      // if(window.wangEditor) resolve();
-      // let timer;
-
-      // isWangEditor();
-      
-      // function isWangEditor() {
-      //   timer = setTimeout(()=> {
-      //     if(window.wangEditor) {
-      //       clearTimeout(timer);
-      //       resolve();
-      //       return;
-      //     }
-      //     isWangEditor();
-      //   }, 100)
-      // }
-    })
-    
   },
   data() {
     return {
@@ -143,6 +123,21 @@ export default {
       isNeedUpload: false, //是否需要发起上传
     }
   },
+  head: {
+    script: [ 
+      { 
+        src: 'https://cdn.bootcss.com/wangEditor/3.1.1/wangEditor.min.js',
+      },
+      {  
+        src: 'https://cdn.bootcss.com/js-xss/0.3.3/xss.min.js',
+        defer:"defer",
+        body: true
+      },
+    ],
+    __dangerouslyDisableSanitizers: ['script'],
+    title:'编辑文章'
+  },
+
 
   methods:{
     //去预览文章
@@ -306,6 +301,25 @@ export default {
   },
 
   async mounted() {
+    this.addEditor = await new Promise((resolve,reject) => {
+      if(window.wangEditor) resolve(new wangEditor('#addArticleEditor'));
+
+      let timer;
+
+      isWangEditor();
+      
+      function isWangEditor() {
+        timer = setTimeout(()=> {
+          if(window.wangEditor) {
+            clearTimeout(timer);
+            resolve(new wangEditor('#addArticleEditor'));
+            return;
+          }
+          isWangEditor();
+        }, 100)
+      }
+    }) 
+
     this.addEditor = new wangEditor('#addArticleEditor')
     //设置留言编辑器自定义配置
     this.addEditor.customConfig = this.getEditorConfig(1);

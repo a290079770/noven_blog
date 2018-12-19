@@ -48,6 +48,18 @@
 import { getUserDetail } from '~/assets/service/userService'
 export default {
 	layout:'normal',
+  head() {
+    return {
+      title:'登录Noven Blog',
+      script: [ 
+        { 
+          src: 'https://cdn.bootcss.com/js-sha1/0.6.0/sha1.min.js',
+          defer:"defer"
+        },
+      ],
+    }
+  },
+
   data() {
     var checkAccount = (rule, value, callback) => {
       if (!value) {

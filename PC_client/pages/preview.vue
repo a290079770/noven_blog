@@ -57,6 +57,11 @@ export default {
 
     }
   },
+  head() {
+    return {
+      title:'预览文章—' + this.articleInfo.Title
+    }
+  },
 
   methods:{
     //发布文章

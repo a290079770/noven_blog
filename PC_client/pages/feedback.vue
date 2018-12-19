@@ -53,30 +53,20 @@ import feedbackItem from '~/components/feedbackItem'
 import { getCommentList , createComment } from '~/assets/service/commentService'
 import Vue from 'vue';
 export default {
-  async asyncData () {
-    await new Promise((resolve,reject)=> {
-      resolve();
-      // if(process.browser) {
-      //   if(window.wangEditor) resolve();
-      //   let timer;
-
-      //   isWangEditor();
-        
-      //   function isWangEditor() {
-      //     timer = setTimeout(()=> {
-      //       if(window.wangEditor) {
-      //         clearTimeout(timer);
-      //         resolve();
-      //         return;
-      //       }
-      //       isWangEditor();
-      //     }, 100)
-      //   }
-      // }else {
-      //   resolve();
-      // }
-    })
+  head: {
+    script: [ 
+      { 
+        src: 'https://cdn.bootcss.com/wangEditor/3.1.1/wangEditor.min.js',
+      },
+      {  
+        src: 'https://cdn.bootcss.com/js-xss/0.3.3/xss.min.js',
+        defer:"defer",
+        body: true
+      },
+    ],
+    __dangerouslyDisableSanitizers: ['script']
   },
+
   props:{
     //1 - 留言板  2 - 文章评论
     type:{
@@ -277,9 +267,29 @@ export default {
   created() {
     
   },
-  mounted() {
+  async mounted() {
     this.getDataList(false);
-    this.fbEditor = new wangEditor('#feedbackEditor')
+
+    //不知道为什么，写在head里的script会比mounted晚执行，导致获取不到wangEditor
+    this.fbEditor = await new Promise((resolve,reject) => {
+      if(window.wangEditor) resolve(new wangEditor('#feedbackEditor'));
+
+      let timer;
+
+      isWangEditor();
+      
+      function isWangEditor() {
+        timer = setTimeout(()=> {
+          if(window.wangEditor) {
+            clearTimeout(timer);
+            resolve(new wangEditor('#feedbackEditor'));
+            return;
+          }
+          isWangEditor();
+        }, 100)
+      }
+    }) 
+
     //设置留言编辑器自定义配置
     this.fbEditor.customConfig = this.getEditorConfig(2);
     this.fbEditor.create()

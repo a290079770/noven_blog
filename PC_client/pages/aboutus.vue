@@ -96,6 +96,11 @@ export default {
   data() {
     return {}
   },
+  head() {
+    return {
+      title:'关于我们'
+    }
+  },
 
   methods:{
 

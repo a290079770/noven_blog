@@ -8,44 +8,48 @@
       trigger="click"
       >
         <el-carousel-item v-for="(item,index) in bannerList" :key="'banner'+index"  >
-          <section @click="goTo('/detail',`id=${item.Id}`)" :style="{background: 'url('+ item.Url +')' }" class="flex-center index-swiper-item bg-full-img">
-            <section class="flex-center flex-column index-swiper-detail-cont">
-              <section class="index-swiper-detail-author font">
-                @article
+          <nuxt-link :to="{ name:'detail',query:{id : item.Id} }">
+            <section :style="{background: 'url('+ item.Url +')' }" class="flex-center index-swiper-item bg-full-img">
+              <section class="flex-center flex-column index-swiper-detail-cont">
+                <section class="index-swiper-detail-author font">
+                  @article
+                </section>
+                <h2 class="index-swiper-detail-title">
+                  {{item.Title}}
+                </h2>
+                <p class="font gray6 text-ess-3 index-swiper-detail-abs" style="-webkit-box-orient: vertical">
+                  {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
+                </p>
+                <p class="font gray9">
+                  {{item.CreateTime}}
+                </p>
               </section>
-              <h2 class="index-swiper-detail-title">
-                {{item.Title}}
-              </h2>
-              <p class="font gray6 text-ess-3 index-swiper-detail-abs" style="-webkit-box-orient: vertical">
-                {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
-              </p>
-              <p class="font gray9">
-                {{item.CreateTime}}
-              </p>
             </section>
-          </section>
+          </nuxt-link>
         </el-carousel-item>
       </el-carousel>
     </section>
 
     <section class="flex flex-justify-between index-body">
       <section class="index-list" > 
-        <section class="index-list-item-first" v-if="firstArc"  @click="goTo('/detail',`id=${firstArc.Id}`)">
-          <div class="index-list-item-first-cover bg-full-img" :style="{background: `url(${firstArc.Url})`}"></div>
-          <div class="index-list-item-first-info-cont">
-            <p class="index-list-item-first-info gray6 font-xs">
-              <span class="primary">article&nbsp;</span>
-              <span>@{{firstArc.Author}}&nbsp;</span>
-              <span class="gray9">{{firstArc.CreateTime}}</span>
-            </p>
-            <h2 class="index-list-item-first-title text-ess-1">
-              {{firstArc.Title}}
-            </h2>
-            <p class="gray6 font text-ess-2" style="-webkit-box-orient: vertical">
-              {{firstArc.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
-            </p>
-          </div>
-        </section>
+        <nuxt-link v-if="firstArc" :to="{ name:'detail',query:{id : firstArc.Id} }">
+          <section class="index-list-item-first" >
+            <div class="index-list-item-first-cover bg-full-img" :style="{background: `url(${firstArc.Url})`}"></div>
+            <div class="index-list-item-first-info-cont">
+              <p class="index-list-item-first-info gray6 font-xs">
+                <span class="primary">article&nbsp;</span>
+                <span>@{{firstArc.Author}}&nbsp;</span>
+                <span class="gray9">{{firstArc.CreateTime}}</span>
+              </p>
+              <h2 class="index-list-item-first-title text-ess-1">
+                {{firstArc.Title}}
+              </h2>
+              <p class="gray6 font text-ess-2" style="-webkit-box-orient: vertical">
+                {{firstArc.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
+              </p>
+            </div>
+          </section>
+        </nuxt-link>
 
         <article-index-item :item="item" v-for="(item,index) in dataList.slice(1)" :key="index"/>
       </section>
@@ -103,7 +107,9 @@
 
         <intro-container title="推荐阅读">
           <div class="index-bloger-cont index-bloger-arcs font gray6">
-            <p @click="goTo('/detail',`id=${item.Id}`)" class="text-ess-1 index-bloger-arc" v-for="(item,index) in recommendList" :key="index">{{item.Title}}</p>
+            <nuxt-link v-for="(item,index) in recommendList" :key="index" :to="{ name:'detail',query:{id : item.Id} }">
+              <p class="text-ess-1 index-bloger-arc" >{{item.Title}}</p>
+            </nuxt-link>
           </div>
         </intro-container>
       </section>
