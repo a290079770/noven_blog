@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "文章详情",
+  "usingComponents": {
+    "add-article-btn": "../component/addArticleBtn/addArticleBtn",
+    "i-icon": "../../dist/icon/index"
+  }
+}

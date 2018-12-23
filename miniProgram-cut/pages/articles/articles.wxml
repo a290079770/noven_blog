@@ -1,0 +1,37 @@
+<view class="article-wrap">
+  <!-- 文章列表 -->
+  <view class="article-image-wrap">
+    <image class="article-image" src="../../images/article/articlelist.png"></image>
+  </view>
+
+  <!-- 最新、热门、精选、搜索 -->
+  <view class='search-row'>
+    <view class='orderby-wrap' bindtap='orderList'>
+      <view class='orderby-item {{ orderBy == "CreateTime" ? "orderby-item-active" : "" }}' data-type='CreateTime'>最新</view>
+      <view class='orderby-item {{ orderBy == "ReadCount" && "orderby-item-active" }}' data-type='ReadCount'>热门</view>
+      <view class='orderby-item {{ orderBy == "CollectCount" ? "orderby-item-active" : "" }}' data-type='CollectCount'>精选</view>
+    </view>
+    <view class='search' bindtap='toSearch'>
+      <!-- <icon class='search-icon' type="search" size="14" color="" /> -->
+      <image class="article-list-search-icon" mode="aspectFit" src="/images/article/search.svg"></image>
+      <text>搜索您感兴趣的文章</text>
+    </view>
+  </view>
+
+  <!-- 文章列表项 -->
+  <view wx:if="{{ hasGotData }}">
+    <article-list-item
+      wx:for="{{ articleList }}"
+      wx:key="{{ id }}"
+      data="{{ item }}">
+    </article-list-item>
+  </view>
+  <image wx:else class="articlelist-skeleton" src="../../images/article/articleListItem-skeleton.jpg"></image>
+  <!-- <button bindtap="toDetails">details</button> -->
+
+  <!-- 新增文章btn -->
+  <add-article-btn />
+  <!-- 回到顶部 -->
+  <to-top-btn hidden="{{ !isShowScrollTopBtn }}" />
+
+</view>

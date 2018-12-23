@@ -1,0 +1,32 @@
+.pd-left20 {
+  padding-left: 20rpx;
+}
+.pd-right20 {
+  padding-right: 20rpx;
+}
+.mg-top30 {
+  margin-top: 30rpx;
+}
+.mg-bottom30 {
+  margin-bottom: 30rpx;
+}
+/*//单行省略*/
+.text-ess-1 {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+/*//2行省略*/
+.text-ess-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+/*//3行省略*/
+.text-ess-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}

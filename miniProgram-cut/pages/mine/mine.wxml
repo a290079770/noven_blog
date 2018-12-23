@@ -1,0 +1,66 @@
+<view class="mine-wrap">
+  <!-- 头像区 -->
+  <view class="mine-info-wrap">
+    <view class="mine-info-img-wrap">
+      <view class='mine-info-img-box'>
+        <view wx:if="{{ !userInfo.CoverUrl }}" class="text-upload-touxiang" bindtap="editTouxiang">
+          <text>请上传</text>
+          <text>头像</text>
+        </view>
+        <image wx:else class="mine-info-img" src="{{ userInfo.CoverUrl }}" mode="aspectFill" bindtap="editTouxiang"></image>
+      </view>
+      
+    </view>
+    <view wx:if="{{ !isLogin }}" class="login-btn" bindtap="toLogin">点击登录</view>
+    <view wx:else class="nick-name-wrap">
+      <view class="nick-name">{{ userInfo.NickName }}</view>
+      <view class="current-time-wrap login-btn">
+        <image wx:if="{{ !userInfo.City }}" class="address-icon" src="/images/mine/local.svg"></image>
+        <text wx:else>{{ userInfo.City }}</text>
+        <text>{{ userInfo.ThisTime }}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 我的发布、我的收藏 -->
+  <view class="mine-tongji-wrap">
+    <view class="mine-tongji-item" data-type="1" bindtap="goTo">
+      <image class="mine-tongji-item-img" src="../../images/mine/write.svg"></image>
+      <view class="mine-tongji-item-text">
+        <text class="number">{{ publishCount }}</text>
+        <text>我的发布</text>
+      </view>
+    </view>
+    <view class="mine-tongji-item" data-type="2" bindtap="goTo">
+      <image class="mine-tongji-item-img" src="../../images/mine/like.svg"></image>
+      <view class="mine-tongji-item-text">
+        <text class="number">{{ collectCount }}</text>
+        <text>我的收藏</text>
+      </view>
+    </view>
+  </view>
+  <!-- 我的  相关列表 -->
+  <view class="mine-list-wrap">
+    <view class="mine-list-item" bindtap="editTouxiang">
+      <image class="mine-list-item-img" src="../../images/mine/cover.svg"></image>
+      <text class="mine-list-item-text">修改头像</text>
+    </view>
+    <view class="mine-list-item" data-type="3" bindtap="goTo">
+      <image class="mine-list-item-img" src="../../images/mine/nickname.svg"></image>
+      <text class="mine-list-item-text">修改昵称</text>
+    </view>
+    <view class="mine-list-item" data-type="4" bindtap="goTo">
+      <image class="mine-list-item-img" src="../../images/mine/abstract.svg"></image>
+      <text class="mine-list-item-text">修改简介</text>
+    </view>
+    <view class="mine-list-item" data-type="5" bindtap="goTo">
+      <image class="mine-list-item-img" src="../../images/mine/aboutus.svg"></image>
+      <text class="mine-list-item-text">关于我们</text>
+    </view>
+    <view class="mine-list-item" data-type="6" bindtap="goTo">
+      <image class="mine-list-item-img" src="../../images/mine/contactus.svg"></image>
+      <text class="mine-list-item-text">意见反馈</text>
+    </view>
+  </view>
+
+  <add-article-btn />
+</view>

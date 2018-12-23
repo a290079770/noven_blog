@@ -1,0 +1,20 @@
+<view class="my-statistics-wrap">
+  <!-- 我的发布 -->
+  <view wx:if="{{type === 1}}" class="my-statistics-item">
+    <view class="my-statistics-title">我的发布</view>
+    <view wx:if="{{ hasGotData }}">
+      <article-list-item wx:for="{{publishList}}" wx:key="{{id}}" data="{{item}}" bindmyevent="onMyEvent"></article-list-item>
+    </view>
+    <image wx:else class="articlelist-skeleton" src="../../images/article/articleListItem-skeleton.jpg"></image>
+  </view>
+  <!-- 我的收藏 -->
+  <view wx:else class="my-statistics-item">
+  <view class="my-statistics-title">我的收藏</view>
+    <view wx:if="{{ hasGotData }}">
+      <article-list-item wx:for="{{collectList}}" wx:key="{{id}}" data="{{item}}" bindmyevent="onMyEvent"></article-list-item>
+    </view>
+    <image wx:else class="articlelist-skeleton" src="../../images/article/articleListItem-skeleton.jpg"></image>
+  </view>
+
+  <add-article-btn />
+</view>

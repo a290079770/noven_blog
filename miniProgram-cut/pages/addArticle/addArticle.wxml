@@ -1,0 +1,125 @@
+<view class='add-article-wrap'>
+  <!-- 标题 -->
+  <view class='add-article-title'>
+    <input class="add-article-title-input"
+      focus
+      maxlength="-1"
+      placeholder="请输入文章标题"
+      placeholder-style="color:#bbb;font-size:28rpx;"
+      selection-start="{{0}}"
+      selection-end="{{30}}"
+      value="{{ addArticle.Title }}"
+      name="Title"
+      bindinput="inputTitleAction"></input>
+    <view class="text-wrap">
+      <text>您最多可以输入30个字符</text>
+      <text><text class="current-length">{{ currentLength.Title }}</text> / 30</text>
+    </view>
+  </view>
+  <!-- 简介 -->
+  <view class='add-article-brief'>
+    <textarea placeholder-style="color:#bbb;font-size:28rpx;"
+      class="add-article-brief-input"
+      auto-height
+      maxlength="-1"
+      placeholder="请输入文章简介！" 
+      value="{{ addArticle.Brief }}"
+      name="Brief"
+      bindinput="inputBriefAction">
+    </textarea>
+    <view class="text-wrap">
+      <text>您最多可以输入280个字符</text>
+      <text><text class="current-length">{{ currentLength.Brief }}</text> / 280</text>
+    </view>
+  </view>
+  <!-- 封面 -->
+  <view class='add-article-cover-wrap flex' bindtap='updateCover'>
+    <text wx:if='{{ !addArticle.Url }}'>+上传封面</text>
+    <image wx:else class='add-article-cover' mode="widthFix" src='{{ addArticle.Url }}'></image>
+    <icon wx:if='{{ addArticle.Url }}' catchtap='removeCover' class='remove-cover-icon' type="clear" size="25" color="rgb(211, 27, 27)" />
+  </view>
+  <!-- 修改文章 内容回显1 -->
+  <!-- <view class='add-article-con-wrap' wx:if="{{ hasStorageDetailData }}">
+    <view wx:if="{{ conIsArray }}">
+      <view wx:for="{{ conList }}" wx:key="id">
+        <view class='flex' wx:if='{{ item.type == "text" }}'>
+          <textarea placeholder-style="color:#bbb;font-size:28rpx;"
+            class="add-article-brief-input"
+            maxlength="-1"
+            auto-height
+            placeholder="请输入文章文本段落！" 
+            value="{{ item.value }}"
+            data-index="{{ index }}"
+            bindinput="inputParaAction">
+          </textarea>
+        </view>
+        <view class='add-article-paragraph-img' wx:elif='{{ item.type == "img" }}'>
+          <view class='paragraph-img-box flex' bindtap='addArticleImg'>
+            <image wx:if='{{ !item.value }}' mode='widthFix' class='add-article-img-icon' src='/images/addArticle/add.svg'></image>
+            <image wx:else mode='widthFix' class='paragraph-img' src='{{ item.value }}'></image>
+          </view>
+          <view class='paragraph-img-desc'>
+            <textarea placeholder-style="color:#ccc;font-size:28rpx;"
+              class="add-article-img-desc-input"
+              maxlength="-1"
+              placeholder="请输入文章图片描述！" 
+              value="{{ item.desc }}"
+              bindinput="inputImgDescAction">
+            </textarea>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else>
+      <view class='flex'>
+        <textarea placeholder-style="color:#bbb;font-size:28rpx;"
+          class="add-article-brief-input"
+          maxlength="-1"
+          auto-height
+          placeholder="请输入文章文本段落！" 
+          value="{{ addArticle.Content }}"
+          bindinput="inputParaAction">
+        </textarea>
+      </view>
+    </view>
+  </view> -->
+  <!-- 修改文章 内容回显2 -->
+  <view class='content-wrap'>
+      <view wx:for="{{ conList }}" wx:key="id" class='content'>
+        <view wx:if='{{ item.type == "text" }}' data-index='{{ index }}' class='content-para content-para-text' bindtap='editTextPara'>
+          {{ item.value }}
+        </view>
+        <view wx:elif='{{ item.type == "img" }}' data-index='{{ index }}' bindtap='editImgPara' class='content-para content-para-img flex'>
+          <view class='para-img flex'>
+            <image wx:if='{{ !item.value }}' mode='widthFix' class='add-para-img-icon' src='/images/addArticle/add.svg'></image>
+            <image wx:else mode='widthFix' class='paragraph-img' src='{{ item.value }}'></image>
+          </view>
+          <view class='para-img-desc'>
+            {{ item.desc }}
+          </view>
+        </view>
+      </view>
+  </view>
+  <!-- 新增内容图标 -->
+  <view class='addarticle-icon-wrap'>
+    <view class='addarticle-icon flex'>
+      <view class='add-icon flex' bindtap='addTextOrImg'>
+        <image mode='widthFix' class='add-con-icon' src='/images/addArticle/add-con.svg'></image>
+
+        <image 
+          class="addpara-item {{ clickAddParaBtn ? 'addpara-item-click addpara-text-item' : '' }}" 
+          mode="aspectFit" 
+          src="/images/addArticle/add-arc.png"
+          bindtap="addTextParagraph"
+        ></image>
+        <image 
+          class="addpara-item {{ clickAddParaBtn ? 'addpara-item-click addpara-img-item' : '' }}" 
+          mode="aspectFit" 
+          src="/images/addArticle/add-img.png"
+          bindtap="addImgParagraph"
+        ></image>
+      </view>
+    </view>
+  </view>
+</view>
+<cover-view class="add-article-btn" bindtap="addOrEditArticle">{{ hasStorageDetailData ? "修改文章" : "发布文章" }}</cover-view>

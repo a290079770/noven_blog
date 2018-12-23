@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/articles/articles",
+    "pages/mine/mine",
+    "pages/login/login",
+    "pages/details/details",
+    "pages/myStatistics/myStatistics",
+    "pages/aboutUs/aboutUs",
+    "pages/editInfo/editInfo",
+    "pages/addArticle/addArticle",
+    "pages/search/search",
+    "pages/addArticle/addPara/addPara"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Noven Blog",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tabBar-icons/index2.png",
+        "selectedIconPath": "images/tabBar-icons/index1.png"
+      },
+      {
+        "pagePath": "pages/articles/articles",
+        "text": "文章",
+        "iconPath": "images/tabBar-icons/article2.png",
+        "selectedIconPath": "images/tabBar-icons/article1.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "images/tabBar-icons/my2.png",
+        "selectedIconPath": "images/tabBar-icons/my1.png"
+      }
+    ],
+    "color": "black",
+    "selectedColor": "red",
+    "backgroundColor": "#fff"
+  }
+}

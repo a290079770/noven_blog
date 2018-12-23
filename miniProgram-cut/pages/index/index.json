@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "Noven_blog",
+  "usingComponents": {
+    "article-item": "../component/articleItem/articleItem",
+    "add-article-btn": "../component/addArticleBtn/addArticleBtn",
+    "to-top-btn": "../component/toTopBtn/toTopBtn"
+  }
+}

@@ -1,0 +1,79 @@
+page {
+  height: 70vh;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-wrap, .login-info, .login-logo {
+  flex-direction: column;
+}
+.login-logo {
+  margin-bottom: 50rpx;
+}
+.logo-img {
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 50%;
+  border: 1px solid rgb(223, 76, 76);
+}
+.userinfo-input {
+  width: 500rpx;
+  height: 70rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgb(197, 129, 129);
+}
+.placeholder-style {
+  font-size: 28rpx;
+  color: #999;
+}
+.yanzhengma {
+  justify-content: flex-start;
+  width: 500rpx;
+  font-size: 32rpx;
+}
+.yanzhengma-input {
+  padding: 0 20rpx;
+  width: 150rpx;
+  height: 70rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  border: 1px solid rgb(197, 129, 129);
+}
+.login-btn {
+  margin-top: 50rpx;
+  width: 500rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 34rpx;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 10rpx;
+  background: rgb(223, 76, 76);
+  border-radius: 10rpx;
+}
+.shouquan-login {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 50rpx;
+  font-size: 32rpx;
+  color: rgba(173, 42, 42, 0.9);
+}
+.shouquan-btn {
+  border: none;
+  background: none;
+  font-size: 30rpx;
+  color: rgba(173, 42, 42, 0.9);
+  padding: 0;
+  line-height: 50rpx;
+}
+.shouquan-btn::after {
+  border: none;
+}
+.nologin {
+  color: #999;
+  
+}

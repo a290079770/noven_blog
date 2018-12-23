@@ -1,0 +1,22 @@
+.add-article-btn-wrap {
+  width: 200rpx;
+  height: 200rpx;
+  position: fixed;
+  bottom: 20rpx;
+  right: 30rpx;
+}
+.add-article-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #d13954;
+	color: white;
+	box-shadow: 0 10px 30px rgba(248,76,91,.6);
+}
+.add-article {
+  width: 50rpx;
+  height: 50rpx;
+}

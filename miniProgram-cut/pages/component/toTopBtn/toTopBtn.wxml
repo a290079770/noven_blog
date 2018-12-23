@@ -1,0 +1,10 @@
+<!--pages/component/toTopBtn.wxml-->
+<movable-area class="totopbtn-wrap" hidden="{{ hidden }}">
+  <movable-view
+    class="totopbtn"
+    direction="all"
+    bindtap="toTop">
+      <!-- <text class="add-article">+</text> -->
+      <image mode="" src="/images/toTop.svg" class="totopbtn-icon"></image>
+  </movable-view>
+</movable-area>
