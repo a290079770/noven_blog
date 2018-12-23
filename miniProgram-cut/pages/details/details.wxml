@@ -58,8 +58,4 @@
         <i-icon type="brush" size="28" color="rgb(204, 122, 135)" />
     </movable-view>
   </movable-area>
-
-  <!-- 新增文章按钮 -->
-  <add-article-btn />
-
 </view>

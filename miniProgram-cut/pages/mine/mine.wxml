@@ -1,66 +1,57 @@
-<view class="mine-wrap">
-  <!-- 头像区 -->
-  <view class="mine-info-wrap">
-    <view class="mine-info-img-wrap">
-      <view class='mine-info-img-box'>
-        <view wx:if="{{ !userInfo.CoverUrl }}" class="text-upload-touxiang" bindtap="editTouxiang">
-          <text>请上传</text>
-          <text>头像</text>
-        </view>
-        <image wx:else class="mine-info-img" src="{{ userInfo.CoverUrl }}" mode="aspectFill" bindtap="editTouxiang"></image>
+<!-- 头像区 -->
+<view class="mine-info-wrap">
+  <view class="mine-info-img-wrap">
+    <view class='mine-info-img-box'>
+      <!-- <view wx:if="{{ !userInfo.CoverUrl }}" class="text-upload-touxiang" bindtap="editTouxiang">
+        <text>请上传</text>
+        <text>头像</text>
       </view>
-      
+      <image wx:else class="mine-info-img" src="{{ userInfo.CoverUrl }}" mode="aspectFill" bindtap="editTouxiang"></image> -->
+      <image class="mine-info-img" src="https://api.novenblog.xin/images/y7bPGjKBCsNJBvIg_photo_1542895870.jpg" mode="aspectFill" />
     </view>
-    <view wx:if="{{ !isLogin }}" class="login-btn" bindtap="toLogin">点击登录</view>
-    <view wx:else class="nick-name-wrap">
-      <view class="nick-name">{{ userInfo.NickName }}</view>
-      <view class="current-time-wrap login-btn">
-        <image wx:if="{{ !userInfo.City }}" class="address-icon" src="/images/mine/local.svg"></image>
-        <text wx:else>{{ userInfo.City }}</text>
-        <text>{{ userInfo.ThisTime }}</text>
+    
+  </view>
+  <!-- <view wx:if="{{ !isLogin }}" bindtap="toLogin">点击登录</view>
+  <view wx:else class="nick-name-wrap">
+    <view class="nick-name">{{ userInfo.NickName }}</view>
+    <view class="current-time-wrap">
+      <image wx:if="{{ !userInfo.City }}" class="address-icon" src="/images/mine/local.svg"></image>
+      <text wx:else>{{ userInfo.City }}</text>
+      <text>{{ userInfo.ThisTime }}</text>
+    </view>
+  </view> -->
+  <view class="nick-name-wrap">
+    <view class="nick-name">Noven Blog</view>
+    <view class="current-time-wrap">
+      <view>
+        <image class="address-icon" src="/images/mine/local.svg"></image>
+        <text class="ml10">{{ city }}</text>
       </view>
+      <text>{{ time }}</text>
     </view>
   </view>
-  <!-- 我的发布、我的收藏 -->
-  <view class="mine-tongji-wrap">
-    <view class="mine-tongji-item" data-type="1" bindtap="goTo">
-      <image class="mine-tongji-item-img" src="../../images/mine/write.svg"></image>
-      <view class="mine-tongji-item-text">
-        <text class="number">{{ publishCount }}</text>
-        <text>我的发布</text>
-      </view>
-    </view>
-    <view class="mine-tongji-item" data-type="2" bindtap="goTo">
-      <image class="mine-tongji-item-img" src="../../images/mine/like.svg"></image>
-      <view class="mine-tongji-item-text">
-        <text class="number">{{ collectCount }}</text>
-        <text>我的收藏</text>
-      </view>
+</view>
+
+<view class="about-me">
+  <view class="list-item">
+    <view class="item-title">关于Noven Blog</view>
+    <view class="item-content">
+      Noven Blog 是一个方便记录博客、文章、心情的涵盖大部分平台的系统，由个人开发维护。如果您在使用的过程中遇到问题或有更好的建议，欢迎联系作者。
     </view>
   </view>
-  <!-- 我的  相关列表 -->
-  <view class="mine-list-wrap">
-    <view class="mine-list-item" bindtap="editTouxiang">
-      <image class="mine-list-item-img" src="../../images/mine/cover.svg"></image>
-      <text class="mine-list-item-text">修改头像</text>
+  <view class="list-item">
+    <view class="item-title">项目简介</view>
+    <view class="item-content">
+      <view>该小程序项目的本意是做出与h5体验一致的平台产品，但限于个人主体及微信审核严格，遂将已完成的与用户交互相关功能全部移除（占比70%），只保留最基础的阅读功能，已移除的功能会在体验版和后续上线的h5版本完善。</view>
     </view>
-    <view class="mine-list-item" data-type="3" bindtap="goTo">
-      <image class="mine-list-item-img" src="../../images/mine/nickname.svg"></image>
-      <text class="mine-list-item-text">修改昵称</text>
-    </view>
-    <view class="mine-list-item" data-type="4" bindtap="goTo">
-      <image class="mine-list-item-img" src="../../images/mine/abstract.svg"></image>
-      <text class="mine-list-item-text">修改简介</text>
-    </view>
-    <view class="mine-list-item" data-type="5" bindtap="goTo">
-      <image class="mine-list-item-img" src="../../images/mine/aboutus.svg"></image>
-      <text class="mine-list-item-text">关于我们</text>
-    </view>
-    <view class="mine-list-item" data-type="6" bindtap="goTo">
-      <image class="mine-list-item-img" src="../../images/mine/contactus.svg"></image>
-      <text class="mine-list-item-text">意见反馈</text>
+  </view>
+  <view class="list-item">
+    <view class="item-title">联系我</view>
+    <view class="item-content">
+      <view>QQ：949975857</view>
+      <view>邮箱：949975857@qq.com</view>
+      <view>微信：lin949975857</view>
     </view>
   </view>
 
-  <add-article-btn />
 </view>

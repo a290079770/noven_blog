@@ -10,6 +10,9 @@
 .mg-bottom30 {
   margin-bottom: 30rpx;
 }
+.ml10 {
+  margin-left: 10rpx;
+}
 /*//单行省略*/
 .text-ess-1 {
   overflow: hidden;

@@ -1,3 +1,4 @@
+/*头像区样式*/
 .mine-info-wrap {
   display: flex;
   justify-content: flex-start;
@@ -8,7 +9,7 @@
   margin-bottom: 30rpx;
   /* border-bottom: 1px solid rgb(204, 122, 135); */
 }
-.mine-info-img-wrap, .nick-name-wrap, .current-time-wrap, .mine-tongji-item, .mine-tongji-item-text, .mine-info-img-box {
+.mine-info-img-wrap, .nick-name-wrap, .current-time-wrap, .mine-info-img-box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,16 +38,6 @@
   color: rgb(204, 102, 119);
   /* background: #efefef; */
 }
-.login-btn {
-  margin-left: 50rpx;
-  padding: 15rpx 20rpx;
-  font-size: 30rpx;
-  color: rgb(204, 102, 119);
-  background: #fff;
-  box-sizing: border-box;
-  border-radius: 50rpx;
-  border: 1px solid rgb(204, 122, 135);
-}
 .nick-name-wrap {
   margin-left: 50rpx;
   flex-direction: column;
@@ -56,56 +47,37 @@
 .current-time-wrap {
   flex-direction: column;
   margin-top: 20rpx;
-  margin-left: 0;
-  padding: 10rpx 20rpx;
+  padding: 15rpx 50rpx;
+  font-size: 30rpx;
+  color: rgb(204, 102, 119);
+  box-sizing: border-box;
+  border-radius: 50rpx;
+  border: 1px solid rgb(204, 122, 135);
 }
 .address-icon {
   width: 30rpx;
   height: 30rpx;
 }
 
-.mine-tongji-wrap {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-bottom: 60rpx;
-}
-.mine-tongji-item {
-  width: 300rpx;
-  height: 150rpx;
-  background: rgba(221, 144, 157, 0.2);
-}
-.mine-tongji-item-img {
-  width: 80rpx;
-  height: 100rpx;
-  /* border: 1px solid red; */
-}
-.mine-tongji-item-text {
-  flex-direction: column;
-  margin-left: 30rpx;
+/*列表区样式*/
+.about-me {
+  padding: 0 30rpx 50rpx;
   font-size: 30rpx;
-  color: rgb(107, 42, 42);
+  color: #666;
 }
-.number {
-  font-size: 36rpx;
+.list-item {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  border: 1px solid rgba(204, 122, 135, .3);
+  border-radius: 10rpx;
+  box-shadow: 0 8rpx 16rpx rgba(241, 136, 136, .3);
 }
-
-
-.mine-list-wrap {
-  display: flex;
-  flex-direction: column;
-  padding-left: 50rpx;
-}
-.mine-list-item {
-  display: flex;
-  align-items: center;
-  height: 80rpx;
-  line-height: 80rpx;
+.item-title {
   font-size: 32rpx;
-  color: rgb(107, 42, 42);
+  text-align: center;
 }
-.mine-list-item-img {
-  width: 30rpx;
-  height: 30rpx;
-  margin-right: 20rpx;
+.item-content {
+  margin-top: 20rpx;
+  text-indent: 60rpx;
+  line-height: 60rpx;
 }

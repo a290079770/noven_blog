@@ -29,8 +29,6 @@
   <image wx:else class="articlelist-skeleton" src="../../images/article/articleListItem-skeleton.jpg"></image>
   <!-- <button bindtap="toDetails">details</button> -->
 
-  <!-- 新增文章btn -->
-  <add-article-btn />
   <!-- 回到顶部 -->
   <to-top-btn hidden="{{ !isShowScrollTopBtn }}" />
 
