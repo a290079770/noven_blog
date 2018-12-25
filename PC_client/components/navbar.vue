@@ -72,13 +72,13 @@ export default {
             '/detail/'
           ]
         },
-        // {
-        //   title:'书不尽言',
-        //   link:'/feedback',
-        //   contRoutes:[
-        //     '/feedback/'
-        //   ]
-        // },
+        {
+          title:'书不尽言',
+          link:'/feedback',
+          contRoutes:[
+            '/feedback/'
+          ]
+        },
         {
           title:'关于我们',
           link:'/aboutus',

@@ -54,10 +54,19 @@
         </div>
       </div>
 
-      <div class="flex flex-align-center flex-justify-center footer-copyright font">
+      <!-- <div class="flex flex-align-center flex-justify-center footer-copyright font">
         <span>Design by：Noven 唐青 </span>
         <a class="footer-copyright-ml" href="http://www.miitbeian.gov.cn/">备案号：蜀ICP备18035425号</a>
-      </div>
+      </div> -->
+      <div class="flex flex-align-center flex-justify-center footer-copyright font">
+          <span>Design by：Noven 唐青 </span>
+          <a class="footer-copyright-ml" href="http://www.miitbeian.gov.cn/">备案号：蜀ICP备18035425号</a>
+
+          <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012402000350" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;margin-left: 10px;">
+            <img src="https://api.novenblog.xin/images/beian.png" style="float:left;">
+            <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">川公网安备 51012402000350号</p>
+          </a>
+        </div>
     </div>
   </div>
 </template>
@@ -151,11 +160,11 @@ export default {
     left: 0;
     width: 100%;
     height: 30px;
-    color: #bbb;
+    color: #939393;
   }
 
   .footer-copyright-ml {
-    color: #bbb;
+    color: #939393;
     margin-left: 10px;
   }
 </style>

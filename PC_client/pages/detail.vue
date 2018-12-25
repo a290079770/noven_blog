@@ -45,7 +45,7 @@
       </section>
     </section>
 
-    <!-- <feedback v-if="Object.keys(detail).length > 0" :type="2" :resourceId="detail.Id"/> -->
+    <feedback v-if="Object.keys(detail).length > 0" :type="2" :resourceId="detail.Id"/>
     
     <section @click="collect" class="flex-center detail-collect-cont">
       <img class="detail-collect" :src="hasCollect">
@@ -57,11 +57,11 @@
 
 import { getArticleDetail , collect } from '~/assets/service/articleService'
 import { detailSimple } from '~/assets/service/userService'
-// import FeedBack from './feedback';
+import FeedBack from './feedback';
 export default {
-  // components:{
-  //   'feedback':FeedBack
-  // },
+  components:{
+    'feedback':FeedBack
+  },
 
   data() {
     return {
