@@ -2,7 +2,7 @@
 App({
   globalData: {
     // baseUrl: 'http://novenblog_api.com',
-    baseUrl: 'https://api.novenblog.xin/',
+    baseUrl: 'https://api.novenblog.xin',
     userInfo: null,
     isLogin: false,
     code: '',

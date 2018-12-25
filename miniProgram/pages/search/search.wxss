@@ -17,12 +17,12 @@
   right: 20rpx;
 }
 .mg-right-20 {
-  margin-right: -20rpx;
+  margin-right: -38rpx;
 }
 .search-input {
   flex: 1;
-  margin-left: -20rpx;
-  padding: 10rpx 50rpx;
+  margin-left: -36rpx;
+  padding: 10rpx 66rpx;
   border: 1px solid rgba(216, 130, 130, 0.774);
   border-radius: 10rpx;
   font-size: 28rpx;
