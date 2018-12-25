@@ -6,7 +6,7 @@ Page({
     hasGotListData: false,
     title: "oven Blog",
     imgUrls: [
-      // 'https://api.novenblog.xin/images/XlIp7OirOgDjesk2_photo_1542896329.jpg',
+      // 'https://api.novenblog.xin/images/arc-default3.jpg',
       // 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
       // 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
     ],

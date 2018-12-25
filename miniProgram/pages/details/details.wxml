@@ -19,7 +19,7 @@
         <image
           mode='widthFix'
           class="detail-cover"
-          src="{{ detailData.Url || 'https://api.novenblog.xin/images/XlIp7OirOgDjesk2_photo_1542896329.jpg' }}" />
+          src="{{ detailData.Url || 'https://api.novenblog.xin/images/arc-default3.jpg' }}" />
       </view>
     </view>
 

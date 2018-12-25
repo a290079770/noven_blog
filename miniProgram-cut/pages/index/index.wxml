@@ -19,7 +19,7 @@
       <block wx:for="{{imgUrls}}" wx:key="{{id}}">
         <swiper-item bindtap="toDetail" data-id="{{ item.Id }}">
           <image
-            src="{{ item.Url || 'https://api.novenblog.xin/images/XlIp7OirOgDjesk2_photo_1542896329.jpg' }}"
+            src="{{ item.Url || 'https://api.novenblog.xin/images/arc-default3.jpg' }}"
             class="slide-image"/>
           <view class='banner-related-wrap'>
             <view class='banner-related'>

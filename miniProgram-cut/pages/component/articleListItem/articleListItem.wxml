@@ -4,7 +4,7 @@
   <view class="article-list-item-wrap">
     <view class="article-list-item" bindtap="toDetails">
       <view class="article-list-item-left">
-        <image mode="aspectFill" class="article-list-item-image" src="{{ data.Url || 'https://api.novenblog.xin/images/XlIp7OirOgDjesk2_photo_1542896329.jpg' }}" />
+        <image mode="aspectFill" class="article-list-item-image" src="{{ data.Url || 'https://api.novenblog.xin/images/arc-default3.jpg' }}" />
       </view>
       <view class="article-list-item-right">
         <view class='article-list-item-title-wrap'>
