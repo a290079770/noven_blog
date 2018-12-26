@@ -1,10 +1,95 @@
-@primary:#d13954; //209,57,84
-@success:#67c23a;
-@warning:#e6a23c;
-@danger:#f56c6c;
-@info:#768fc3;
-@borderBold: 1px solid #e0e0e0;
-@borderDashed: 1px dashed #e0e0e0;
-@borderRadius: 0.1rem;
-@boxShadow: 0px 0px 0.5rem #888;
-@transition: all .5s;
+.index {
+	.index-swiper {
+		height: 4rem;
+		.index-swiper-item {
+			height: 100%;
+		}
+	}
+
+	.index-swiper-skeleton {
+		background: url('/banner-skeleton.jpg');
+	}
+
+	.index-title {
+	   margin-top: .3rem;
+	   height: 1.41rem;
+	   width: 100%;
+	}
+
+	.index-title-image {
+	   width: 4.23rem;
+	   height: 100%;
+	}
+
+	.arc-item {
+	   height: 2.4rem;
+	   overflow: hidden;
+	   border-bottom: @borderBold;
+	   .arc-item-cont {
+	     margin-top: .3rem;
+	   	 height: 2rem;
+
+	   	 .arc-item-cover {
+	   	 	width: 1.8rem;
+	   	 	height: 1.8rem;
+	   	 	background: pink;
+	   	 	border-radius: @borderRadius;
+	   	 }
+
+	   	 .arc-item-abs {
+	   	 	width: 5rem;
+	   	 	height: 100%;
+
+	   	 	.art-li-title {
+				height: .6rem;
+				width: 100%;
+			}
+
+			.art-li-title-yuanchuang {
+				margin-right: .12rem;
+				padding: .03rem .1rem;
+				font-size: .2rem;
+				color: @primary;
+				box-sizing: border-box;
+				border: .02rem solid @primary;
+				border-radius: .08rem;
+			}
+
+			.art-li-brief {
+			   margin-bottom: .05rem;
+			   height: .74rem;
+			   line-height: .37rem;
+			}
+
+
+			.art-li-info {
+			  margin-bottom: .27rem;
+			  height: .48rem;
+			  width: 100%;
+			}
+
+
+			.article-info-icon {
+				margin-right:.06rem;
+				width: .28rem;
+				height: .28rem;
+			}
+
+			.article-info-zan {
+				margin-right: .2rem;
+			}
+
+			.art-li-info-createtime {
+				margin-left: .2rem;
+				font-style: italic;
+				height: 100%;
+			}
+
+			.article-li-item-skeleton {
+				width: 6.80rem;
+				height: 4.32rem;
+			}
+	   	 }
+	   }
+	}
+}

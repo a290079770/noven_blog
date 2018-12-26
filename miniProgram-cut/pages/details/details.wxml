@@ -35,7 +35,6 @@
       </view>
     </view>
     <view wx:else class="detail-text">{{ detailData.Content }}</view>
-    
   </view>
   <image wx:else class="detail-skeleton" src="../../images/detail/detail-skeleton.jpg"></image>
 
