@@ -53,18 +53,11 @@ Page({
           // console.log(err);
         }
         console.log(res)
-        if(res.AppCode !== 3 && res.Content.toString().slice(0, 1) === "<") {
-          wx.setStorageSync('detailData', res);
-          wx.navigateTo({
-            url: "/pages/wxParse/wxParse"
-          })
-        }else {// res.AppCode === 3 小程序端
-          _this.setData({
-            detailData: res,
-            hasGotData: true,
-            conIsArray: Array.isArray(res.Content)
-          })
-        }
+        _this.setData({
+          detailData: res,
+          hasGotData: true,
+          conIsArray: Array.isArray(res.Content)
+        })
       }
     })
   },
@@ -100,13 +93,5 @@ Page({
         })
       }
     })
-  },
-  // 修改
-  editArticle() {
-    // console.log(this.data.detailData)
-    wx.setStorageSync("detailData", this.data.detailData);
-    wx.navigateTo({
-      url: '/pages/addArticle/addArticle?title=修改文章'
-    });
   }
 })

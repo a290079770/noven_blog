@@ -24,8 +24,8 @@ Page({
   },
   // 轮播图跳转详情页面
   toDetail(e) {
-    // console.log(e.currentTarget.dataset.id)
-    app.toDetails(e.currentTarget.dataset.id)
+    // console.log(e.currentTarget.dataset.appCode)
+    app.toDetails(e.currentTarget.dataset.id, e.currentTarget.dataset.appCode);
   },
   // 下拉刷新
   onPullDownRefresh() {

@@ -17,7 +17,7 @@
       interval="{{interval}}"
       duration="{{duration}}">
       <block wx:for="{{imgUrls}}" wx:key="{{id}}">
-        <swiper-item bindtap="toDetail" data-id="{{ item.Id }}">
+        <swiper-item bindtap="toDetail" data-id="{{ item.Id }}" data-app-code="{{ item.AppCode }}">
           <image
             src="{{ item.Url || 'https://api.novenblog.xin/images/arc-default3.jpg' }}"
             class="slide-image"/>

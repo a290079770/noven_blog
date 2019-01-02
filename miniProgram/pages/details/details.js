@@ -53,18 +53,11 @@ Page({
           // console.log(err);
         }
         console.log(res)
-        if(res.AppCode !== 3 && res.Content.toString().slice(0, 1) === "<") {
-          wx.setStorageSync('detailData', res);
-          wx.navigateTo({
-            url: "/pages/wxParse/wxParse"
-          })
-        }else {// res.AppCode === 3 小程序端
-          _this.setData({
-            detailData: res,
-            hasGotData: true,
-            conIsArray: Array.isArray(res.Content)
-          })
-        }
+        _this.setData({
+          detailData: res,
+          hasGotData: true,
+          conIsArray: Array.isArray(res.Content)
+        })
       }
     })
   },

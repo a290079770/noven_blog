@@ -18,10 +18,17 @@ App({
     }
   },
   // 跳转到详情页面
-  toDetails(articleId) {
-    wx.navigateTo({
-      url: "/pages/details/details?id=" + articleId
-    })
+  toDetails(articleId, appCode) {
+    console.log("articleId:",articleId,"appCode:",appCode);
+    if(appCode == 3) {
+      wx.navigateTo({
+        url: "/pages/details/details?id=" + articleId
+      })
+    }else {
+      wx.navigateTo({
+        url: "/pages/wxParse/wxParse?id=" + articleId
+      })
+    }
   },
 
   //封装wx.request

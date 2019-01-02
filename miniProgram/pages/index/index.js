@@ -25,7 +25,7 @@ Page({
   // 轮播图跳转详情页面
   toDetail(e) {
     // console.log(e.currentTarget.dataset.id)
-    app.toDetails(e.currentTarget.dataset.id)
+    app.toDetails(e.currentTarget.dataset.id, e.currentTarget.dataset.appCode);
   },
   // 下拉刷新
   onPullDownRefresh() {
@@ -70,11 +70,13 @@ Page({
           return item;
         })
         if (order == "ReadCount") {
+          console.log(res);// 后台限制了显示每页20条
           _this.setData({
             articleList: res.list,
             hasGotListData: true
           })
-        } else {// banner，精选文章列表
+        } else {// banner，精选文章列表CollectCount
+          console.log(res);
           _this.setData({
             imgUrls: res.list.slice(0, 5),
             hasGotBannerData: true

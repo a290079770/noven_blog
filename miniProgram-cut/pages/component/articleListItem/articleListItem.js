@@ -16,7 +16,7 @@ Component({
   methods: {
     toDetails: function () {
 
-      app.toDetails(this.properties.data.Id);
+      app.toDetails(this.properties.data.Id, this.properties.data.AppCode);
       
       // wx.navigateTo({
       //   url:  app.globalData.baseUrl + "d=" + this.properties.data.id

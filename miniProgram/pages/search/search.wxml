@@ -23,3 +23,10 @@
 <view class='search-list'>
   <article-list-item wx:for="{{searchList}}" wx:key="{{id}}" data="{{ item }}"></article-list-item>
 </view>
+
+<!-- 回到顶部 -->
+<to-top-btn hidden="{{ !isShowScrollTopBtn }}" />
+
+<view class="bottom-line" wx:if="{{ hasGotData && cp * ps >= recordCount }}">
+  ------我是有底线的哟------
+</view>

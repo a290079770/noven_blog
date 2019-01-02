@@ -11,7 +11,7 @@ Component({
   },
   methods: {
     toDetail() {
-      app.toDetails(this.properties.item.Id)
+      app.toDetails(this.properties.item.Id, this.properties.item.AppCode);
     }
   },
 

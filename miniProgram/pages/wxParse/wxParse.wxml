@@ -41,15 +41,5 @@
         <image title="收藏" class="collection-img" src="{{ detailData.HasCollect ? '/images/detail/collect-full.svg' : '/images/detail/collect-kong.svg' }}"></image>
     </movable-view>
   </movable-area>
-
-  <!-- 修改按钮 -->
-  <movable-area wx:if="{{ detailData.CanEdit && detailData.AppCode == 3  }}" class="edit-icon-wrap">
-    <movable-view
-      class="edit-icon-circle"
-      direction="all"
-      bindtap='editArticle'>
-        <i-icon type="brush" size="28" color="rgb(204, 122, 135)" />
-    </movable-view>
-  </movable-area>
 </view>
 
