@@ -10,7 +10,8 @@
     "pages/editInfo/editInfo",
     "pages/addArticle/addArticle",
     "pages/search/search",
-    "pages/addArticle/addPara/addPara"
+    "pages/addArticle/addPara/addPara",
+    "pages/wxParse/wxParse"
   ],
   "window": {
     "backgroundTextStyle": "light",

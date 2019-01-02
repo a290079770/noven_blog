@@ -5,7 +5,7 @@ Page({
     userInfo: null,
     isLogin: false,
     time: dateFormat(new Date(), 'yyyy-mm-dd'),
-    city: "绵阳市"
+    city: "成都市"
   },
   onLoad: function () {
     

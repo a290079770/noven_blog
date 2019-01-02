@@ -5,7 +5,8 @@
     "pages/mine/mine",
     "pages/login/login",
     "pages/details/details",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/wxParse/wxParse"
   ],
   "window": {
     "backgroundTextStyle": "light",

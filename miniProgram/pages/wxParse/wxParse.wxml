@@ -1,0 +1,55 @@
+<!--pages/wxParse/wxParse.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
+<view class="detail-wrap">
+  <view wx:if="{{ hasGotData }}">
+    <view class="detail-title">{{ detailData.Title }}</view>
+    <view class="about-article">
+      <text class="article">article</text>
+      <text class="author mg-letf20">@{{ detailData.Author || '暂无作者信息' }}</text>
+      <text class="time mg-letf20">{{ detailData.CreateTimeFormate }}</text>
+    </view>
+
+    <view class="tongji-wrap">
+      <view class="tongji">
+        <text>收藏量：<text>{{ detailData.CollectCount || 0 }}</text></text>
+        <text class="reading">阅读量：<text>{{ detailData.ReadCount || 0 }}</text></text>
+      </view>
+    </view>
+    
+    <view class="detail-cover-wrap flex">
+      <view class='detail-cover-box flex'>
+        <image
+          mode='widthFix'
+          class="detail-cover"
+          src="{{ detailData.Url || 'https://api.novenblog.xin/images/arc-default3.jpg' }}" />
+      </view>
+    </view>
+
+    <view class='content'>
+      <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+    </view>
+    
+  </view>
+  <image wx:else class="detail-skeleton" src="../../images/detail/detail-skeleton.jpg"></image>
+
+  <!-- 是否收藏 -->
+  <movable-area class="is-collection-wrap">
+    <movable-view
+      class="is-collection"
+      direction="all"
+      bindtap='isCollect'>
+        <image title="收藏" class="collection-img" src="{{ detailData.HasCollect ? '/images/detail/collect-full.svg' : '/images/detail/collect-kong.svg' }}"></image>
+    </movable-view>
+  </movable-area>
+
+  <!-- 修改按钮 -->
+  <movable-area wx:if="{{ detailData.CanEdit && detailData.AppCode == 3  }}" class="edit-icon-wrap">
+    <movable-view
+      class="edit-icon-circle"
+      direction="all"
+      bindtap='editArticle'>
+        <i-icon type="brush" size="28" color="rgb(204, 122, 135)" />
+    </movable-view>
+  </movable-area>
+</view>
+

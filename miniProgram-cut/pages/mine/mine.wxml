@@ -25,6 +25,7 @@
     <view class="current-time-wrap">
       <view>
         <image class="address-icon" src="/images/mine/local.svg"></image>
+        <!-- <text class="ml10">{{ userInfo.City || "暂无城市信息" }}</text> -->
         <text class="ml10">{{ city }}</text>
       </view>
       <text>{{ time }}</text>
