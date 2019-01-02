@@ -80,6 +80,10 @@ export default {
         query:this.tabList[val].query
       })
     },
+    
+    $route() {
+      this.setActiveTab();
+    }
   }
 }
 

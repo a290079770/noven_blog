@@ -164,12 +164,12 @@ export default {
           },
           {
             listName:'bannerList',
-            order:'ReadCount',
+            order:'CollectCount',
             ps:5
           },
           {
             listName:'recommendList',
-            order:'CollectCount',
+            order:'ReadCount',
             ps:10
           },
       ];

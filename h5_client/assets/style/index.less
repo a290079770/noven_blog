@@ -3,6 +3,43 @@
 		height: 4rem;
 		.index-swiper-item {
 			height: 100%;
+
+			.swiper-art-cont {
+			   width:4.4rem;
+			   height: 2.2rem;
+			   box-sizing: border-box;
+			   border: .1rem solid transparent;
+			   outline: .1rem solid rgba(255,255,255,0.9);
+			}
+
+			.swiper-art-center {
+			   width:100%;
+			   height: 100%;
+			   background: rgba(255,255,255,0.9); 
+			}
+
+			.swiper-art-center div {
+			   margin: 0 auto;
+			   width: 80%;
+			}
+
+			.swiper-art-type {
+			  height: .5rem;
+			  line-height: .6rem;
+			  text-align: center;
+			  color: #d13954;
+			}
+
+			.swiper-art-title {
+			  height: .65rem;
+			  line-height: .65rem;
+			  text-align: center;
+			}
+
+			.swiper-art-brief {
+			  text-align: center;
+			}
+
 		}
 	}
 
@@ -21,75 +58,9 @@
 	   height: 100%;
 	}
 
-	.arc-item {
-	   height: 2.4rem;
-	   overflow: hidden;
-	   border-bottom: @borderBold;
-	   .arc-item-cont {
-	     margin-top: .3rem;
-	   	 height: 2rem;
-
-	   	 .arc-item-cover {
-	   	 	width: 1.8rem;
-	   	 	height: 1.8rem;
-	   	 	background: pink;
-	   	 	border-radius: @borderRadius;
-	   	 }
-
-	   	 .arc-item-abs {
-	   	 	width: 5rem;
-	   	 	height: 100%;
-
-	   	 	.art-li-title {
-				height: .6rem;
-				width: 100%;
-			}
-
-			.art-li-title-yuanchuang {
-				margin-right: .12rem;
-				padding: .03rem .1rem;
-				font-size: .2rem;
-				color: @primary;
-				box-sizing: border-box;
-				border: .02rem solid @primary;
-				border-radius: .08rem;
-			}
-
-			.art-li-brief {
-			   margin-bottom: .05rem;
-			   height: .74rem;
-			   line-height: .37rem;
-			}
-
-
-			.art-li-info {
-			  margin-bottom: .27rem;
-			  height: .48rem;
-			  width: 100%;
-			}
-
-
-			.article-info-icon {
-				margin-right:.06rem;
-				width: .28rem;
-				height: .28rem;
-			}
-
-			.article-info-zan {
-				margin-right: .2rem;
-			}
-
-			.art-li-info-createtime {
-				margin-left: .2rem;
-				font-style: italic;
-				height: 100%;
-			}
-
-			.article-li-item-skeleton {
-				width: 6.80rem;
-				height: 4.32rem;
-			}
-	   	 }
-	   }
+	.index-link {
+		 height: .7rem;
+		 line-height: 1rem;
+		 text-align: center;
 	}
 }

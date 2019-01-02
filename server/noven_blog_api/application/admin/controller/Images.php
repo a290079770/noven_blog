@@ -110,7 +110,7 @@ class Images extends Controller
         $type = explode('/',$type)[1];
         $size = $_FILES['file']['size'];
 
-        $url = request()->server()['REQUEST_SCHEME'].':'.DS.DS.request()->server()['HTTP_HOST'].DS.'images'.DS.$filename.'.'.$type;
+        $url = request()->scheme().':'.DS.DS.request()->server()['HTTP_HOST'].DS.'images'.DS.$filename.'.'.$type;
         //解决中文图片名
         $upload_file = iconv("UTF-8", "GB2312",  ROOT_PATH.'public'.DS.'images'.DS.$filename.'.'.$type);
 
