@@ -74,7 +74,8 @@ Page({
   clearSearchInput() {
     if (!this.data.searchValue) return;
     this.setData({
-      searchValue: ''
+      searchValue: '',
+      searchList: [],
     })
   },
   searchRes() {

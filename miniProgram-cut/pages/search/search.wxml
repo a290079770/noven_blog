@@ -14,7 +14,7 @@
     <icon wx:if="{{ searchValue }}" catchtap='clearSearchInput' class="clear-icon" type="clear" size="18" color="" />
     <view class='search-btn' bindtap='searchRes'>搜索</view>
   </view>
-  <view wx:if="{{ hasGotData }}" class='search-explain'>
+  <view wx:if="{{ hasGotData && searchValue }}" class='search-explain'>
     如下是关于“<text>{{ searchValue }}</text>”的搜索结果：
   </view>
   <view wx:else class='search-explain'>暂无搜索结果</view>
@@ -27,6 +27,6 @@
 <!-- 回到顶部 -->
 <to-top-btn hidden="{{ !isShowScrollTopBtn }}" />
 
-<view class="bottom-line" wx:if="{{ hasGotData && cp * ps >= recordCount }}">
+<view class="bottom-line" wx:if="{{ hasGotData && searchValue && cp * ps >= recordCount }}">
   ------我是有底线的哟------
 </view>
