@@ -73,9 +73,11 @@ Page({
   // 清空输入框
   clearSearchInput() {
     if (!this.data.searchValue) return;
+    this.data.cp = 1;
     this.setData({
       searchValue: '',
       searchList: [],
+      hasGotData: false,
     })
   },
   searchRes() {
