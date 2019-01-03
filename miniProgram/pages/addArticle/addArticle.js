@@ -244,13 +244,13 @@ Page({
             title: '修改成功！',
           })
 
-          app.toDetails(addParams.Id);
+          app.toDetails(addParams.Id, 3);
         } else {
           wx.showToast({
             title: '新增成功！',
           })
 
-          app.toDetails(res);
+          app.toDetails(res, 3);
         }
       }
     })
