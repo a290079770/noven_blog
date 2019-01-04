@@ -32,18 +32,18 @@ Component({
         content: '',
         success(res) {
           if (res.confirm) {
-            console.log('用户点击确定')
+            // console.log('用户点击确定')
             // console.log(_this.properties.data.type)
             _this.properties.data.type == 1 ? _this.deletePulish(articleId) : _this.deleteCollect(articleId)
           } else if (res.cancel) {
-            console.log('用户点击取消')
+            // console.log('用户点击取消')
           }
         }
       })
     },
     // 删除我的发布的文章
     deletePulish(articleId) {
-      console.log('删除我的发布')
+      // console.log('删除我的发布')
       let _this = this;
       app.request({
         url:  app.globalData.baseUrl + '/arcticle/delete',
@@ -65,7 +65,7 @@ Component({
     },
     // 删除我的收藏（取消收藏）
     deleteCollect(articleId) {
-      console.log('删除我的收藏')
+      // console.log('删除我的收藏')
       let _this = this;
       app.request({
         url:  app.globalData.baseUrl + '/arcticle/collect',

@@ -9,7 +9,7 @@
   </view>
   <!-- 我的收藏 -->
   <view wx:else class="my-statistics-item">
-  <view class="my-statistics-title">我的收藏</view>
+    <view class="my-statistics-title">我的收藏</view>
     <view wx:if="{{ hasGotData }}">
       <article-list-item wx:for="{{collectList}}" wx:key="{{id}}" data="{{item}}" bindmyevent="onMyEvent"></article-list-item>
     </view>
@@ -17,4 +17,11 @@
   </view>
 
   <add-article-btn />
+
+  <!-- 回到顶部 -->
+  <to-top-btn hidden="{{ !isShowScrollTopBtn }}" />
+
+  <view class="bottom-line" wx:if="{{ hasGotData && cp * ps >= recordCount }}">
+    ------我是有底线的哟------
+  </view>
 </view>

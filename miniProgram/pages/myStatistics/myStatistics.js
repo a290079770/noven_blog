@@ -10,6 +10,7 @@ Page({
     ps: 4,
     recordCount: 0,
     hasGotData: false,
+    isShowScrollTopBtn: false,
   },
   onLoad: function (option) {
     // console.log(option.type)
@@ -23,6 +24,19 @@ Page({
   onPullDownRefresh() {
     this.data.cp = 1;
     this.data.type == 1 ? this.getPublishData() : this.getCollectData()
+  },
+  // 监听用户滑动页面事件
+  onPageScroll(e) {
+    // console.log(e.scrollTop)
+    if (e.scrollTop > 1200 && !this.data.isShowScrollTopBtn) {
+      this.setData({
+        isShowScrollTopBtn: true
+      })
+    } else if (e.scrollTop < 1200 && this.data.isShowScrollTopBtn) {
+      this.setData({
+        isShowScrollTopBtn: false
+      })
+    }
   },
   // 文章到达底部，自动加载更多
   onReachBottom() {
@@ -54,7 +68,8 @@ Page({
         _this.setData({
           publishList: isLoadmore ? _this.data.publishList.concat(res.list) : res.list,
           recordCount: res.recordCount,
-          hasGotData: true
+          hasGotData: true,
+          cp: isLoadmore ? _this.data.cp : 1
         })
       }
     })
@@ -78,15 +93,17 @@ Page({
         _this.setData({
           collectList: isLoadmore ? _this.data.collectList.concat(res.list) : res.list,
           recordCount: res.recordCount,
-          hasGotData: true
+          hasGotData: true,
+          cp: isLoadmore ? _this.data.cp : 1
         })
       }
     })
   },
 
   onMyEvent(e) {
-    console.log(e.detail)
+    // console.log(e.detail)
     this.data.cp = 1;
+    this.data.hasGotData = false;
     e.detail == 1 ? this.getPublishData() : this.getCollectData()
   }
 })

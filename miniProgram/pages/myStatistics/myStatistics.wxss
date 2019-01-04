@@ -12,3 +12,9 @@
   height: 276rpx;
   border: 1px solid #ddd;
 }
+.bottom-line {
+  text-align: center;
+  font-size: 30rpx;
+  color: #666;
+  padding: 20rpx 0 100rpx;
+}

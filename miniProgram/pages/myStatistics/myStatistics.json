@@ -2,6 +2,7 @@
   "navigationBarTitleText": "",
   "usingComponents": {
     "article-list-item": "../component/articleListItem/articleListItem",
-    "add-article-btn": "../component/addArticleBtn/addArticleBtn"
+    "add-article-btn": "../component/addArticleBtn/addArticleBtn",
+    "to-top-btn": "../component/toTopBtn/toTopBtn"
   }
 }
