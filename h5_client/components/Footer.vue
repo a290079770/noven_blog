@@ -40,14 +40,14 @@ export default {
           path:'/feedback',
           query:{}
         },
-        // {
-        //   id:3,
-        //   title:'我的',
-        //   defaultIcon:'～static/我的icon@2x.png',
-        //   activeIcon:'～static/我的icon-on@2x.png',
-        //   path:'/my',
-        //   query:{}
-        // },
+        {
+          id:3,
+          title:'我的',
+          defaultIcon:'/n2.png',
+          activeIcon:'/n1.png',
+          path:'/my',
+          query:{}
+        },
       ]
     }
   },
@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     showFooter() {
-      let ShowFooterPathList = ['/','/list','/feedback','/index'];
+      let ShowFooterPathList = [...this.tabList.map(item => item.path),'/index'];
       let activePath = this.$route.path;
 
       //显示并处理当前选中
@@ -75,6 +75,9 @@ export default {
   },
   watch:{
     'selected':function(val) {
+      //非tab页
+      if(!val || val == -1) return;
+
       this.$router.push({
         path:this.tabList[val].path,
         query:this.tabList[val].query

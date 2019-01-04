@@ -1,5 +1,24 @@
 <template>
    <div class="my">
+     <div class="mine-info-wrap">
+      <div class="mine-info-img-wrap">
+        <div class='mine-info-img-box'>
+          <img class="mine-info-img" src="https://api.novenblog.xin/images/y7bPGjKBCsNJBvIg_photo_1542895870.jpg" />
+        </div>
+      </div>
+      <div class="flex flex-justify-between nick-name-wrap">
+        <div class="flex-center info nick-name">NovenNov</div>
+        <div class="info flex-column current-time-wrap">
+          <div class="flex-center">
+            <img class="address-icon" src="~assets/icon/local.svg">
+            <span class="ml10">成都</span>
+          </div>
+          <span>2019-01-03</span>
+        </div>
+      </div>
+    </div>
+
+
      <div class="flex flex-justify-between my-published">
        <div class="flex flex-justify-between my-published-item" @click="goTo" data-type="1">
          <div class="flex flex-align-center flex-justify-center my-published-item-left">
@@ -36,11 +55,6 @@
      <div class="flex flex-align-center my-oparate-item" @click="goTo" data-type="4">
       <img src="~assets/icon/abstract.svg" class="my-oparate-item-icon">
       <span> 修改简介 </span>   
-     </div>
-
-     <div class="flex flex-align-center my-oparate-item" @click="goTo" data-type="5">
-      <img src="~assets/icon/aboutus.svg" class="my-oparate-item-icon">
-      <span> 关于我们 </span>   
      </div>
 
      <div class="flex flex-align-center my-oparate-item">

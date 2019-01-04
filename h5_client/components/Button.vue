@@ -54,42 +54,43 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @import '~assets/style/varite.less';
+
   button {
     box-sizing: border-box;
     outline: none;
     font-size: 0.28rem;
     border-radius: 0.1rem;
-
   }
 
   //primary
 
   .button-primary {
-    background: #75a1fe;
+    background: @primary;
     border: none;
     color: white;
   }
   .button-primary:active {
-    background: #719af5;
+    background: #cc0000;
   }
 
 
   //primary-plain
   .button-primary-plain {
     background: transparent;
-    border: 1px solid #75a1fe;
+    border: 1px solid @primary;
     color: #222;
   }
 
   .button-primary-plain:active {
-    border: 1px solid #719af5;
+    border: 1px solid #cc0000;
   }
 
 
 
   //warning
   .button-warning {
-    background: #ffbe32;
+    background: @warning;
     border: none;
     color: white;
   }
@@ -101,7 +102,7 @@ export default {
   //warning-plain
   .button-warning-plain {
     background: transparent;
-    border: 1px solid #ffbe32;
+    border: 1px solid @warning;
     color: #222;
   }
 
@@ -136,24 +137,24 @@ export default {
 
   //info
   .button-info {
-    background: #9071ff;
+    background: @info;
     border: none;
     color: white;
   }
   .button-info:active {
-    background: #896cf5;
+    background: @info;
   }
 
 
   //info-plain
   .button-info-plain {
     background: transparent;
-    border: 1px solid #9071ff;
+    border: 1px solid @info;
     color: #222;
   }
 
   .button-info-plain:active {
-    border: 1px solid #896cf5;
+    border: 1px solid @info;
   }
 
 

@@ -121,7 +121,7 @@ function parseDetail(res) {
         if(current.type == 'text') {
           return prevStr + `<p>${current.value}</p>`
         }else {
-          return prevStr + `<p><img src="${current.value}"/><br/><span style="padding-left:26px">${current.desc}</span></p>`
+          return prevStr + `<p><img src="${current.value}" style="max-width:100%"/><br/><span style="padding-left:26px">${current.desc}</span></p>`
         }
       },'')
     }catch(e) {

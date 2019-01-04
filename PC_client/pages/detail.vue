@@ -68,7 +68,8 @@ export default {
       detail:{
         Title:'Noven技术生涯经验分享'
       },
-      authorInfo:{}
+      authorInfo:{},
+      id:null
     }
   },
 
