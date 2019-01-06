@@ -1,17 +1,15 @@
 <template>
   <section class="preview">
-    <section id="feedbackEditor" class="feedback-edit"></section>
-      
+    <vue-html5-editor :content="content" :height="500"></vue-html5-editor>
   </section>
 </template>
 
 <script>
 export default {
   head: {
+    link: [
+    ],
     script: [ 
-      { 
-        src: 'https://cdn.bootcss.com/wangEditor/3.1.1/wangEditor.min.js',
-      },
       {  
         src: 'https://cdn.bootcss.com/js-xss/0.3.3/xss.min.js',
         defer:"defer",
@@ -23,7 +21,7 @@ export default {
   data() {
     return {
       fbEditor: null,
-      content: '',
+      content: '123', 
     }
   },
 
@@ -36,28 +34,28 @@ export default {
   },
   async mounted() {
     //不知道为什么，写在head里的script会比mounted晚执行，导致获取不到wangEditor
-    this.fbEditor = await new Promise((resolve,reject) => {
-      if(window.wangEditor) resolve(new wangEditor('#feedbackEditor'));
+    // this.fbEditor = await new Promise((resolve,reject) => {
+    //   if(window.___E) resolve(new ___E('feedbackEditor'));
 
-      let timer;
+    //   let timer;
 
-      isWangEditor();
+    //   isWangEditor();
       
-      function isWangEditor() {
-        timer = setTimeout(()=> {
-          if(window.wangEditor) {
-            clearTimeout(timer);
-            resolve(new wangEditor('#feedbackEditor'));
-            return;
-          }
-          isWangEditor();
-        }, 100)
-      }
-    }) 
+    //   function isWangEditor() {
+    //     timer = setTimeout(()=> {
+    //       if(window.___E) {
+    //         clearTimeout(timer);
+    //         resolve(new ___E('feedbackEditor'));
+    //         return;
+    //       }
+    //       isWangEditor();
+    //     }, 100)
+    //   }
+    // }) 
 
     //设置留言编辑器自定义配置
-    this.fbEditor.customConfig = this.getEditorConfig(2);
-    this.fbEditor.create()
+    // this.fbEditor.customConfig = this.getEditorConfig(2);
+    // this.fbEditor.init();
   },
 }
 </script>
