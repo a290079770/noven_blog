@@ -27,7 +27,7 @@
     </section>
     
 
-    <section v-if="true" class="fd-list-cont">
+    <section v-if="hasGotData && dataList.length > 0" class="fd-list-cont">
       <feedback-item 
       :key="index" 
       v-for="(item,index) in dataList" 
@@ -87,6 +87,7 @@ export default {
       cp: 1,
       total: 0,  //顶级留言数
       totalCount: 0, //所有的留言数
+      hasGotData: false, //还未获取到评论数据的时候，不展示无数据的图片
     }
   },
   components: {
@@ -116,6 +117,7 @@ export default {
       });
       this.total = recordCount;
       this.totalCount = totalCount;
+      this.hasGotData = true;
 
 
       if(!needScroll) return;
