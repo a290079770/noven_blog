@@ -6,7 +6,7 @@
 			</div>
 		</div>
 
-    <div class="flex-1 layout-cont">
+    <div class="flex-1 font layout-cont">
     	<nuxt/>
     </div>
 

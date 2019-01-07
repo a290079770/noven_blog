@@ -265,7 +265,6 @@ export default {
     }
   },
   created() {
-    
   },
   async mounted() {
     this.getDataList(false);

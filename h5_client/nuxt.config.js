@@ -59,7 +59,6 @@ module.exports = {
     { src: '@/plugins/http', ssr: true },
     { src: '@/plugins/mintui', ssr: true },
     { src: '@/plugins/auto-size', ssr: true },
-    { src: '@/plugins/editorConfig', ssr: false },
     { src: '@/plugins/utils', ssr: true },
     { src: '@/plugins/cookie', ssr: false },
     { src: '@/plugins/vueHtml5Editor.js', ssr: false },

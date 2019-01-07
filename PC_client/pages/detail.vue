@@ -45,7 +45,7 @@
       </section>
     </section>
 
-    <feedback v-if="Object.keys(detail).length > 0" :type="2" :resourceId="detail.Id"/>
+    <feedback :type="2" :resourceId="id"/>
     
     <section @click="collect" class="flex-center detail-collect-cont">
       <img class="detail-collect" :src="hasCollect">
@@ -122,7 +122,6 @@ export default {
     this.getArticleDetail();
   },
   mounted() {
-    
   },
 
   computed: {

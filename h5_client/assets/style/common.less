@@ -207,6 +207,10 @@ a.notapcolor{
     color:#fff;
 }
 
+input,textarea,button {
+  outline: none;
+}
+
 
 textarea {
   resize: none;
@@ -231,7 +235,7 @@ textarea::-ms-input-placeholder {
 
 
 
-.w-e-text,.detail-content {
+.vue-html5-editor,.detail-content {
   div {
     line-height: 0.5rem;
   }
@@ -299,7 +303,26 @@ textarea::-ms-input-placeholder {
       text-decoration: underline;
     }
   }
+
+  button,input,textarea {
+    outline: none;
+  }
+
+  img {
+    max-width: 100%;
+  }
 }
+
+
+[contenteditable = "true"], input, textarea {
+-webkit-user- select: text!important;
+-khtml-user-select: text!important;
+-moz-user-select: text!important;
+-ms-user-select: text!important;
+-o-user-select: text!important;
+user-select: text!important;
+}
+
 
 
 .mint-msgbox-confirm {
@@ -330,4 +353,61 @@ textarea::-ms-input-placeholder {
   background: white !important;
   border-radius: 0.07rem  !important;
   opacity: .8 !important;
+}
+
+
+
+.editor-icon-font {
+  background: url(~assets/icon/font.svg);
+}
+
+.editor-icon-align {
+  background: url(~assets/icon/align.svg);
+}
+
+.editor-icon-list {
+  background: url(~assets/icon/list.svg);
+}
+.editor-icon-link {
+  background: url(~assets/icon/link.svg);
+}
+
+.editor-icon-tabulation {
+  background: url(~assets/icon/tabulation.svg);
+}
+.editor-icon-image {
+  background: url(~assets/icon/image.svg);
+}
+.editor-icon-hr {
+  background: url(~assets/icon/hr.svg);
+}
+.editor-icon-undo {
+  background: url(~assets/icon/undo.svg);
+}
+
+
+.page-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  width: 100vw;
+}
+
+.page-bottom-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex:1;
+  height: .90rem;
+  background: @primary;
+  color:white;
+  font-size: .36rem;
+}
+
+.page-bottom-btn-plain {
+  background: white;
+  box-sizing: border-box;
+  border-top:@borderBold;
+  color:@primary;
 }

@@ -43,19 +43,36 @@
         
       </div>
 
-
+      <!-- 评论 -->
       <div class="flex-center article-zan">
         <div class="flex-center article-zan-cont" @click="addOrCancelCollection">
            <img :src="hasCollect ? '/zan-full.svg' : '/zan-kong.svg'" class="article-zan-icon">
            <span > {{detail.CollectCount}} </span>   
         </div>
       </div> 
+      
+      <section class="mc detail-author ">
+        <section class="flex detail-author-cont">
+          <figure class="detail-author-cover bg-full-img" :style="{background: `url(${authorInfo.CoverUrl})`}"> </figure>
+          <section class="detail-author-info">
+            <p>
+              <span class="font-l">作者：</span>
+              <span class="font-l primary">{{authorInfo.NickName}}</span>  
+            </p>
+
+            <p class="font-xs gray6 detail-author-abs">{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}</p>
+          </section>
+        </section>
+      </section>
+
+      <feedback :type="2" :resourceId="id"/>
    </div>
 </template>
 
 <script>
 import { getArticleDetail , collect } from '~/assets/service/articleService'
 import { detailSimple } from '~/assets/service/userService'
+import FeedBack from './feedback';
 export default {
   data() {
     return {
@@ -65,6 +82,9 @@ export default {
       authorInfo:{},
       id:null
     }
+  },
+  components:{
+    'feedback':FeedBack
   },
 
   methods:{

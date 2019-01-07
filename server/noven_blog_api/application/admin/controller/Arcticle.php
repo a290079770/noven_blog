@@ -343,6 +343,11 @@ class Arcticle extends Controller
               ->where('CollectionId',request()->post('Id'))
               ->delete();
 
+              //删除评论
+              Db::name('comments')
+              ->where('ResourceId',request()->post('Id'))
+              ->delete();
+
               $this->common->setResponse(200,'删除成功！');
               // 提交事务
               Db::commit();
@@ -384,8 +389,14 @@ class Arcticle extends Controller
             return;
           }
 
+          //删除收藏
           $res = Db::name('collections')
           ->where('CollectionId','in',$Ids)
+          ->delete();
+
+          //删除评论
+          Db::name('comments')
+          ->where('ResourceId','in',$Ids)
           ->delete();
 
           $this->common->setResponse(200,'删除成功！');

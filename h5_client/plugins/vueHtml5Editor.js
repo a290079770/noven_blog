@@ -13,20 +13,18 @@ Vue.use(VueHtml5Editor, {
     // 自定义各个图标的class，默认使用的是font-awesome提供的图标
     // custom icon class of built-in modules,default using font-awesome
     icons: {
-        text: "fa fa-pencil",
-        color: "fa fa-paint-brush",
-        font: "fa fa-font",
-        align: "fa fa-align-justify",
-        list: "fa fa-list",
-        link: "fa fa-chain",
-        unlink: "fa fa-chain-broken",
-        tabulation: "fa fa-table",
-        image: "fa fa-file-image-o",
-        hr: "fa fa-minus",
-        eraser: "fa fa-eraser",
-        undo: "fa-undo fa",
-        "full-screen": "fa fa-arrows-alt",
-        info: "fa fa-info",
+//         text: "fa fa-pencil",
+//         color: "fa fa-paint-brush",
+        font: "bg-full-img editor-icon-font",
+        align: "bg-full-img editor-icon-align",
+        list: "bg-full-img editor-icon-list",
+        link: "bg-full-img editor-icon-link",
+//         unlink: "fa fa-chain-broken",
+        tabulation: "bg-full-img editor-icon-tabulation",
+        image: "bg-full-img editor-icon-image",
+        hr: "bg-full-img editor-icon-hr",
+//         eraser: "fa fa-eraser",
+        undo: "bg-full-img editor-icon-undo",
     },
     // 配置图片模块
     // config image module
@@ -36,29 +34,26 @@ Vue.use(VueHtml5Editor, {
         // 上传参数,默认把图片转为base64而不上传
         // upload config,default null and convert image to base64
         upload: {
-            url: null,
+            url:Vue.prototype.apiUrl +'/images/uploadFile',
             headers: {},
             params: {},
-            fieldName: {}
+            fieldName: 'file'
         },
         // 压缩参数,默认使用localResizeIMG进行压缩,设置为null禁止压缩
         // compression config,default resize image by localResizeIMG (https://github.com/think2011/localResizeIMG)
         // set null to disable compression
-        compress: {
-            width: 1600,
-            height: 1600,
-            quality: 80
-        },
+        compress: null,
         // 响应数据处理,最终返回图片链接
         // handle response data，return image url
         uploadHandler(responseText){
-            //default accept json data like  {ok:false,msg:"unexpected"} or {ok:true,data:"image url"}
             var json = JSON.parse(responseText)
-            if (!json.ok) {
-                alert(json.msg)
-            } else {
-                return json.data
-            }
+						let { success ,code , data , description } = json;
+						
+						if( success && code ) {
+							return data.url
+						}else {
+							Vue.prototype.$message(description);
+						}
         }
     },
     // 语言，内建的有英文（en-us）和中文（zh-cn）
@@ -75,7 +70,6 @@ Vue.use(VueHtml5Editor, {
             "unlink": "去除链接",
             "table": "表格",
             "font": "文字",
-            "full screen": "全屏",
             "text": "排版",
             "eraser": "格式清除",
             "info": "关于",
@@ -117,20 +111,19 @@ Vue.use(VueHtml5Editor, {
     // keep only the modules you want and customize the order.
     // can be used with hiddenModules together
     visibleModules: [
-        "text",
-        "color",
+//         "text",
+//         "color",
         "font",
         "align",
         "list",
         "link",
-        "unlink",
+//         "unlink",
         "tabulation",
         "image",
         "hr",
-        "eraser",
+//         "eraser",
         "undo",
-        "full-screen",
-        "info",
+//         "full-screen",
     ],
     // 扩展模块，具体可以参考examples或查看源码
     // extended modules
