@@ -87,7 +87,7 @@ export default {
       cp: 1,
       total: 0,  //顶级留言数
       totalCount: 0, //所有的留言数
-      hasGotData: false,
+      hasGotData: false, //还未获取到评论数据的时候，不展示无数据的图片
     }
   },
   components: {
@@ -118,7 +118,6 @@ export default {
       this.total = recordCount;
       this.totalCount = totalCount;
       this.hasGotData = true
-
 
       if(!needScroll) return;
       this.$nextTick(function() {
