@@ -5,14 +5,14 @@
         <img class="search-icon-img" src="~assets/icon/search.svg">
       </div>
       <input 
-      class="search-input font-l"
+      class="search-input"
       type='text' 
       placeholder="请输入关键字进行搜索" 
       autofocus 
       v-model="keywords"
-      @keyup.enter="getArticleList"      
+      @keyup.enter="getArticleList(true)"      
       />
-      <div catchtap="clear" class="flex flex-align-center flex-justify-center search-clear">
+      <div @click.stop="clear" class="flex flex-align-center flex-justify-center search-clear">
         <img class="search-clear-icon" src="~assets/icon/close-white.svg">
       </div>
       <span class="font-l cancle" @click="$router.go(-1)">取消</span>
@@ -20,7 +20,7 @@
 
     <section v-if="hasGotData" class="gray9 font-xs search-text">
       <span>已为您搜索到</span>
-      <span class="primary">“{{ keywords }}”</span>
+      <span class="primary">“{{ copyKeywords }}”</span>
       <span>相关文章，共计</span>
       <span class="primary">{{ total }}</span>
       <span>篇</span>
@@ -46,9 +46,10 @@ export default {
       dataList:[],
       hasGotData: false,
       keywords:'',
+      copyKeywords:'',
       total: 0,
       cp: 1,
-      ps: 10
+      ps: 5
     }
   },
 
@@ -59,31 +60,45 @@ export default {
   methods:{
     /**
      * [getArticleList 获取文章列表]
-     * @param  {[StriNg]} listName [对应this.data里的三个列表]
+     * @param  {[Boolean]} isSearch [是否是执行搜索操作，如果是，则cp置为1]
      * @return {[type]}          [description]
      */
-    async getArticleList(listName) {
-      this.dataList = [];
-      this.hasGotData = false;
-
+    async getArticleList(isSearch = false) {
       let { keywords , ps , cp } = this;
-      if(!keywords || !keywords.replace(/ /g,'')) {
-        this.$message('请输入搜索关键字');
-        return;
+      if( isSearch ) {
+        this.cp = cp = 1;
+        if(!keywords || !keywords.replace(/ /g,'')) {
+          this.$message('请输入搜索关键字');
+          return;
+        }
+        this.hasGotData = false;
+        this.copyKeywords = keywords;
       }
+      
 
       let { list, recordCount } = await getArticleList(ps,cp,keywords,'CreateTime');
-      this.dataList = list;
+      this.dataList = cp > 1 ? [...this.dataList, ...list] : list;
       this.total = recordCount;
       this.hasGotData = true;
     },
-
+    clear() {
+      this.keywords = '';
+    }
   },
   created() {
     
   },
   mounted() {
-    
+    this.onReachBottom(()=>{
+      let { ps, cp , total } = this;
+      //cp > 1则是请求加载更多，cp = 1 则是首次加载
+      if( cp > 1 && ps * cp >= total ) return; 
+      this.cp ++;
+      this.getArticleList();
+    })
   },
+  beforeDestroy() {
+    window.onscroll = null;
+  }
 }
 </script>

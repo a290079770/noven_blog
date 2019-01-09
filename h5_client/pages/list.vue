@@ -63,7 +63,7 @@ export default {
     async getArticleList() {
       let { ps, cp , activeIndex } = this;
 
-      let orderBy = ['CreateTime','ReadCount','CollectCount'];
+      let orderBy = ['CreateTime','CollectCount','ReadCount'];
       let { list, recordCount } = await getArticleList(ps,cp,'',orderBy[activeIndex]);
       this.dataList = cp > 1 ? [...this.dataList,...list] : list;
       this.total = recordCount;
@@ -72,6 +72,8 @@ export default {
     //改变文章分类
     changeNavAction(index) {
       this.activeIndex = index;
+      this.cp = 1;
+      this.getArticleList();
     },
 
   },
@@ -93,10 +95,12 @@ export default {
       let { ps, cp , total } = this;
       //cp > 1则是请求加载更多，cp = 1 则是首次加载
       if( cp > 1 && ps * cp >= total ) return; 
-
       this.cp ++;
       this.getArticleList();
     })
   },
+  beforeDestroy() {
+    window.onscroll = null;
+  }
 }
 </script>

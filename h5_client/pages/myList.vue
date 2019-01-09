@@ -3,9 +3,12 @@
     <div 
     class="flex-center my-list-item" 
     v-for="(item,index) in dataList" 
-    @click="handleArticleClick" 
     >
-      <div class="flex flex-align-center flex-justify-between my-list-item-cont">
+      <div 
+      @touchstart="itemTouchStart(item)"
+      @touchend="itemTouchEnd(item.Id)" 
+      class="flex flex-align-center flex-justify-between my-list-item-cont"
+      >
          <div class="flex flex-align-center my-list-item-cont-left">
            <div v-if="isOpenEdit" class="flex flex-align-center my-list-item-del">
              <div class="my-list-item-del-kong" v-if="!item.selected"></div>
@@ -48,6 +51,11 @@ export default {
     return {
       dataList:[],
       isOpenEdit: false,
+      total: 0,
+      cp: 1,
+      ps: 10,
+      timer: null, //长按定时器
+      touchTime:null, //记录点击时的时间戳
     }
   },
 
@@ -62,20 +70,35 @@ export default {
      * @return {[type]}          [description]
      */
     async getArticleList(listName) {
-      let orderBy = [
-          {
-            listName:'dataList',
-            order:'CreateTime',
-            ps:10
-          }
-      ];
+      let { ps , cp } = this;
 
-      let { order , ps } = orderBy.find(item => item.listName == listName);
-      let { list } = await getArticleList(ps,1,'',order);
-      this.dataList = list;
+      let { list, recordCount } = await getArticleList(ps,cp,'','CreateTime');
+      this.dataList = cp > 1 ? [...this.dataList, ...list] : list;
+      this.total = recordCount;
     },
 
-    handleArticleClick() {},
+    async itemTouchStart(item) {
+      this.touchTime = Date.now();
+      //开始计时
+      await new Promise(resolve => this.timer = setTimeout(resolve,500))
+
+      this.isOpenEdit = true;
+
+    },
+
+    itemTouchEnd(id) {
+      clearTimeout(this.timer);
+
+      if(this.isOpenEdit) {
+
+      }else {
+        if(Date.now() - this.touchTime < 500) this.handleArticleClick(id);
+      }
+    },
+
+    handleArticleClick(id) {
+      this.goTo('/detail',`id=${id}`)
+    },
     selectAll() {},
     deleteAction() {},
     cancel() {},
@@ -94,7 +117,17 @@ export default {
     this.getArticleList('dataList');
   },
   mounted() {
+    this.onReachBottom(()=>{
+      let { ps, cp , total } = this;
+      //cp > 1则是请求加载更多，cp = 1 则是首次加载
+      if( cp > 1 && ps * cp >= total ) return; 
+      this.cp ++;
+      this.getArticleList();
+    })
 
   },
+  beforeDestroy() {
+    window.onscroll = null;
+  }
 }
 </script>
