@@ -62,9 +62,11 @@ export default {
      */
     async getArticleList() {
       let { ps, cp , activeIndex } = this;
+
       let orderBy = ['CreateTime','ReadCount','CollectCount'];
-      let { list } = await getArticleList(ps,cp,'',orderBy[activeIndex]);
-      this.dataList = list;
+      let { list, recordCount } = await getArticleList(ps,cp,'',orderBy[activeIndex]);
+      this.dataList = cp > 1 ? [...this.dataList,...list] : list;
+      this.total = recordCount;
     },
 
     //改变文章分类
@@ -84,11 +86,16 @@ export default {
     }
   },
   created() {
-    this.getArticleList('dataList');
+    this.getArticleList();
   },
   mounted() {
     this.onReachBottom(()=>{
-      console.log(111)
+      let { ps, cp , total } = this;
+      //cp > 1则是请求加载更多，cp = 1 则是首次加载
+      if( cp > 1 && ps * cp >= total ) return; 
+
+      this.cp ++;
+      this.getArticleList();
     })
   },
 }
