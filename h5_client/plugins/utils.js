@@ -436,7 +436,46 @@ function validUserInfo() {
 }
 
 
+function onReachBottom(callback) {
+  window.onscroll = function() {
+    if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
+      callback();
+    }
+  }
+}
 
+//文档高度
+function getDocumentTop() {
+    var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+    if (document.body) {
+        bodyScrollTop = document.body.scrollTop;
+    }
+    if (document.documentElement) {
+        documentScrollTop = document.documentElement.scrollTop;
+    }
+    scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;    return scrollTop;
+}
+//可视窗口高度
+function getWindowHeight() {
+    var windowHeight = 0;
+    if (document.compatMode == "CSS1Compat") {
+        windowHeight = document.documentElement.clientHeight;
+    } else {
+        windowHeight = document.body.clientHeight;
+    }
+    return windowHeight;
+}
+//滚动条滚动高度
+function getScrollHeight() {
+    var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+    if (document.body) {
+        bodyScrollHeight = document.body.scrollHeight;
+    }
+    if (document.documentElement) {
+        documentScrollHeight = document.documentElement.scrollHeight;
+    }
+    scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;    return scrollHeight;
+}
 
 
 
@@ -457,9 +496,14 @@ let utils = {
   getDefaultCover,    // 获取文章默认封面图
   goTo,    // 跳转页面
   getUploadParams,   //返回文件上传的配置
+  onReachBottom, //滚动触底事件
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);
+
+
+//需要拦截的权限等级
+Vue.prototype.authPermission = 2;
 
 
 

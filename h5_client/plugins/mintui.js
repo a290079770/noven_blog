@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { 
 	Toast , 
-	InfiniteScroll , 
 	Lazyload ,
 	Swipe, 
 	SwipeItem,
@@ -11,7 +10,6 @@ import {
  } from 'mint-ui';
 
 
-Vue.use(InfiniteScroll)
 Vue.use(Lazyload)
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);

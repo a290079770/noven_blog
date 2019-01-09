@@ -20,24 +20,28 @@
 
 
      <div class="flex flex-justify-between my-published">
-       <div class="flex flex-justify-between my-published-item" @click="goTo" data-type="1">
-         <div class="flex flex-align-center flex-justify-center my-published-item-left">
-          <img src="~assets/icon/write-black.svg" class="my-published-item-img">
+        <nuxt-link :to="{ name:'myList',query:{type : 1} }">
+         <div class="flex flex-justify-between my-published-item">
+           <div class="flex flex-align-center flex-justify-center my-published-item-left">
+            <img src="~assets/icon/write-black.svg" class="my-published-item-img">
+           </div>
+           <div class="flex flex-justify-center flex-align-center my-published-item-right">
+            <span class="my-published-item-number">{{publishCount}} </span>   
+            <span>我的发布 </span>    
+           </div>
          </div>
-         <div class="flex flex-justify-center flex-align-center my-published-item-right">
-          <span class="my-published-item-number">{{publishCount}} </span>   
-          <span>我的发布 </span>    
+        </nuxt-link> 
+        <nuxt-link :to="{ name:'myList',query:{type : 2} }">
+         <div class="flex flex-justify-between my-published-item ">
+           <div class="flex flex-align-center flex-justify-center my-published-item-left">
+            <img src="~assets/icon/like.svg" class="my-published-item-img">
+           </div>
+           <div class="flex flex-justify-center flex-align-center my-published-item-right">
+            <span class="my-published-item-number">{{collectCount}} </span>   
+            <span>我的收藏 </span>    
+           </div>
          </div>
-       </div>
-       <div class="flex flex-justify-between my-published-item " @click="goTo" data-type="2">
-         <div class="flex flex-align-center flex-justify-center my-published-item-left">
-          <img src="~assets/icon/like.svg" class="my-published-item-img">
-         </div>
-         <div class="flex flex-justify-center flex-align-center my-published-item-right">
-          <span class="my-published-item-number">{{collectCount}} </span>   
-          <span>我的收藏 </span>    
-         </div>
-       </div>
+        </nuxt-link>
      </div>
 
 
@@ -46,16 +50,21 @@
       <img src="~assets/icon/cover.svg" class="my-oparate-item-icon">
       <span> 修改头像 </span>   
      </div>
+    
 
-     <div class="flex flex-align-center my-oparate-item" @click="goTo" data-type="3">
-      <img src="~assets/icon/nickname.svg" class="my-oparate-item-icon">
-      <span> 修改昵称 </span>   
-     </div>
-
-     <div class="flex flex-align-center my-oparate-item" @click="goTo" data-type="4">
-      <img src="~assets/icon/abstract.svg" class="my-oparate-item-icon">
-      <span> 修改简介 </span>   
-     </div>
+     <nuxt-link :to="{ name:'updateUserInfo',query:{type : 3} }">
+       <div class="flex flex-align-center my-oparate-item">
+        <img src="~assets/icon/nickname.svg" class="my-oparate-item-icon">
+        <span> 修改昵称 </span>   
+       </div>
+     </nuxt-link>
+      
+     <nuxt-link :to="{ name:'updateUserInfo',query:{type : 4} }"> 
+       <div class="flex flex-align-center my-oparate-item">
+        <img src="~assets/icon/abstract.svg" class="my-oparate-item-icon">
+        <span> 修改简介 </span>   
+       </div>
+     </nuxt-link>
 
      <div class="flex flex-align-center my-oparate-item">
       <img src="~assets/icon/exit.svg" class="my-oparate-item-icon">

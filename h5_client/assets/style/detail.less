@@ -180,7 +180,6 @@
 	  	width: 1rem;
 	  	height: 1rem;
 	  	border-radius: 50%;
-	  	border: @borderDashed;
 	  	&:hover {
 	  		border-radius: @borderRadius;
 	  	}
@@ -192,9 +191,28 @@
 	  }
 
 	  .detail-author-abs {
-	  	margin: .10rem 0 ;
+	  	margin: .10rem 0 0;
 	  	line-height: .32rem;
 	  	min-height: .52rem;
 	  }
 	}
+}
+
+
+.add-article-cont {
+  position: fixed;
+  right: 1rem;
+  bottom: 3rem;
+  z-index: 10;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  background: @info;
+  color: white;
+  box-shadow: 0 .10rem .3rem rgba(118,143,195,.6);
+}
+
+.add-article {
+  width: .50rem;
+  height: .50rem;
 }

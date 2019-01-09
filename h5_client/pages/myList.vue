@@ -94,7 +94,7 @@ export default {
     this.getArticleList('dataList');
   },
   mounted() {
-    
+
   },
 }
 </script>

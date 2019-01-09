@@ -52,7 +52,7 @@ export default {
 
   methods:{},
   created() {
-    
+    this.type = this.$route.query.type;
   },
   mounted() {
     

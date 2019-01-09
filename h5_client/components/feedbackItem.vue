@@ -103,7 +103,6 @@ export default {
       width: .54rem;
       height: .54rem;
       border-radius: 50%;
-      border: @borderDashed;
 
       &:hover {
         border-radius: .08rem;

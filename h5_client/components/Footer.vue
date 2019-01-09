@@ -76,7 +76,7 @@ export default {
   watch:{
     'selected':function(val) {
       //非tab页
-      if(!val || val == -1) return;
+      if((!val && val !== 0 ) || val == -1) return;
 
       this.$router.push({
         path:this.tabList[val].path,

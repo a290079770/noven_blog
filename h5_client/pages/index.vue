@@ -5,22 +5,24 @@
     <section v-else class="index-swiper">
       <mt-swipe :auto="5000">
         <mt-swipe-item v-for="(item,index) in bannerList" :key="item.id">
-          <section class="flex-center index-swiper-item bg-full-img" :style="{background: `url(${ item.Url })`}">
-            <div class="swiper-art-cont">
-              <div class="flex flex-align-center flex-column swiper-art-center">
-                <div class="font-xs swiper-art-type">
-                  @article
-                </div>
-                <div class="text-ess-1 font-lg gray3 swiper-art-title">
-                  {{item.Title}}
-                </div>
+          <nuxt-link :to="{ name:'detail',query:{id : item.Id} }">
+            <section class="flex-center index-swiper-item bg-full-img" :style="{background: `url(${ item.Url })`}">
+              <div class="swiper-art-cont">
+                <div class="flex flex-align-center flex-column swiper-art-center">
+                  <div class="font-xs swiper-art-type">
+                    @article
+                  </div>
+                  <div class="text-ess-1 font-lg gray3 swiper-art-title">
+                    {{item.Title}}
+                  </div>
 
-                <div class="text-ess-2 gray9 font-xs swiper-art-brief">
-                  {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
+                  <div class="text-ess-2 gray9 font-xs swiper-art-brief">
+                    {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </nuxt-link>
         </mt-swipe-item>
       </mt-swipe>
     </section>
@@ -108,19 +110,17 @@ export default {
     }
   },
   created() {
+    this.getArticleList('dataList');
+    this.getArticleList('bannerList');
+    this.getArticleList('recommendList');
+  },
+  mounted() {
     //获取用户信息,如果有就显示
     try {
       this.userInfo = JSON.parse(localStorage.userInfo);
     }catch(e) {
       //没有用户信息的话用默认的
     }
-
-    this.getArticleList('dataList');
-    this.getArticleList('bannerList');
-    this.getArticleList('recommendList');
-  },
-  mounted() {
-    
   },
 }
 </script>

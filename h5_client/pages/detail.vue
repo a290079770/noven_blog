@@ -60,12 +60,20 @@
               <span class="font-l primary">{{authorInfo.NickName}}</span>  
             </p>
 
-            <p class="font-xs gray6 detail-author-abs">{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}</p>
+            <p class="font-xs gray6 detail-author-abs">{{authorInfo.Introduction || '博主很懒，没有留下简介信息~~~'}}</p>
           </section>
         </section>
       </section>
 
       <feedback :type="2" :resourceId="id"/>
+
+
+      <section 
+      class="flex flex-align-center flex-justify-center add-article-cont"
+      @click="addOrCancelCollection"
+      >
+        <img :src="hasCollect ? '/collect-full.svg' : '/collect-kong.svg'" class="add-article">
+      </section>
    </div>
 </template>
 
@@ -110,7 +118,7 @@ export default {
       return 
     }
 
-    this.id = id;
+    this.id = + id;
     this.getArticleDetail();
   },
   mounted() {
@@ -118,7 +126,7 @@ export default {
   },
   computed: {
     hasCollect() {
-      return true
+      return this.detail.HasCollect;
     }
   }
 }

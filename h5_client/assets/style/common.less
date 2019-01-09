@@ -185,6 +185,8 @@ li {
 a {
   color: black;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -moz-tap-highlight-color: transparent
 }
 
 a.notapcolor{
@@ -242,14 +244,14 @@ textarea::-ms-input-placeholder {
           /* table 样式 */
   table {
     width: 100%;
-    border-top: 1rem solid #ccc;
-    border-left: 1rem solid #ccc;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
     border-collapse: collapse;
   }
   table td,
   table th {
-    border-bottom: 1rem solid #ccc;
-    border-right: 1rem solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
     padding: .03rem .05rem;
   }
   table th {
@@ -271,13 +273,12 @@ textarea::-ms-input-placeholder {
   /* code 样式 */
   code {
     display: inline-block;
-    *display: inline;
-    *zoom: 1;
     background-color: #f1f1f1;
     border-radius: .03rem;
     padding: .03rem .05rem;
     margin: 0 .03rem;
     overflow-x: auto;
+    font-size: 0.2rem;
   }
   pre code {
     display: block;
@@ -338,7 +339,7 @@ user-select: text!important;
 }
 
 .mint-swipe-indicators {
-  bottom: -2px !important;
+  bottom: 5px !important;
 
   .is-active {
     width: .5rem !important;
