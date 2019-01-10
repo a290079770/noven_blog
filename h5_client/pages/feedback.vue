@@ -8,7 +8,7 @@
         </div>
         <div class="font-xs feedback-warning"> 温馨提示：禁止在留言和评论中散布恶意、违法信息</div>
       </div>
-      <textarea ref="editor" class="gray6 fd-editor">
+      <textarea v-model="content" class="gray6 fd-editor">
         
       </textarea>
 
@@ -22,7 +22,7 @@
       </p>
     </section>
     
-    <section class="fd-list-title">
+    <section ref="feedbackTitle" class="fd-list-title">
       {{ type == 1 ? '留言板' : '文章评论' }}（<span class="primary">{{totalCount}}</span>）
     </section>
     
@@ -32,6 +32,7 @@
       :key="index" 
       v-for="(item,index) in dataList" 
       :item="item"
+      :style="{borderBottom: index === dataList.length - 1 ? 'none' : '1px solid #e0e0e0'}"
       @showReply="showReply($event,index)"
       @clearReplyText="clearReplyText(index)"
       @replyAction="replyAction(index)"
@@ -54,8 +55,6 @@ import Button from '~/components/Button';
 import { getCommentList , createComment } from '~/assets/service/commentService'
 export default {
   head: {
-    link: [
-    ],
     script: [ 
       {  
         src: 'https://cdn.bootcss.com/js-xss/0.3.3/xss.min.js',
@@ -81,7 +80,6 @@ export default {
   data() {
     return {
       dataList:[],
-      fbEditor: null,
       content: '',
       ps: 10,
       cp: 1,
@@ -108,26 +106,29 @@ export default {
         resourceId: this.resourceId
       });
 
-      this.dataList = list.map(item => {
+      list = list.map(item => {
         //添加回复框显示和@对象
         item.isReplyShow = false;
         item.replyNickName = '';
         item.replyText = '';
         return item;
-      });
+      })
+
+      this.dataList = this.cp > 1 ? [...this.dataList,...list]: list;
       this.total = recordCount;
       this.totalCount = totalCount;
       this.hasGotData = true
 
       if(!needScroll) return;
+
       this.$nextTick(function() {
         //获取feedbackTitle的位置
         let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
         let totalTop = 0;
 
         if(this.$refs.feedbackTitle &&  this.$refs.feedbackTitle.getBoundingClientRect) {
-          let { top } = this.$refs.feedbackTitle.getBoundingClientRect();
-          totalTop = top - 65 + scrollTop;
+          let { top, height } = this.$refs.feedbackTitle.getBoundingClientRect();
+          totalTop = top + scrollTop;
         }  
         window.scrollTo({
           top: totalTop,
@@ -138,11 +139,10 @@ export default {
 
     //创建留言
     async createFeedback(pid = 0) {
-      let content = this.fbEditor.txt.text();
-      let contentHtml = this.fbEditor.txt.html();
-        
+      let { content } = this;
+
       //验证合法性，获取xss后的字符串
-      let xssStr = this.validFeedback(content,contentHtml); 
+      let xssStr = await this.validFeedback(content,content); 
       if(!xssStr) return;
       this.content = xssStr;
 
@@ -154,8 +154,8 @@ export default {
         resourceId: this.resourceId
       });
 
-      this.fbEditor.txt.html('');
-      this.$message.success('留言成功！');
+      this.content = '';
+      this.$message('留言成功！');
 
       this.cp = 1;
       this.getDataList();
@@ -163,12 +163,10 @@ export default {
 
     //清空留言
     async clearFeedback() {
-      let confirm = await this.$confirm('确定清除编辑器中的留言信息？','提示');
+      let confirm = await this.$confirm('确定清除编辑器中的留言信息？','提示').catch(()=>null)
 
-      if(confirm) {
-        //清空
-        this.fbEditor.txt.html('');
-      }
+      //清空
+      if(confirm) this.content = '';
     },
     //显示当前评论的回复框
     showReply(replyNickName,index) {
@@ -185,10 +183,56 @@ export default {
       item.isReplyShow = true;
 
       this.$set(this.dataList,index,item);
+
+
+      //点击回复，自动聚焦
+      this.$nextTick(function() {
+        document.querySelector(`#feedbackTextarea${item.Id}`).focus();
+      })
     },
     //清空当前回复框的内容
     clearReplyText(index) {
       this.$set(this.dataList[index],'replyText','');
+    },
+
+    /**
+     * [validFeedback 验证留言的必要信息]
+     * @param  {[String]} content     [内容的纯文本，text类型]
+     * @param  {[String]} contentHtml [内容的Html]
+     * @return {[String]}             [xss处理后的内容]
+     */
+    async validFeedback(content,contentHtml) {
+      return new Promise(async (resolve,reject) => {
+        //验证登录
+        if(!this.isLogin) {
+          this.goTo('/login');
+          resolve(false);
+          return; 
+        }
+        //非空
+        if(!content) {
+          this.$message('请添加留言内容');
+          resolve(false);
+          return;
+        }
+
+        //判定xss插件是否引入
+        let xssInject = await this.validXssFilterLoaded();
+        if(!xssInject) {
+          resolve(false);
+          return;
+        }
+        
+
+        //验证xss后是否非空
+        if(!filterXSS(contentHtml)){
+          this.$message('留言内容含有非法内容');
+          resolve(false);
+          return;
+        }
+
+        resolve(filterXSS(contentHtml));
+      }) 
     },
 
     //发起回复操作
@@ -197,7 +241,7 @@ export default {
       let { replyNickName , replyText , Id } = this.dataList[index];
 
       //验证合法性，获取xss后的字符串
-      let xssStr = this.validFeedback(replyText,replyText,2); 
+      let xssStr = await this.validFeedback(replyText,replyText,2); 
       if(!xssStr) return;
 
       //发起请求
@@ -209,7 +253,7 @@ export default {
         replyNickName
       });
 
-      this.$message.success('回复成功！');
+      this.$message('回复成功！');
 
       //这里为保持当前位置不变化，直接append一个Child进去
       let { NickName , CoverUrl } = this.userInfo;
@@ -230,16 +274,58 @@ export default {
       item.isReplyShow = false;
 
       this.$set(this.dataList,index,item);
+    },
+
+    //判定xss插件是否引入
+    async validXssFilterLoaded() {
+      return new Promise(async (resolve,reject)=>{
+        let count = 5;
+        while(count -- ) {
+          if(!window.filterXSS) await new Promise((resolve)=>setTimeout(resolve,1000));
+          else break;
+        }
+
+        if(!window.filterXSS) {
+          this.$message('程序好像跑偏了，请刷新试试呢～!');
+          resolve(false);
+          return 
+        } 
+
+        this.setXSSWhiteList();
+        resolve(true);
+      })
     }
   },
   computed:{
-    
+    isLogin() {
+      return this.getCookie('token');
+    },
+
+    userInfo() {
+      //获取用户信息
+      try {
+        return JSON.parse(localStorage.userInfo);
+      }catch(e) {
+        return {}
+      }
+    }
   },
   created() {
     
   },
-  async mounted() {
+  mounted() {
     this.getDataList(false);
+
+    this.onReachBottom(()=>{
+      let { ps, cp , total } = this;
+      //cp > 1则是请求加载更多，cp = 1 则是首次加载
+      if( cp > 1 && ps * cp >= total ) return; 
+      this.cp ++;
+      this.getDataList(false);
+    })
   },
+  beforeDestroy() {
+    window.onscroll = null;
+  }
 }
 </script>

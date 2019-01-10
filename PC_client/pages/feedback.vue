@@ -138,6 +138,8 @@ export default {
     async createFeedback(pid = 0) {
       let content = this.fbEditor.txt.text();
       let contentHtml = this.fbEditor.txt.html();
+
+      this.setXSSWhiteList();
         
       //验证合法性，获取xss后的字符串
       let xssStr = this.validFeedback(content,contentHtml); 

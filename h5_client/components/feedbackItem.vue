@@ -29,16 +29,17 @@
       <section v-if="item.isReplyShow" class="feedback-reply-textarea">
         <p>
           <textarea 
+          :id="`feedbackTextarea${item.Id}`"
           class="font gray6 feedback-reply-input"
           :placeholder="`回复@${item.replyNickName}`"
           v-model="item.replyText" 
           ></textarea>
         </p>
         <p class="flex flex-align-center feedback-item-edit-btns">
-          <Button type="primary" customClass="feedback-item-edit-btn" bindtap="replyAction">
+          <Button type="primary" customClass="feedback-item-edit-btn" @click="replyAction">
             回复
           </Button> 
-          <span class="gray9">
+          <span class="gray9" @click="clearReplyText">
             清空
           </span>
         </p>

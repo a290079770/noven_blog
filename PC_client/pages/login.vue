@@ -43,8 +43,6 @@
 </template>
 
 <script>
-
-
 import { getUserDetail } from '~/assets/service/userService'
 export default {
 	layout:'normal',
@@ -117,6 +115,7 @@ export default {
             Password:this.loginForm.pass
           }).then(({ token }) => {
             this.setCookie('token',token, 1000 * 3600 * 2);
+            localStorage.setItem('account',this.loginForm.account);
             return getUserDetail();
           }).then(res => {
           	localStorage.setItem('userInfo',JSON.stringify(res));
@@ -167,7 +166,6 @@ export default {
     this.delCookie('token');
     localStorage.removeItem('userInfo');
   	this.loginForm.account = localStorage.getItem('account');
-  	this.loginForm.pass = localStorage.getItem('pwd');
   	window.onresize = () => {
   		this.setWindow();
   	}

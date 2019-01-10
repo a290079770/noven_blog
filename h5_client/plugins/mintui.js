@@ -18,4 +18,5 @@ Vue.component(TabItem.name, TabItem);
 
 Vue.prototype.$message = Toast;
 Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$alert = MessageBox.alert;
 

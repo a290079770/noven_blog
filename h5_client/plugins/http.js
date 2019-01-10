@@ -73,7 +73,7 @@ axios.interceptors.response.use(
           })
         }else {
           //其他错误轻提示 
-          Vue.prototype.$message.error(description);   
+          Vue.prototype.$message(description);   
           return Promise.reject(description);
         }
       }else{  

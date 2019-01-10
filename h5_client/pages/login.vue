@@ -42,7 +42,7 @@
             </div>
           </div>
 
-          <Button type="primary" customClass="login-btn-normal login-btn-confirm" @click="loginAccount">
+          <Button type="primary" customClass="login-btn-normal login-btn-confirm" @click="login">
             账号登录
           </Button> 
           <div class="font-xs cancle-login gray6" @click="cancleLogin"> 暂不登录 </div> 
@@ -54,7 +54,19 @@
 
 <script>
 import Button from '~/components/Button';
+import { getUserDetail } from '~/assets/service/userService'
 export default {
+  head() {
+    return {
+      title:'登录Noven Blog',
+      script: [ 
+        { 
+          src: 'https://cdn.bootcss.com/js-sha1/0.6.0/sha1.min.js',
+          defer:"defer"
+        },
+      ],
+    }
+  },
   data() {
     return {
       account:'',
@@ -69,6 +81,59 @@ export default {
     Button
   },
   methods:{
+    // 登录
+    async login(formName) {
+      let valid = this.validFormData();
+      if(!valid) return;
+      
+      //判定sha1插件是否引入
+      let count = 5;
+      while(count -- ) {
+        if(!window.sha1) await new Promise((resolve)=>setTimeout(resolve,1000));
+        else break;
+      }
+
+      if(!window.sha1) {
+        this.$message('程序好像跑偏了，请刷新试试呢～!');
+        return;
+      }
+
+      //密码加密
+      if(this.password && (this.password !== localStorage.getItem('pwd'))) {
+        this.password = sha1(this.password).toUpperCase();
+      }
+
+      //发起登录
+      this.$http.post('/user/login',{
+        Account:this.account,
+        Password:this.password
+      }).then(({ token }) => {
+        this.setCookie('token',token, 1000 * 3600 * 2);
+        localStorage.setItem('account',this.account);
+        return getUserDetail();
+      }).then(res => {
+        localStorage.setItem('userInfo',JSON.stringify(res));
+        this.$router.go(-1);
+      })
+    },
+
+    validFormData() {
+      let { account , password } = this;
+      //验证账号
+      if( !account || !account.replace(/ /g,'') ) {
+        this.$message('请输入账号！');
+        return false;
+      }
+
+      //验证密码
+      if( !password || !password.replace(/ /g,'') ) {
+        this.$message('请输入密码！');
+        return false;
+      }
+
+      return true;
+    },
+
     //type - 1  - 账号 2 - 密码
     //action - 1 - 获取焦点  -1 - 失去焦点
     inputFocus(type,action) {
@@ -90,7 +155,7 @@ export default {
     },
 
 
-    loginAccount() {},
+    
 
     cancleLogin() {
       this.$router.go(-1);

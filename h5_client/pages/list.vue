@@ -69,11 +69,17 @@ export default {
       this.total = recordCount;
     },
 
-    //改变文章分类
-    changeNavAction(index) {
-      this.activeIndex = index;
+    resetPageData() {
+      let { index } = this.$route.query;
+
+      this.activeIndex = [ 0, 1, 2 ].includes(+index) ? index : 0;
       this.cp = 1;
       this.getArticleList();
+    },
+
+    //改变文章分类
+    changeNavAction(index) {
+      this.goTo('/list',`index=${index}`)
     },
 
   },
@@ -88,7 +94,7 @@ export default {
     }
   },
   created() {
-    this.getArticleList();
+    this.resetPageData();
   },
   mounted() {
     this.onReachBottom(()=>{
@@ -98,6 +104,11 @@ export default {
       this.cp ++;
       this.getArticleList();
     })
+  },
+  watch: {
+    $route(nv) {
+      this.resetPageData();
+    }
   },
   beforeDestroy() {
     window.onscroll = null;

@@ -78,10 +78,12 @@ export default {
       //非tab页
       if((!val && val !== 0 ) || val == -1) return;
 
-      this.$router.push({
-        path:this.tabList[val].path,
-        query:this.tabList[val].query
-      })
+      let { id , path } = this.tabList[val];
+
+      //只有列表页有query参数
+      let query = id == 1 ? this.$route.query : '';
+
+      this.goTo(path,query);
     },
     
     $route() {

@@ -81,7 +81,8 @@ export default {
   data() {
     return {
       publishCount: 0,
-      collectCount: 0
+      collectCount: 0,
+      userInfo:{}
     }
   },
 

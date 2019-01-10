@@ -435,7 +435,13 @@ function validUserInfo() {
   })
 }
 
-
+//设置xss的白名单，在默认白名单上加上自定义
+function setXSSWhiteList() {
+  let { whiteList } = window.filterXSS;
+  Object.keys(whiteList).forEach(key => {
+    whiteList[key].push('style');
+  })
+}
 
 
 
@@ -457,6 +463,7 @@ let utils = {
   getDefaultCover,    // 获取文章默认封面图
   goTo,    // 跳转页面
   getUploadParams,   //返回文件上传的配置
+  setXSSWhiteList, //自定义xss白名单
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);

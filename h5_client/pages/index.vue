@@ -36,7 +36,7 @@
       <article-item :item="item" v-for="(item,index) in recommendList" :key="'hot'+index"/>
     </div>
     <p class="font index-link">
-      <nuxt-link class="primary notapcolor" to="/list">查看更多 >></nuxt-link>
+      <nuxt-link class="primary notapcolor" :to="{name:'list',query:{ index: 2}}">查看更多 >></nuxt-link>
     </p>
 
 
@@ -48,7 +48,7 @@
       <article-item :item="item" v-for="(item,index) in dataList" :key="'new'+index"/>
     </div>
     <p class="font index-link">
-      <nuxt-link class="primary notapcolor" to="/list">查看更多 >></nuxt-link>
+      <nuxt-link class="primary notapcolor" :to="{name:'list',query:{ index: 0}}">查看更多 >></nuxt-link>
     </p>
   </section>
 </template>

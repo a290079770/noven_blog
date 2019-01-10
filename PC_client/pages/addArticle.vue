@@ -149,6 +149,8 @@ export default {
       //获取编辑器的html
       articleInfo.Content = this.addEditor.txt.html();    
 
+      this.setXSSWhiteList();
+
       //数据验证
       if(!this.validNeccessaryField(articleInfo)) return;
 
@@ -195,7 +197,7 @@ export default {
               break;
             }
 
-            this.articleInfo.Content = ContentHtml;
+            this.articleInfo.Content = filterXSS(ContentHtml).replace(/text-decoration-line/g,'text-decoration');
             break;      
         }
         
