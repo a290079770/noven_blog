@@ -122,7 +122,6 @@
 import ArticleIndexItem from '~/components/articleIndexItem'
 import introContainer from '~/components/introContainer'
 import { getArticleList } from '~/assets/service/articleService'
-console.log(process.browser)
 export default {
   data() {
     return {

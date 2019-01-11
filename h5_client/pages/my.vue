@@ -3,17 +3,17 @@
      <div class="mine-info-wrap">
       <div class="mine-info-img-wrap">
         <div class='mine-info-img-box'>
-          <img class="mine-info-img" src="https://api.novenblog.xin/images/y7bPGjKBCsNJBvIg_photo_1542895870.jpg" />
+          <div class="mine-info-img bg-full-img" :style="{background: `url(${ userInfo.CoverUrl })`}"></div>
         </div>
       </div>
       <div class="flex flex-justify-between nick-name-wrap">
-        <div class="flex-center info nick-name">NovenNov</div>
+        <div class="flex-center info nick-name">{{userInfo.NickName}}</div>
         <div class="info flex-column current-time-wrap">
           <div class="flex-center">
             <img class="address-icon" src="~assets/icon/local.svg">
-            <span class="ml10">成都</span>
+            <span class="ml10">{{userInfo.Province || '成都市'}}</span>
           </div>
-          <span>2019-01-03</span>
+          <span>{{date}}</span>
         </div>
       </div>
     </div>
@@ -45,7 +45,6 @@
      </div>
 
 
-
      <div class="flex flex-align-center my-oparate-item my-oparate-item-1" @click="updateCover">
       <img src="~assets/icon/cover.svg" class="my-oparate-item-icon">
       <span> 修改头像 </span>   
@@ -68,7 +67,7 @@
 
      <div class="flex flex-align-center my-oparate-item">
       <img src="~assets/icon/exit.svg" class="my-oparate-item-icon">
-      <span @click="logoutAction"> 退出登录 </span>   
+      <span @click="signOut"> 退出登录 </span>   
      </div>
 
 
@@ -76,49 +75,45 @@
 </template>
 
 <script>
-import { getArticleList } from '~/assets/service/articleService'
+import { getArticleList , getCollectList } from '~/assets/service/articleService'
+import { signOut } from '~/assets/service/userService'
 export default {
   data() {
     return {
       publishCount: 0,
       collectCount: 0,
-      userInfo:{}
+      userInfo:{},
+      date: this.dateFormat(Date.now(),'yyyy-mm-dd')
     }
   },
 
   methods:{
-    /**
-     * [getArticleList 获取文章列表]
-     * @param  {[StriNg]} listName [对应this.data里的三个列表]
-     * @return {[type]}          [description]
-     */
-    async getArticleList(listName) {
-      let orderBy = [
-          {
-            listName:'dataList',
-            order:'CreateTime',
-            ps:10
-          },
-          {
-            listName:'bannerList',
-            order:'ReadCount',
-            ps:5
-          },
-          {
-            listName:'recommendList',
-            order:'CollectCount',
-            ps:10
-          },
-      ];
+    //获取我的发布和我的收藏
+    async getArticleCount() {
+     let [{recordCount : publishCount},{ recordCount: collectCount}] = await Promise.all([
+        getArticleList(1,1,'','CreateTime',true),
+        getCollectList()
+     ]).catch(()=> [{recordCount:0},{recordCount:0}])
 
-      let { order , ps } = orderBy.find(item => item.listName == listName);
-      let { list } = await getArticleList(ps,1,'',order);
-      this[listName] = list;
-    },
+     this.publishCount = publishCount;
+     this.collectCount = collectCount;
+    },  
 
     updateCover() {},
-    goTo() {},
-    logoutAction() {}
+    //退出登录
+    async signOut() {
+      let confirm = await this.$confirm('是否要退出？','提示').catch(()=>null)
+      if(!confirm) return; 
+
+      //发起退出登录
+      await signOut();
+
+      this.userInfo = {};
+      this.delCookie('token');
+      sessionStorage.clear();
+      localStorage.clear();
+      this.goTo('/','',true);
+    }
   },
   computed:{
     isLogin() {
@@ -138,9 +133,7 @@ export default {
       //没有用户信息的话用默认的
     }
 
-    this.getArticleList('dataList');
-    this.getArticleList('bannerList');
-    this.getArticleList('recommendList');
+    this.getArticleCount();
   },
   mounted() {
     

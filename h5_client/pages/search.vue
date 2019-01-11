@@ -4,7 +4,8 @@
       <div class="flex-center search-icon">
         <img class="search-icon-img" src="~assets/icon/search.svg">
       </div>
-      <input 
+      <input
+      ref="searchInput" 
       class="search-input"
       type='text' 
       placeholder="请输入关键字进行搜索" 
@@ -80,6 +81,9 @@ export default {
       this.dataList = cp > 1 ? [...this.dataList, ...list] : list;
       this.total = recordCount;
       this.hasGotData = true;
+
+      //解决移动端不会自动失去焦点的问题
+      this.$refs.searchInput.blur();
     },
     clear() {
       this.keywords = '';

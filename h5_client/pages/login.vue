@@ -166,7 +166,10 @@ export default {
     
   },
   mounted() {
-    
+    //每次到了这个页面，直接认为用户退出了登录，清除用户信息
+    this.delCookie('token');
+    localStorage.removeItem('userInfo');
+    this.account = localStorage.getItem('account');
   },
 }
 </script>

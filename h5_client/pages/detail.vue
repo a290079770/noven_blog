@@ -108,7 +108,23 @@ export default {
       this.authorInfo = await detailSimple(id);
     },
 
-    addOrCancelCollection() {}
+    async addOrCancelCollection() {
+      // 如果用户未登录，则跳转到登录页面
+      if (!this.isLogin) {
+        this.goTo('/login');
+        return;
+      }
+
+      //还没请求回数据
+      if(!Object.keys(this.detail).includes('HasCollect')) return;
+
+      let { HasCollect, Id } = this.detail;
+
+      this.detail = await collect({
+        id: Id,
+        isCollect: !HasCollect
+      });
+    }
     
   },
   created() {
@@ -127,6 +143,9 @@ export default {
   computed: {
     hasCollect() {
       return this.detail.HasCollect;
+    },
+    isLogin() {
+      return this.getCookie('token');
     }
   }
 }

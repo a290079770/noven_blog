@@ -8,6 +8,9 @@
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
+import { 
+  MessageBox,
+ } from 'mint-ui';
 
 // axios 配置
 axios.defaults.timeout = 5000;
@@ -65,8 +68,9 @@ axios.interceptors.response.use(
       if (code == 21) {
         //连接超时
         if(description.indexOf("token") !== -1){
+          MessageBox.close();
           Vue.prototype.$alert(description, '提示', {
-            confirmButtonText: '确定',
+            confirmButtonText: '重新登录',
             type: 'warning',
           }).then(()=>{
             Vue.prototype.goTo('/login','',true);
