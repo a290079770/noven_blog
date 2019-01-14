@@ -1,8 +1,9 @@
 <template>
-  <div class="article-detail-cont" v-if="detail">
-     <div class="article-detail-title">
-      {{detail.Title}}
-     </div>
+  <div>
+    <div class="article-detail-cont" v-if="detail">
+      <div class="article-detail-title">
+        {{detail.Title}}
+      </div>
 
       <div class="flex flex-align-center flex-justify-between article-info">
         <div class="article-info-left">{{detail.Author}}  
@@ -28,7 +29,7 @@
       
       
       <!-- 简介 -->
-      <div class="article-brief font gray9" v-if="detail.Brief">
+      <div class="article-brief font-xs gray9" v-if="detail.Brief">
          简介：{{detail.Brief}}
       </div>
 
@@ -74,7 +75,11 @@
       >
         <img :src="hasCollect ? '/collect-full.svg' : '/collect-kong.svg'" class="add-article">
       </section>
-   </div>
+    </div>
+    <div class="article-detail-skeleton" v-else>
+      <img class="article-img" src="/skeletonDetail.jpg">
+    </div>
+  </div>
 </template>
 
 <script>
@@ -84,9 +89,7 @@ import FeedBack from './feedback';
 export default {
   data() {
     return {
-      detail:{
-        Title:'Noven技术生涯经验分享'
-      },
+      detail:null,
       authorInfo:{},
       id:null
     }
@@ -110,7 +113,7 @@ export default {
 
     async addOrCancelCollection() {
       // 如果用户未登录，则跳转到登录页面
-      if (!this.isLogin) {
+      if (!this.isLogin()) {
         this.goTo('/login');
         return;
       }
@@ -143,9 +146,6 @@ export default {
   computed: {
     hasCollect() {
       return this.detail.HasCollect;
-    },
-    isLogin() {
-      return this.getCookie('token');
     }
   }
 }

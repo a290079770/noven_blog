@@ -21,8 +21,14 @@
                <div class="text-ess-2 my-list-arc-title">
                 {{item.Title}}
                </div>
-               <div class="text-ess-1 my-list-arc-date">
-                {{item.CreateTime}}
+               <div class="flex flex-align-center flex-justify-between text-ess-1 my-list-arc-date">
+                <span>
+                  {{item.CreateTime}}
+                </span> 
+                <span @click.stop="goTo('/addArticle',`id=${item.Id}`)" v-if="type == 1" class="flex flex-align-center info my-list-arc-edit">
+                  <img class="my-list-arc-edit-icon" src="~assets/icon/write.svg">
+                  <span class="font">编辑</span>
+                </span>
                </div>
              </div>
            </div>
@@ -48,7 +54,11 @@
       </div>
     </section>
 
-    <div class="flex-center font gray9" style="min-height: 8rem" v-else>
+    <div v-for="item in skeleton" v-if="!hasGotData && dataList.length < 1">
+     <img class="mylist-item-skeleton" :src="item">
+    </div>
+
+    <div v-if="hasGotData && dataList.length < 1" class="flex-center font gray9" style="min-height: 8rem" >
       {{ type == 1 ? '还没有发布过文章!~' : '还没有收藏过文章!~'}}
     </div>
   </section>
@@ -58,8 +68,22 @@
 import { getArticleList , getCollectList, deleteArticle ,collect } from '~/assets/service/articleService'
 import ArticleListItem from '~/components/articleListItem'
 export default {
+  async asyncData ({ app , redirect}) {
+    //拦截非管理员用户
+    let isAuth = await app.validUserInfo();
+    if(!isAuth) redirect('/');
+  },
   data() {
     return {
+      //判定首次加载数据
+      skeleton:[
+        '/skeletonmylist.jpg',
+        '/skeletonmylist.jpg',
+        '/skeletonmylist.jpg',
+        '/skeletonmylist.jpg',
+        '/skeletonmylist.jpg',
+      ],
+      hasGotData: false,
       dataList:[],
       isOpenEdit: false,
       total: 0,
@@ -93,6 +117,7 @@ export default {
       this.dataList = cp > 1 ? [...this.dataList, ...list] : list;
 
       this.total = recordCount;
+      this.hasGotData = true;
 
     },
 
@@ -151,14 +176,6 @@ export default {
     },
   },
   computed:{
-    isLogin() {
-      try {
-        return JSON.parse(localStorage.userInfo);
-      }catch(e) {
-        //没有用户信息的话用默认的
-        return false;
-      }
-    }
   },
   created() {
     this.type = this.$route.query.type;

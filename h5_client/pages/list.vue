@@ -27,10 +27,13 @@
        </nuxt-link>  
      </div>
    </div>
-
+  
    <section 
    class="article-list-cont" 
    >
+     <div v-for="item in skeleton" v-if="dataList.length < 1">
+      <img class="arclist-item-skeleton" :src="item">
+     </div>
      <article-list-item :item="item" v-for="(item,index) in dataList" :key="index"/>
    </section>
   </section>
@@ -42,6 +45,14 @@ import ArticleListItem from '~/components/articleListItem'
 export default {
   data() {
     return {
+      //判定首次加载数据
+      skeleton:[
+        '/arclist-item-skeleton.jpg',
+        '/arclist-item-skeleton.jpg',
+        '/arclist-item-skeleton.jpg',
+        '/arclist-item-skeleton.jpg',
+        '/arclist-item-skeleton.jpg',
+      ],
       dataList:[],
       activeIndex: 0,
       ps:10,
@@ -84,14 +95,6 @@ export default {
 
   },
   computed:{
-    isLogin() {
-      try {
-        return JSON.parse(localStorage.userInfo);
-      }catch(e) {
-        //没有用户信息的话用默认的
-        return false;
-      }
-    }
   },
   created() {
     this.resetPageData();

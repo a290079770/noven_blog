@@ -32,6 +32,9 @@
     <section class="flex flex-justify-center flex-align-center index-title" >
       <img src="~assets/icon/hotarc.jpg" class="index-title-image full-img">
     </section>
+    <div v-for="item in skeleton" v-if="recommendList.length < 1">
+      <img class="arc-item-skeleton" :src="item">
+    </div>
     <div class="index-arc-list">
       <article-item :item="item" v-for="(item,index) in recommendList" :key="'hot'+index"/>
     </div>
@@ -59,6 +62,12 @@ import ArticleItem from '~/components/articleItem'
 export default {
   data() {
     return {
+      //判定首次加载数据
+      skeleton:[
+        '/arc-item-skeleton.jpg',
+        '/arc-item-skeleton.jpg',
+        '/arc-item-skeleton.jpg',
+      ],
       dataList:[],
       bannerList:[],
       recommendList:[]
@@ -97,17 +106,10 @@ export default {
       let { order , ps } = orderBy.find(item => item.listName == listName);
       let { list } = await getArticleList(ps,1,'',order);
       this[listName] = list;
+
     }
   },
   computed:{
-    isLogin() {
-      try {
-        return JSON.parse(localStorage.userInfo);
-      }catch(e) {
-        //没有用户信息的话用默认的
-        return false;
-      }
-    }
   },
   created() {
     this.getArticleList('dataList');

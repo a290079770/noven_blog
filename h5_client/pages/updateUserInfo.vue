@@ -41,6 +41,11 @@
 import Button from '~/components/Button';
 import { updateUserInfo } from '~/assets/service/userService'
 export default {
+  async asyncData ({ app , redirect}) {
+    //拦截非管理员用户
+    let isAuth = await app.validUserInfo();
+    if(!isAuth) redirect('/');
+  },
   data() {
     return {
       type:4,  //3 - 修改昵称。 4 - 修改简介

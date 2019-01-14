@@ -78,6 +78,11 @@
 import { getArticleList , getCollectList } from '~/assets/service/articleService'
 import { signOut } from '~/assets/service/userService'
 export default {
+  async asyncData ({ app , redirect}) {
+    //拦截非管理员用户
+    let isAuth = await app.validUserInfo();
+    if(!isAuth) redirect('/');
+  },
   data() {
     return {
       publishCount: 0,
@@ -116,14 +121,7 @@ export default {
     }
   },
   computed:{
-    isLogin() {
-      try {
-        return JSON.parse(localStorage.userInfo);
-      }catch(e) {
-        //没有用户信息的话用默认的
-        return false;
-      }
-    }
+
   },
   created() {
     //获取用户信息,如果有就显示

@@ -22,28 +22,30 @@
       </p>
     </section>
     
-    <section ref="feedbackTitle" class="fd-list-title">
-      {{ type == 1 ? '留言板' : '文章评论' }}（<span class="primary">{{totalCount}}</span>）
-    </section>
-    
-
-    <section v-if="hasGotData && dataList.length > 0" class="fd-list-cont">
-      <feedback-item 
-      :key="index" 
-      v-for="(item,index) in dataList" 
-      :item="item"
-      :style="{borderBottom: index === dataList.length - 1 ? 'none' : '1px solid #e0e0e0'}"
-      @showReply="showReply($event,index)"
-      @clearReplyText="clearReplyText(index)"
-      @replyAction="replyAction(index)"
-      />
-
-
+    <section class="fd-list-content"> 
+      <section ref="feedbackTitle" class="fd-list-title">
+        {{ type == 1 ? '留言板' : '文章评论' }}（<span class="primary">{{totalCount}}</span>）
+      </section>
       
-    </section>
+      <div class="comment-item-skeleton" v-for="item in skeleton" v-if="!hasGotData && dataList.length < 1">
+       <img class="full-img" :src="item">
+      </div>
+      <section v-if="hasGotData && dataList.length > 0" class="fd-list-cont">
+        <feedback-item 
+        :key="index" 
+        v-for="(item,index) in dataList" 
+        :item="item"
+        :style="{borderBottom: index === dataList.length - 1 ? 'none' : '1px solid #e0e0e0'}"
+        @showReply="showReply($event,index)"
+        @clearReplyText="clearReplyText(index)"
+        @replyAction="replyAction(index)"
+        />
+        
+      </section>
 
-    <section v-else class="flex-center font-xs gray9 fd-list-cont">
-      暂无{{ type == 1 ? '留言' : '评论' }}，快去抢个沙发～
+      <section v-if="hasGotData && dataList.length < 1" class="flex-center font-xs gray9 fd-list-cont">
+        暂无{{ type == 1 ? '留言' : '评论' }}，快去抢个沙发～
+      </section>
     </section>
     
   </section>
@@ -79,6 +81,11 @@ export default {
 
   data() {
     return {
+      //判定首次加载数据
+      skeleton:[
+        '/comment-item-skeleton.jpg',
+        '/comment-item-skeleton.jpg',
+      ],
       dataList:[],
       content: '',
       ps: 10,
@@ -204,7 +211,7 @@ export default {
     async validFeedback(content,contentHtml) {
       return new Promise(async (resolve,reject) => {
         //验证登录
-        if(!this.isLogin) {
+        if(!this.isLogin()) {
           this.goTo('/login');
           resolve(false);
           return; 
@@ -297,10 +304,6 @@ export default {
     }
   },
   computed:{
-    isLogin() {
-      return this.getCookie('token');
-    },
-
     userInfo() {
       //获取用户信息
       try {

@@ -1,12 +1,12 @@
 <template>
-  <div class="article-detail-cont" v-if="detail">
+  <div class="article-detail-cont" v-if="articleInfo">
      <div class="article-detail-title">
-      {{detail.Title}}
+      {{articleInfo.Title}}
      </div>
 
       <div class="flex flex-align-center flex-justify-between article-info">
-        <div class="article-info-left">{{detail.Author}}  
-          <span class="article-info-time"> {{detail.CreatTime}}</span>
+        <div class="article-info-left">{{articleInfo.Author}}  
+          <span class="article-info-time"> {{articleInfo.CreatTime}}</span>
         </div>  
 
         <div class="flex flex-align-center flex-justify-between article-info-numbercont">
@@ -28,28 +28,28 @@
       
       
       <!-- 简介 -->
-      <div class="article-brief font gray9" v-if="detail.Brief">
-         简介：{{detail.Brief}}
+      <div class="article-brief font-xs gray9" v-if="articleInfo.Brief">
+         简介：{{articleInfo.Brief}}
       </div>
 
       
       <!-- 封面 -->
-      <div class="article-cover bg-full-img" :style="{background: `url(${ detail.Url })`}" v-if="detail.Url" >
+      <div class="article-cover bg-full-img" :style="{background: `url(${ articleInfo.Url })`}" v-if="articleInfo.Url" >
       </div>
 
       
       <!-- 内容 -->
-      <div class="gray6 font-l article-content detail-content " v-html="detail.Content" >
+      <div class="gray6 font-l article-content detail-content " v-html="articleInfo.Content" >
         
       </div>
 
 
       <div class="flex page-bottom">
-        <div class=" page-bottom-btn page-bottom-btn-plain" @click="">
+        <div class=" page-bottom-btn page-bottom-btn-plain" @click="backEdit">
           修改
         </div>
 
-        <div class=" page-bottom-btn " @click="">
+        <div class=" page-bottom-btn " @click="createOrUpdate">
           发布
         </div>
       </div>
@@ -57,29 +57,83 @@
 </template>
 
 <script>
+import { createOrUpdate } from '~/assets/service/articleService'
 export default {
+  async asyncData ({ app , redirect}) {
+    //拦截非管理员用户
+    let isAuth = await app.validUserInfo();
+    if(!isAuth) redirect('/');
+  },
   data() {
     return {
-      detail:{
-        Title:'Noven技术生涯经验分享'
+      articleInfo:{
+        Title:'',
+        Url:'',
+        Brief:'',
+        CreateTime:'',
+        Content:'',
+        Author:''
       },
-      authorInfo:{},
+
+      userInfo: {},
+
+    }
+  },
+  head() {
+    return {
+      title:'预览文章—' + this.articleInfo.Title
     }
   },
 
-
   methods:{
+    //发布文章
+    async createOrUpdate() {
+      let confirm = await this.$confirm('确定发布文章？','提示').catch(()=> false)
+      if(!confirm) return;
 
-    
+      //发起新增或修改
+      this.articleInfo.Author = this.userInfo.NickName;
+      this.articleInfo.Content = this.articleInfo.Content.replace(/\\/g,'/');
+      let res = await createOrUpdate(this.articleInfo).catch(err => {
+        //捕获到异常
+        return -1
+      })
+
+      if( res !== -1) {
+        //新增成功
+        this.$message( res ? '新增文章成功！～' : '修改文章成功！～');
+        sessionStorage.removeItem('previewArticleData')
+
+        this.goTo('/detail',{
+          id: res || this.articleInfo.Id
+        },true)
+      }
+    },
+
+    //返回去编辑
+    backEdit() {
+      sessionStorage.setItem('previewArticleData', JSON.stringify(this.articleInfo));
+      let { id } = this.$route.query;
+      let query = id ? `id=${id}` : '';
+      this.goTo('/addArticle',query,true);
+    }
   },
   created() {
-
+    //获取用户信息
+    try {
+      this.articleInfo = JSON.parse(sessionStorage.previewArticleData);
+      this.userInfo = JSON.parse(localStorage.userInfo);
+    }catch(e) {
+      this.$confirm('获取文章预览信息或用户信息失败！','提示',{
+        showCancelButton: false,
+      })
+      .then(() => {
+        this.goTo('/my');
+      })
+    }
   },
-  mounted() {
-    
-  },
-  computed: {
-
+  beforeDestroy() {
+    // sessionStorage.removeItem('previewArticleData');
   }
 }
 </script>

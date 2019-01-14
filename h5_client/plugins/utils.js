@@ -403,6 +403,18 @@ function getUploadParams() {
   }
 }
 
+
+//验证登录
+function isLogin() {
+  if(!Vue.prototype.getCookie('token')) return false;
+
+  try {
+    return JSON.parse(localStorage.userInfo);
+  }catch(e) {
+    return false;
+  }
+}
+
 /**
  * [validUserInfo 验证用户信息，用于拦截非管理员登录个人中心各个页面]
  * @Author   罗文
@@ -506,6 +518,7 @@ let utils = {
   getUploadParams,   //返回文件上传的配置
   onReachBottom, //滚动触底事件
   setXSSWhiteList, //自定义xss白名单
+  isLogin,  //是否登录
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);

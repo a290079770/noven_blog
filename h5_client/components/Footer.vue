@@ -3,7 +3,9 @@
     <div class="nx-footer-place"></div>
     <mt-tabbar v-model="selected" :fixed="true">
       <mt-tab-item :key="item.id" :id="item.id" v-for="(item,index) in tabList">
-        <img slot="icon" :src="selected == item.id ? item.activeIcon : item.defaultIcon">
+        <!-- <img :style="{'border-radius': index == tabList.length - 1 ? '50%' : 0}" slot="icon" :src="selected == item.id ? item.activeIcon : item.defaultIcon"> -->
+        <div slot="icon" class="bg-full-img" :style="{background: `url(${ selected == item.id ? item.activeIcon : item.defaultIcon })`, 'border-radius': index == tabList.length - 1 ? '50%' : 0}">
+        </div>
         {{item.title}}
       </mt-tab-item>
     </mt-tabbar>
@@ -57,12 +59,27 @@ export default {
 
       this.selected = this.tabList.findIndex(item => item.path.indexOf(activePath) !== -1 );
     },
+
+    setMyEnter() {
+      //只有当登录了且有用户数据，才能进入
+      let isLogin = this.isLogin();
+      let myItem = this.tabList[3];
+      let userInfo = isLogin && JSON.parse(localStorage.userInfo);
+
+      this.$set(this.tabList,3,Object.assign({},myItem,{
+        title: isLogin ? '我的' : '登录',
+        path: isLogin ? '/my' : '/login',
+        defaultIcon: isLogin ? userInfo.CoverUrl : '/n2.png',
+        activeIcon: isLogin ? userInfo.CoverUrl : '/n1.png',
+      }))
+    }
   },
   created() {
     this.tabList =  this.footerList ||  this.tabList;
   },
   mounted() {
     this.setActiveTab();
+    this.setMyEnter();
   },
   computed: {
     showFooter() {
@@ -88,6 +105,9 @@ export default {
     
     $route() {
       this.setActiveTab();
+
+      //判断我的模块入口是否打开
+      this.setMyEnter();
     }
   }
 }
