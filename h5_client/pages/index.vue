@@ -1,5 +1,20 @@
 <template>
   <section class="mc index">
+    <section>
+      
+      <vue-core-image-upload
+        :crop="false"
+        :credentials="false"
+        inputOfFile="file"
+        :compress="50"
+        :max-file-size="500 * 1024 * 1024"
+        :url="getUploadParams().action" 
+        @imageuploaded="imageuploaded"
+        @errorhandle="errorhandle"
+        >
+        <button>11323123</button>
+      </vue-core-image-upload>
+    </section>
     <!-- 轮播图 -->
     <section v-if="bannerList.length < 1" class="index-swiper bg-full-img index-swiper-skeleton"> </section>
     <section v-else class="index-swiper">
@@ -59,6 +74,7 @@
 <script>
 import { getArticleList } from '~/assets/service/articleService'
 import ArticleItem from '~/components/articleItem'
+import VueCoreImageUpload from 'vue-core-image-upload'
 export default {
   data() {
     return {
@@ -75,10 +91,15 @@ export default {
   },
 
   components:{
-    'article-item':ArticleItem
+    'article-item':ArticleItem,
+    'vue-core-image-upload': VueCoreImageUpload,
   },
 
   methods:{
+    imageuploaded(res) {
+      console.log(res)
+    },
+    @errorhandle="errorhandle"
     /**
      * [getArticleList 获取文章列表]
      * @param  {[StriNg]} listName [对应this.data里的三个列表]
