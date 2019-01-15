@@ -74,7 +74,9 @@ return [
     //标签相关接口
     '[comment]' => [
         'getComments' => ['admin/comment/getComments', ['method' => 'get']],  // 获取评论列表
+        'commentListAdmin' => ['admin/comment/commentListAdmin', ['method' => 'get']],  // 获取评论列表（后台）
         'createComment' => ['admin/comment/createComment', ['method' => 'post']],  // 新增一条评论
+        'upOrDownShelf' => ['admin/comment/upOrDownShelf', ['method' => 'post']],  // 上架/下架评论
     ],
 
 

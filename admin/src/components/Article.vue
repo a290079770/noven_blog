@@ -130,9 +130,7 @@
 		  <el-form-item label="简介">
 		    <el-input type="textarea " v-model="articleDetailInfo.Brief" readonly></el-input>
 		  </el-form-item>
-		  <el-form-item label="内容">
-		    <el-input type="textarea " v-model="articleDetailInfo.Content" readonly></el-input>
-		  </el-form-item>
+		  
 		  <!-- <el-form-item label="所属用户ID">
 		    <el-input v-model="articleDetailInfo.AuthorId"></el-input>
 		  </el-form-item> -->
@@ -149,6 +147,12 @@
         		</div>
 		    	<span>点击打开新页面查看原图</span>
 		    </a>
+		  </el-form-item>
+		  <el-form-item label="内容">
+		    <!-- <el-input type="textarea " v-model="articleDetailInfo.Content" readonly></el-input> -->
+		    <div class="detail-content" v-html="articleDetailInfo.Content">
+		    	
+		    </div>
 		  </el-form-item>
 		  <!-- <el-form-item label="文章标签列表">
 		    <ul>
@@ -340,4 +344,67 @@ export default {
 	  	}
   	}
   }
+
+
+  .w-e-text,.detail-content {
+  	padding:  15px;
+  	border-radius: 6px;
+  	  border:1px solid #ddd;
+	          /* table 样式 */
+	  table {
+	    width: 100%;
+	    border-top: 1px solid #ccc;
+	    border-left: 1px solid #ccc;
+	    border-collapse: collapse;
+	  }
+	  table td,
+	  table th {
+	    border-bottom: 1px solid #ccc;
+	    border-right: 1px solid #ccc;
+	    padding: 3px 5px;
+	  }
+	  table th {
+	    border-bottom: 2px solid #ccc;
+	    text-align: center;
+	  }
+
+	  /* blockquote 样式 */
+	  blockquote {
+	    display: block;
+	    border-left: 8px solid #d0e5f2;
+	    padding: 5px 10px;
+	    margin: 10px 0;
+	    line-height: 1.4;
+	    font-size: 100%;
+	    background-color: #f1f1f1;
+	  }
+
+	  /* code 样式 */
+	  code {
+	    display: inline-block;
+	    *display: inline;
+	    *zoom: 1;
+	    background-color: #f1f1f1;
+	    border-radius: 3px;
+	    padding: 3px 5px;
+	    margin: 0 3px;
+	    overflow-x: auto;
+	  }
+	  pre code {
+	    display: block;
+	  }
+
+	  pre {
+	    background: #f1f1f1
+	  }
+
+	  /* ul ol 样式 */
+	  ul, ol {
+	    margin: 10px 0;
+	    background: #f4f4f4;
+	    li {
+	      padding: 0px 20px;
+	    }
+	  }
+	}
 </style>

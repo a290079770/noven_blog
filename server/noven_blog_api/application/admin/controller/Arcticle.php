@@ -86,30 +86,7 @@ class Arcticle extends Controller
         if($appCode != 4) {
           $query['IsUpShelf'] = 1;
         }
-
-        // if(!$isMy ) {
-        //   //在非isMy下，如果当前有传入token，则验证该用户是否是管理员，如果是，则返回所有文章，如果不是，则只返回上架的文章
-        //   $token = request()->header('token') ? request()->header('token') : request()->post('token');
-        //   if($token) {
-        //     //验证token
-        //     $tokenData = $this->jwt->decPure($token);
-        //     if(!$tokenData || $tokenData['expireTime'] < time()) {
-        //       $query['IsUpShelf'] = 1;
-        //     }else {
-        //       //此时去查询下这个用户的权限，如果是管理员则可以看到所有的，包括下架了的
-        //       $uid = $tokenData['uid'];
-        //       $userInfo = Db::name('users')
-        //       ->where('Id',$uid)
-        //       ->find();
-
-        //       if($userInfo['UserType'] < 2) $query['IsUpShelf'] = 1;
-        //     }
-        //   }else {
-        //     $query['IsUpShelf'] = 1;
-        //   }
-        // }else {
-        //   $query['IsUpShelf'] = 1;
-        // }
+        
         // 支持标题，简介，作者，时间范围
         $res = $this->common->getDataList('arcticles',$query,$field,$time);
         
