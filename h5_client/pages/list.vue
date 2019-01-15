@@ -43,6 +43,11 @@
 import { getArticleList } from '~/assets/service/articleService'
 import ArticleListItem from '~/components/articleListItem'
 export default {
+  head() {
+    return {
+      title:'学海无涯'
+    }
+  },
   data() {
     return {
       //判定首次加载数据
@@ -100,6 +105,8 @@ export default {
     this.resetPageData();
   },
   mounted() {
+    this.setPageTitle('学海无涯');
+
     this.onReachBottom(()=>{
       let { ps, cp , total } = this;
       //cp > 1则是请求加载更多，cp = 1 则是首次加载

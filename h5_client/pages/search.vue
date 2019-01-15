@@ -42,6 +42,11 @@
 import { getArticleList } from '~/assets/service/articleService'
 import ArticleListItem from '~/components/articleListItem'
 export default {
+  head() {
+    return {
+      title:'搜索感兴趣的文章'
+    }
+  },
   data() {
     return {
       dataList:[],
@@ -93,6 +98,7 @@ export default {
     
   },
   mounted() {
+    this.setPageTitle('搜索感兴趣的文章');
     this.onReachBottom(()=>{
       let { ps, cp , total } = this;
       //cp > 1则是请求加载更多，cp = 1 则是首次加载

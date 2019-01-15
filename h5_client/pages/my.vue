@@ -44,11 +44,23 @@
         </nuxt-link>
      </div>
 
-
-     <div class="flex flex-align-center my-oparate-item my-oparate-item-1" @click="updateCover">
-      <img src="~assets/icon/cover.svg" class="my-oparate-item-icon">
-      <span> 修改头像 </span>   
-     </div>
+     <section>
+      <vue-core-image-upload
+        :crop="false"
+        :credentials="false"
+        inputOfFile="file"
+        :compress="50"
+        :max-file-size="500 * 1024 * 1024"
+        :url="getUploadParams().action" 
+        @imageuploaded="imageuploaded"
+        @errorhandle="errorhandle"
+        >
+        <div class="flex flex-align-center my-oparate-item my-oparate-item-1">
+          <img src="~assets/icon/cover.svg" class="my-oparate-item-icon">
+          <span> 修改头像 </span>
+        </div>
+      </vue-core-image-upload>
+    </section>
     
 
      <nuxt-link :to="{ name:'updateUserInfo',query:{type : 3} }">
@@ -75,13 +87,20 @@
 </template>
 
 <script>
+import VueCoreImageUpload from 'vue-core-image-upload'
 import { getArticleList , getCollectList } from '~/assets/service/articleService'
 import { signOut } from '~/assets/service/userService'
+import { updateUserInfo } from '~/assets/service/userService'
 export default {
   async asyncData ({ app , redirect}) {
     //拦截非管理员用户
     let isAuth = await app.validUserInfo();
     if(!isAuth) redirect('/');
+  },
+  head() {
+    return {
+      title: this.userInfo.NickName + '的个人空间'
+    }
   },
   data() {
     return {
@@ -90,6 +109,9 @@ export default {
       userInfo:{},
       date: this.dateFormat(Date.now(),'yyyy-mm-dd')
     }
+  },
+  components:{
+    'vue-core-image-upload': VueCoreImageUpload,
   },
 
   methods:{
@@ -104,7 +126,14 @@ export default {
      this.collectCount = collectCount;
     },  
 
-    updateCover() {},
+    //修改用户信息
+    async updateUserInfo(url) {
+      this.userInfo = await updateUserInfo(Object.assign({},this.userInfo,{ CoverUrl: url}));
+
+      this.$set(this.userInfo,'CoverUrl',url);
+      this.$message('修改成功！');
+      localStorage.setItem('userInfo',JSON.stringify(this.userInfo));
+    },
     //退出登录
     async signOut() {
       let confirm = await this.$confirm('是否要退出？','提示').catch(()=>null)
@@ -118,7 +147,21 @@ export default {
       sessionStorage.clear();
       localStorage.clear();
       this.goTo('/','',true);
-    }
+    },
+
+    imageuploaded(res) {
+      let { code , data, description } = res;
+
+      if(code !== 200) {
+        this.$message(description);
+        return;
+      }
+
+      this.updateUserInfo(data.url);
+    },
+    errorhandle() {
+      this.$message('图片上传出错！');
+    },
   },
   computed:{
 
@@ -134,7 +177,7 @@ export default {
     this.getArticleCount();
   },
   mounted() {
-    
+    this.setPageTitle(this.userInfo.NickName + '的个人空间');
   },
 }
 </script>

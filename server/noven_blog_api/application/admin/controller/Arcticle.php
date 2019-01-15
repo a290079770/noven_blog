@@ -37,7 +37,14 @@ class Arcticle extends Controller
      * @possibleParam  [String]  order  排序方式  精选 - CollectCount  热门 - ReadCount  
      */
     public function arcticleList()
-    {
+    {    
+        //appCode是必传
+        //获取AppCode  平台类型  1 - PC   2-H5   3- 小程序   4 - admin
+        $appCodeValid = appCodeValid::valid();
+        if(!$appCodeValid) return;
+        $appCode = $appCodeValid['AppCode'];
+
+
         $keywords = request()->get('keywords') ? request()->get('keywords') : '';
         $authorId = request()->get('authorId') ? request()->get('authorId') : '';
 
@@ -75,29 +82,34 @@ class Arcticle extends Controller
         //查询某个Id或isMy
         if( $authorId ) $query['AuthorId'] = $authorId;
 
-        if(!$isMy) {
-          //在非isMy下，如果当前有传入token，则验证该用户是否是管理员，如果是，则返回所有文章，如果不是，则只返回上架的文章
-          $token = request()->header('token') ? request()->header('token') : request()->post('token');
-          if($token) {
-            //验证token
-            $tokenData = $this->jwt->decPure($token);
-            if(!$tokenData || $tokenData['expireTime'] < time()) {
-              $query['IsUpShelf'] = 1;
-            }else {
-              //此时去查询下这个用户的权限，如果是管理员则可以看到所有的，包括下架了的
-              $uid = $tokenData['uid'];
-              $userInfo = Db::name('users')
-              ->where('Id',$uid)
-              ->find();
-
-              if($userInfo['UserType'] < 2) $query['IsUpShelf'] = 1;
-            }
-          }else {
-            $query['IsUpShelf'] = 1;
-          }
-        }else {
+        //只有管理系统才能拿到下架的文章
+        if($appCode != 4) {
           $query['IsUpShelf'] = 1;
         }
+
+        // if(!$isMy ) {
+        //   //在非isMy下，如果当前有传入token，则验证该用户是否是管理员，如果是，则返回所有文章，如果不是，则只返回上架的文章
+        //   $token = request()->header('token') ? request()->header('token') : request()->post('token');
+        //   if($token) {
+        //     //验证token
+        //     $tokenData = $this->jwt->decPure($token);
+        //     if(!$tokenData || $tokenData['expireTime'] < time()) {
+        //       $query['IsUpShelf'] = 1;
+        //     }else {
+        //       //此时去查询下这个用户的权限，如果是管理员则可以看到所有的，包括下架了的
+        //       $uid = $tokenData['uid'];
+        //       $userInfo = Db::name('users')
+        //       ->where('Id',$uid)
+        //       ->find();
+
+        //       if($userInfo['UserType'] < 2) $query['IsUpShelf'] = 1;
+        //     }
+        //   }else {
+        //     $query['IsUpShelf'] = 1;
+        //   }
+        // }else {
+        //   $query['IsUpShelf'] = 1;
+        // }
         // 支持标题，简介，作者，时间范围
         $res = $this->common->getDataList('arcticles',$query,$field,$time);
         
@@ -161,6 +173,11 @@ class Arcticle extends Controller
         $dbArticle = Db::name('arcticles')->where('Id',$arcticle['Id'])->find();
         if(!$dbArticle) {
           $this->common->setResponse(21,'查询文章数据失败！');
+          return;
+        }
+
+        if($appCode != 4 && $dbArticle['IsUpShelf'] != 1) {
+          $this->common->setResponse(21,'文章已下架，不能进行相关操作～');
           return;
         }
 
@@ -249,6 +266,12 @@ class Arcticle extends Controller
         return false;
       }
 
+      //获取AppCode  平台类型  1 - PC   2-H5   3- 小程序   4 - admin
+      $appCodeValid = appCodeValid::valid();
+      if(!$appCodeValid) return;
+      $appCode = $appCodeValid['AppCode'];
+
+
       $id = request()->get('Id');
 
       $res = Db::name('arcticles')
@@ -257,6 +280,14 @@ class Arcticle extends Controller
 
       if(count($res) === 0) {
          $this->common->setResponse(21,'未获取到文章详情！');
+         return;
+      }
+
+      $arcticleInfo = $res[0];
+
+      if($appCode != 4 && $arcticleInfo['IsUpShelf'] != 1){
+        $this->common->setResponse(21,'该资源已下架，不能进行相关操作！');
+        return;
       }else {
          //该文章阅读量加1
          // 启动事务
@@ -282,7 +313,6 @@ class Arcticle extends Controller
 
 
          //获取到了文章相关标签信息
-         $arcticleInfo = $res[0];
          $arcticleInfo['ReadCount'] ++ ;
          $arcticleInfo['HasCollect'] = false;
          $arcticleInfo['CanEdit'] = false;

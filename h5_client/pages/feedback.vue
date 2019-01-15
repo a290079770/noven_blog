@@ -319,6 +319,8 @@ export default {
   mounted() {
     this.getDataList(false);
 
+    if( this.type == 1 ) this.setPageTitle('书不尽言');
+
     this.onReachBottom(()=>{
       let { ps, cp , total } = this;
       //cp > 1则是请求加载更多，cp = 1 则是首次加载

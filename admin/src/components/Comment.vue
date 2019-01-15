@@ -1,17 +1,14 @@
 <template>
   <div class="content-main-wrap boxshadow">
     <el-row class="title">
-		<span class="blue">banner</span>
+		<span class="blue">留言评论</span>
 		<span class="gray">/列表</span>
 		<hr>
 	</el-row>
 
 	<!-- 新增 & 搜索 -->
 	<el-row class="search">
-		<el-col :span="2">
-			<el-button size="mini" type="primary" icon="el-icon-plus" @click="bannerAdd">新增</el-button>
-  		</el-col>
-  		<el-col :span="10">&nbsp;</el-col>
+  	<el-col :span="12">&nbsp;</el-col>
 		<el-col :span="12">
 			<el-input
       		 	size="small"

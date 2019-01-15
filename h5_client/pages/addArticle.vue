@@ -38,13 +38,25 @@
       <div class="flex flex-align-center flex-justify-center addindex-border addindex-cover bg-full-img" :style="{background: `url(${ articleInfo.Url })`}">
         
         <!-- 新增按钮 -->
-        <div v-if="!articleInfo.Url" class="flex flex-column flex-align-center" @click="addCoverAction">
-          <img 
-          src="~assets/icon/add-gray.svg" 
-          class="addindex-cover-oparate-icon addindex-cover-oparate-icon-nobg"
+        <vue-core-image-upload
+          v-if="!articleInfo.Url"
+          :crop="false"
+          :credentials="false"
+          inputOfFile="file"
+          :compress="50"
+          :max-file-size="500 * 1024 * 1024"
+          :url="getUploadParams().action" 
+          @imageuploaded="imageuploaded"
+          @errorhandle="errorhandle"
           >
-          <span class="font-l gray9 addindex-cover-addtext"> 封面 </span>    
-        </div>
+          <div class="flex flex-column flex-align-center">
+            <img 
+            src="~assets/icon/add-gray.svg" 
+            class="addindex-cover-oparate-icon addindex-cover-oparate-icon-nobg"
+            >
+            <span class="font-l gray9 addindex-cover-addtext"> 封面 </span>    
+          </div>
+        </vue-core-image-upload>
         
         <!-- 关闭按钮 -->
         <img 
@@ -71,6 +83,7 @@
 
 <script>
 import {getArticleDetail} from '~/assets/service/articleService'
+import VueCoreImageUpload from 'vue-core-image-upload'
 export default {
   async asyncData ({ app , redirect}) {
     //拦截非管理员用户
@@ -106,27 +119,10 @@ export default {
       },
     }
   },
+  components:{
+    'vue-core-image-upload': VueCoreImageUpload,
+  },
   methods:{
-    /**
-     * [addCoverAction 添加封面操作]
-     * @Author   罗文
-     * @DateTime 2018-10-12
-     */
-    addCoverAction() {
-      let _this = this;
-      app.uploadImgCloud()
-      .then(res =>{
-        _this.setData({
-          ['articleInfo.Url']:res.data
-        })
-
-        app.showToast('上传成功');
-      })
-      .catch(err => {
-        console.log(err);
-        app.showToast(err.description,2);
-      })
-    },
 
     /**
      * [deleteCoverAction 删除封面]
@@ -256,6 +252,20 @@ export default {
       let query = id ? `id=${id}` : '';
       this.goTo('/preview',query,true);
     },
+
+    imageuploaded(res) {
+      let { code , data, description } = res;
+
+      if(code !== 200) {
+        this.$message(description);
+        return;
+      }
+
+      this.$set(this.articleInfo,'Url',data.url);
+    },
+    errorhandle() {
+      this.$message('图片上传出错！');
+    },
   },
   computed:{
     
@@ -279,7 +289,7 @@ export default {
     //如果都没有，则是新增
   },
   mounted() {
-    
+    this.setPageTitle('编辑文章');
   },
 }
 </script>

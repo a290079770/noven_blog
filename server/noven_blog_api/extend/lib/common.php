@@ -158,6 +158,13 @@ class Common
       if(!$tokenData) return false;
       //获取用户id，且必须是该用户所写的文章才能删除，管理员除外
       $uid = $tokenData['uid'];
+
+      //获取AppCode  平台类型  1 - PC   2-H5   3- 小程序   4 - admin
+      $appCodeValid = appCodeValid::valid();
+      if(!$appCodeValid) return;
+      $appCode = $appCodeValid['AppCode'];
+
+
       //获取用户信息,主要获取角色信息
       $userInfo = Db::name('users')
           ->where('Id',$uid)
@@ -169,6 +176,11 @@ class Common
           ->find(); 
 
       if($find) {
+        if( $appCode != 4 && $find['IsUpShelf'] == -1) {
+          $this->setResponse(21,'资源已下架，不能进行相关操作～');
+          return;
+        }
+        
         //验证作者id
         if($uid != $find['AuthorId'] && $userInfo['UserType'] == 1) {
           $this->setResponse(21,'您无权删除该文章！');
@@ -221,6 +233,12 @@ class Common
 
       if(!$tokenData) return false;
       $uid = $tokenData['uid'];
+
+      //获取AppCode  平台类型  1 - PC   2-H5   3- 小程序   4 - admin
+      $appCodeValid = appCodeValid::valid();
+      if(!$appCodeValid) return;
+      $appCode = $appCodeValid['AppCode'];
+
       $arr = Db::name('collections')
             ->where('CollectionId', $id)
             ->where('UserId',$uid)
@@ -235,7 +253,12 @@ class Common
          return;
       }
 
-      $resData = $dataArr[0];        
+      $resData = $dataArr[0]; 
+
+      if($appCode != 4 && $resData['IsUpShelf'] != 1) {
+         $this->setResponse(21,'资源已下架，不能进行相关操作～');
+         return;
+      }
 
       //判断是新增还是移除      
       if(!$isCollect || $isCollect === 'false') {
@@ -340,8 +363,14 @@ class Common
       if(!$tokenData) return false;
       $uid = $tokenData['uid'];
 
+      //获取AppCode  平台类型  1 - PC   2-H5   3- 小程序   4 - admin
+      $appCodeValid = appCodeValid::valid();
+      if(!$appCodeValid) return;
+      $appCode = $appCodeValid['AppCode'];
+
       $cp = request()->get('cp') ? request()->get('cp') : 1;
       $ps = request()->get('ps') ? request()->get('ps') : 20;
+
 
       $arr = Db::name('collections')
              ->where('userId',$uid)
@@ -377,6 +406,13 @@ class Common
              break;
            }
          }
+      }
+
+      //去掉已下架的资源
+      if($appCode != 4) {
+        $sort = array_filter($sort,function($item) {
+          return $item['IsUpShelf'] == 1;
+        });
       }
 
       $this->setResponse(200,'ok',['list'=>$sort, 'recordCount' => $count],$count);       

@@ -144,7 +144,7 @@ export default {
     previewArc() {
 
       let { articleInfo } = this;
-      articleInfo.CreateTime = Date.now();
+      if(!articleInfo.Id) articleInfo.CreateTime = Date.now();
 
       //获取编辑器的html
       articleInfo.Content = this.addEditor.txt.html();    

@@ -119,10 +119,14 @@ export default {
     }
   },
   created() {
+    
+  },
+  mounted() {
     //获取用户信息
     try {
       this.articleInfo = JSON.parse(sessionStorage.previewArticleData);
       this.userInfo = JSON.parse(localStorage.userInfo);
+      this.setPageTitle(this.articleInfo.Title);
     }catch(e) {
       this.$confirm('获取文章预览信息或用户信息失败！','提示',{
         showCancelButton: false,

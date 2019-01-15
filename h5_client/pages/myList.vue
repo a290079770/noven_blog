@@ -91,7 +91,7 @@ export default {
       ps: 6,
       timer: null, //长按定时器
       touchTime:null, //记录点击时的时间戳
-      type:1,
+      type:1,  //1 - 我的发布  2 - 我的收藏
     }
   },
 
@@ -182,6 +182,8 @@ export default {
     this.getArticleList('dataList');
   },
   mounted() {
+    this.setPageTitle(`我的${this.type == 1 ? '发布' : '收藏'}`);
+
     this.onReachBottom(()=>{
       let { ps, cp , total } = this;
       //cp > 1则是请求加载更多，cp = 1 则是首次加载

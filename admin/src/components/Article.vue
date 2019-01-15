@@ -45,11 +45,10 @@
 		      >
 		      <!-- <template slot-scope="scope">{{ scope.row.Author }}</template> -->
 		    </el-table-column>
-		    <el-table-column
+<!-- 		    <el-table-column
 		      prop="Brief"
 		      label="简介">
-		      <!-- <template slot-scope="scope">{{ scope.row.Brief }}</template> -->
-		    </el-table-column>
+		    </el-table-column> -->
 		    <el-table-column
 		      prop="CreateTime"
 		      label="加入时间"

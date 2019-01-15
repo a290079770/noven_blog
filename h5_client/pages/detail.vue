@@ -40,7 +40,7 @@
 
       
       <!-- 内容 -->
-      <div class="gray6 font-l article-content detail-content " v-html="detail.Content" >
+      <div class="gray6 article-content detail-content " v-html="detail.Content" >
         
       </div>
 
@@ -87,6 +87,11 @@ import { getArticleDetail , collect } from '~/assets/service/articleService'
 import { detailSimple } from '~/assets/service/userService'
 import FeedBack from './feedback';
 export default {
+  head() {
+    return {
+      title:this.title
+    }
+  },
   data() {
     return {
       detail:null,
@@ -103,6 +108,7 @@ export default {
       let res = await getArticleDetail(this.id);
 
       this.detail = res;  
+      this.setPageTitle(res.Title);
       this.getSimpleDetail(res.AuthorId);
     },
 
@@ -138,14 +144,17 @@ export default {
     }
 
     this.id = + id;
-    this.getArticleDetail();
   },
   mounted() {
-    
+    this.getArticleDetail();
   },
   computed: {
     hasCollect() {
       return this.detail.HasCollect;
+    },
+
+    title() {
+      return this.detail && this.detail.Title ? this.detail.Title : 'Noven技术生涯经验分享'
     }
   }
 }

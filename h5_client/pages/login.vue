@@ -170,6 +170,8 @@ export default {
     this.delCookie('token');
     localStorage.removeItem('userInfo');
     this.account = localStorage.getItem('account');
+
+    this.setPageTitle('登录Noven');
   },
 }
 </script>

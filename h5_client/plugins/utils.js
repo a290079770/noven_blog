@@ -426,14 +426,14 @@ function validUserInfo() {
     //获取用户信息
     try {
       let { UserType } = JSON.parse(localStorage.userInfo);
-      if( !UserType || UserType < 2) {
+      if( !UserType || UserType < Vue.prototype.authPermission) {
         resolve(false);
         return;
       }
 
       //发起请求，去服务器拉最新用户信息，验证UserType
       let res = await Vue.prototype.$http.get('/user/detail')
-      if( !res.UserType || res.UserType < 2 ) {
+      if( !res.UserType || res.UserType < Vue.prototype.authPermission ) {
         resolve(false);
         return;
       }
@@ -448,6 +448,8 @@ function validUserInfo() {
 }
 
 
+
+//触底事件
 function onReachBottom(callback) {
   window.onscroll = function() {
     if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
@@ -498,6 +500,27 @@ function setXSSWhiteList() {
 }
 
 
+//设置一个自定义事件
+function setPageTitle(value) {
+  //存入session
+  sessionStorage.setItem('pageTitle',value);
+
+  //在document身上挂载一个setItem事件
+  let storageEvent = document.createEvent('StorageEvent');
+  storageEvent.initStorageEvent('setItem', false, false, 'pageTitle', null, value, null, null);
+  //触发事件
+  document.dispatchEvent(storageEvent);
+}
+
+
+
+
+
+
+
+
+
+
 
 let utils = {
   //object操作
@@ -519,6 +542,7 @@ let utils = {
   onReachBottom, //滚动触底事件
   setXSSWhiteList, //自定义xss白名单
   isLogin,  //是否登录
+  setPageTitle,  //设置页面标题
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);

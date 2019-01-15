@@ -100,6 +100,7 @@ class Comment extends Controller
     foreach ($comments as $k => $v) {
       $children = Db::name('comments')
       ->where('Pid',$v['Id'])
+      ->where('isShow',1)
       ->order('CreateTime','asc')
       ->select(); 
 

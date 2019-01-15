@@ -1,10 +1,6 @@
 <template>
   <div class="flex flex-column flex-justify-between  layout">
-		<div class="layout-header bg-full-img">
-			<div class="text-ess-1 info layout-header-text font-lg">
-				{{ pageTitle }}
-			</div>
-		</div>
+		<nv-header :isBackBtnShow="isBackBtnShow" :pageTitle="pageTitle"/>
 
     <div class="flex-1 font layout-cont">
     	<nuxt/>
@@ -23,6 +19,7 @@
 
 <script >
 	import Footer from '@/components/Footer'
+	import Header from '@/components/Header'
 	import AddArticleBtn from '@/components/addArticleBtn'
 	export default {
 		data() {
@@ -35,10 +32,18 @@
 		},
 		components:{
 			'nv-footer':Footer,
+			'nv-header':Header,
 			'add-article-btn':AddArticleBtn
 		},
 
 		computed:{
+			isBackBtnShow() {
+				//需要隐藏的页面路由
+				let hidePages = ['','index','list','feedback','login','my','preview'];
+				let { path } = this.$route;
+
+				return !hidePages.includes(path.replace(/\//g,''));
+			}
 	  },
 
 	  methods:{
@@ -62,20 +67,20 @@
 	  mounted() {
 	  	this.setLogin();
 	  	this.setAddBtnShow();
+
+	  	this.pageTitle = sessionStorage.pageTitle || 'Noven技术生涯经验分享'
+	  	document.addEventListener('setItem', ()=>{
+	  		this.pageTitle = sessionStorage.pageTitle || 'Noven技术生涯经验分享'
+	  	}, false)
 	  },
 
 		watch: {
 			$route(nv) {
-				let { path } = nv;
-				//修改页面标题
-				let pageTitle = sessionStorage.pageTitle;
-				this.pageTitle = pageTitle || 'Noven Blog';
-
 				//每次切换页面，判定是否登录
 				this.setLogin();
 				//决定新增按钮是否显示
 				this.setAddBtnShow();
-			}
+			},
 		}
 	}
 </script>

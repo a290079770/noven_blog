@@ -46,6 +46,11 @@ export default {
     let isAuth = await app.validUserInfo();
     if(!isAuth) redirect('/');
   },
+  head() {
+    return {
+      title:`修改${this.type == 3 ? '昵称' : '个人简介'}`
+    }
+  },
   data() {
     return {
       type:4,  //3 - 修改昵称。 4 - 修改简介
@@ -66,7 +71,6 @@ export default {
 
   methods:{
    updateAction(type) {
-    console.log(11)
       //发起修改
       //数据验证，这里只需要验证nickName
       let { NickName,Introduction } = this.editUserInfo;
@@ -139,16 +143,20 @@ export default {
   },
   created() {
     this.type = this.$route.query.type;
+    
+  },
+  mounted() {
     //获取用户信息,如果有就显示
     try {
-      let { NickName , Introduction } = JSON.parse(localStorage.userInfo);
-      this.editUserInfo = { NickName , Introduction };
+      let { NickName , Introduction, CoverUrl } = JSON.parse(localStorage.userInfo);
+      this.editUserInfo = { NickName , Introduction, CoverUrl };
       this.currentLen = this.type == 3 ? this.getLen(NickName) : this.getLen(Introduction);
     }catch(e) {
       //没有用户信息的话用默认的
     }
-  },
-  mounted() {
+
+    this.setPageTitle(`修改${this.type == 3 ? '昵称' : '个人简介'}`);
+
     this.type == 3 ? this.$refs.nickNameInput.select() : this.$refs.introInput.select()
   },
 }

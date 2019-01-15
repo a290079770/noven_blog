@@ -474,6 +474,14 @@ class User extends Controller
              Db::name('arcticles')
               ->where('AuthorId',$uid)
               ->setField('Author',$userInfo['NickName']);
+
+             //修改评论用户昵称和头像
+             Db::name('Comments')
+              ->where('AuthorId',$uid)
+              ->update([
+                'NickName' => $userInfo['NickName'],
+                'CoverUrl' => $userInfo['CoverUrl']
+              ]);
               
              $this->common->setResponse(200,'修改成功！',$arr);
           }else {
