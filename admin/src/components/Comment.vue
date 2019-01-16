@@ -8,98 +8,112 @@
 
 	<!-- 新增 & 搜索 -->
 	<el-row class="search">
-  	<el-col :span="12">&nbsp;</el-col>
-		<el-col :span="12">
+  	<el-col :span="18">
+  		<el-select size="small" v-model="type" placeholder="全部" @change="search">
+		    <el-option label="全部" :value="0"></el-option>
+		    <el-option label="留言" :value="1"></el-option>
+		    <el-option label="文章评论" :value="2"></el-option>
+		  </el-select>
+  	</el-col>
+		<el-col :span="6">
 			<el-input
-      		 	size="small"
-		    	placeholder="请输入关键字进行搜索..."
-		    	suffix-icon="el-icon-search"
-		    	v-model="keyword"
-            	@keyup.enter.native="search">
-		  	</el-input>
+			  style="width: 100%"
+  		 	size="small"
+       	placeholder="请输入关键字进行搜索..."
+     	  suffix-icon="el-icon-search"
+    	  v-model="keywords"
+        @keyup.enter.native="search">
+		  </el-input>
 		</el-col>
 	</el-row>
 
-	<!-- banner图列表 -->
+	<!-- comment图列表 -->
 	<el-row>
 		<el-table
-			border
-		    :data="tableData3"
-		    tooltip-effect="dark"
-		    style="width: 100%">
-		    <el-table-column
-		      prop="Id"
-		      label="编号"
-		      width="80">
-		      <!-- <template slot-scope="scope">{{ scope.row.Id }}</template> -->
-		    </el-table-column>
-		    <el-table-column
-		      prop="Title"
-		      label="标题"
-		      >
-		      <!-- <template slot-scope="scope">{{ scope.row.Title }}</template> -->
-		    </el-table-column>
-		    <el-table-column
-		      label="缩略图"
-		      >
-		      <template slot-scope="scope">
-		      	<img :src="scope.row.Url" style="width: 60px">
-		      </template>
-		    </el-table-column>
-		    <el-table-column
-		      prop="Link"
-		      label="超链接"
-		      width="108">
-		      <!-- <template slot-scope="scope">{{ scope.row.Brief }}</template> -->
-		    </el-table-column>
-		    <el-table-column
-		      prop="CreateTime"
-		      label="加入时间"
-		      width="133">
-		      <!-- <template slot-scope="scope">{{ scope.row.CreateTime }}</template> -->
-		    </el-table-column>
-		    <el-table-column
-		      label="状态"
-		      width="100">
-		      <template slot-scope="scope">
-		      	
-		      	<el-tag
-                    plain
-                    size="mini"
-                    :type="scope.row.IsShow === 1 ? 'info' : 'success'">
-                    {{ scope.row.IsShow === 1 ? '已上架' : '已下架' }}
-                </el-tag>
-		      </template>
-		    </el-table-column>
-		    <el-table-column label="操作" width="252">
-	          <template slot-scope="scope">
-	          	<el-button
-	           	  plain
-	              style="margin-left:0"
-	              :icon="scope.row.IsShow === 1 ? 'el-icon-download' : 'el-icon-upload2'"
-	              size="mini"
-	              :type="scope.row.IsShow === 1 ? 'success' : 'info'"
-	              @click="changeShow(scope.$index, scope.row)">
-	              	{{ scope.row.IsShow === 1 ? '下架' : '上架' }}
-	          	</el-button>
-	          	<el-button
-	           	  plain
-	              style="margin-left:0"
-	              icon="el-icon-edit"
-	              size="mini"
-	              type="warning"
-	              @click="bannerEdit(scope.$index, scope.row)">修改
-	          	</el-button>
-	            <el-button
-	           	  plain
-	              style="margin-left:0"
-	              icon="el-icon-delete"
-	              size="mini"
-	              type="danger"
-	              @click="bannerDelete(scope.$index, scope.row)">删除
-	          	</el-button>
-	          </template>
-        	</el-table-column>
+		border
+    :data="dataList"
+    tooltip-effect="dark"
+    style="width: 100%">
+    <el-table-column
+      prop="Id"
+      label="编号"
+      width="60">
+      <!-- <template slot-scope="scope">{{ scope.row.Id }}</template> -->
+    </el-table-column>
+    <el-table-column
+      prop="NickName"
+      label="作者"
+      width="100"
+      >
+      <!-- <template slot-scope="scope">{{ scope.row.Title }}</template> -->
+    </el-table-column>
+    <el-table-column
+      label="内容"
+      >
+      <template slot-scope="scope">
+        <span style="font-size: 12px;">{{ scope.row.Content }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="类型"
+      width="60">
+      <template slot-scope="scope">{{ ['未知','留言','文章'][scope.row.Type] }}</template>
+    </el-table-column>
+    <el-table-column
+      prop="ReplyNickName"
+      label="被回复人"
+      width="100"
+      >
+    </el-table-column>
+    <el-table-column
+      prop="Pid"
+      label="被回复Id"
+      width="60"
+      >
+    </el-table-column>
+    <el-table-column
+      label="创建时间"
+      width="133">
+      <template slot-scope="scope">
+      	<span style="font-size: 12px;">{{ scope.row.CreateTime }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="层级"
+      width="60">
+      <template slot-scope="scope">
+        <el-tag
+          plain
+          size="mini"
+          :type="scope.row.Pid > 0 ? 'warning' : 'success'">
+          {{ scope.row.Pid > 0 ? '二级' : '一级' }}
+        </el-tag>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="状态"
+      width="80">
+      <template slot-scope="scope">
+      	<el-tag
+          plain
+          size="mini"
+          :type="scope.row.IsShow === 1 ? 'success' : 'info'">
+          {{ scope.row.IsShow === 1 ? '已上架' : '已下架' }}
+        </el-tag>
+      </template>
+    </el-table-column>
+    <el-table-column label="操作" width="100">
+        <template slot-scope="scope">
+        	<el-button
+         	  plain
+            :icon="scope.row.IsShow === 1 ? 'el-icon-download' : 'el-icon-upload2'"
+            size="mini"
+            :type="scope.row.IsShow === 1 ? 'danger' : 'success'"
+            @click="changeShow(scope.$index, scope.row)">
+            	{{ scope.row.IsShow === 1 ? '下架' : '上架' }}
+        	</el-button>
+        </template>
+    	</el-table-column>
 		</el-table>
 	</el-row>
 
@@ -111,235 +125,132 @@
 	      style="float: right;margin-top: 15px"
 	      @size-change="handleSizeChange"
 	      @current-change="handleCurrentChange"
-	      :current-page="currentPage"
-	      :page-sizes="[10, 20, 30, 40, 50, 100]"
-	      :page-size="10"
+	      :current-page="cp"
+	      :page-sizes="[5,10, 20, 30]"
+	      :page-size="ps"
 	      layout="total, sizes, prev, pager, next, jumper"
-	      :total="totality">
+	      :total="total">
 	    </el-pagination>
 	  </el-col>
 	</el-row>
 
-	<!-- 新增banner弹框 -->
-	<el-dialog
-	  top="10vh"
-	  title="新增文章"
-	  :visible.sync="bannerAddDialog"
-	  width="80%"
-	  >
-	  <div>
-		<el-form :label-position="labelPosition" label-width="100px" :model="bannerInfo">
-		  <el-form-item label="banner图ID" v-if="bannerInfo.Id">
-		    <el-input v-model="bannerInfo.Id"></el-input>
-		  </el-form-item>
-		  <el-form-item label="标题">
-		    <el-input v-model="bannerInfo.Title"></el-input>
-		  </el-form-item>
-		  <el-form-item label="类型">
-		    <el-input v-model="bannerInfo.Type"></el-input>
-		  </el-form-item>
-		  <el-form-item label="是否展示">
-		    <el-input v-model="bannerInfo.IsShow"></el-input>
-		  </el-form-item>
-		  <el-form-item label="banner地址">
-		    <el-input v-model="bannerInfo.Url"></el-input>
-		  </el-form-item>
-		  <el-form-item label="banner对应的超链接">
-		    <el-input v-model="bannerInfo.Link"></el-input>
-		  </el-form-item>
-		  <el-form-item label="创建时间">
-		    <el-input v-model="bannerInfo.CreateTime"></el-input>
-		  </el-form-item>
-		  <el-form-item label="所属用户ID">
-		    <el-input v-model="bannerInfo.AuthorId"></el-input>
-		  </el-form-item>
-		</el-form>
-	  </div>
-	  <div slot="footer" class="dialog-footer">
-	    <el-button size="mini" @click="bannerAddCancle">取 消</el-button>
-	    <el-button size="mini" type="primary" @click="bannerAddSure">确 定</el-button>
-	  </div>
-	</el-dialog>
+
   </div>
 </template>
 
 <script>
 export default {
-    data() {
-      	return {
-			keyword: '',
-			tableData3: [],
-			currentPage:1,
+  data() {
+    return {
+    	dataList:[],
+			keywords: '',
+			cp:1,
 			ps:10,
-			totality: 1,
-			bannerAddDialog: false,
-			bannerInfo: {
-				Title: '',
-	            Type: '',// 1首页展示，2用户展示
-	            IsShow: '',// 0 - 前台不展示 1 - 前台展示
-	            Id: '',
-	            Url: '',
-	            Link: '',
-	            CreateTime: '',
-	            UserId: ''   //所属用户id，如果有该数据，则是用户的banner
-			},
-			labelPosition: 'right'
-      }
-    },
-    methods: {
-		//获取 banner图 列表
-		getBannerList(keyword,cp,ps) {
-			// keywords,cp,ps
-			cp = cp || 1;
-			ps = ps || 10;
-			this.$http.get('/banner/bannerList',{
+			total: 0,
+			type: 0,
+    }
+  },
+  methods: {
+	  //获取 comment图 列表
+		async getCommentList() {
+			let { keywords , cp , ps , type } = this;
+
+			let { data: { code , description , data, recordCount } } = await this.$http.get('/comment/commentListAdmin',{
 			  params:{
-			     keywords:keyword,
-			     cp:cp,
-			     ps:ps
+			    keywords,
+			    cp,
+			    ps,
+			    type
 			  }
-			}).then((res) => {
-				this.tableData3 = [];
-				this.tableData3 = res.data.data;
-
-				this.totality = res.data.recordCount;
-				this.currentPage = cp || this.currentPage;
-				this.ps = ps || this.ps;
 			})
-		},
-		// 新增banner图
-		bannerAdd() {
-			this.bannerAddDialog = true;
-		},
-		bannerAddCancle() {
-			this.bannerAddDialog = false;
-		},
-		bannerAddSure() {
-			this.bannerAddDialog = false;
-			this.$http.post('/banner/createOrUpdate',{
-              Title: this.bannerInfo.Title,
-              Type: this.bannerInfo.Type,// 1首页展示，2用户展示
-              IsShow: this.bannerInfo.IsShow,// 0 - 前台不展示 1 - 前台展示
-              Id: this.bannerInfo.Id,
-              Url: this.bannerInfo.Url,
-              Link: this.bannerInfo.Link,
-              CreateTime: this.bannerInfo.CreateTime,
-              UserId: this.bannerInfo.UserId   //所属用户id，如果有该数据，则是用户的banner
-            }).then((res) => {
-              console.log(res.data);
-              if(res.data.code === 200) {
-                this.$message({
-                  message: res.data.description,
-                  type: 'success',
-                  center: true
-                });
-                this.getBannerList();
-                this.bannerInfo = {};
-              } else {
-                this.$message({
-                  message: res.data.description,
-                  type: 'error',
-                  center: true
-                });
-              }
-            })
-		},
-		bannerEdit(index, row) {
-			console.log(index, row);
-		},
-		// 上架/下架
-		changeShow(index, row) {
-			console.log(index, row);
-			let bannerIsShow = row.IsShow === 1 ? '下架' : '上架';
-			console.log(bannerIsShow);
-			this.$confirm('是否' + bannerIsShow + '该banner图?', '提示', {
-	            confirmButtonText: '确定',
-	            cancelButtonText: '取消',
-	            type: 'warning'
-	        }).then(() => {
-	            this.$http.post('/banner/publish',{
-	              Id: row.Id,
-	              isShow: row.IsShow ? 0 : 1
-	            }).then((res) => {
-	              console.log(res.data);
-	              if(res.data.code === 200) {
-	                this.$message({
-	                  message: res.data.description,
-	                  type: 'success',
-	                  center: true
-	                });
-	                this.getBannerList();
-	              } else {
-	                this.$message({
-	                  message: res.data.description,
-	                  type: 'error',
-	                  center: true
-	                });
-	              }
+			
+			if(code !== 200) {
+				this.$message.error(description);
+				return;
+			}
 
-	            })
-	        }).catch(() => {
-	            this.$message({
-	              type: 'info',
-	              message: '已取消' + bannerIsShow + '该banner图!'
-	            });
-	        });
+			this.dataList = data;
+			this.total = recordCount;
+		},
+
+		search() {
+			this.cp = 1;
+			this.getCommentList();
+		},
+	
+		// 上架/下架
+		async changeShow(index, row) {
+			let commentIsShow = row.IsShow === 1 ? '下架' : '上架';
+
+			let confirm = await this.$confirm('是否' + commentIsShow + '该留言（评论）?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+      })
+
+      if(!confirm) return;
+
+      let { data: { code ,description }} = await this.$http.post('/comment/upOrDownShelf',{
+        Id: row.Id,
+        IsShow: row.IsShow ? 0 : 1
+      })
+
+      if(code !== 200) {
+				this.$message.error(description);
+				return;
+			}
+
+			this.$message.success('操作成功');
+
+      this.getCommentList();
 		},
 		// 删除文章
-		bannerDelete(index, row) {
-		  console.log(index, row);
-          this.$confirm('删除后将不可恢复，是否确认删除?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$http.post('/banner/delete',{
-              Id:row.Id,
-            }).then((res) => {
-              console.log(res.data);
-              if(res.data.code === 200) {
-                this.$message({
-                  message: res.data.description,
-                  type: 'success',
-                  center: true
-                });
-                this.getBannerList();
-              } else {
-                this.$message({
-                  message: res.data.description,
-                  type: 'error',
-                  center: true
-                });
-              }
-
-            })
-          }).catch(() => {
+		commentDelete(index, row) {
+      this.$confirm('删除后将不可恢复，是否确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.post('/comment/delete',{
+          Id:row.Id,
+        }).then((res) => {
+          if(res.data.code === 200) {
             this.$message({
-              type: 'info',
-              message: '已取消删除该Banner！'
+              message: res.data.description,
+              type: 'success',
+              center: true
             });
-          });
+            this.getCommentList();
+          } else {
+            this.$message({
+              message: res.data.description,
+              type: 'error',
+              center: true
+            });
+          }
+
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除该Comment！'
+        });
+      });
 		},
 
 		//分页
 		handleSizeChange(val) {
-	    this.getBannerList('','',val);
-		  // console.log(`每页 ${val} 条`);
+			this.ps = val;
+	    this.getCommentList();
 		},
 		handleCurrentChange(val) {
-	    this.getBannerList('',val,'');
-		  // console.log(`当前页: ${val}`);
-		},
-
-		//搜索
-		search() {
-			this.getBannerList(this.keyword);
+			this.cp = val;
+	    this.getCommentList();
 		},
 	},
-
-    mounted() {
-      this.getBannerList();
-    }
+	created() {
+    this.getCommentList();
+  }
 }
 </script>
 

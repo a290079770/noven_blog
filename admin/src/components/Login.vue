@@ -90,17 +90,14 @@
 	    login(formName) {
 	      this.$refs[formName].validate((valid) => {
 	        if (valid) {
-	        	console.log(this.loginForm.account,this.loginForm.pass);
 	        	//密码加密
 	          if(this.loginForm.pass && (this.loginForm.pass !== localStorage.getItem('pwd'))) {
 	          	this.loginForm.pass = hex_sha1(this.loginForm.pass);
 	          }
-	          // console.log(this.loginForm.pass);
 	          this.$http.post('/user/loginAdmin',{
                 Account:this.loginForm.account,
                 Password:this.loginForm.pass
               }).then((res) => {
-              	console.log(res.data);
                 if(res.data.code === 200) {
                   // this.$message({
                   //   message: res.data.description,
@@ -141,7 +138,6 @@
 
               })
 	        } else {
-	          console.log('error submit!!');
 	          return false;
 	        }
 	      });

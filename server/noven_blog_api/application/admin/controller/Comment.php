@@ -143,7 +143,21 @@ class Comment extends Controller
     //验证字段
     if(!$this->validateData()) return;
 
+    //如果是回复别人的评论，则要验证被回复的评论是否下架
+    $pid = request()->post('pid');
 
+    if((int)$pid > 0) {
+      $find = Db::name('comments')->where('Id',$pid)->find();
+      if(!$find) {
+        $this->common->setResponse(21,'未查询到被回复的评论或留言信息！');
+        return;
+      }
+      
+      if($find['IsShow'] === 0) {
+        $this->common->setResponse(21,'该评论已下架，不能回复！');
+        return;
+      }
+    }
 
     //如果传入了resourceId，必须验证文章是否存在，是否下架
     if(request()->post('resourceId') && request()->post('resourceId') != -1) {
@@ -271,16 +285,36 @@ class Comment extends Controller
     //查一下有没有这个评论
     $find = Db::name('comments')
       ->where('Id',request()->post('Id'))
-      ->select();
-    if( count($find) < 1 ) {
+      ->find();
+    if( !$find ) {
        $this->common->setResponse(21,'没有这个Id对应的评论！');
        return;
     }   
+
+    //如果是上架操作，需要判断这个评论的父级评论有没有上架，如果没有，则不能上架这条评论
+    $pid = $find['Pid'];
+    if($isShow == 1 && $pid > 0) {
+      $parent = Db::name('comments')->where('Id',$pid)->find();
+      if(!$parent) {
+        $this->common->setResponse(21,'未查询到被回复的评论或留言信息！');
+        return;
+      }
+      
+      if($parent['IsShow'] === 0) {
+        $this->common->setResponse(21,'被回复的评论处于下架状态，不能上架当前评论！');
+        return;
+      }
+    }
 
     Db::startTrans();
     try{
         $res = Db::name('comments')
         ->where('Id',request()->post('Id'))
+        ->setField('IsShow',$isShow);
+
+        //需要同时上下架这个评论下的所有评论
+        Db::name('comments')
+        ->where('Pid',request()->post('Id'))
         ->setField('IsShow',$isShow);
 
         $this->common->setResponse(200,'操作成功！');

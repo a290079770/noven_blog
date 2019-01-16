@@ -90,7 +90,6 @@ export default {
     // 获取用户详情
     getUserDetail() {
       this.$http.get('/user/detail').then((res) => {
-        console.log(res.data);
         if(res.data.code === 200) {
           sessionStorage.setItem('userDetail', JSON.stringify(res.data.data));
 
@@ -126,10 +125,8 @@ export default {
         });
     },
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
     }
   },
   created() {
@@ -266,9 +263,5 @@ export default {
     padding-bottom: 60px;
     border-radius: 8px;
     box-shadow: 5px 5px 5px #ddd,-5px 5px 5px #ddd;
-  }
-  .el-input--small .el-input__inner {
-    float: right;
-    width: 400px;
   }
 </style>

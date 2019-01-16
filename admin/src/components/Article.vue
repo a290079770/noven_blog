@@ -8,8 +8,8 @@
 
 	<!-- 搜索 -->
 	<el-row class="search">
-  		<el-col :span="12">&nbsp;</el-col>
-		<el-col :span="12">
+  	<el-col :span="18">&nbsp;</el-col>
+		<el-col :span="6">
 			<el-input
       		 	size="small"
 		    	placeholder="请输入标题、作者、简介关键字进行搜索..."
@@ -51,7 +51,7 @@
 		    </el-table-column> -->
 		    <el-table-column
 		      prop="CreateTime"
-		      label="加入时间"
+		      label="创建时间"
 		      width="133">
 		      <!-- <template slot-scope="scope">{{ scope.row.CreateTime }}</template> -->
 		    </el-table-column>
@@ -199,7 +199,6 @@ export default {
 			     ps:ps
 			  }
 			}).then((res) => {
-				console.log(res.data);
 				this.tableData3 = [];
 				this.tableData3 = res.data.data.list;
 
@@ -212,34 +211,30 @@ export default {
 		articleDetail(index, row) {
 			this.articleDetailDialog = true;
 			this.isShowSureBtn = false;
-			console.log(index, row);
 			this.$http.get('/arcticle/detail',{
 			  params:{
 			    Id: row.Id
 			  }
 			}).then((res) => {
-				console.log(res.data);
 				if(res.data.code === 200) {
 					this.articleDetailInfo = {};
 					this.articleDetailInfo = res.data.data;
 				}else {
 					this.$message({
-	                  message: res.data.description,
-	                  type: 'error',
-	                  center: true
-	                });
+            message: res.data.description,
+            type: 'error',
+            center: true
+          });
 				}
 			})
 		},
 
 		upOrDownShelf(index, row) {
-		  console.log(index, row);
 		  let isUpShelf = row.IsUpShelf == 1 ? -1 : 1;
 		  this.$http.post('/arcticle/upOrDownShelf',{
 			Id: row.Id,
 			IsUpShelf: isUpShelf
 		  }).then((res) => {
-			console.log(res.data);
 			if(res.data.code === 200) {
 				this.$message({
 	              message: res.data.description,
@@ -259,48 +254,44 @@ export default {
 
 		// 删除文章
 		articleDelete(index, row) {
-		  console.log(index, row);
-          this.$confirm('删除后将不可恢复，是否确认删除?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$http.post('/arcticle/delete',{
-              Id:row.Id,
-            }).then((res) => {
-              console.log(res.data);
-              if(res.data.code === 200) {
-                this.$message({
-                  message: res.data.description,
-                  type: 'success',
-                  center: true
-                });
-                this.getArcticleList();
-              } else {
-                this.$message({
-                  message: res.data.description,
-                  type: 'error',
-                  center: true
-                });
-              }
-
-            })
-          }).catch(() => {
+      this.$confirm('删除后将不可恢复，是否确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.post('/arcticle/delete',{
+          Id:row.Id,
+        }).then((res) => {
+          if(res.data.code === 200) {
             this.$message({
-              type: 'info',
-              message: '已取消删除该文章！'
+              message: res.data.description,
+              type: 'success',
+              center: true
             });
-          });
+            this.getArcticleList();
+          } else {
+            this.$message({
+              message: res.data.description,
+              type: 'error',
+              center: true
+            });
+          }
+
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除该文章！'
+        });
+      });
 		},
 
 		//分页
 		handleSizeChange(val) {
 	    this.getArcticleList('','',val);
-		  // console.log(`每页 ${val} 条`);
 		},
 		handleCurrentChange(val) {
 	    this.getArcticleList('',val,'');
-		  // console.log(`当前页: ${val}`);
 		},
 
 		//搜索

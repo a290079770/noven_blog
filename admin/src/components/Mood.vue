@@ -171,13 +171,11 @@ export default {
 		// 获取心情详情
 		moodDetail(index, row) {
 			this.moodDetailDialog = true;
-			console.log(index, row);
 			this.$http.get('/mood/detail',{
 			  params:{
 			     Id: row.Id
 			  }
 			}).then((res) => {
-				console.log(res.data);
 				this.moodDetailInfo = {};
 				this.moodDetailInfo = res.data.data;
 			})
@@ -185,7 +183,6 @@ export default {
 
 		// 删除心情
 		moodDelete(index, row) {
-		  console.log(index, row);
           this.$confirm('删除后将不可恢复，是否确认删除?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -194,7 +191,6 @@ export default {
             this.$http.post('/mood/delete',{
               Id:row.Id,
             }).then((res) => {
-              console.log(res.data);
               if(res.data.code === 200) {
                 this.$message({
                   message: res.data.description,
@@ -222,11 +218,9 @@ export default {
 		//分页
 		handleSizeChange(val) {
 	    this.getArcticleList('','',val);
-		  // console.log(`每页 ${val} 条`);
 		},
 		handleCurrentChange(val) {
 	    this.getArcticleList('',val,'');
-		  // console.log(`当前页: ${val}`);
 		},
 
 		//搜索

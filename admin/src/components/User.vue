@@ -8,8 +8,8 @@
 
       <!-- 搜索 -->
   		<el-row class="search">
-  			<el-col :span="12">&nbsp;</el-col>
-  			<el-col :span="12">
+  			<el-col :span="18">&nbsp;</el-col>
+  			<el-col :span="6">
   				<el-input
             size="small"
 			    	placeholder="请输入手机号、昵称关键字进行搜索..."
@@ -193,7 +193,6 @@ export default {
                ps: ps
             }
           }).then((res) => {
-            console.log(res.data);
             if(res.data.code === 200) {
               this.tableData3 = [];
               // res.data.data.forEach((item,index) => {
@@ -222,7 +221,6 @@ export default {
 
     	  // 锁定/解锁
   			lockOrOpen(index, row) {
-  				console.log(index, row);
   				// this.$router.push('/wrap/adminEdit');
 
           // 保存本行有关信息
@@ -238,7 +236,6 @@ export default {
           //     profession: row.profession,
           //   }
           // })
-          // console.log(this.$route.query.tel);
           let userStatus = row.Status == 1 ? "锁定" : "解锁";
           this.$confirm('是否' + userStatus + '该用户', '提示', {
             confirmButtonText: '确定',
@@ -249,7 +246,6 @@ export default {
               Id: row.Id,
               Status: row.Status == 1 ? 2 : 1
             }).then((res) => {
-              console.log(res.data);
               if(res.data.code === 200) {
                 this.$message({
                   message: userStatus + "成功！",
@@ -281,12 +277,10 @@ export default {
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            console.log(index, row);
             this.$http.post('/user/updatePwd',{
               Id:row.Id,
               Password: resetPwdJiami
             }).then((res) => {
-              console.log(res.data);
               if(res.data.code === 200) {
                 this.$message({
                   message: res.data.description,
@@ -312,14 +306,12 @@ export default {
           });
   			},
         seeDetail(index, row) {
-          console.log(index, row);
           this.userDetailDialog = true;
           this.$http.get('/user/detail', {
             params: {
               Id: row.Id
             }
           }).then((res) => {
-            console.log(res.data);
             if(res.data.code === 200) {
               this.userDetailInfo = res.data.data;
               this.userDetailInfo.CoverUrl = this.userDetailInfo.CoverUrl || 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541610478229&di=46134ec1a7b7c9a8823de9d8ad15629d&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0152b457d1129b0000012e7e2d081f.jpg%401280w_1l_2o_100sh.jpg';
@@ -338,11 +330,9 @@ export default {
       	//分页
       	handleSizeChange(val) {
           this.getUserList('','',val);
-      	  // console.log(`每页 ${val} 条`);
       	},
       	handleCurrentChange(val) {
           this.getUserList('',val,'');
-      	  // console.log(`当前页: ${val}`);
       	},
 
         //搜索
