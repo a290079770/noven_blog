@@ -163,6 +163,10 @@ export default {
 
     //清空留言
     async clearFeedback() {
+      let content = this.fbEditor.txt.text();
+
+      if(!content || !content.replace(/ /g,'')) return;
+
       let confirm = await this.$confirm('确定清除编辑器中的留言信息？','提示');
 
       if(confirm) {

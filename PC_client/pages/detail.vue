@@ -23,9 +23,15 @@
           </i>
         </p>
 
-        <figure class="detail-cover">
+        <section v-if="detail.Brief" class="detail-content font-lg detail-brief">
+          “
+            <span class="font-xs gray9">{{detail.Brief}}</span>
+          ”
+        </section>
+
+<!--         <figure class="detail-cover">
           <img :src="detail.Url" class="detail-cover-img">
-        </figure>
+        </figure> -->
 
         <article class="font gray6 detail-content" v-html="detail.Content"></article>
 

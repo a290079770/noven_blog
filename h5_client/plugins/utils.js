@@ -543,6 +543,7 @@ let utils = {
   setXSSWhiteList, //自定义xss白名单
   isLogin,  //是否登录
   setPageTitle,  //设置页面标题
+  validUserInfo, //验证登录权限
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);

@@ -86,14 +86,27 @@ export default {
   },
 
   methods:{
-    //发布文章
+   //发布文章
     async createOrUpdate() {
+      let { userInfo: { NickName }, articleInfo: { Content, Id , Url }} = this;
+
+      //如果文章没有封面的话，选取一张系统内置图做为默认图
+      if( !Url || !Url.replace(/ /g,'')) {
+        let urlConfirm = await this.$confirm('您的文章没有上传封面，是否使用一张随机封面？','提示').catch(()=> false)
+        if(urlConfirm) {
+          let random = Math.ceil(Math.random()* 3)  + 1;
+          this.articleInfo.Url = this.apiUrl + `/images/users/arc-default${random}.jpg`
+        }
+      }
+
       let confirm = await this.$confirm('确定发布文章？','提示').catch(()=> false)
       if(!confirm) return;
 
       //发起新增或修改
-      this.articleInfo.Author = this.userInfo.NickName;
-      this.articleInfo.Content = this.articleInfo.Content.replace(/\\/g,'/');
+      this.articleInfo.Author = NickName;
+      this.articleInfo.Content = Content.replace(/\\/g,'/');
+
+
       let res = await createOrUpdate(this.articleInfo).catch(err => {
         //捕获到异常
         return -1
@@ -105,7 +118,7 @@ export default {
         sessionStorage.removeItem('previewArticleData')
 
         this.goTo('/detail',{
-          id: res || this.articleInfo.Id
+          id: res || Id
         },true)
       }
     },

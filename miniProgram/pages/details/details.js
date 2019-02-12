@@ -27,7 +27,6 @@ Page({
   },
   onShow() {
     if (wx.getStorageSync('isNeedRefresh')) {
-      // console.log(999999)
       this.getDetail(this.data.articleId);
       wx.setStorageSync('isNeedRefresh', false);
     }
@@ -49,7 +48,6 @@ Page({
         }catch(err) {
           // console.log(err);
         }
-        console.log(res)
         _this.setData({
           detailData: res,
           hasGotData: true,

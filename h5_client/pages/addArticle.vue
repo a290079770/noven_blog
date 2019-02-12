@@ -35,7 +35,7 @@
 
 
       <!-- 封面 -->
-      <div class="flex flex-align-center flex-justify-center addindex-border addindex-cover bg-full-img" :style="{background: `url(${ articleInfo.Url })`}">
+      <div class="pr flex flex-align-center flex-justify-center addindex-border addindex-cover bg-full-img" :style="{background: `url(${ articleInfo.Url })`}">
         
         <!-- 新增按钮 -->
         <vue-core-image-upload
@@ -65,6 +65,21 @@
         class="addindex-close addindex-icon"
         @click="deleteCoverAction"
         >
+
+        <div v-if="!articleInfo.Url" class="font-l info addindex-netImg-text" @click="isUseNetImg = true">
+          网络图片
+        </div>
+      </div>
+
+      <div class="flex addindex-netImg" v-if="isUseNetImg">
+        <input 
+          class="addindex-title-input addindex-netImg-input" 
+          placeholder="请输入图片网络地址" 
+          v-model="netImgUrl"
+        />
+        <Button plain type="info" customClass="addindex-netImg-btn" @click="addNetImg">
+          添加
+        </Button> 
       </div>
 
 
@@ -84,6 +99,7 @@
 <script>
 import {getArticleDetail} from '~/assets/service/articleService'
 import VueCoreImageUpload from 'vue-core-image-upload'
+import Button from '~/components/Button';
 export default {
   async asyncData ({ app , redirect}) {
     //拦截非管理员用户
@@ -117,10 +133,13 @@ export default {
         CreateTime:Date.now(),
         Content:''
       },
+      isUseNetImg: false,
+      netImgUrl:'',
     }
   },
   components:{
     'vue-core-image-upload': VueCoreImageUpload,
+    Button
   },
   methods:{
 
@@ -262,9 +281,26 @@ export default {
       }
 
       this.$set(this.articleInfo,'Url',data.url);
+      this.isUseNetImg = false;
+      this.netImgUrl = '';
     },
     errorhandle() {
       this.$message('图片上传出错！');
+      this.isUseNetImg = false;
+      this.netImgUrl = '';
+    },
+
+    //添加网络图片做为封面
+    addNetImg() {
+      let { netImgUrl } = this;
+      if(!netImgUrl || !netImgUrl.replace(/ /g,'')) {
+        this.$message('请输入图片网络地址');
+        return;
+      }
+
+      this.$set(this.articleInfo,'Url',netImgUrl.replace(/\\/g,'/'));
+      this.isUseNetImg = false;
+      this.netImgUrl = '';
     },
   },
   computed:{

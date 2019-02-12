@@ -170,6 +170,8 @@ export default {
 
     //清空留言
     async clearFeedback() {
+      if(!this.content || !this.content.replace(/ /g,'')) return;
+
       let confirm = await this.$confirm('确定清除编辑器中的留言信息？','提示').catch(()=>null)
 
       //清空
