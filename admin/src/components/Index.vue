@@ -8,15 +8,13 @@
 		</el-row>
 
 		<el-row class="index-total">
-
-
 	      <div class="index-total-resource">
 	        <div class="index-total-resource-left">
 	        	<div class="left-icon">
 	        		<i class="iconfont icon-article"></i>
 	        	</div>
 	        </div>
-			<div class="index-total-resource-right">
+	    		<div class="index-total-resource-right">
 	        	<div class="right-statistics">
 	        		<p class="statistics-info">{{ statistics.articles }}</p>
 	        		<p class="statistics-description">Articles</p>
@@ -27,28 +25,27 @@
 	      <div class="index-total-resource">
 	        <div class="index-total-resource-left">
 	        	<div class="left-icon">
-	        		<i class="iconfont icon-xinqing"></i>
-	        	</div>
-	        </div>
-			<div class="index-total-resource-right">
-	        	<div class="right-statistics">
-	        		<p class="statistics-info">{{ statistics.moods }}</p>
-	        		<p class="statistics-description">Moods</p>
-	        	</div>
-	        </div>
-	      </div>
-
-
-	      <div class="index-total-resource">
-	        <div class="index-total-resource-left">
-	        	<div class="left-icon">
 	        		<i class="iconfont icon-banner"></i>
 	        	</div>
 	        </div>
 	        <div class="index-total-resource-right">
 	        	<div class="right-statistics">
-	        		<p class="statistics-info">{{ statistics.banners }}</p>
-	        		<p class="statistics-description">Banners</p>
+	        		<p class="statistics-info">{{ statistics.comments }}</p>
+	        		<p class="statistics-description">Comments</p>
+	        	</div>
+	        </div>
+	      </div>
+
+	      <div class="index-total-resource">
+	        <div class="index-total-resource-left">
+	        	<div class="left-icon">
+	        		<i class="iconfont icon-xinqing"></i>
+	        	</div>
+	        </div>
+			    <div class="index-total-resource-right">
+	        	<div class="right-statistics">
+	        		<p class="statistics-info">{{ statistics.moods }}</p>
+	        		<p class="statistics-description">Moods</p>
 	        	</div>
 	        </div>
 	      </div>
@@ -196,19 +193,19 @@ export default {
         statistics: {
         	articles: 0,
         	moods: 0,
-        	banners: 0
+        	comments: 0
         }
     }
   },
   mounted(){
   	this.getActiveUser();
   	this.getArcticleList();
+  	this.getCommentList();
   },
   methods: {
     // 当前活跃用户详情
     getActiveUser() {
       this.$http.get('/user/activeUserList').then((res) => {
-          console.log(res.data);
           if(res.data.code === 200) {
             // this.NickName = res.data.Data.NickName;
             this.dataList = res.data.data.list
@@ -216,29 +213,45 @@ export default {
       })
     },
     //获取 文章 列表
-	getArcticleList(keyword,cp,ps) {
-		// keywords,cp,ps
-		cp = cp || 1;
-		ps = ps || 10;
-		this.$http.get('/arcticle/arcticleList',{
-		  params:{
-		     keywords:keyword,
-		     cp:cp,
-		     ps:ps
-		  }
-		}).then((res) => {
-			console.log(res.data);
-			if(res.data.code === 200) {
-			  this.statistics.articles = res.data.recordCount;
-            } else {
-              this.$message({
-                message: res.data.description,
-                type: 'error',
-                center: true
-              });
-            }
-		})
-	},
+	  getArcticleList(keyword,cp,ps) {
+			// keywords,cp,ps
+			cp = cp || 1;
+			ps = ps || 10;
+			this.$http.get('/arcticle/arcticleList',{
+			  params:{
+			     keywords:keyword,
+			     cp:cp,
+			     ps:ps
+			  }
+			}).then((res) => {
+				if(res.data.code === 200) {
+				  this.statistics.articles = res.data.recordCount;
+	            } else {
+	              this.$message({
+	                message: res.data.description,
+	                type: 'error',
+	                center: true
+	              });
+	            }
+			})
+		},
+
+		//获取评论数量
+		//获取 comment图 列表
+		async getCommentList() {
+			let { keywords , cp , ps , type } = this;
+
+			let { data: { code , description , data, recordCount } } = await this.$http.get('/comment/commentListAdmin',{
+			  params:{
+			  }
+			})
+			
+			if(code !== 200) {
+				this.$message.error(description);
+				return;
+			}
+			this.statistics.comments = recordCount;
+		},
   }
 }
 </script>

@@ -43,6 +43,7 @@
   color: rgb(63, 12, 3);
   font-size: 40rpx;
   text-align: center;
+  word-break: break-all;
 }
 .des {
   padding: 0 20rpx;

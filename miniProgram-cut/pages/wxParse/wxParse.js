@@ -30,9 +30,6 @@ Page({
       data: {
         Id: id
       },
-      header: {
-        token: app.globalData.token
-      },
       success(res) {
         res.CreateTimeFormate = dateFormat(res.CreateTime, 'yyyy-mm-dd');
         _this.setData({

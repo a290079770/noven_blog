@@ -403,6 +403,18 @@ function getUploadParams() {
   }
 }
 
+
+//验证登录
+function isLogin() {
+  if(!Vue.prototype.getCookie('token')) return false;
+
+  try {
+    return JSON.parse(localStorage.userInfo);
+  }catch(e) {
+    return false;
+  }
+}
+
 /**
  * [validUserInfo 验证用户信息，用于拦截非管理员登录个人中心各个页面]
  * @Author   罗文
@@ -414,14 +426,14 @@ function validUserInfo() {
     //获取用户信息
     try {
       let { UserType } = JSON.parse(localStorage.userInfo);
-      if( !UserType || UserType < 2) {
+      if( !UserType || UserType < Vue.prototype.authPermission) {
         resolve(false);
         return;
       }
 
       //发起请求，去服务器拉最新用户信息，验证UserType
       let res = await Vue.prototype.$http.get('/user/detail')
-      if( !res.UserType || res.UserType < 2 ) {
+      if( !res.UserType || res.UserType < Vue.prototype.authPermission ) {
         resolve(false);
         return;
       }
@@ -434,6 +446,76 @@ function validUserInfo() {
     }
   })
 }
+
+
+
+//触底事件
+function onReachBottom(callback) {
+  window.onscroll = function() {
+    if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
+      callback();
+    }
+  }
+}
+
+//文档高度
+function getDocumentTop() {
+    var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+    if (document.body) {
+        bodyScrollTop = document.body.scrollTop;
+    }
+    if (document.documentElement) {
+        documentScrollTop = document.documentElement.scrollTop;
+    }
+    scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;    return scrollTop;
+}
+//可视窗口高度
+function getWindowHeight() {
+    var windowHeight = 0;
+    if (document.compatMode == "CSS1Compat") {
+        windowHeight = document.documentElement.clientHeight;
+    } else {
+        windowHeight = document.body.clientHeight;
+    }
+    return windowHeight;
+}
+//滚动条滚动高度
+function getScrollHeight() {
+    var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+    if (document.body) {
+        bodyScrollHeight = document.body.scrollHeight;
+    }
+    if (document.documentElement) {
+        documentScrollHeight = document.documentElement.scrollHeight;
+    }
+    scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;    return scrollHeight;
+}
+
+//设置xss的白名单，在默认白名单上加上自定义
+function setXSSWhiteList() {
+  let { whiteList } = window.filterXSS;
+  Object.keys(whiteList).forEach(key => {
+    whiteList[key].push('style');
+  })
+}
+
+
+//设置一个自定义事件
+function setPageTitle(value) {
+  //存入session
+  sessionStorage.setItem('pageTitle',value);
+
+  //在document身上挂载一个setItem事件
+  let storageEvent = document.createEvent('StorageEvent');
+  storageEvent.initStorageEvent('setItem', false, false, 'pageTitle', null, value, null, null);
+  //触发事件
+  document.dispatchEvent(storageEvent);
+}
+
+
+
+
+
 
 
 
@@ -457,9 +539,18 @@ let utils = {
   getDefaultCover,    // 获取文章默认封面图
   goTo,    // 跳转页面
   getUploadParams,   //返回文件上传的配置
+  onReachBottom, //滚动触底事件
+  setXSSWhiteList, //自定义xss白名单
+  isLogin,  //是否登录
+  setPageTitle,  //设置页面标题
+  validUserInfo, //验证登录权限
 }
 
 Vue.prototype = Object.assign(Vue.prototype,utils);
+
+
+//需要拦截的权限等级
+Vue.prototype.authPermission = 2;
 
 
 

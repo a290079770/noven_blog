@@ -13,7 +13,7 @@
       indicator-color="{{indicatorColor}}"
       indicator-active-color="{{indicatorActiveColor}}"
       circular="true"
-      autoplay="{{true}}"
+      autoplay="{{false}}"
       interval="{{interval}}"
       duration="{{duration}}">
       <block wx:for="{{imgUrls}}" wx:key="{{id}}">
@@ -25,7 +25,7 @@
             <view class='banner-related'>
               <view class='banner-related-con'>
                 <view class='text-article'>@article</view>
-                <view class='mt-20 text-ess-1'>{{ item.Title }}</view>
+                <view class='mt-20 text-ess-2'>{{ item.Title }}</view>
                 <view class='mt-20 text-ess-1'>作者：{{ item.Author }}</view>
               </view>
             </view>

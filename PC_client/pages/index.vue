@@ -122,7 +122,6 @@
 import ArticleIndexItem from '~/components/articleIndexItem'
 import introContainer from '~/components/introContainer'
 import { getArticleList } from '~/assets/service/articleService'
-console.log(process.browser)
 export default {
   data() {
     return {
@@ -137,9 +136,10 @@ export default {
       recommendList: [],
 
       userInfo: {
-        CoverUrl:'https://api.novenblog.xin/images/Yve4jIf6KHG3dz63_photo_1544078309.jpeg',
+        CoverUrl:'/intro2.jpeg',
+        // CoverUrl:'https://api.novenblog.xin/images/Yve4jIf6KHG3dz63_photo_1544078309.jpeg',
         NickName:'Noven',
-        Introduction:'关于我自己，昵称唐青，2014年毕业于重庆某大学，从事Web前端四年有余，掌握HTML、CSS、JS、PHP、NodeJS、Vue、React、Webpack、D3...各种前端技能，十八般武艺，都耍得有模有样。'
+        Introduction:'关于Noven Blog，是一个个人文章分享类网站，由唐青和小林共同开发^_^，目前已上线PC、H5、微信小程序～'
       }
     }
   },

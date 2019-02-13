@@ -39,6 +39,14 @@
             <i class="iconfont  icon-daohangshouye mr8"></i>
             <span slot="title">首页</span>
           </el-menu-item>
+          <el-menu-item index="/wrap/article">
+            <i class="iconfont icon-article mr8"></i>
+            <span slot="title">文章管理</span>
+          </el-menu-item>
+          <el-menu-item index="/wrap/comment">
+            <i class="iconfont icon-banner mr8"></i>
+            <span slot="title">评论管理</span>
+          </el-menu-item>
           <el-menu-item index="/wrap/user">
             <i class="iconfont icon-yonghushezhi mr8"></i>
             <span slot="title">用户管理</span>
@@ -47,18 +55,11 @@
             <i class="el-icon-picture"></i>
             <span slot="title">相册管理</span>
           </el-menu-item>
-          <el-menu-item index="/wrap/article">
-            <i class="iconfont icon-article mr8"></i>
-            <span slot="title">文章管理</span>
-          </el-menu-item>
           <el-menu-item index="/wrap/mood" disabled>
             <i class="iconfont icon-xinqing mr8"></i>
             <span slot="title">心情管理</span>
           </el-menu-item>
-          <el-menu-item index="/wrap/banner" disabled>
-            <i class="iconfont icon-banner mr8"></i>
-            <span slot="title">banner管理</span>
-          </el-menu-item>
+
           <el-menu-item index="" @click="exit">
             <i class="iconfont icon-tuichu1 mr8"></i>
             <span slot="title">退出</span>
@@ -89,7 +90,6 @@ export default {
     // 获取用户详情
     getUserDetail() {
       this.$http.get('/user/detail').then((res) => {
-        console.log(res.data);
         if(res.data.code === 200) {
           sessionStorage.setItem('userDetail', JSON.stringify(res.data.data));
 
@@ -125,10 +125,8 @@ export default {
         });
     },
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
     }
   },
   created() {
@@ -265,9 +263,5 @@ export default {
     padding-bottom: 60px;
     border-radius: 8px;
     box-shadow: 5px 5px 5px #ddd,-5px 5px 5px #ddd;
-  }
-  .el-input--small .el-input__inner {
-    float: right;
-    width: 400px;
   }
 </style>

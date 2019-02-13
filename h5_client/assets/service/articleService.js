@@ -103,6 +103,27 @@ export const collect = function({ id , isCollect }) {
 
 
 /**
+ * [collectList 获取个人的收藏列表]
+ * @Author   罗文
+ * @DateTime 2018-09-26
+ * @possibleParam  [Number]  ps  每页条数  
+ * @possibleParam  [Number]  cp  当前页  
+ */
+export const getCollectList = function(ps=10,cp=1) {
+  return Vue.prototype.$http.get('/arcticle/collectList',{
+    params:{
+      ps,
+      cp,
+    }
+  })
+  .then(res => {
+    let { list, recordCount } = res;
+    return { list , recordCount };
+  })
+}
+
+
+/**
  * [parseDetail 解析文章详情，主要是处理日期兼容safari和小程序端创建文章的问题]
  * @Author   罗文
  * @DateTime 2018-12-10
@@ -121,7 +142,7 @@ function parseDetail(res) {
         if(current.type == 'text') {
           return prevStr + `<p>${current.value}</p>`
         }else {
-          return prevStr + `<p><img src="${current.value}"/><br/><span style="padding-left:26px">${current.desc}</span></p>`
+          return prevStr + `<p><img src="${current.value}" style="max-width:100%"/><br/><span style="padding-left:26px">${current.desc}</span></p>`
         }
       },'')
     }catch(e) {

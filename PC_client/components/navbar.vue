@@ -113,14 +113,9 @@ export default {
     search() {
       let { keywords } = this;
       if(keywords)
-        this.$router.push({
-          path:'/list',
-          query:{
-            keywords
-          }
-        })
+        this.goTo('/list',`keywords=${keywords}`);
       else
-        this.$router.push('/list')
+        this.goTo('/list');
     },
     goToMy() {
       //进个人中心的拦截
@@ -145,18 +140,6 @@ export default {
       // this.changeRoute(index);
     },
 
-    /**
-     * [changeRoute 跳转到对应路径]
-     * @Author   罗文
-     * @DateTime 2018-11-23
-     * @param    {[Number]}   index [活跃项索引]
-     * @return   {[type]}         [description]
-     */
-    // changeRoute(index) {
-    //   this.$router.push({
-    //     path: this.navList[index].link  
-    //   })
-    // },
 
     //设置navbar是否是固定定位
     setNavBarFixed() {
@@ -206,8 +189,8 @@ export default {
       this.userInfo = null;
       this.delCookie('token');
       sessionStorage.clear();
-      localStorage.clear();
-      this.goTo('/');
+      localStorage.removeItem('userInfo');
+      this.goTo('/','',true);
     }
   },
   created() {

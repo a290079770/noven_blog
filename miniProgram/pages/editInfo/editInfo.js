@@ -133,7 +133,8 @@ Page({
         }
       },
       header: {
-        token: app.globalData.token
+        token: app.globalData.token,
+        appCode: 3,
       },
       success(updateUserInfoRes) {
         // console.log(updateUserInfoRes)

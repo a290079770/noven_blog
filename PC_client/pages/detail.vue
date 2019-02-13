@@ -23,9 +23,15 @@
           </i>
         </p>
 
-        <figure class="detail-cover">
+        <section v-if="detail.Brief" class="detail-content font-lg detail-brief">
+          “
+            <span class="font-xs gray9">{{detail.Brief}}</span>
+          ”
+        </section>
+
+<!--         <figure class="detail-cover">
           <img :src="detail.Url" class="detail-cover-img">
-        </figure>
+        </figure> -->
 
         <article class="font gray6 detail-content" v-html="detail.Content"></article>
 
@@ -45,7 +51,7 @@
       </section>
     </section>
 
-    <feedback v-if="Object.keys(detail).length > 0" :type="2" :resourceId="detail.Id"/>
+    <feedback :type="2" :resourceId="id"/>
     
     <section @click="collect" class="flex-center detail-collect-cont">
       <img class="detail-collect" :src="hasCollect">
@@ -68,7 +74,8 @@ export default {
       detail:{
         Title:'Noven技术生涯经验分享'
       },
-      authorInfo:{}
+      authorInfo:{},
+      id:null
     }
   },
 
@@ -121,7 +128,6 @@ export default {
     this.getArticleDetail();
   },
   mounted() {
-    
   },
 
   computed: {

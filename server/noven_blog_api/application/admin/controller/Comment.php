@@ -8,6 +8,8 @@ use think\Validate;
 use lib\common;
 use lib\jwtTool;
 use lib\validJWT;
+use lib\appCodeValid;
+
 
 class Comment extends Controller
 {
@@ -100,6 +102,7 @@ class Comment extends Controller
     foreach ($comments as $k => $v) {
       $children = Db::name('comments')
       ->where('Pid',$v['Id'])
+      ->where('isShow',1)
       ->order('CreateTime','asc')
       ->select(); 
 
@@ -140,7 +143,21 @@ class Comment extends Controller
     //验证字段
     if(!$this->validateData()) return;
 
+    //如果是回复别人的评论，则要验证被回复的评论是否下架
+    $pid = request()->post('pid');
 
+    if((int)$pid > 0) {
+      $find = Db::name('comments')->where('Id',$pid)->find();
+      if(!$find) {
+        $this->common->setResponse(21,'未查询到被回复的评论或留言信息！');
+        return;
+      }
+      
+      if($find['IsShow'] === 0) {
+        $this->common->setResponse(21,'该评论已下架，不能回复！');
+        return;
+      }
+    }
 
     //如果传入了resourceId，必须验证文章是否存在，是否下架
     if(request()->post('resourceId') && request()->post('resourceId') != -1) {
@@ -201,6 +218,147 @@ class Comment extends Controller
     }
   }
 
+  /**
+   * [commentListAdmin 用户admin获取评论列表，与客户端有差异]
+   * @Author   罗文
+   * @DateTime 2018-09-26
+   * @neccessaryParam [Number]  headers.appCode  平台类型  
+   * @neccessaryParam [String]  headers.token  1 - 留言  2 - 文章  
+   * @possibleParam  [Number]  type  按分类查询 0 -全部 1 - 文章评论 2 - 留言  
+   * @possibleParam  [Number]  resourceId  根据资源id查询其下所有评论 
+   * @possibleParam  [String]  keywords  搜索关键字  
+   * @possibleParam  [Number]  ps  每页条数  默认20 分页参数是针对顶层评论的
+   * @possibleParam  [Number]  cp  当前页  分页参数是针对顶层评论的
+   */
+  public function commentListAdmin() 
+  {
+    $valid = $this->adminAuth();
+    if(!$valid) return;
+
+    $keywords = request()->get('keywords') ? request()->get('keywords') : '';
+    $resourceId = request()->get('resourceId') ? request()->get('resourceId') : null;
+    $type = request()->get('type') ? request()->get('type') : null;
+
+    //数组的第一项可以是布尔值，用来指定是否是剔除，true - 是
+    // $field = [true,'Content'];
+    $field = [];
+
+    $query = [
+      'NickName|Content|ReplyNickName' => ['like','%'.$keywords.'%'],
+    ];
+    //查询某个Id
+    if( $resourceId ) $query['ResourceId'] = $resourceId;
+    //查詢某個分類
+    if( in_array($type, [1,2]) ) $query['Type'] = $type;
+
+    // 支持标题，简介，作者，时间范围
+    $res = $this->common->getDataListByOrder('comments',$query,$field,null,null,'Id');
+    if(!(bool)$res) $this->common->setResponse(21,'获取列表失败，请联系管理员！');
+  }
+
+
+  /**
+   * [upOrDownShelf 上下架评论]
+   * @Author   罗文
+   * @DateTime 2018-04-17
+   * @param [Number] Id [要操作的评论]
+   * @param [Number] IsShow [是否上下架   1 - 上架   -1 - 下架]
+   * @return   [type]     [description]
+   */
+  public function upOrDownShelf()
+  {
+    //操作权限验证
+    $valid = $this->adminAuth();
+    if(!$valid) return;
+
+    if(!request()->post('Id')) {
+       $this->common->setResponse(21,'要操作的评论Id为空！');
+       return;
+    }
+
+    $isShow = request()->post('IsShow');
+    if( !in_array($isShow,['0','1'])) {
+       $this->common->setResponse(21,'操作不合法，只能上架或者下架！');
+       return;
+    }
+
+    //查一下有没有这个评论
+    $find = Db::name('comments')
+      ->where('Id',request()->post('Id'))
+      ->find();
+    if( !$find ) {
+       $this->common->setResponse(21,'没有这个Id对应的评论！');
+       return;
+    }   
+
+    //如果是上架操作，需要判断这个评论的父级评论有没有上架，如果没有，则不能上架这条评论
+    $pid = $find['Pid'];
+    if($isShow == 1 && $pid > 0) {
+      $parent = Db::name('comments')->where('Id',$pid)->find();
+      if(!$parent) {
+        $this->common->setResponse(21,'未查询到被回复的评论或留言信息！');
+        return;
+      }
+      
+      if($parent['IsShow'] === 0) {
+        $this->common->setResponse(21,'被回复的评论处于下架状态，不能上架当前评论！');
+        return;
+      }
+    }
+
+    Db::startTrans();
+    try{
+        $res = Db::name('comments')
+        ->where('Id',request()->post('Id'))
+        ->setField('IsShow',$isShow);
+
+        //需要同时上下架这个评论下的所有评论
+        Db::name('comments')
+        ->where('Pid',request()->post('Id'))
+        ->setField('IsShow',$isShow);
+
+        $this->common->setResponse(200,'操作成功！');
+        // 提交事务
+        Db::commit();
+    } catch (\Exception $e) {
+        $this->common->setResponse(21,'操作失败！');
+        // 回滚事务
+        Db::rollback();
+    } 
+  }
+
+
+  //验证用户权限及平台信息
+  private function adminAuth() 
+  {
+     //验证token
+     $tokenData = validJWT::valid();
+     if(!$tokenData) return false;
+     $uid = $tokenData['uid'];
+
+     //获取AppCode  平台类型  1 - PC   2-H5   3- 小程序   4 - admin
+     $appCodeValid = appCodeValid::valid();
+     if(!$appCodeValid) return false;
+     $appCode = $appCodeValid['AppCode'];
+
+     //验证平台类型
+     if($appCode != 4) {
+       $this->common->setResponse(21,'appCode错误');
+       return false;
+     }
+
+     //验证用户身份
+     $userInfo = Db::name('users')
+     ->where('Id',$uid)
+     ->find();
+
+     if(!$userInfo || $userInfo['UserType'] < 2) {
+       $this->common->setResponse(21,'权限不足');
+       return false;
+     }
+
+     return true;
+  }
 
   //验证必须的数据是否传入
   private function validateData() 

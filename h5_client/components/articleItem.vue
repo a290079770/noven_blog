@@ -1,43 +1,45 @@
 <template>
-   <div class="arc-item" >
-    <div class="flex flex-justify-between arc-item-cont">
-      <figure class="arc-item-cover bg-full-img" :style="{background: `url(${ item.Url })`}"></figure>
-      <div class="flex flex-column flex-justify-between arc-item-abs">
-        <div class="flex flex-align-center art-li-title">
-          <span class="art-li-title-yuanchuang"> 原创 </span>
-          <span class="flex-1 text-ess-1 font-l"> {{item.Title}}</span>        
-        </div>
-        <div v-if="true" class="art-li-brief font-xs gray9 text-ess-2">
-          {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
-        </div>
-
-        <div class="flex flex-align-center flex-justify-between art-li-info font-xs">
-          <div class="flex flex-align-center">
-            <div class="font-xs gray9">
-              <span class="primary">@</span>
-              <span class="info">{{item.Author}}</span>
+   <nuxt-link :to="{ name:'detail',query:{id : item.Id} }">
+     <div class="arc-item" >
+        <div class="flex flex-justify-between arc-item-cont">
+          <figure class="arc-item-cover bg-full-img" :style="{background: `url(${ item.Url })`}"></figure>
+          <div class="flex flex-column flex-justify-between arc-item-abs">
+            <div class="flex flex-align-center art-li-title">
+              <span class="art-li-title-yuanchuang"> 原创 </span>
+              <span class="flex-1 text-ess-1 font-l"> {{item.Title}}</span>        
             </div>
-            
-          </div>
-          <div class="flex flex-align-center font-l gray9">
-            <div class="flex flex-align-center flex-justify-end article-info-zan">
-              <img src="~assets/icon/zan-kong.svg" class=" article-info-icon">
-              <div class="font info">
-                {{item.CollectCount}}
+            <div v-if="true" class="art-li-brief font-xs gray9 text-ess-2">
+              {{item.Brief || '博主很懒，没有留下简介信息，点击去看详情吧~~~'}}
+            </div>
+
+            <div class="flex flex-align-center flex-justify-between art-li-info font-xs">
+              <div class="flex flex-align-center">
+                <div class="font-xs gray9">
+                  <span class="primary">@</span>
+                  <span class="info">{{item.Author}}</span>
+                </div>
+                
               </div>
-            </div>
+              <div class="flex flex-align-center font-l gray9">
+                <div class="flex flex-align-center flex-justify-end article-info-zan">
+                  <img src="~assets/icon/zan-kong.svg" class=" article-info-icon">
+                  <div class="font info">
+                    {{item.CollectCount}}
+                  </div>
+                </div>
 
-            <div class="flex flex-align-center flex-justify-end article-info-zan">
-              <img src="~assets/icon/view.svg" class=" article-info-icon">
-              <div class="font primary">
-                {{item.ReadCount}}
+                <div class="flex flex-align-center flex-justify-end article-info-zan">
+                  <img src="~assets/icon/view.svg" class=" article-info-icon">
+                  <div class="font primary">
+                    {{item.ReadCount}}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+   </nuxt-link>
 </template>
 <script>
 export default {

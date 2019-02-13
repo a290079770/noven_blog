@@ -13,9 +13,15 @@
           <span>{{dateFormat(articleInfo.CreateTime,'yyyy-mm-dd')}}</span>
         </p>
 
-        <figure class="detail-cover">
+        <section v-if="articleInfo.Brief" class="detail-content font-lg detail-brief">
+          “
+            <span class="font-xs gray9">{{articleInfo.Brief}}</span>
+          ”
+        </section>
+
+<!--         <figure class="detail-cover">
           <img :src="articleInfo.Url" class="detail-cover-img">
-        </figure>
+        </figure> -->
 
         <article class="font gray6 detail-content" v-html="articleInfo.Content">
           
@@ -64,14 +70,23 @@ export default {
   },
 
   methods:{
-    //发布文章
+     //发布文章
     async createOrUpdate() {
       let confirm = await this.$confirm('确定发布文章？','提示').catch(()=> false)
       if(!confirm) return;
 
+      let { userInfo: { NickName }, articleInfo: { Content, Id , Url }} = this;
+
       //发起新增或修改
-      this.articleInfo.Author = this.userInfo.NickName;
-      this.articleInfo.Content = this.articleInfo.Content.replace(/\\/g,'/');
+      this.articleInfo.Author = NickName;
+      this.articleInfo.Content = Content.replace(/\\/g,'/');
+
+      //如果文章没有封面的话，选取一张系统内置图做为默认图
+      if( !Url || !Url.replace(/ /g,'')) {
+        let random = Math.ceil(Math.random()* 3)  + 1;
+        this.articleInfo.Url = this.apiUrl + `/images/users/arc-default${random}.jpg`
+      }
+
       let res = await createOrUpdate(this.articleInfo).catch(err => {
         //捕获到异常
         return -1
@@ -83,7 +98,7 @@ export default {
         sessionStorage.removeItem('previewArticleData')
 
         this.goTo('/detail',{
-          id: res || this.articleInfo.Id
+          id: res || Id
         },true)
       }
     },

@@ -16,15 +16,16 @@ import router from './router'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-var apiUrl = 'http://120.77.180.233:8081';
+// var apiUrl = 'http://120.77.180.233:8081';
 // var apiUrl = 'http://novenblog_api.com';
+var apiUrl = 'https://api.novenblog.xin';
 
 axios.defaults.baseURL = apiUrl;
 
 
 // axios.defaults.baseURL = apiUrl;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-
+axios.defaults.headers.appCode = 4;
 
 // http request 拦截器
 

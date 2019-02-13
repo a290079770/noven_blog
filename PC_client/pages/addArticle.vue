@@ -46,22 +46,30 @@
           <span>文章封面</span>
         </div>
         <div class="flex pr add-arc-form-item-right">
-          <el-upload
-            v-show="!articleInfo.Url"
-            ref="upload"
-            :action="uploadParams.action"
-            :multiple="uploadParams.multiple"
-            :name="uploadParams.name"
-            :accept="uploadParams.accept"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :on-change="previewImage"
-            :auto-upload="false"
-            >
-            <div class="flex-center add-arc-form-cover">
-              <img class="add-arc-form-cover-upload-icon" src="~assets/icon/add-gray.svg">
+          <div class="flex flex-align-end" v-show="!articleInfo.Url">
+            <el-upload
+              ref="upload"
+              :action="uploadParams.action"
+              :multiple="uploadParams.multiple"
+              :name="uploadParams.name"
+              :accept="uploadParams.accept"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :on-change="previewImage"
+              :auto-upload="false"
+              >
+              <div class="flex-center add-arc-form-cover">
+                <img class="add-arc-form-cover-upload-icon" src="~assets/icon/add-gray.svg">
+              </div>
+            </el-upload>
+            <div class="font-xs info add-arc-network-url">
+              <span class="add-arc-network-text" v-if="!isUseNetImg" @click="isUseNetImg = true">网络图片</span>
+              <span v-else>
+                <input v-model="netImgUrl" class="gray6 add-arc-form-input add-arc-network-input" type="text" placeholder="请输入图片网络地址" >
+                <el-button size="small" @click="addNetImg">添加</el-button>
+              </span>
             </div>
-          </el-upload>
+          </div>
 
           <figure v-show="articleInfo.Url" class="pr add-arc-form-cover-has bg-full-img" :style="{background: `url(${articleInfo.Url})`}">
             <div @click="articleInfo.Url = ''" class="add-arc-form-cover-has-close">
@@ -86,7 +94,7 @@
         <div class="flex flex-align-center flex-justify-end add-arc-form-item-left">
         </div>
         <div class="flex add-arc-form-item-right add-arc-submit-btns">
-          <el-button type="primary add-arc-submit-btn" @click="previewArc">预览文章</el-button>
+          <el-button type="primary" @click="previewArc">预览文章</el-button>
           <el-button @click="cancelEdit">放弃编辑</el-button>
         </div>
       </div>
@@ -121,6 +129,8 @@ export default {
       uploadParams: this.getUploadParams(),
       isSubmit: false,
       isNeedUpload: false, //是否需要发起上传
+      isUseNetImg: false,
+      netImgUrl:'',
     }
   },
   head: {
@@ -144,10 +154,12 @@ export default {
     previewArc() {
 
       let { articleInfo } = this;
-      articleInfo.CreateTime = Date.now();
+      if(!articleInfo.Id) articleInfo.CreateTime = Date.now();
 
       //获取编辑器的html
       articleInfo.Content = this.addEditor.txt.html();    
+
+      this.setXSSWhiteList();
 
       //数据验证
       if(!this.validNeccessaryField(articleInfo)) return;
@@ -195,7 +207,7 @@ export default {
               break;
             }
 
-            this.articleInfo.Content = ContentHtml;
+            this.articleInfo.Content = filterXSS(ContentHtml).replace(/text-decoration-line/g,'text-decoration');
             break;      
         }
         
@@ -267,6 +279,8 @@ export default {
           //加载完毕之后获取结果赋值给img
         _this.$set(_this.articleInfo,'Url',this.result);
         _this.isNeedUpload = true;
+        _this.isUseNetImg = false;
+        _this.netImgUrl = '';
       }
     },
 
@@ -284,6 +298,19 @@ export default {
 
       //去跳转到预览页
       this.toPreview();
+    },
+
+    //添加网络图片做为封面
+    addNetImg() {
+      let { netImgUrl } = this;
+      if(!netImgUrl || !netImgUrl.replace(/ /g,'')) {
+        this.$message.error('请输入图片网络地址');
+        return;
+      }
+
+      this.$set(this.articleInfo,'Url',netImgUrl.replace(/\\/g,'/'));
+      this.isUseNetImg = false;
+      this.netImgUrl = '';
     },
   },
 

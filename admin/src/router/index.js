@@ -24,8 +24,8 @@ const router =  new Router({
 	      		component: resolve => require.ensure([], () => resolve(require('@/components/Index')), 'Index'),
 	      	},
 	      	{
-	      		path: 'banner',
-	      		component: resolve => require.ensure([], () => resolve(require('@/components/Banner')), 'Banner'),
+	      		path: 'comment',
+	      		component: resolve => require.ensure([], () => resolve(require('@/components/Comment')), 'Comment'),
 	      	},
 	      	{
 	      		path: 'mood',

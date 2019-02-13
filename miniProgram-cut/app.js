@@ -66,12 +66,13 @@ App({
 
     // console.log(this.globalData.token)
     delete options.success;
+    options.header = options.header || {};
     wx.request({
       ...options,
-      header: options.header || {
+      header: Object.assign({
         token: this.globalData.token,
         appCode: 3, //1 - pc 2 - h5  3 - weixinmini  4 - admin
-      },
+      },options.header),
       success(res) {
         if (res.statusCode !== 200) {
           //此时wx.request返回失败

@@ -43,8 +43,6 @@
 </template>
 
 <script>
-
-
 import { getUserDetail } from '~/assets/service/userService'
 export default {
 	layout:'normal',
@@ -107,16 +105,15 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
         	//密码加密
-          if(this.loginForm.pass && (this.loginForm.pass !== localStorage.getItem('pwd'))) {
-          	this.loginForm.pass = sha1(this.loginForm.pass).toUpperCase();
-          }
+          let pass = sha1(this.loginForm.pass).toUpperCase();
 
           //发起登录
           this.$http.post('/user/login',{
             Account:this.loginForm.account,
-            Password:this.loginForm.pass
+            Password:pass
           }).then(({ token }) => {
             this.setCookie('token',token, 1000 * 3600 * 2);
+            localStorage.setItem('account',this.loginForm.account);
             return getUserDetail();
           }).then(res => {
           	localStorage.setItem('userInfo',JSON.stringify(res));
@@ -167,7 +164,7 @@ export default {
     this.delCookie('token');
     localStorage.removeItem('userInfo');
   	this.loginForm.account = localStorage.getItem('account');
-  	this.loginForm.pass = localStorage.getItem('pwd');
+    console.log(this.loginForm.account)
   	window.onresize = () => {
   		this.setWindow();
   	}

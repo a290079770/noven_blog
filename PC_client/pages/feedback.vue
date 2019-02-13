@@ -138,6 +138,8 @@ export default {
     async createFeedback(pid = 0) {
       let content = this.fbEditor.txt.text();
       let contentHtml = this.fbEditor.txt.html();
+
+      this.setXSSWhiteList();
         
       //验证合法性，获取xss后的字符串
       let xssStr = this.validFeedback(content,contentHtml); 
@@ -161,6 +163,10 @@ export default {
 
     //清空留言
     async clearFeedback() {
+      let content = this.fbEditor.txt.text();
+
+      if(!content || !content.replace(/ /g,'')) return;
+
       let confirm = await this.$confirm('确定清除编辑器中的留言信息？','提示');
 
       if(confirm) {
@@ -265,7 +271,6 @@ export default {
     }
   },
   created() {
-    
   },
   async mounted() {
     this.getDataList(false);
