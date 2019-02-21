@@ -131,8 +131,38 @@
         width: @formRightItem;
       }
 
+      .add-arc-editor-bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 999;
+        height: 30px;
+        border: @borderBold;
+        border-bottom: none;
+        background: #eee;
+      }
+
+      .add-arc-editor-bar-cont {
+        width: 898px;
+        height: 100%;
+      }
+
+      .add-arc-editor-bar-fixed {
+        position: fixed;
+        padding-left: 70px;
+        border-bottom: @borderBold
+      }
+
+      .add-arc-editor-bar-abs {
+        position: absolute;
+      }
+
       .add-arc-editor {
+        margin-top: 30px;
         width: 100%;
+        border: @borderBold;
+        min-height: 200px;
 
         .w-e-text-container {
           min-height: 300px !important;

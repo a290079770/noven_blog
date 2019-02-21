@@ -86,6 +86,9 @@
           <span>文章内容</span>
         </div>
         <div class="flex pr add-arc-form-item-right">
+          <div :class="`flex-center add-arc-editor-bar ${isEditorBarFixed ? 'add-arc-editor-bar-fixed' : 'add-arc-editor-bar-abs'}`" >
+            <div class="add-arc-editor-bar-cont" id="addArticleEditorBar"></div>
+          </div>
           <div class="add-arc-editor" id="addArticleEditor"></div>
         </div>
       </div>
@@ -131,6 +134,7 @@ export default {
       isNeedUpload: false, //是否需要发起上传
       isUseNetImg: false,
       netImgUrl:'',
+      isEditorBarFixed: false, //是否固定在页面顶部
     }
   },
   head: {
@@ -312,6 +316,23 @@ export default {
       this.isUseNetImg = false;
       this.netImgUrl = '';
     },
+
+    //设置编辑器导航条的位置
+    setEditBarFixed() {
+      this.$nextTick(function() {
+        let bar = document.querySelector('.add-arc-editor-bar');
+        
+        let { y } = bar.getBoundingClientRect();
+
+        //窗口滚动的时候不断获取当前位置，如果超过bar，就设置fixed，否则absolute
+        let _this = this;
+        window.onscroll = function() {
+          let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+          //根据当前元素位置，执行固定定位
+          _this.isEditorBarFixed = scrollTop > y;
+        }
+      })
+    }
   },
 
   created() {
@@ -329,7 +350,7 @@ export default {
 
   async mounted() {
     this.addEditor = await new Promise((resolve,reject) => {
-      if(window.wangEditor) resolve(new wangEditor('#addArticleEditor'));
+      if(window.wangEditor) resolve(new wangEditor('#addArticleEditorBar','#addArticleEditor'));
 
       let timer;
 
@@ -339,7 +360,7 @@ export default {
         timer = setTimeout(()=> {
           if(window.wangEditor) {
             clearTimeout(timer);
-            resolve(new wangEditor('#addArticleEditor'));
+            resolve(new wangEditor('#addArticleEditorBar','#addArticleEditor'));
             return;
           }
           isWangEditor();
@@ -347,13 +368,14 @@ export default {
       }
     }) 
 
-    this.addEditor = new wangEditor('#addArticleEditor')
     //设置留言编辑器自定义配置
     this.addEditor.customConfig = this.getEditorConfig(1);
     this.addEditor.create()
 
+
     if(this.articleInfo.Content) {
-      this.addEditor.txt.html(this.articleInfo.Content)
+      this.addEditor.txt.html(this.articleInfo.Content);
+      this.setEditBarFixed();
       return
     }
 
@@ -361,10 +383,14 @@ export default {
       //修改文章的时候，url会携带文章id
       let { id } = this.$route.query;
       this.articleInfo = await getArticleDetail(id);
-      this.addEditor.txt.html(this.articleInfo.Content)
+      this.addEditor.txt.html(this.articleInfo.Content);
+      this.setEditBarFixed();
+      return
     }
 
     //如果都没有，则是新增
+    
+    this.setEditBarFixed();
   },
 
   watch: {
