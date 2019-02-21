@@ -4,10 +4,18 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const router =  new Router({
+  mode: 'history',
+  // http://localhost:8080/#/login-->http://localhost:8080/#/wrap/index
+  // http://localhost:8080/login-->http://localhost:8080/wrap/index
+  // linkActiveClass: 'router-link-active',
   routes: [
   	{
         path: '/login',
-        component: resolve => require.ensure([], () => resolve(require('@/components/Login')), 'wrap'), 
+        // 路由分割
+        component: resolve => require.ensure([], () => resolve(require('@/components/Login')), 'login'), 
+        // beforeEnter(to,from,next) {
+        // 	if(localStorage.userInfo.UserType == 3) next();
+        // }
     },
     {
         path: '/wrap',

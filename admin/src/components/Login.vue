@@ -120,6 +120,8 @@
                   	// localStorage.removeItem('account');
                   	localStorage.removeItem('pwd');
                   }
+
+                  // this.$route.addRoutes()
                   this.$router.push('/wrap');
                   //this.$router.push({
 		          //   path:'/wrap',

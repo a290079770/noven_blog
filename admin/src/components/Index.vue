@@ -76,9 +76,10 @@
 
     	<div class="index-statistics-right">
     		<el-row class="title">
-			  <span class="blue">资源统计</span>
-			  <hr>
-			</el-row>
+				  <span class="blue">资源统计</span>
+				  <hr>
+				  <div id="pie" style="width:300px;height:350px"></div>
+				</el-row>
     	</div>
     </div>
 
@@ -197,27 +198,68 @@ export default {
         }
     }
   },
-  mounted(){
-  	this.getActiveUser();
-  	this.getArcticleList();
-  	this.getCommentList();
+  async mounted(){
+    await Promise.all([
+    	this.getActiveUser(),
+    	this.getArcticleList(),
+    	this.getCommentList()
+    ])
+
+    //async 与 await 一起使用
+    //async 用来修饰函数
+    //async表明这个函数体内可能有await
+    //如果有await，则必须有async
+    //async修饰的函数，默认会返回一个promise
+    //await等待的函数，默认也会返回一个promise
+    
+    //await 默认是等待promise的，如果不是Promise，会直接触发
+    // await this.getActiveUser(),
+    // await this.getArcticleList(),
+    // await this.getCommentList()
+
+  	let { articles , moods , comments } = this.statistics;
+
+  	var myChart = echarts.init(document.getElementById('pie'));
+		var option = {
+				title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data:['数量']
+        },
+		    xAxis: {
+		        type: 'category',
+		        data: ['文章', '评论', '心情']
+		    },
+		    yAxis: {
+		        type: 'value'
+		    },
+		    series: [{
+		        data: [articles ,comments,moods ],
+		        type: 'bar'
+		    }]
+		};
+		myChart.setOption(option);
   },
   methods: {
     // 当前活跃用户详情
     getActiveUser() {
-      this.$http.get('/user/activeUserList').then((res) => {
+      return this.$http.get('/user/activeUserList').then((res) => {
           if(res.data.code === 200) {
             // this.NickName = res.data.Data.NickName;
             this.dataList = res.data.data.list
           }
       })
+
+      // return Promise.resolve()
     },
     //获取 文章 列表
 	  getArcticleList(keyword,cp,ps) {
 			// keywords,cp,ps
 			cp = cp || 1;
 			ps = ps || 10;
-			this.$http.get('/arcticle/arcticleList',{
+			return this.$http.get('/arcticle/arcticleList',{
 			  params:{
 			     keywords:keyword,
 			     cp:cp,
