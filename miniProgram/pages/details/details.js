@@ -56,6 +56,15 @@ Page({
       }
     })
   },
+  previewImage(e) {
+    // 点击查看大图
+    let url = e.currentTarget.dataset.url;
+    // console.log(url);
+    wx.previewImage({
+      current: url, // 当前显示图片的http链接
+      urls: [url] // 需要预览的图片http链接列表
+    })
+  },
   // 收藏
   isCollect() {
     // 如果用户未登录，则跳转到登录页面

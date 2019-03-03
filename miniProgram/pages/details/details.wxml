@@ -19,6 +19,8 @@
         <image
           mode='widthFix'
           class="detail-cover"
+          bindtap='previewImage'
+          data-url="{{detailData.Url}}"
           src="{{ detailData.Url || 'https://api.novenblog.xin/images/arc-default3.jpg' }}" />
       </view>
     </view>
@@ -28,7 +30,7 @@
         <view wx:if='{{ item.type == "text" }}' class='detail-paragraph-text'>{{ item.value }}</view>
         <view wx:else class='detail-paragraph-img'>
           <view class='flex'>
-            <image mode='widthFix' src='{{ item.value }}' />
+            <image bindtap='previewImage' data-url="{{item.value}}" mode='widthFix' src='{{ item.value }}' />
           </view>
           <text>{{ item.desc || '暂无图片描述' }}</text>
         </view>
