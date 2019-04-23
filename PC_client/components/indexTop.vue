@@ -145,6 +145,8 @@ export default {
       .index-top-black-scroll-cont {
         width: @pageWidth;
         height: 100%;
+        background-size: cover;
+        background-position: center;
         
         .index-top-black-scroll-box {
           width: 60px;

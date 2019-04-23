@@ -56,12 +56,16 @@
     <section @click="collect" class="flex-center detail-collect-cont">
       <img class="detail-collect" :src="hasCollect">
     </section>
+
+    <section @click="praise" class="flex-center detail-collect-cont detail-praise-cont">
+      <img class="detail-collect" :src="praiseImg">
+    </section>
   </section>
 </template>
 
 <script>
 
-import { getArticleDetail , collect } from '~/assets/service/articleService'
+import { getArticleDetail , collect , praise } from '~/assets/service/articleService'
 import { detailSimple } from '~/assets/service/userService'
 import FeedBack from './feedback';
 export default {
@@ -75,7 +79,20 @@ export default {
         Title:'Noven技术生涯经验分享'
       },
       authorInfo:{},
-      id:null
+      id:null,
+      hasPraise: false
+    }
+  },
+  computed: {
+    hasCollect() {
+      return this.detail.HasCollect ? '/zan-full.svg' : '/zan-kong-white.svg';
+    },
+
+    isLogin() {
+      return this.getCookie('token');
+    },
+    praiseImg() {
+      return this.hasPraise ? '/praise-full.svg' : '/praise.svg'
     }
   },
 
@@ -116,6 +133,18 @@ export default {
         isCollect: !HasCollect
       });
     },
+
+    //点赞
+    async praise() {
+      if(this.hasPraise) return;
+
+      await praise({
+        Id: this.id,
+      });
+
+      this.hasPraise = true;
+      this.detail.CollectCount ++ ;
+    }
   },
   created() {
     let { id } = this.$route.query;
@@ -124,20 +153,12 @@ export default {
       return 
     }
 
-    this.id = id;
+    this.id = + id;
     this.getArticleDetail();
   },
   mounted() {
   },
 
-  computed: {
-    hasCollect() {
-      return this.detail.HasCollect ? '/zan-full.svg' : '/zan-kong-white.svg';
-    },
 
-    isLogin() {
-      return this.getCookie('token');
-    }
-  }
 }
 </script>

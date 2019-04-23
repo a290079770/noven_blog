@@ -44,6 +44,22 @@ export default {
       })
 
     }
+  },
+
+  mounted() {
+    //只有开发环境使用， 如果打包后想使用，注释这行代码即可
+    if(process.env.NODE_ENV !== 'development') return;
+    //开发环境，动态加载移动端调试工具
+    function initEruda() {
+      eruda.init();
+    }
+
+    let script = document.createElement('script');
+    script.setAttribute('src', 'http://eruda.liriliri.io/eruda.min.js');
+    script.setAttribute('defer', true);//异步，不卡线程
+    script.setAttribute('async', true);//兼容
+    script.onload = initEruda;
+    document.body.appendChild(script)
   }
 }
 </script>

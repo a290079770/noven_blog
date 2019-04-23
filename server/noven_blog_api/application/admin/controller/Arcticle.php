@@ -506,6 +506,36 @@ class Arcticle extends Controller
     }
 
 
+    /**
+     * [praise 点赞文章]
+     * @Author   罗文
+     * @DateTime 2018-04-17
+     * @return   [type]     [description]
+     */
+    public function praise()
+    {
+      if(!request()->post('Id')) {
+        $this->common->setResponse(21,'未获取到要点赞的文章');
+        return;
+      }
+
+      Db::startTrans();
+      try{
+          $res = Db::name('arcticles')
+          ->where('Id',request()->post('Id'))
+          ->setInc('CollectCount');
+
+          $this->common->setResponse(200,'操作成功！');
+          // 提交事务
+          Db::commit();
+      } catch (\Exception $e) {
+          $this->common->setResponse(21,'操作失败！');
+          // 回滚事务
+          Db::rollback();
+      } 
+    }
+
+
     //验证必须的数据是否传入
     private function validateData() 
     {

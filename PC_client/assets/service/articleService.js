@@ -103,6 +103,19 @@ export const collect = function({ id , isCollect }) {
 
 
 /**
+ * [collect 点赞]
+ * @Author   罗文
+ * @DateTime 2018-09-26
+ * @neccessaryParam  [Number]  id  文章id
+ */
+export const praise = function({ Id }) {
+  return Vue.prototype.$http.post('/arcticle/praise',{
+    Id, 
+  })
+}
+
+
+/**
  * [parseDetail 解析文章详情，主要是处理日期兼容safari和小程序端创建文章的问题]
  * @Author   罗文
  * @DateTime 2018-12-10

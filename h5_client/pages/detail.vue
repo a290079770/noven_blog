@@ -75,6 +75,13 @@
       >
         <img :src="hasCollect ? '/collect-full.svg' : '/collect-kong.svg'" class="add-article">
       </section>
+
+      <section 
+      class="flex flex-align-center flex-justify-center add-article-cont add-article-praise-cont"
+      @click="praise"
+      >
+        <img :src="hasPraise ? '/praise-full.svg' : '/praise.svg'" class="add-article">
+      </section>
     </div>
     <div class="article-detail-skeleton" v-else>
       <img class="article-img" src="/skeletonDetail.jpg">
@@ -83,7 +90,7 @@
 </template>
 
 <script>
-import { getArticleDetail , collect } from '~/assets/service/articleService'
+import { getArticleDetail , collect , praise } from '~/assets/service/articleService'
 import { detailSimple } from '~/assets/service/userService'
 import FeedBack from './feedback';
 export default {
@@ -96,7 +103,8 @@ export default {
     return {
       detail:null,
       authorInfo:{},
-      id:null
+      id:null,
+      hasPraise: false
     }
   },
   components:{
@@ -133,6 +141,17 @@ export default {
         id: Id,
         isCollect: !HasCollect
       });
+    },
+    //点赞
+    async praise() {
+      if(this.hasPraise) return;
+
+      await praise({
+        Id: this.id,
+      });
+
+      this.hasPraise = true;
+      this.detail.CollectCount ++ ;
     }
     
   },

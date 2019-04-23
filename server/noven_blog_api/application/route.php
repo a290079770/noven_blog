@@ -42,6 +42,7 @@ return [
         'collect'   => ['admin/arcticle/collect', ['method' => 'post']],  //收藏文章
         'collectList'   => ['admin/arcticle/collectList', ['method' => 'get']],  //获取用户文章收藏列表
         'upOrDownShelf'   => ['admin/arcticle/upOrDownShelf', ['method' => 'post']],  //上架或下架文章
+        'praise'   => ['admin/arcticle/praise', ['method' => 'post']],  //点赞文章
     ],
 
     //心情相关接口
