@@ -11,6 +11,12 @@
 	  	<mt-swipe-item>我渴望随着命运指引的方向，心平气和地、没有争吵、悔恨、羡慕，笔直走完人生旅途。</mt-swipe-item>
 	  </mt-swipe>
 	</div>
+  <div>
+    <n-input v-model="model"/>
+  </div>
+  <div>
+    <n-switch v-model="switchModel"/>
+  </div>
 	<div class="article">
 	  <article-item v-for="(item, index) in articles" :key="index" :listItem="item"></article-item>
 	</div>
@@ -19,6 +25,8 @@
 
 <script>
 import articleItem from './common/articleItem.vue';
+import nInput from './common/n-input.vue';
+import nSwitch from './common/switch.vue';
 export default {
   name: 'index',
   data () {
@@ -40,11 +48,15 @@ export default {
       	  Createtime: "2018-10-24",
       	  Brief: "我是文章的简介我是文章的简介我是文章的简介我是文章的简介我是文章的简介我是文章的简介"
       	}
-      ]
+      ],
+      model: 'hello',
+      switchModel: true
     }
   },
   components:{
-    'article-item': articleItem
+    'article-item': articleItem,
+    'n-input': nInput,
+    'n-switch': nSwitch,
   },
   methods:{
     
@@ -52,6 +64,14 @@ export default {
 
   mounted() {
     
+  },
+  watch: {
+    model(nv) {
+      console.log(nv)
+    },
+    switchModel(nv) {
+      console.log(nv)
+    },
   }
 }
 </script>

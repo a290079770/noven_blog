@@ -6,6 +6,7 @@ import article from '@/components/Article'
 import mine from '@/components/Mine'
 import detail from '@/components/Detail'
 import search from '@/components/Search'
+import test from '@/components/test'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: search
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test
     },
     { path: '*', redirect: '/index' }
   ]
