@@ -1,6 +1,6 @@
 
 <template name="bg-header">
-	<view class="index-header header-bg" style="background: url(http://120.77.180.233:8081/images/hb7uYy--iFT-yAmN_photo_1544163452.jpeg) no-repeat">
+	<view class="index-header header-bg" style="background: url(https://api.novenblog.xin/images/users/bg1.jpg) no-repeat">
 	  <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
 	  <view class="flex flex-align-center top-capsule" style="height:{{titleBarHeight}}px">
 
@@ -88,7 +88,7 @@
 
 
 <template name="bg-footer">
-   <view class="index-bottom header-bg" style="background: url(http://120.77.180.233:8081/images/6pbKpX0ev8ox_Iz6_photo_1544163513.jpeg">
+   <view class="index-bottom header-bg" style="background: url(https://api.novenblog.xin/images/users/bg3.jpg">
    </view>
 </template>
 

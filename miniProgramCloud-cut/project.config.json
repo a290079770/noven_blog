@@ -16,6 +16,8 @@
 	"appid": "wx6a4441008b589a6d",
 	"projectname": "miniProgram-cut",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

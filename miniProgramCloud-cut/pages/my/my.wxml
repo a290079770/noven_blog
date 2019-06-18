@@ -1,7 +1,7 @@
 <import src="../common/bgTemplate/bgTemplate.wxml"/>
 
 
-<view class="my header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);"  bindtap="headerClick">
+<view class="my header-bg" style="background: url(https://api.novenblog.xin/images/users/bg2.png);"  bindtap="headerClick">
    <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl,isCover:true,isLogin:true,userInfo,date}}"/>
 
    <view class="my-content">

@@ -44,5 +44,6 @@
     "color": "black",
     "selectedColor": "#d13954",
     "backgroundColor": "#fff"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

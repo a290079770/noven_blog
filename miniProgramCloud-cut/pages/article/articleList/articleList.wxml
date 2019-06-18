@@ -1,7 +1,7 @@
 <!--logs.wxml-->
 <import src="../../common/bgTemplate/bgTemplate.wxml"/>
 
-<view class="article-list header-bg" style="background: url(http://thyrsi.com/t6/394/1540276154x-1404793232.png);">
+<view class="article-list header-bg" style="background: url(https://api.novenblog.xin/images/users/bg2.png);">
 
    <view>
      <template is="bg-header" data="{{statusBarHeight,titleBarHeight,titleImgUrl}}"/>

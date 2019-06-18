@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/article/articleList/articleList",
     "pages/mood/mood",
@@ -8,40 +8,43 @@
     "pages/search/search",
     "pages/my/my"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#d13954",
     "navigationBarTitleText": "Noven Blog 博客",
-    "navigationBarTextStyle":"white",
-    "navigationStyle":"custom"
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "selectedColor": "#d13954",
-    "backgroundColor":"#fff",
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "首页",
-      "iconPath":"images/index2.png",
-      "selectedIconPath":"images/index1.png"
-    }, 
-    {
-      "pagePath": "pages/article/articleList/articleList",
-      "text": "文章",
-      "iconPath":"images/article2.png",
-      "selectedIconPath":"images/article1.png"
-    }, 
-    {
-      "pagePath": "pages/my/my",
-      "text": "Noven",
-      "iconPath":"images/n2.png",
-      "selectedIconPath":"images/n1.png"
-    }]
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/index2.png",
+        "selectedIconPath": "images/index1.png"
+      },
+      {
+        "pagePath": "pages/article/articleList/articleList",
+        "text": "文章",
+        "iconPath": "images/article2.png",
+        "selectedIconPath": "images/article1.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "Noven",
+        "iconPath": "images/n2.png",
+        "selectedIconPath": "images/n1.png"
+      }
+    ]
   },
   "useful": {
     "pagePath": "pages/mood/mood",
     "text": "心情",
-    "iconPath":"images/mood2.png",
-    "selectedIconPath":"images/mood1.png"
+    "iconPath": "images/mood2.png",
+    "selectedIconPath": "images/mood1.png"
   },
-  "cloud": true
+  "cloud": true,
+  "sitemapLocation": "sitemap.json"
 }

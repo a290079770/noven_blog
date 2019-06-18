@@ -1,6 +1,6 @@
 
 <template name="bg-header">
-	<view class="index-header header-bg" style="background: url(http://thyrsi.com/t6/394/1540276229x-1404781090.jpg) no-repeat">
+	<view class="index-header header-bg" style="background: url(https://api.novenblog.xin/images/users/bg1.jpg) no-repeat">
 	  <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
 	  <view class="flex flex-align-center top-capsule" style="height:{{titleBarHeight}}px">
 
@@ -88,7 +88,7 @@
 
 
 <template name="bg-footer">
-   <view class="index-bottom header-bg" style="background: url(http://thyrsi.com/t6/394/1540276318x-1404817712.jpg">
+   <view class="index-bottom header-bg" style="background: url(https://api.novenblog.xin/images/users/bg3.jpg">
    </view>
 </template>
 
