@@ -77,11 +77,11 @@
               </span>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="https://github.com/a290079770" placement="top">
-              <!-- <a href="https://github.com/a290079770" target="_blank"> -->
+              <a href="https://github.com/a290079770" target="_blank">
                 <span class="flex flex-align-center flex-justify-center index-bloger-social-item">
                   <img class="index-bloger-social-item-icon" src="~assets/icon/github-gray.svg">
                 </span>
-              <!-- </a> -->
+              </a>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="yuzhichen832037" placement="top">
               <span class="flex flex-align-center flex-justify-center index-bloger-social-item">

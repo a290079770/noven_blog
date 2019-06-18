@@ -21,11 +21,11 @@
               </span>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="https://github.com/a290079770" placement="top">
-              <!-- <a href="https://github.com/a290079770" target="_blank"> -->
+              <a href="https://github.com/a290079770" target="_blank">
                 <span class="flex flex-align-center flex-justify-center footer-social-item">
                   <img class="footer-social-item-icon" src="~assets/icon/github.svg">
                 </span>
-              <!-- </a> -->
+              </a>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="yuzhichen832037" placement="top">
               <span class="flex flex-align-center flex-justify-center footer-social-item">
@@ -60,7 +60,7 @@
       </div> -->
       <div class="flex flex-align-center flex-justify-center footer-copyright font">
           <span>Design by：Noven 唐青 </span>
-          <a class="footer-copyright-ml" href="http://www.miitbeian.gov.cn/">备案号：蜀ICP备18035425号</a>
+          <a class="footer-copyright-ml" href="http://beian.miit.gov.cn">备案号：蜀ICP备18035425号</a>
 
           <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012402000350" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;margin-left: 10px;">
             <img src="https://api.novenblog.xin/images/beian.png" style="float:left;">

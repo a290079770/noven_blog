@@ -12,9 +12,9 @@ import qs from 'qs'
 // axios 配置
 axios.defaults.timeout = 5000;
 
-let apiUrl = 'https://api.novenblog.xin';
+// let apiUrl = 'https://api.novenblog.xin';
 // let apiUrl = 'http://test.api.novenblog.xin';
-// let apiUrl = 'http://novenblog_api.com';
+let apiUrl = 'http://novenblog_api.com';
 
 axios.defaults.baseURL = apiUrl;
 

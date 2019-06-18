@@ -29,11 +29,17 @@
 				<el-row v-show="false" class="mb10 remenber-passwd">
 					<el-checkbox v-model="checked">记住密码</el-checkbox>
 				</el-row>
-			    <el-row v-show="showObj.login">
-			    	<span ref="login" >
-			    	   <el-button class="mb10 loginBtn" type="primary" @click="login('loginForm')">登录</el-button>
-			    	</span>
-			    </el-row>
+        
+		    <el-row v-show="showObj.login">
+		    	<span ref="login" >
+		    	   <el-button class="mb10 loginBtn" type="primary" @click="login('loginForm')">登录</el-button>
+		    	</span>
+		    </el-row>
+
+        <el-row v-show="showObj.login" class="mb10 mt10">
+          <img @click="qqLogin" style="width: 16px;cursor: pointer;" src="~assets/icon/qq.png">
+        </el-row>
+
 			    <!-- <el-row class="forget-passwd">
 					<span>忘记密码</span>
 				</el-row> -->
@@ -152,6 +158,12 @@ export default {
     setWindow() {
       this.winWidth = window.innerWidth
       this.winHeight = window.innerHeight
+    },
+    qqLogin(){
+      var qqAppId = '101547883'; // 上面申请得到的appid
+      var qqAuthPath = 'https://www.novenblog.xin/thirdLogin'; // 前面设置的回调地址
+      var state = 'novenblog'; // 防止CSRF攻击的随机参数，必传，登录成功之后会回传，最好后台自己生成然后校验合法性
+      location.href = `https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=${qqAppId}&redirect_uri=${encodeURIComponent(qqAuthPath)}&state=${state}`;
     }
   },
   created() {

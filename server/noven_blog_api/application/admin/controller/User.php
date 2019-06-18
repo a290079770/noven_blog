@@ -58,15 +58,22 @@ class User extends Controller
      * [thirdPartyLogin 第三方登录，目前主要针对微信第三方的openId]
      * @return [type] [description]
      */
-    public function thirdPartyLogin() {
-      $code = request()->post('Code');
-      $appId = 'wx0933eb006a76d4a5';
-      $secret = 'a51ec5e2f71f5fc4b6441cfbd1d17b91';
+    private function thirdPartyLogin() {
+      //默认是微信第三方登录，如果有ThirdParty:'qq'参数，则是qq第三方登录
+      $thirdParty = request()->post('ThirdParty');
+      $res = isset($thirdParty) && strtolower($thirdParty) === 'qq' ? $this->qqThirdPartyLogin() : $this->wxThirdPartyLogin();
 
-      $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$appId.'&secret='.$secret.'&js_code='.$code.'&grant_type=authorization_code';
+      //微信获取openId出错
+      if(isset($res->errcode)) {
+        $this->common->setResponse(21,$res->errmsg);
+        return; 
+      }
+      //qq获取openId出错
+      if(isset($res->error)) {
+        $this->common->setResponse(21,$res->error_description);
+        return; 
+      }
 
-      $res = file_get_contents($url);
-      $res = json_decode($res);
       $openId = $res->openid;
 
       //获取到openId,查询数据库是否有该用户
@@ -163,6 +170,53 @@ class User extends Controller
          $arr['isExist'] = true; 
          $this->common->setResponse(200,'登录成功',$arr);
        }
+    }
+
+    /**
+     * [qqThirdPartyLogin qq第三方登录]
+     * @return [type] [description]
+     */
+    private function qqThirdPartyLogin() {
+      $returnUrl = request()->post('ReturnUrl');
+      $code = request()->post('Code');
+      $url = "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=101547883&client_secret=5d28de8163a8b0f2b900ccfb08e94c5b&code=$code&redirect_uri=".urlencode($returnUrl);
+
+      //qq这边会有被qq服务器拦截的问题，不能使用file_get_contents，必须用curl建立连接
+      $ch = curl_init(); 
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
+      curl_setopt($ch, CURLOPT_URL, $url); 
+      $res = curl_exec($ch); 
+      curl_close($ch); 
+
+      if(strpos($res, "callback") !== false){ 
+       $lpos = strpos($res, "("); 
+       $rpos = strrpos($res, ")"); 
+       $res = substr($res, $lpos + 1, $rpos - $lpos -1); 
+      } 
+
+      $res = json_decode($res); 
+
+      return $res;
+    }
+
+    /**
+     * [wxThirdPartyLogin 微信第三方登录]
+     * @return [Object] 
+     * 正常情况下的返回：[session_key] => TzMa4SetLZDN3fy7yWhCxw== [openid] => ohi0v5StaMHSuGjaoU8xuxpCWVCk 
+     * 错误情况下的返回：[errcode] => 40163 [errmsg] => code been used, hints: [ req_id: GKICxQaLRa-CKBI4a ]
+     */
+    private function wxThirdPartyLogin() {
+      $code = request()->post('Code');
+      $appId = 'wx0933eb006a76d4a5';
+      $secret = 'a51ec5e2f71f5fc4b6441cfbd1d17b91';
+
+      $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$appId.'&secret='.$secret.'&js_code='.$code.'&grant_type=authorization_code';
+
+      $res = file_get_contents($url);
+      $res = json_decode($res);
+
+      return $res;
     }
 
 
