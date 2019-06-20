@@ -45,6 +45,10 @@
           <Button type="primary" customClass="login-btn-normal login-btn-confirm" @click="login">
             账号登录
           </Button> 
+          <div class="flex-center login-third-txt gray9 font-xs">----- 第三方登录 -----</div>
+          <div class="flex-center">
+            <img class="third-login-icon" src="~assets/icon/qq.svg">
+          </div>
           <div class="font-xs cancle-login gray6" @click="cancleLogin"> 暂不登录 </div> 
         </div>
       </div>
@@ -54,7 +58,7 @@
 
 <script>
 import Button from '~/components/Button';
-import { getUserDetail } from '~/assets/service/userService'
+import { getUserDetail,login } from '~/assets/service/userService'
 export default {
   head() {
     return {
@@ -104,7 +108,7 @@ export default {
       }
 
       //发起登录
-      this.$http.post('/user/login',{
+      login({
         Account:this.account,
         Password:this.password
       }).then(({ token }) => {

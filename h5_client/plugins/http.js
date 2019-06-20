@@ -15,9 +15,12 @@ import {
 // axios 配置
 axios.defaults.timeout = 5000;
 
-let apiUrl = 'https://api.novenblog.xin';
-// let apiUrl = 'http://test.api.novenblog.xin';
+// let apiUrl = 'https://api.novenblog.xin';
+let apiUrl = 'http://test.api.novenblog.xin';
 // let apiUrl = 'http://novenblog_api.com';
+
+// Vue.prototype.thirdLoginReturnUrl = 'https://www.novenblog.xin/thirdLogin';
+Vue.prototype.thirdLoginReturnUrl = 'http://test.novenblog.xin/thirdLogin';
 
 axios.defaults.baseURL = apiUrl;
 
