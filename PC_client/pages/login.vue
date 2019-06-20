@@ -36,8 +36,11 @@
 		    	</span>
 		    </el-row>
 
-        <el-row v-show="showObj.login" class="mb10 mt10">
-          <img @click="qqLogin" style="width: 16px;cursor: pointer;" src="~assets/icon/qq.png">
+        <el-row v-show="showObj.login">
+          <div class="flex-center flex-column third-login">
+            <span class="font-xs">—————— &nbsp;第三方登录&nbsp; ——————</span>
+            <img @click="qqLogin" style="width: 22px;cursor: pointer;margin-top: 10px" src="~assets/icon/qq.png">
+          </div>  
         </el-row>
 
 			    <!-- <el-row class="forget-passwd">
@@ -49,7 +52,7 @@
 </template>
 
 <script>
-import { getUserDetail } from '~/assets/service/userService'
+import { getUserDetail, login } from '~/assets/service/userService'
 export default {
 	layout:'normal',
   head() {
@@ -114,7 +117,7 @@ export default {
           let pass = sha1(this.loginForm.pass).toUpperCase();
 
           //发起登录
-          this.$http.post('/user/login',{
+          login({
             Account:this.loginForm.account,
             Password:pass
           }).then(({ token }) => {
@@ -123,10 +126,16 @@ export default {
             return getUserDetail();
           }).then(res => {
           	localStorage.setItem('userInfo',JSON.stringify(res));
-            this.$router.go(-1);
+
+            let { to } = this.$route.query;
+            if(to) {
+              location.replace(decodeURIComponent(to));
+            }else {
+              this.$router.go(-1);
+            }
           })
         } else {
-          console.log('error submit!!');
+          console.log('账号密码输入有误！');
           return false;
         }
       });
@@ -160,10 +169,10 @@ export default {
       this.winHeight = window.innerHeight
     },
     qqLogin(){
-      var qqAppId = '101547883'; // 上面申请得到的appid
-      var qqAuthPath = 'https://www.novenblog.xin/thirdLogin'; // 前面设置的回调地址
-      var state = 'novenblog'; // 防止CSRF攻击的随机参数，必传，登录成功之后会回传，最好后台自己生成然后校验合法性
-      location.href = `https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=${qqAppId}&redirect_uri=${encodeURIComponent(qqAuthPath)}&state=${state}`;
+      var qqAppId = '101660354'; // 上面申请得到的appid
+      var qqAuthPath = this.thirdLoginReturnUrl; // 前面设置的回调地址
+      var state = encodeURIComponent(this.$route.query.to); // 防止CSRF攻击的随机参数，必传，登录成功之后会回传，最好后台自己生成然后校验合法性
+      location.href = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${qqAppId}&redirect_uri=${encodeURIComponent(qqAuthPath)}&state=${state}`;
     }
   },
   created() {
@@ -176,7 +185,6 @@ export default {
     this.delCookie('token');
     localStorage.removeItem('userInfo');
   	this.loginForm.account = localStorage.getItem('account');
-    console.log(this.loginForm.account)
   	window.onresize = () => {
   		this.setWindow();
   	}
@@ -458,5 +466,10 @@ export default {
 .bounceInUp {
   -webkit-animation-name: bounceInUp;
   animation-name: bounceInUp;
+}
+
+.third-login {
+  margin-top: 20px;
+  color:  white
 }
 </style>

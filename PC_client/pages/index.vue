@@ -58,7 +58,7 @@
         <intro-container :title=" isLogin ? '欢迎您' : '关于我'">
           <div class="index-bloger-cont">
             <figure class="index-bloger-cover">
-              <img class="index-bloger-cover-img" :src="userInfo.CoverUrl">
+              <img :style="{ width: `${userInfo && userInfo.UserType < 2 ? 140 : 294}px` }" :src="userInfo.CoverUrl">
             </figure>
             <h3 class="flex-center font-lg primary index-bloger-name " >
               {{userInfo.NickName}}

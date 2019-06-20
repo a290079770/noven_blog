@@ -47,7 +47,7 @@ class User extends Controller
        else if(request()->post('Password') !== $arr['Password']) {
          $this->common->setResponse(21,'账号或密码错误！');
        }else {
-       	 $token = $this->updateToken($arr);
+         $token = $this->updateToken($arr);
 
          if($token) $this->common->setResponse(200,'登录成功',['token'=>$token]);
        }
@@ -61,7 +61,9 @@ class User extends Controller
     private function thirdPartyLogin() {
       //默认是微信第三方登录，如果有ThirdParty:'qq'参数，则是qq第三方登录
       $thirdParty = request()->post('ThirdParty');
-      $res = isset($thirdParty) && strtolower($thirdParty) === 'qq' ? $this->qqThirdPartyLogin() : $this->wxThirdPartyLogin();
+      $isQQ = isset($thirdParty) && strtolower($thirdParty) === 'qq';
+      
+      $res = $isQQ ? $this->qqThirdPartyLogin() : $this->wxThirdPartyLogin();
 
       //微信获取openId出错
       if(isset($res->errcode)) {
@@ -74,7 +76,7 @@ class User extends Controller
         return; 
       }
 
-      $openId = $res->openid;
+      $openId = isset($res->openid) ? $res->openid : $res->OpenId;
 
       //获取到openId,查询数据库是否有该用户
       $arr = Db::name('users')->where('OpenId',$openId)->find();
@@ -86,7 +88,7 @@ class User extends Controller
 
          Db::startTrans();
          try{
-           $res = Db::name('users')->insert([
+           $defaultUserInfo = array(
              'OpenId'=> $openId,
              'Account' => $account,
              'Password' =>'7C4A8D09CA3762AF61E59520943DC26494F8941B',   //123456的sha1加密
@@ -95,7 +97,11 @@ class User extends Controller
              'ThisTime' => date('Y-m-d H:i:s',time()),
              'ThisIp' => request()->ip(),
              'CreateTime' => date('Y-m-d H:i:s',time())
-           ]);
+           );
+           
+           $userInfo = $isQQ ? array_merge((array)$res,$defaultUserInfo)  : $defaultUserInfo;
+           
+           $res = Db::name('users')->insert($userInfo);
 
            $userId = Db::name('users')->getLastInsID();
 
@@ -148,11 +154,10 @@ class User extends Controller
              //设置上次和本次登录的ip
              $arr['LastTime'] = $arr['ThisTime'];
              $arr['LastIp'] = $arr['ThisIp'];
-         
-
-
-              $arr['ThisTime'] = date('Y-m-d H:i:s',time());
+             $arr['ThisTime'] = date('Y-m-d H:i:s',time());
              $arr['ThisIp'] = request()->ip();
+
+             if($isQQ) $arr = array_merge($arr,(array)$res);
 
              Db::name('users')
              ->where('Id',$arr['Id'])
@@ -179,8 +184,52 @@ class User extends Controller
     private function qqThirdPartyLogin() {
       $returnUrl = request()->post('ReturnUrl');
       $code = request()->post('Code');
-      $url = "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=101547883&client_secret=5d28de8163a8b0f2b900ccfb08e94c5b&code=$code&redirect_uri=".urlencode($returnUrl);
+      $clientId= '101660354';
+      $clientSecret= '340bdfe0f8c50562e81a1a8f652d7e47';
+      $url = "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=$clientId&client_secret=$clientSecret&code=$code&redirect_uri=".urlencode($returnUrl);
 
+      $res = $this->curl_get_contents($url);
+
+      if(strpos($res, "callback") !== false){ 
+       //如果进到这里面来了，就去获取access_token失败了
+       return json_decode($this->parseCallBack($res)); 
+      }
+
+      //获取access_token成功，开始获取openId和userInfo
+      parse_str($res, $res);
+      $accessToken = $res['access_token'];
+
+      $openIdUrl = "https://graph.qq.com/oauth2.0/me?access_token=$accessToken&unionid=1";
+      $openIdRes = json_decode($this->parseCallBack($this->curl_get_contents($openIdUrl)));
+      if(isset($openIdRes->error)) return $openIdRes;
+      
+      //获取openId成功，获取用户信息，
+      $openId = $openIdRes->openid;
+      $userInfoUrl = "https://graph.qq.com/user/get_user_info?access_token=$accessToken&oauth_consumer_key=$clientId&openid=$openId";
+      $userInfo = json_decode($this->curl_get_contents($userInfoUrl));
+
+      //获取失败
+      if($userInfo->ret !== 0) {
+        $userInfo->error = true;
+        $userInfo->error_description = '获取用户信息失败！';
+        return $userInfo;
+      }
+
+      //获取成功，取出有用信息
+      $res = array();
+      $sex = array('男'=>0,'女'=>1);
+      $res['NickName'] = $userInfo->nickname;
+      $res['Sex'] = in_array($userInfo->gender, array('男','女')) ? $sex[$userInfo->gender] : 2;
+      $res['Province'] = $userInfo->province;
+      $res['City'] = $userInfo->city;
+      $res['CoverUrl'] = $userInfo->figureurl_qq;
+      $res['OpenId'] = $openIdRes->unionid; //多个应用，用unionid字段，用户唯一
+      
+      return (object)$res;
+    }
+    
+    //用curl的形式获取接口数据
+    private function curl_get_contents($url){
       //qq这边会有被qq服务器拦截的问题，不能使用file_get_contents，必须用curl建立连接
       $ch = curl_init(); 
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
@@ -188,16 +237,15 @@ class User extends Controller
       curl_setopt($ch, CURLOPT_URL, $url); 
       $res = curl_exec($ch); 
       curl_close($ch); 
-
-      if(strpos($res, "callback") !== false){ 
-       $lpos = strpos($res, "("); 
-       $rpos = strrpos($res, ")"); 
-       $res = substr($res, $lpos + 1, $rpos - $lpos -1); 
-      } 
-
-      $res = json_decode($res); 
-
+      
       return $res;
+    }
+    
+    //从q q响应数据中取出callback部分
+    private function parseCallBack($str) {
+      $lpos = strpos($str, "("); 
+      $rpos = strrpos($str, ")"); 
+      return substr($str, $lpos + 1, $rpos - $lpos -1); 
     }
 
     /**
@@ -806,11 +854,11 @@ class User extends Controller
      * @return   {[type]}   [description]
      */
     public function randomStr($len) {
-      $preinstallStr = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-$';
+      $preinstallStr = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
       $str = '';
 
       for($i = 0 ; $i < $len ; $i ++) {
-         $random = rand(0,64);
+         $random = rand(0,61);
          $str .= $preinstallStr[$random];
       }
 

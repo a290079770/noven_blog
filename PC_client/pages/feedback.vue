@@ -11,7 +11,7 @@
       <section id="feedbackEditor" class="feedback-edit">
       </section>
       <p class="flex flex-align-center feedback-edit-btns">
-        <el-button size="small" @click="createFeedback(0)" type="primary">留言</el-button>
+        <el-button size="small" @click="createFeedback(0)" type="primary">{{isLogin ? '留言':'登录后留言'}}</el-button>
         <el-button size="small" @click="clearFeedback">清空</el-button>
       </p>
     </section>

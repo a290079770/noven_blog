@@ -58,6 +58,7 @@ module.exports = {
   */
   plugins: [
     { src: '@/plugins/element-ui', ssr: true },
+    { src: '@/plugins/router', ssr: true },
     { src: '@/plugins/http', ssr: true },
     { src: '@/plugins/particles', ssr: false },
     { src: '@/plugins/editorConfig', ssr: false },

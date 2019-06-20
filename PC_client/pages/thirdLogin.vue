@@ -12,13 +12,30 @@
 </template>
 
 <script>
-
+import { login , getUserDetail } from '~/assets/service/userService'
 export default {
   created() {
-    
-  },
-  mounted() {
-    
+    let { code, state } = this.$route.query;
+
+    if(!code) {
+      this.$message.error('获取code失败，登录错误！');
+      return;
+    }
+
+    login({
+      Code: code,
+      ThirdParty:'qq',
+      ReturnUrl: this.thirdLoginReturnUrl
+    })
+    .then(({ token }) => {
+      this.setCookie('token',token, 1000 * 3600 * 2);
+      return getUserDetail();
+    }).then(res => {
+      localStorage.setItem('userInfo',JSON.stringify(res));
+
+      let url = decodeURIComponent(state);
+      !url || url === 'undefined' ? this.$router.replace('/') : location.replace(url);
+    })
   },
 }
 </script>

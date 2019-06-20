@@ -73,3 +73,11 @@ export const signOut = function(userInfo) {
   return Vue.prototype.$http.post('/user/signout')
 }
 
+/**
+* [signout 退出登录]
+* @return [type] [description]
+*/
+export const login = function(acountInfo) {
+  return Vue.prototype.$http.post('/user/login',acountInfo)
+}
+
