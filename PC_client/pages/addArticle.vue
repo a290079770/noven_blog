@@ -349,6 +349,12 @@ export default {
   },
 
   async mounted() {
+    window.onbeforeunload = function(e) {
+      let msg = "数据尚未保存，离开后可能会导致数据丢失\n\n您确定要离开吗？";
+      e.returnValue = msg
+      return msg
+    } 
+
     this.addEditor = await new Promise((resolve,reject) => {
       if(window.wangEditor) resolve(new wangEditor('#addArticleEditorBar','#addArticleEditor'));
 
