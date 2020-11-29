@@ -159,7 +159,7 @@ export default {
       let orderBy = [
           {
             listName:'dataList',
-            order:'CreateTime',
+            order:'ReadCount',
             ps:10
           },
           {
@@ -169,7 +169,7 @@ export default {
           },
           {
             listName:'recommendList',
-            order:'ReadCount',
+            order:'CreateTime',
             ps:10
           },
       ];
