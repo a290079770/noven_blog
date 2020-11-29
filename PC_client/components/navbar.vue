@@ -86,6 +86,13 @@ export default {
             '/aboutus/'
           ]
         },
+        {
+          title:'书香记',
+          link:'/timeline',
+          contRoutes:[
+            '/timeline/'
+          ]
+        },
         // {
         //   title:'我的创作',
         //   link:'/my',

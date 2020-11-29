@@ -25,7 +25,7 @@
 
         <section v-if="detail.Brief" class="detail-content font-lg detail-brief">
           “
-            <span class="font-xs gray9">{{detail.Brief}}</span>
+            <span class="font gray9">{{detail.Brief}}</span>
           ”
         </section>
 
