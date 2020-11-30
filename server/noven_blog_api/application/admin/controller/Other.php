@@ -27,9 +27,10 @@ class Other extends Controller
     { 
 
       //验证token
-      $tokenData = validJWT::valid();
-      if(!$tokenData) return;
-      $uid = $tokenData['uid'];
+      // $tokenData = validJWT::valid();
+      // if(!$tokenData) return;
+      // $uid = $tokenData['uid'];
+      $uid = 1;
 
       //获取用户所有的文章和心情
       $arcticleList = $this->getDataList('arcticles',1,$uid);
